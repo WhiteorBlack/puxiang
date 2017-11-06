@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolBarSizeHeight"
+            android:background="@color/white">
+
+            <ImageButton
+                android:id="@+id/iv_back"
+                style="@style/ToolbarBackBtnStyle"
+                android:layout_gravity="bottom" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tb_login"
+                android:layout_width="300px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                app:tabIndicatorColor="@color/text_black"
+                app:tabMode="fixed"
+                app:tabTextAppearance="@style/LoginTabTextStyle"
+                app:tabSelectedTextColor="#494949"
+                app:tabTextColor="#7a7a7a" />
+        </FrameLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+    </LinearLayout>
+</layout>

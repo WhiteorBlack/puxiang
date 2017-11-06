@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.model.data.RxRefund" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_pic"
+            android:layout_width="125px"
+            android:layout_height="wrap_content"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="centerInside"
+            app:viewAspectRatio="1"
+            app:url="@{viewModel.mainPictureUrl}" />
+
+        <TextView
+            android:id="@+id/tv_shaidan_title"
+            style="@style/titleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sdv_pic"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="15px"
+            android:layout_toRightOf="@+id/sdv_pic"
+            android:text="@{viewModel.productName}" />
+
+        <TextView
+            android:id="@+id/tv_shaidan_price"
+            style="@style/SalPriceStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_pic"
+            android:layout_alignLeft="@+id/tv_shaidan_title"
+            android:layout_marginBottom="20px"
+            android:text="@{MyTextUtils.getSalePrice(viewModel.price)}"
+            android:textSize="28px" />
+
+    </RelativeLayout>
+</layout>

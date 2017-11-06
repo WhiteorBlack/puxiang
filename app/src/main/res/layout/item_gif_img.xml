@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils"/>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.module.post.model.GifModel"/>
+    </data>
+
+    <FrameLayout
+        android:id="@+id/fl_gif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15px"
+        android:paddingLeft="10px"
+        android:paddingRight="10px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:actualImageScaleType="fitXY"
+            app:viewAspectRatio="1"
+            app:placeholderImageScaleType="fitXY"
+            app:url="@{item.isGif?item.gifUrl:item.imgUrl}"
+            />
+
+        <ImageView
+            android:id="@+id/iv_play_gif"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_gravity="center"
+            android:src="@mipmap/play_gif"
+            android:visibility="@{item.isGif?View.GONE:View.VISIBLE}"
+            />
+
+    </FrameLayout>
+</layout>

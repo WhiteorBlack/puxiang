@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="20px"
+        android:background="#ebebeb" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_shop"
+            android:layout_width="48px"
+            android:layout_height="48px"
+            app:placeholderImageRes="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:drawablePadding="20px"
+            android:drawableRight="@mipmap/title_back"
+            android:paddingLeft="20px"
+            android:textColor="#1e1e1e"
+            android:textSize="36px" />
+    </LinearLayout>
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#ebebeb" />
+</LinearLayout>

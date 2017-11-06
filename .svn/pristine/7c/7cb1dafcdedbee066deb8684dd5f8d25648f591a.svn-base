@@ -1,0 +1,31 @@
+package com.puxiang.mall.model.data;
+
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.ObservableBoolean;
+
+/**
+ * Created by zhaoyong bai on 2017/10/17.
+ */
+
+public class RxArea extends BaseObservable {
+    private String areaName;
+    private String areaCode;
+    @Bindable
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    @Bindable
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+}

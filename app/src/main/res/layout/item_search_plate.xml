@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.StringUtil" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <import type="com.puxiang.mall.R" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxPlate" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/recycler_bg"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin">
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_bbs_pic"
+            style="@style/BbsCircleHeadPicStyle"
+            android:layout_marginBottom="32px"
+            android:layout_marginTop="32px"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:roundAsCircle="true"
+            app:url="@{item.platePic}" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/BbsCircleTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30px"
+            android:layout_toRightOf="@+id/sdv_bbs_pic"
+            android:text="@{item.plateName}" />
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/BbsCircleBriefTextStyle"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_title"
+            android:layout_below="@+id/tv_title"
+            android:singleLine="true"
+            android:text="@{item.plateIntroduce}"
+            android:textSize="23px" />
+
+        <TextView
+            android:id="@+id/tv_attention_num"
+            style="@style/BbsCircleFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_bbs_pic"
+            android:layout_alignLeft="@+id/tv_title"
+            android:text="@{StringUtil.getString(R.string.plate_attentionQty)+item.attentionQty}" />
+
+
+        <TextView
+            android:id="@+id/tv_post_num"
+            style="@style/BbsCircleFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_bbs_pic"
+            android:layout_marginLeft="50px"
+            android:layout_toRightOf="@+id/tv_attention_num"
+            android:text="@{StringUtil.getString(R.string.plate_postQty)+item.postQty}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/sdv_bbs_pic"
+            android:background="#ebebeb" />
+
+    </RelativeLayout>
+</layout>

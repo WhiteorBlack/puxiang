@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="toolBarTitle"
+            type="String" />
+
+        <variable
+            name="toolBarText"
+            type="String" />
+
+        <variable
+            name="isShowIcon"
+            type="boolean" />
+
+        <variable
+            name="isShowText"
+            type="boolean" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/web_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolBarSizeHeight"
+        android:background="@color/view_bg"
+        android:elevation="@dimen/elevation_height">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            style="@style/ToolbarBackBtnStyle"
+            android:layout_alignParentBottom="true" />
+
+        <TextView
+            android:id="@+id/tv_toolbar_text"
+            style="@style/bigTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="@dimen/toolBarBottomMargin"
+            android:text="@{toolBarTitle}" />
+
+        <View
+            android:id="@+id/v_icon"
+            android:layout_width="36px"
+            android:layout_height="36px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/toolBarBottomMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:background="@mipmap/nav_share_g"
+            android:onClick="onClick"
+            android:visibility="@{isShowIcon?View.VISIBLE:View.GONE}" />
+
+        <TextView
+            android:id="@+id/btn_text"
+            style="@style/titleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/toolBarSize"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:gravity="bottom"
+            android:onClick="onClick"
+            android:paddingBottom="@dimen/toolBarBottomMargin"
+            android:text="@{toolBarText}"
+            android:visibility="@{isShowText?View.VISIBLE:View.GONE}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#ccc" />
+
+    </RelativeLayout>
+</layout>

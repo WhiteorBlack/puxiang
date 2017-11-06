@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.my.viewmodel.ShowViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/drag_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_login" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_show"
+                app:url="@{viewModel.url}"
+                android:layout_width="match_parent"
+                android:layout_height="768px"
+                android:layout_gravity="center"
+                fresco:fadeDuration="100"
+                fresco:placeholderImage="@mipmap/ic_launcher"
+                fresco:placeholderImageScaleType="centerInside" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="headModel"
+            type="com.puxiang.mall.module.shop.viewModel.CityHeadViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/line_light"
+        android:orientation="vertical"
+        android:paddingBottom="42px">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="32px"
+            android:text="@{`当前：`+headModel.currentCity}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42px"
+            android:layout_marginTop="42px"
+            android:text="定位/最近访问"
+            android:textColor="#9fa0a0"
+            android:textSize="32px" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_latest"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42px"
+            android:layout_marginTop="42px"
+            android:text="热门城市"
+            android:textColor="#9fa0a0"
+            android:textSize="32px" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_hot"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25px" />
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,122 @@
+package com.puxiang.mall.module.shop.view;
+
+import android.databinding.DataBindingUtil;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
+import android.view.View;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.mcxtzhang.indexlib.suspension.SuspensionDecoration;
+import com.puxiang.mall.BaseBindActivity;
+import com.puxiang.mall.R;
+import com.puxiang.mall.databinding.ActivitySelectCityBinding;
+import com.puxiang.mall.model.data.RxCity;
+import com.puxiang.mall.module.shop.adapter.CityAdapter;
+import com.puxiang.mall.module.shop.viewModel.SelectCityViewModel;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Created by zhaoyong bai on 2017/10/24.
+ */
+
+public class SelectCityActivity extends BaseBindActivity {
+    private ActivitySelectCityBinding binding;
+    private SelectCityViewModel viewModel;
+    private CityAdapter adapter;
+    private List<RxCity> cityList = new ArrayList<>();
+    private LinearLayoutManager mManager;
+    private SuspensionDecoration mDecoration;
+
+    @Override
+    protected void initBind() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_select_city);
+        adapter = new CityAdapter(R.layout.item_city);
+        viewModel = new SelectCityViewModel(this, adapter);
+        binding.setViewModel(viewModel);
+    }
+
+    @Override
+    public void initView() {
+        binding.rv.setLayoutManager(mManager=new LinearLayoutManager(this));
+        binding.rv.setAdapter(adapter);
+        binding.rv.addItemDecoration(mDecoration = new SuspensionDecoration(this, cityList).setLeftPadding(80));
+        binding.indexBar.setmPressedShowTextView(binding.tvSideBarHint)
+                .setNeedRealIndex(true)
+                .setmLayoutManager(mManager);
+
+        getCityData();
+
+    }
+
+    private void getCityData() {
+        new Thread(() -> {
+            readJson();
+        }).start();
+    }
+
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                onBackPressed();
+                break;
+        }
+    }
+
+    private void readJson() {
+        try {
+            InputStream is = getAssets().open("city.json");//此处为要加载的json文件名称
+            String text = readTextFromSDcard(is);
+            handleCitiesResponse(text);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.d("readFromAssets", e.toString());
+        }
+    }
+
+    //将传入的is一行一行解析读取出来出来
+    private String readTextFromSDcard(InputStream is) throws Exception {
+        InputStreamReader reader = new InputStreamReader(is, "GB2312");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        StringBuffer buffer = new StringBuffer("");
+        String str;
+        while ((str = bufferedReader.readLine()) != null) {
+            buffer.append(str);
+            buffer.append("\n");
+        }
+        return buffer.toString();//把读取的数据返回
+    }
+
+    //把读取出来的json数据进行解析
+    public boolean handleCitiesResponse(String response) {
+        try {
+            cityList = new Gson().fromJson(response, new TypeToken<List<RxCity>>() {
+            }.getType());
+            binding.indexBar.getDataHelper().sortSourceDatas(cityList);
+            runOnUiThread(() -> {
+                if (cityList != null && cityList.size() > 0) {
+                    adapter.setNewData(cityList);
+                    binding.indexBar.setmSourceDatas(cityList).invalidate();
+                    mDecoration.setmDatas(cityList);
+                }
+            });
+
+            return true;
+        } catch (Exception e) {
+            Log.d("handleCitiesResponse", e.toString());
+        }
+        return false;
+    }
+
+    @Override
+    protected void viewModelDestroy() {
+
+    }
+}

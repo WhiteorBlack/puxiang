@@ -1,0 +1,45 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="elevation_height">4px</dimen>
+
+
+    <dimen name="sideMargin">20px</dimen>
+    <dimen name="titleSize">32px</dimen>
+    <dimen name="sideMarginTop">20px</dimen>
+    <dimen name="salePriceSize">38px</dimen>
+    <dimen name="toolBarSize">88px</dimen>
+    <dimen name="toolBarSizeHeight">130px</dimen>
+    <dimen name="homeItemPicSize">230px</dimen>
+    <dimen name="toolBarTopMargin">60px</dimen>
+    <dimen name="toolBarBottomMargin">26px</dimen>
+
+    <dimen name="PlateMarginStateBar">0px</dimen>
+    <dimen name="PlateMarginTop">103px</dimen>
+
+    <dimen name="PersonalMarginTop">162px</dimen>
+
+    <dimen name="LargeTextSize">16dp</dimen>
+    <dimen name="BasicTextSize">15dp</dimen>
+    <dimen name="TitleTextSize">18dp</dimen>
+    <dimen name="SmallTextSize">14dp</dimen>
+    <dimen name="SmallerTextSize">13dp</dimen>
+    <dimen name="LargestTextSize">30dp</dimen>
+    <dimen name="ChattingTextSize">16dp</dimen>
+    <dimen name="ChattingContentMinHeight">49dp</dimen>
+    <dimen name="PreferenceItemHeight">42dp</dimen>
+    <dimen name="ConversationItemHeight">58dp</dimen>
+    <dimen name="LargeAvatarSize">56dp</dimen>
+    <dimen name="NoStatusToolBarSize">88px</dimen>
+    <dimen name="StateBarSize">0px</dimen>
+
+    <dimen name="px6">6px</dimen>
+    <dimen name="searchBarHeight">88px</dimen>
+    <dimen name="searchBarWide">640px</dimen>
+    <dimen name="searchBarIconSize">50px</dimen>
+    <dimen name="searchEditHeight">60px</dimen>
+    <dimen name="myInfoTextSize">35px</dimen>
+    <dimen name="progress_width">200dp</dimen>
+</resources>

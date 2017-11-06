@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.emotion.viewmodel.EmotionViewModer" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/emotion_bar"
+            layout="@layout/include_emotion_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            bind:viewModel="@{viewModel}" />
+
+        <LinearLayout
+            android:id="@+id/ll_emotion_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.puxiang.mall.module.emotion.view.emotionkeyboardview.NoHorizontalScrollerViewPager
+                android:id="@+id/vp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="70px" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

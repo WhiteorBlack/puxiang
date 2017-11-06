@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.StringUtil" />
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <import type="com.puxiang.mall.R" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.userinfo.viewmodel.InfoViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sideMarginTop"
+            android:background="@drawable/shadow"
+            android:elevation="@dimen/elevation_height"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_info_head"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="头        像" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_info_pic"
+                    android:layout_width="100px"
+                    android:layout_height="100px"
+                    android:layout_marginRight="35px"
+                    app:placeholderImage="@mipmap/mine_head"
+                    app:placeholderImageScaleType="fitXY"
+                    app:roundAsCircle="true"
+                    app:url="@{viewModel.userBean.userImage}"
+
+                    />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+
+            <include layout="@layout/view_lien" />
+
+            <LinearLayout
+                android:id="@+id/ll_info_username"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v1"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="用  户  名" />
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    style="@style/myInfoTextAlphaStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right"
+                    android:text="@{viewModel.userBean.viewName}"
+                    android:textSize="@dimen/myInfoTextSize" />
+            </LinearLayout>
+
+            <include layout="@layout/view_lien" />
+
+            <LinearLayout
+                android:id="@+id/ll_info_nick"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_nick_title"
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{viewModel.check.changeAble==1? StringUtil.getString(R.string.user_info_nick_name_change_tis):StringUtil.getString(R.string.user_info_nick_name_no_change_tis)}" />
+
+                <TextView
+                    android:id="@+id/tv_nick"
+                    style="@style/myInfoTextAlphaStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@{viewModel.userBean.nickname}" />
+
+                <ImageView
+                    android:id="@+id/iv_nick"
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open"
+                    android:visibility="@{viewModel.check.changeAble==0?View.INVISIBLE:View.VISIBLE}" />
+            </LinearLayout>
+
+            <include layout="@layout/view_lien" />
+
+            <LinearLayout
+                android:id="@+id/ll_info_realName"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="真实姓名" />
+
+                <TextView
+                    android:id="@+id/tv_realName"
+                    style="@style/myInfoTextAlphaStyle2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right"
+                    android:text="@{viewModel.userBean.realName}"
+                    android:textSize="@dimen/myInfoTextSize" />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+
+
+            <include layout="@layout/view_lien" />
+
+            <LinearLayout
+                android:id="@+id/ll_info_mobile"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="手机号码" />
+
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    style="@style/myInfoTextAlphaStyle2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right"
+                    android:text="@{viewModel.userBean.mobile}"
+                    android:textSize="@dimen/myInfoTextSize" />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+
+            <include layout="@layout/view_lien" />
+
+            <LinearLayout
+                android:id="@+id/ll_info_sex"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="性        别" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    style="@style/myInfoTextAlphaStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.sex}"
+                    android:textSize="@dimen/myInfoTextSize" />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+
+            <include layout="@layout/view_lien" />
+
+            <LinearLayout
+                android:id="@+id/my_info_birthday"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="出生日期" />
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    style="@style/myInfoTextAlphaStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/myInfoTextSize" />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

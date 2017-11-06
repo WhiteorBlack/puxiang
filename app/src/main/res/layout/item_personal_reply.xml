@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
+
+        <import type="com.puxiang.mall.utils.StringUtil" />
+
+        <import type="com.puxiang.mall.utils.DateUtils" />
+
+        <import type="android.view.View" />
+
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxReplyPostComment" />
+
+        <variable
+            name="isOwner"
+            type="boolean" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_user_pic"
+            style="@style/BbsHeadPicStyle"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="30px"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+
+            app:roundAsCircle="true"
+            app:url="@{item.commentUser.userImage}" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/BbsUserNameTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sdv_user_pic"
+            android:layout_marginTop="5px"
+            android:layout_toRightOf="@+id/sdv_user_pic"
+            android:text="@{item.commentUser.viewName}" />
+
+        <ImageView
+            android:id="@+id/iv_time_icon"
+            style="@style/BbsTopIconStyle"
+            android:layout_alignBottom="@+id/sdv_user_pic"
+            android:layout_alignLeft="@id/tv_user_name"
+            android:layout_marginBottom="3px"
+            android:src="@mipmap/icon_time" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/BbsTopTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_time_icon"
+            android:layout_toRightOf="@+id/iv_time_icon"
+            android:text="@{DateUtils.getPostTime(item.commentTime)}"
+            android:textColor="@color/user_time" />
+
+        <TextView
+            android:id="@+id/tv_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_user_name"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="20px"
+            android:lineSpacingExtra="15px"
+            android:textColor="@color/title"
+            android:textSize="26px"
+            android:text="@{item.comment}" />
+
+        <LinearLayout
+            android:id="@+id/ll_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_reply"
+            android:layout_marginTop="15px"
+            android:divider="@drawable/line_ccc"
+            android:orientation="vertical"
+            android:showDividers="beginning"
+            android:visibility="visible"
+          >
+
+
+            <TextView
+                android:id="@+id/tv_comment1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100px"
+                android:layout_marginTop="20px"
+                android:lineSpacingExtra="15px"
+                android:text="111"
+                android:textColor="@color/title"
+                android:textSize="22px" />
+
+
+            <TextView
+                android:id="@+id/tv_comment2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100px"
+                android:layout_marginTop="20px"
+                android:lineSpacingExtra="15px"
+                android:text="userName："
+                android:textColor="@color/title"
+                android:textSize="22px" />
+
+
+            <TextView
+                android:id="@+id/tv_more_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:paddingLeft="100px"
+                android:text="查看更多评论"
+                android:textColor="@color/comment_text"
+                android:textSize="22px" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/ll_comment"
+            android:layout_marginTop="30px"
+            android:background="#ccc" />
+
+        <ImageView
+            android:id="@+id/iv_del_icon"
+            android:layout_width="70px"
+            android:layout_height="70px"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_user_name"
+            android:padding="20px"
+            android:src="@mipmap/icon_delite"
+            android:visibility="@{isOwner?View.VISIBLE:View.GONE}" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iv_time_icon"
+            android:layout_alignStart="@+id/iv_time_icon"
+            android:layout_below="@+id/iv_time_icon"
+            android:layout_marginTop="10px"
+            android:singleLine="true"
+            android:text="@{StringUtil.getString(R.string.comment_left_brace)+item.title+StringUtil.getString(R.string.comment_right_brace)}"
+            android:textColor="@color/comment_text"
+            android:textSize="24px" />
+
+    </RelativeLayout>
+</layout>

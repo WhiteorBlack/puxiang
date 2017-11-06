@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxProduct" />
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="20px"
+        android:paddingTop="20px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42px"
+            android:checked="@{item.selected}"
+            android:button="@drawable/select_goods" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_item_pic"
+            android:layout_width="204px"
+            android:layout_height="204px"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            app:fadeDuration="300"
+            app:placeholderImage="@mipmap/ic_launcher"
+            bind:url="@{item.mainPictureUrl}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30px"
+                android:gravity="center_horizontal"
+                android:text="@{item.productName}"
+                android:textColor="#292929"
+                android:textSize="28px" />
+
+            <TextView
+                android:id="@+id/tv_goods_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="15px"
+                android:gravity="center_horizontal"
+                android:text="@{item.description}"
+                android:textColor="#292929"
+                android:textSize="22px" />
+
+            <TextView
+                android:id="@+id/tv_goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="20px"
+                android:text="@{MyTextUtils.getSalePrice(item.salePrice)}"
+                android:textColor="@color/sale_price"
+                android:textSize="32px" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_reduce"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:background="@drawable/btn_reduce" />
+
+                <TextView
+                    android:layout_width="100px"
+                    android:layout_height="40px"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:gravity="center"
+                    android:text="@{MyTextUtils.getInt2String(item.buyCount)}"
+                    android:textColor="@color/text_black"
+                    android:textSize="28px" />
+
+                <ImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:background="@drawable/btn_add" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:text="@{`件（库存：`+item.stock+` 件）`}"
+                    android:textColor="#9fa0a0"
+                    android:textSize="22px" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

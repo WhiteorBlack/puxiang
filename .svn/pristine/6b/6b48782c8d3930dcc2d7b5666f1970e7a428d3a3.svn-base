@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxReply" />
+        <import type="com.puxiang.mall.utils.MyTextUtils"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/sideMargin"
+        android:orientation="horizontal"
+        android:paddingLeft="118px">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:lineSpacingExtra="15px"
+            android:textColor="@color/title"
+            android:textSize="22px"
+           android:text="@{MyTextUtils.getCommentText(item.commentUser.viewName,item.commentReply.reply,item.commentReply.replyTime)}" />
+    </LinearLayout>
+</layout>

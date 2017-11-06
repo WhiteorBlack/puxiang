@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils"/>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxUserInfo" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/recycler_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="35px"
+            android:paddingLeft="@dimen/sideMargin"
+            android:paddingRight="@dimen/sideMargin"
+            android:paddingTop="35px">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_item_pic"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                app:placeholderImage="@mipmap/ic_launcher"
+                app:placeholderImageScaleType="centerInside"
+                app:roundAsCircle="true"
+                app:viewAspectRatio="1"
+                app:url="@{item.userImage}" />
+
+            <TextView
+                android:id="@+id/tv_item_name"
+                style="@style/titleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/sideMarginTop"
+                android:layout_marginLeft="@dimen/sideMargin"
+                android:layout_marginTop="30px"
+                android:layout_toRightOf="@+id/sdv_item_pic"
+                android:text="@{item.viewName}"
+                android:textColor="@color/title" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_lien" />
+    </LinearLayout>
+</layout>

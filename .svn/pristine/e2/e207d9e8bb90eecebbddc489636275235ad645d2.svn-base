@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+        <import type="com.puxiang.mall.utils.StringUtil"/>
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.login.viewmodel.LoginViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42px"
+            android:layout_marginRight="42px"
+            android:layout_marginTop="180px"
+            android:elevation="@dimen/elevation_height"
+            android:paddingBottom="40px">
+
+            <ImageView
+                android:id="@+id/tv_accounts"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/icon_account"
+                android:gravity="center" />
+
+            <EditText
+                android:id="@+id/et_accounts"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_accounts"
+                android:background="@null"
+                android:hint="请输入帐号"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:text="@={viewModel.account}"
+                android:textColorHint="@color/se" />
+
+            <ImageView
+                android:id="@+id/iv_account_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:onClick="@{viewModel.onClick}"
+                android:layout_marginRight="20px"
+                android:visibility="@{StringUtil.isEmpty(viewModel.account)?View.INVISIBLE:View.VISIBLE}"
+                android:layout_marginTop="50px"
+                android:background="@mipmap/icon_cancel" />
+
+            <View
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_accounts"
+                android:background="#cecece" />
+
+            <ImageView
+                android:id="@+id/tv_password"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_accounts"
+                android:background="@mipmap/icon_pass"
+                android:gravity="center" />
+
+            <EditText
+                android:id="@+id/et_password"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_accounts"
+                android:layout_toRightOf="@+id/tv_password"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:text="@={viewModel.password}"
+                android:textColorHint="@color/se" />
+
+            <CheckBox
+                android:id="@+id/chb_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_accounts"
+                android:layout_marginTop="40px"
+                android:button="@drawable/chb_password"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/iv_pwd_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20px"
+                android:layout_below="@+id/tv_accounts"
+                android:onClick="@{viewModel.onClick}"
+                android:layout_marginTop="50px"
+                android:visibility="@{StringUtil.isEmpty(viewModel.password)?View.INVISIBLE:View.VISIBLE}"
+                android:layout_toLeftOf="@+id/chb_pass"
+                android:background="@mipmap/icon_cancel" />
+
+            <View
+                android:id="@+id/login_v3"
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_password"
+                android:background="#cecece" />
+
+            <CheckBox
+                android:id="@+id/chb_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_forget"
+                android:layout_alignBottom="@+id/tv_forget"
+                android:layout_alignStart="@+id/login_v3"
+                android:button="@drawable/chb_login"
+                android:drawablePadding="10px"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8px"
+                android:text="  自动登录"
+                android:textColor="#999999"
+                android:textSize="22px" />
+
+            <FrameLayout
+                android:id="@+id/fl_login"
+                android:layout_width="match_parent"
+                android:layout_height="90px"
+                android:layout_below="@+id/chb_login"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80px">
+
+                <ProgressBar
+                    android:id="@+id/pb"
+                    style="@style/btnStyle"
+                    android:layout_gravity="center"
+                    android:visibility="@{viewModel.isLogging?View.VISIBLE:View.GONE}" />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    style="@style/btnStyle"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_login_btn"
+                    android:gravity="center"
+                    android:onClick="@{viewModel.onClick}"
+                    android:text="登录" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_forget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/login_v3"
+                android:layout_marginRight="@dimen/sideMargin"
+                android:layout_marginTop="40px"
+                android:gravity="right"
+                android:onClick="@{viewModel.onClick}"
+                android:text="找回密码"
+                android:textColor="#999999"
+                android:textSize="22px" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="706px"
+            android:layout_height="23px"
+            android:src="@mipmap/login_logo_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingBottom="50px"
+            android:paddingTop="50px">
+
+            <ImageView
+                android:id="@+id/iv_wechat"
+                android:layout_width="72px"
+                android:layout_height="102px"
+                android:onClick="@{viewModel.onClick}"
+                android:src="@mipmap/login_logo_wechat" />
+
+            <ImageView
+                android:id="@+id/iv_qq"
+                android:layout_width="72px"
+                android:layout_height="102px"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:onClick="@{viewModel.onClick}"
+                android:src="@mipmap/login_logo_qq" />
+
+            <ImageView
+                android:id="@+id/iv_weibo"
+                android:layout_width="72px"
+                android:layout_height="102px"
+                android:onClick="@{viewModel.onClick}"
+                android:src="@mipmap/login_logo_weibo" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.bbs.viewmodel.PublishViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/view_bg"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_login"
+            app:isPublishing="@{viewModel.isPublishing}" />
+
+        <com.puxiang.mall.widget.MyScroll
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="30px">
+
+                <!--<ViewStub-->
+                <!--android:id="@+id/vs"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="@dimen/sideMargin"-->
+                <!--android:layout="@layout/viewstub_publish_layout" />-->
+
+                <EditText
+                    android:id="@+id/et_content"
+                    style="@style/titleTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="输入您想分享的内容..."
+                    android:minLines="8"
+                    android:padding="@dimen/sideMargin"
+                    android:textColorHint="@color/se" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/sideMarginTop"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/sideMargin"
+                    android:paddingRight="@dimen/sideMargin" />
+
+                <TextView
+                    android:id="@+id/tv_select_plate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25px"
+                    android:onClick="onClick"
+                    android:paddingLeft="@dimen/sideMargin"
+                    android:text="@{MyTextUtils.setSelectPlateText(viewModel.plateName)}"
+                    android:textColor="@color/title"
+                    android:textSize="25px" />
+
+            </LinearLayout>
+        </com.puxiang.mall.widget.MyScroll>
+    </LinearLayout>
+</layout>

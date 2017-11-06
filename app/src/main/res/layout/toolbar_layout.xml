@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/order_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolBarSizeHeight"
+        android:background="@color/view_bg"
+        android:elevation="@dimen/elevation_height">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            style="@style/ToolbarBackBtnStyle"
+            android:layout_alignParentBottom="true"
+            android:onClick="onClick" />
+
+        <TextView
+            android:id="@+id/tv_toolbar_text"
+            style="@style/bigTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="@dimen/toolBarBottomMargin"
+            android:text="@{title}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#ccc" />
+    </RelativeLayout>
+</layout>

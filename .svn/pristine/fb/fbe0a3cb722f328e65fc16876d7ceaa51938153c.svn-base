@@ -1,0 +1,75 @@
+package com.puxiang.mall.module.shop.viewModel;
+
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.puxiang.mall.BaseBindActivity;
+import com.puxiang.mall.model.data.RxCity;
+import com.puxiang.mall.module.shop.adapter.CityAdapter;
+import com.puxiang.mall.mvvm.base.ViewModel;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by zhaoyong bai on 2017/10/24.
+ */
+
+public class SelectCityViewModel implements ViewModel {
+    private BaseBindActivity activity;
+    private CityAdapter adapter;
+    private List<RxCity> cityList = new ArrayList<>();
+
+    public SelectCityViewModel(BaseBindActivity activity, CityAdapter adapter) {
+        this.activity = activity;
+        this.adapter = adapter;
+    }
+
+    private void readJson() {
+        try {
+            InputStream is = activity.getAssets().open("city.json");//此处为要加载的json文件名称
+            String text = readTextFromSDcard(is);
+            handleCitiesResponse(text);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.d("readFromAssets", e.toString());
+        }
+    }
+
+    //将传入的is一行一行解析读取出来出来
+    private String readTextFromSDcard(InputStream is) throws Exception {
+        InputStreamReader reader = new InputStreamReader(is, "GB2312");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        StringBuffer buffer = new StringBuffer("");
+        String str;
+        while ((str = bufferedReader.readLine()) != null) {
+            buffer.append(str);
+            buffer.append("\n");
+        }
+        return buffer.toString();//把读取的数据返回
+    }
+
+    //把读取出来的json数据进行解析
+    public boolean handleCitiesResponse(String response) {
+        try {
+            cityList = new Gson().fromJson(response, new TypeToken<List<RxCity>>() {
+            }.getType());
+            if (cityList != null && cityList.size() > 0) {
+                adapter.setNewData(cityList);
+            }
+            return true;
+        } catch (Exception e) {
+            Log.d("handleCitiesResponse", e.toString());
+        }
+        return false;
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}

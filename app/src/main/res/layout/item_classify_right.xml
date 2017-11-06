@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxProduct" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_classify_right_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_pic"
+            android:layout_width="150px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21px"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:viewAspectRatio="1"
+            bind:url="@{item.mainPictureUrl}" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/homeItemTitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12px"
+            android:gravity="center"
+            android:paddingLeft="15px"
+            android:paddingRight="15px"
+            android:paddingTop="15px"
+            android:singleLine="true"
+            android:text="@{item.productName}"
+            android:textSize="25px" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_name"
+        android:textSize="20px"
+        android:textColor="#4c4948"
+        android:layout_width="wrap_content"
+        android:text="测试"
+        android:paddingTop="5px"
+        android:paddingBottom="5px"
+        android:layout_marginLeft="10px"
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
+        android:background="@drawable/bg_textview"
+        android:layout_height="wrap_content" />
+</LinearLayout>

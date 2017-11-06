@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.circle.viewmodel.CircleViewModel" />
+
+    </data>
+
+    <com.puxiang.mall.widget.CusPtrFrameLayout
+        android:id="@+id/ptr_frame"
+        style="@style/style_ptr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="@{viewModel.init?View.VISIBLE:View.INVISIBLE}">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/view_bg" />
+    </com.puxiang.mall.widget.CusPtrFrameLayout>
+
+</layout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_login" />
+
+
+        <RadioGroup
+            android:id="@+id/rg_sex_select"
+            style="@style/titleMarginStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sideMarginTop"
+            android:background="@drawable/shadow"
+            android:elevation="@dimen/elevation_height"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_woman"
+                style="@style/titleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableLeft="@drawable/select_goods"
+                android:text="     女" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="30px"
+                android:background="#ebebeb" />
+
+            <RadioButton
+                android:id="@+id/rb_man"
+                style="@style/titleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px"
+                android:button="@null"
+                android:drawableLeft="@drawable/select_goods"
+                android:text="     男" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="30px"
+                android:background="#ebebeb" />
+
+            <RadioButton
+                android:id="@+id/rb_unknown"
+                style="@style/titleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px"
+                android:button="@null"
+                android:drawableLeft="@drawable/select_goods"
+                android:text="     保密" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</layout>

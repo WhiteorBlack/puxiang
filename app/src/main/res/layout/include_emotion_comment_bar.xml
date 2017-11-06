@@ -1,0 +1,68 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/line_ccc"
+        android:orientation="vertical"
+        android:showDividers="end|beginning">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="17px"
+            android:paddingLeft="@dimen/sideMargin"
+            android:paddingRight="@dimen/sideMargin"
+            android:paddingTop="17px">
+
+
+            <ImageView
+                android:id="@+id/iv_emotion_btn"
+                android:layout_width="48px"
+                android:layout_height="48px"
+                android:layout_marginRight="@dimen/sideMargin"
+                android:clickable="true"
+                android:src="@mipmap/tip_icon"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/ll_edit_bar_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20px"
+                android:layout_weight="1"
+                android:background="@drawable/bg_product_search"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15px">
+
+                <EditText
+                    android:id="@+id/et_emotion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#0000"
+                    android:hint="我也来说一说"
+                    android:maxLines="3"
+                    android:minHeight="50px"
+                    android:paddingBottom="12px"
+                    android:paddingTop="12px"
+                    android:textColorHint="@color/se"
+                    android:textSize="30px" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btn_send"
+                android:layout_width="90px"
+                android:layout_height="60px"
+                android:gravity="center"
+                android:text="@string/btn_send"
+                android:textColor="@color/tipsText"
+                android:textSize="34px"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

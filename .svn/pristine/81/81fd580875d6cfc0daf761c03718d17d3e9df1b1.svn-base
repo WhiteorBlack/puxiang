@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxPostInfo" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/ll_classify_right_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/video_right_item_pic"
+            android:layout_width="250px"
+            android:layout_height="200px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="21px"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="centerInside"
+
+            app:url="@{item.post.picUrl}" />
+
+        <LinearLayout
+            android:layout_width="250px"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/video_right_item_pic"
+            android:layout_alignLeft="@+id/video_right_item_pic"
+            android:background="#77000000"
+            android:gravity="center_vertical"
+            android:paddingLeft="15px"
+            android:paddingRight="15px">
+
+            <ImageView
+                android:layout_width="40px"
+                android:layout_height="40px"
+                android:src="@mipmap/play" />
+
+            <TextView
+                android:id="@+id/video_playQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:singleLine="true"
+                android:text="@{String.valueOf(item.post.playQty)}"
+                android:textColor="@color/se"
+                android:textSize="25px" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/video_right_item_title"
+            android:layout_width="250px"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/video_right_item_pic"
+            android:layout_below="@+id/video_right_item_pic"
+            android:layout_marginBottom="12px"
+            android:layout_marginTop="12px"
+            android:lines="2"
+            android:singleLine="false"
+            android:text="@{item.post.title}"
+            android:textColor="@color/title"
+            android:textSize="25px" />
+    </RelativeLayout>
+</layout>

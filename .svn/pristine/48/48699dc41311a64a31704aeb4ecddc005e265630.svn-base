@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="String"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_official_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_shaidan_ll"
+            android:orientation="vertical"
+            android:padding="20px"
+            />
+
+        <TextView
+            android:layout_width="168px"
+            android:layout_height="34px"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40px"
+            android:layout_marginTop="15px"
+            android:background="@mipmap/get_product"
+            android:gravity="center"
+            android:text="官方回复"
+            android:textColor="@color/view_bg"
+            android:textSize="22px"/>
+
+    </RelativeLayout>
+</layout>

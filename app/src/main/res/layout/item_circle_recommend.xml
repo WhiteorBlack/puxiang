@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_recommend_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/fl_sdvs"
+        android:layout_width="match_parent"
+        android:layout_height="325px"
+        android:layout_below="@+id/tv_content"
+        app:actualImageScaleType="fitXY"
+        app:fadeDuration="300"
+        app:placeholderImage="@mipmap/ic_launcher"
+        app:placeholderImageScaleType="centerInside" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="28px"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin"
+        android:paddingTop="28px">
+
+        <TextView
+            android:id="@+id/tv_recommend_name"
+            style="@style/HomeRecommendTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="游戏系类专场" />
+
+        <ImageView
+            style="@style/HomeRecommendIconStyle"
+            android:src="@mipmap/my_open" />
+    </LinearLayout>
+
+    <include layout="@layout/view_bbs_foot" />
+</LinearLayout>

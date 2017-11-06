@@ -1,0 +1,38 @@
+package com.puxiang.mall.model.data;
+
+import android.databinding.BaseObservable;
+import android.databinding.ObservableBoolean;
+
+/**
+ * Created by zhaoyong bai on 2017/10/18.
+ */
+
+public class RxDescShop extends BaseObservable{
+    private String descName;
+    private String descCode;
+    private ObservableBoolean isSelect=new ObservableBoolean(false);
+
+    public void setIsSelect(boolean isSelect){
+        this.isSelect.set(isSelect);
+    }
+
+    public boolean getIsSelect(){
+        return isSelect.get();
+    }
+
+    public String getDescName() {
+        return descName;
+    }
+
+    public void setDescName(String descName) {
+        this.descName = descName;
+    }
+
+    public String getDescCode() {
+        return descCode;
+    }
+
+    public void setDescCode(String descCode) {
+        this.descCode = descCode;
+    }
+}

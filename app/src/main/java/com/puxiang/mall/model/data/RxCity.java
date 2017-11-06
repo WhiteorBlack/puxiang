@@ -1,0 +1,88 @@
+package com.puxiang.mall.model.data;
+
+import android.databinding.Bindable;
+
+import com.mcxtzhang.indexlib.IndexBar.bean.BaseIndexBean;
+import com.mcxtzhang.indexlib.IndexBar.bean.BaseIndexPinyinBean;
+
+/**
+ * Created by zhaoyong bai on 2017/10/24.
+ */
+
+public class RxCity extends BaseIndexPinyinBean {
+    private String code;
+    private String name;
+    private String firstLetter;
+    private boolean isTop = false;//是否是最上面的 不需要被转化成拼音的
+    private boolean isSelected=false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isTop() {
+        return isTop;
+    }
+
+    public void setTop(boolean top) {
+        isTop = top;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFirstLetter() {
+        return firstLetter;
+    }
+
+    public void setFirstLetter(String firstLetter) {
+        this.firstLetter = firstLetter;
+    }
+
+    @Override
+    public String getBaseIndexTag() {
+        return super.getBaseIndexTag();
+    }
+
+    @Override
+    public BaseIndexBean setBaseIndexTag(String baseIndexTag) {
+        return super.setBaseIndexTag(baseIndexTag);
+    }
+
+    @Override
+    public String getTarget() {
+        return name;
+    }
+
+    @Override
+    public boolean isNeedToPinyin() {
+        return !isTop;
+    }
+
+//    @Override
+//    public String getSuspensionTag() {
+//        return firstLetter;
+//    }
+
+    @Override
+    public boolean isShowSuspension() {
+        return !isTop;
+    }
+}

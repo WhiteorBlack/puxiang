@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.puxiang.mall.R" />
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.search.viewmodel.SearchViewModel" />
+        <variable
+            name="msgModel"
+            type="com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/order_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolBarSizeHeight"
+        android:background="@color/mall_activity"
+        android:elevation="@dimen/elevation_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/iv_back"
+                style="@style/ToolbarBackBtnStyle"
+                android:layout_marginRight="5dp"
+                android:background="@color/mall_activity"
+                android:onClick="onClick"
+                android:src="@mipmap/nav_back_g" />
+
+            <RelativeLayout
+                android:id="@+id/rl_search"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/searchEditHeight"
+                android:layout_gravity="center_vertical"
+                android:layout_toLeftOf="@+id/iv_search_btn"
+                android:layout_toRightOf="@+id/iv_back"
+                android:layout_weight="1"
+                android:background="@drawable/bg_search_bar">
+
+
+                <ImageView
+                    android:id="@+id/iv_search_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/search_a" />
+
+                <EditText
+                    android:id="@+id/et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/iv_search_icon"
+                    android:background="@null"
+                    android:hint="输入您喜欢的商品"
+                    android:singleLine="true"
+                    android:text="@{viewModel.keyword}"
+                    android:textColor="#aaa"
+                    android:textColorHint="@color/searchTextColor"
+                    android:textSize="32px" />
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="55px"
+                android:layout_height="52px"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px">
+
+                <ImageView
+                    android:id="@+id/iv_warn"
+                    android:layout_width="@dimen/searchBarIconSize"
+                    android:layout_height="@dimen/searchBarIconSize"
+                    android:layout_gravity="bottom|left"
+                    android:background="@mipmap/nav_warn_w" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|right"
+                    android:background="@drawable/white_circle_bg"
+                    android:paddingBottom="2px"
+                    android:paddingLeft="8px"
+                    android:paddingRight="8px"
+                    android:paddingTop="2px"
+                    android:visibility="@{msgModel.msgCount>0?View.VISIBLE:View.INVISIBLE}"
+                    android:text="@{msgModel.msgCount+``}"
+                    android:textColor="@color/mall_activity"
+                    android:textSize="18px" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#ccc" />
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
+
+        <import type="com.puxiang.mall.utils.StringUtil" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.pay.viewmodel.PayResultViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow"
+            android:elevation="@dimen/elevation_height"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_result_icon"
+                android:layout_width="78px"
+                android:layout_height="68px"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="90px"
+                android:src="@{AppUtil.getDrawable(viewModel.isSucceed?R.mipmap.done:R.mipmap.fail)}" />
+
+            <TextView
+                android:id="@+id/tv_pay_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20px"
+                android:layout_marginTop="30px"
+                android:text="@{viewModel.resultStr}"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <include layout="@layout/view_lien" />
+
+            <TextView
+                android:id="@+id/tv_result_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/sideMargin"
+                android:layout_marginRight="@dimen/sideMargin"
+                android:layout_marginTop="30px"
+                android:gravity="center"
+                android:text="@{viewModel.explainStr}"
+                android:textSize="25px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/sideMargin"
+                android:layout_marginRight="@dimen/sideMargin"
+                android:layout_marginTop="20px"
+                android:gravity="center"
+                android:text="@{MyTextUtils.getSalePrice(viewModel.amount)}"
+                android:textColor="@color/sale_price"
+                android:textSize="30px"
+                android:textStyle="bold"
+                android:visibility="@{viewModel.isSucceed?View.VISIBLE:View.GONE}" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="40px" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_pay_result"
+            style="@style/btnStyle"
+            android:layout_gravity="center"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_login_btn"
+            android:elevation="@dimen/elevation_height"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@{StringUtil.getString(viewModel.isSucceed?R.string.pay_succeed_btn_text:R.string.pay_fail_btn_text)}"
+            android:textColor="@color/btnText" />
+
+        <Button
+            android:id="@+id/btn_goHome_"
+            style="@style/btnStyle"
+            android:layout_gravity="center"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_btn_stroke"
+            android:elevation="@dimen/elevation_height"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/pay_btn_go_home"
+            android:textColor="@color/btnText" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <import type="com.puxiang.mall.utils.DateUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxAccount" />
+
+        <variable
+            name="publishTime"
+            type="String" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_user_pic"
+            style="@style/BbsHeadPicStyle"
+            android:layout_marginTop="30px"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:roundAsCircle="true"
+
+            app:url="@{item.userImage}" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/BbsUserNameTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sdv_user_pic"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="5px"
+            android:layout_toRightOf="@+id/sdv_user_pic"
+            android:text="@{item.viewName}" />
+
+        <ImageView
+            android:id="@+id/iv_time_icon"
+            style="@style/BbsTopIconStyle"
+            android:layout_alignLeft="@id/tv_user_name"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_marginTop="10px"
+            android:src="@mipmap/icon_time" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/BbsTopTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_time_icon"
+            android:layout_toRightOf="@+id/iv_time_icon"
+            android:text="@{DateUtils.getPostTime(publishTime)}"
+            android:textColor="@color/user_time" />
+    </RelativeLayout>
+</layout>

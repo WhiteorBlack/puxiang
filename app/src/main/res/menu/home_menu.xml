@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_mall"
+        android:icon="@mipmap/bar_home"
+        android:title="" />
+    <item
+        android:id="@+id/item_classfy"
+        android:icon="@mipmap/bar_sort"
+        android:title="" />
+    <item
+        android:id="@+id/item_circle"
+        android:icon="@mipmap/bar_frends"
+        android:title="" />
+    <item
+        android:id="@+id/item_shop_cart"
+        android:icon="@mipmap/bar_car"
+        android:title="" />
+    <item
+        android:id="@+id/item_mine"
+        android:icon="@mipmap/bar_my"
+        android:title="" />
+
+</menu>

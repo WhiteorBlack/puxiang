@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="transparent">#00000000</color>
+    <!-- 指示器颜色 -->
+    <color name="indicator_color">#7bc351</color>
+    <!-- 提示文字 -->
+    <color name="tipsText">#ef7203</color>
+    <!-- 价格颜色 -->
+    <color name="sale_price">#c8142d</color>
+    <color name="white">@android:color/white</color>
+    <color name="white_alpha">#40FFFFFF</color>
+    <!-- 分割线颜色 -->
+    <color name="line">#cccccc</color>
+    <color name="line_light">#FFF1F1F1</color>
+    <color name="bgSerachBar">#F4F3F3</color>
+    <color name="none_text">#a9afbb</color>
+    <color name="text_black">#2f2f2f</color>
+    <!-- 标题颜色 -->
+    <color name="title_alpha77">#77384258</color>
+    <!-- 标题颜色 -->
+    <color name="title">#384252</color>
+    <!-- 主背景颜色 -->
+    <color name="main_bg">#f2f2f2</color>
+    <!-- 控件背景颜色 -->
+    <color name="view_bg">#FFFFFF</color>
+    <color name="se">#d6dae3</color>
+    <!-- 社区文字颜色 -->
+    <color name="bbsText">#222733</color>
+    <color name="tab_select_color">#ef7203</color>
+    <color name="plateInfoColor">#96a5ad</color>
+    <color name="footTextColor">#9197a6</color>
+    <!-- 原价颜色 -->
+    <color name="price">#999999</color>
+    <!-- 社区文字颜色 -->
+    <color name="userNameText">#65708a</color>
+    <!-- 用户发帖时间-->
+    <color name="user_time">#aeb6c8</color>
+    <color name="video_left_new_bg">#eeeff3</color>
+
+    <color name="theme">#7bc351</color>
+    <color name="theme_bg">#7bc351</color>
+    <color name="Alpha_theme">#771c202c</color>
+    <!-- 提示文字颜色 -->
+    <color name="tipsTitle">#2e0904</color>
+    <!-- 按钮文字颜色 -->
+    <color name="btnText">#4e0900</color>
+    <!--tab 文字选中颜色-->
+    <color name="tab_on_color">#fff</color>
+    <color name="tab_off_color">#244710</color>
+    <color name="comment_text">#0d81ca</color>
+    <color name="bg_indicator_point_normal">#D8D8D8</color>
+    <color name="bg_indicator_point_selected">#A6A6A6</color>
+    <!-- 搜索框背景颜色 -->
+    <color name="searchBg">#eef1f4</color>
+    <color name="bg_horizontal_line_color">#80a3a4a7</color>
+    <color name="bg_horizontal_btn_normal">#fff</color>
+    <color name="bg_horizontal_btn_selected">#70a3a4a7</color>
+    <color name="gray_text">#83868f</color>
+    <!-- 商品ET字体颜色 -->
+    <color name="et_text">#999</color>
+
+    <!-- 灰色 -->
+    <color name="bg_Gray">#CCCCCC</color>
+
+    <!-- 浅灰色 -->
+    <color name="bg_Gray_light">#EEEEEE</color>
+    <!-- 个人中心数字字颜色 -->
+    <color name="personalNumText">#ffb400</color>
+    <!-- 个人中心数字字颜色 -->
+    <color name="personalText">#fff</color>
+
+    <!-- 退货订单颜色-->
+    <color name="refund_order_color">#606a80</color>
+    <color name="searchTextColor">#b5b5b5</color>
+    <color name="bg_go_button">#FFA101</color>
+    <color name="toolbarColor">#FFFFFF</color>
+    <color name="white90">#e6ffffff</color>
+    <color name="white80">#d9ffffff</color>
+    <color name="white70">#ccffffff</color>
+    <color name="white60">#b3ffffff</color>
+    <color name="mall_search_bg">#f4f3f3</color>
+    <color name="popBg">#879B9293</color>
+    <color name="mall_activity">#FFB71E14</color>
+    <color name="mall_title_info">#FF737270</color>
+    <color name="city_pop_item_bg">#FFF1F1F1</color>
+    <color name="shop_detial_indicator">#4c4948</color>
+    <color name="pop_bg_color">#99020202</color>
+</resources>

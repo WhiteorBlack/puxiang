@@ -1,0 +1,80 @@
+package com.puxiang.mall.module.shop.view;
+
+import android.databinding.DataBindingUtil;
+import android.support.v7.widget.LinearLayoutManager;
+import android.widget.LinearLayout;
+
+import com.puxiang.mall.BaseBindActivity;
+import com.puxiang.mall.MyApplication;
+import com.puxiang.mall.R;
+import com.puxiang.mall.databinding.ActivityShopBinding;
+import com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel;
+import com.puxiang.mall.module.shop.adapter.ShopListAdapter;
+import com.puxiang.mall.module.shop.viewModel.ShopHeadViewModel;
+import com.puxiang.mall.module.shop.viewModel.ShopViewModel;
+import com.puxiang.mall.utils.RecycleViewUtils;
+
+/**
+ * Created by zhaoyong bai on 2017/10/12.
+ * 精选商家列表页面
+ */
+
+public class ShopListActivity extends BaseBindActivity {
+    private ActivityShopBinding shopBinding;
+    private ShopViewModel shopViewModel;
+    private ShopHeadViewModel shopHeadViewModel;
+    private MsgCountViewModel msgCountViewModel;
+    private ShopListAdapter shopListAdapter;
+
+    @Override
+    protected void initBind() {
+        shopBinding=DataBindingUtil.setContentView(this,R.layout.activity_shop);
+        shopListAdapter = new ShopListAdapter(R.layout.item_shop);
+        shopViewModel = new ShopViewModel(this, shopListAdapter);
+        shopHeadViewModel = new ShopHeadViewModel(this);
+        msgCountViewModel = new MsgCountViewModel(this);
+
+        shopBinding.setHeadModel(shopHeadViewModel);
+        shopBinding.setViewModel(shopViewModel);
+        shopBinding.setMsgModel(msgCountViewModel);
+
+    }
+
+    @Override
+    public void initView() {
+        shopListAdapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());
+        shopListAdapter.setEnableLoadMore(true);
+        shopListAdapter.setOnLoadMoreListener(() -> shopViewModel.loadMore(), shopBinding.bottomView);
+        shopBinding.bottomView.setLayoutManager(new LinearLayoutManager(this));
+        shopBinding.bottomView.setAdapter(shopListAdapter);
+        shopBinding.bottomView.addOnItemTouchListener(shopViewModel.onItemTouchListener());
+        initBanner(shopBinding.banner);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) shopBinding.banner.getLayoutParams();
+        params.height = MyApplication.widthPixels / 2;
+        shopBinding.banner.setLayoutParams(params);
+        shopBinding.banner.setAdapter(shopHeadViewModel);
+
+        refreshData();
+    }
+
+
+    @Override
+    public void refreshData() {
+        super.refreshData();
+        shopHeadViewModel.getBannerData();
+        shopViewModel.getShopList(1, "", "", "");
+        msgCountViewModel.getMsgCountData();
+    }
+
+    @Override
+    protected void viewModelDestroy() {
+        if (shopViewModel != null) {
+            shopViewModel.destroy();
+        }
+        if (shopHeadViewModel != null) {
+            shopHeadViewModel.destroy();
+        }
+        if (msgCountViewModel != null) msgCountViewModel.destroy();
+    }
+}

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.personal.viewmodel.PersonalViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/abl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/ctl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/Alpha_theme"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed"
+                app:scrimAnimationDuration="100"
+                app:statusBarScrim="@color/Alpha_theme"
+                app:theme="@style/ToolbarTheme">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="none">
+                    <!--app:layout_collapseParallaxMultiplier="0.6"-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="450px">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/sdv_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:actualImageScaleType="fitXY"
+
+                            app:url="@{viewModel.bgUrl}" />
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/sdv_user_pic"
+                            android:layout_width="130px"
+                            android:layout_height="130px"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="45px"
+                            android:layout_marginTop="@dimen/PersonalMarginTop"
+                            android:onClick="onClick"
+                            android:scaleType="fitXY"
+                            app:placeholderImage="@mipmap/ic_launcher"
+                            app:placeholderImageScaleType="centerInside"
+                            app:roundAsCircle="true"
+                            app:url="@{viewModel.userBean.account.userImage}" />
+
+
+                        <ImageView
+                            android:id="@+id/v_attention"
+                            android:layout_width="60px"
+                            android:layout_height="68px"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignTop="@+id/sdv_user_pic"
+                            android:layout_marginRight="@dimen/sideMargin"
+                            android:layout_marginTop="26px"
+                            android:background="@{AppUtil.getDrawable(viewModel.isAttention?R.mipmap.follow_on:R.mipmap.follow_off)}"
+                            android:onClick="onClick"
+                            android:visibility="@{viewModel.userBean.isOwner?View.GONE:View.VISIBLE}" />
+
+                        <View
+                            android:id="@+id/v_chat"
+                            android:layout_width="60px"
+                            android:layout_height="68px"
+                            android:layout_alignTop="@+id/v_attention"
+                            android:layout_marginRight="10px"
+                            android:layout_toLeftOf="@+id/v_attention"
+                            android:background="@mipmap/chat"
+                            android:onClick="onClick"
+                            android:visibility="@{viewModel.userBean.isOwner?View.GONE:View.VISIBLE}" />
+
+                        <TextView
+                            android:id="@+id/tv_plate_title"
+                            style="@style/text_shadow"
+                            android:layout_width="350px"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/sdv_user_pic"
+                            android:layout_marginLeft="35px"
+                            android:layout_marginTop="44px"
+                            android:layout_toRightOf="@+id/sdv_user_pic"
+                            android:singleLine="true"
+                            android:text="@{viewModel.userBean.account.viewName}"
+                            android:textSize="30px" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80px"
+                            android:layout_alignParentBottom="true"
+                            android:divider="@drawable/divider"
+                            android:orientation="horizontal"
+                            android:showDividers="middle">
+
+                            <LinearLayout
+                                android:id="@+id/ll_plate"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:onClick="onClick"
+                                android:orientation="vertical"
+                                android:paddingBottom="10px">
+
+                                <TextView
+                                    android:id="@+id/tv_plate_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5px"
+                                    android:text="@{viewModel.userBean.plateNum}"
+                                    android:textColor="@color/personalNumText"
+                                    android:textSize="26px" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="圈子"
+                                    android:textColor="@color/personalText"
+                                    android:textSize="24px" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/ll_attention"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:onClick="onClick"
+                                android:orientation="vertical"
+                                android:paddingBottom="10px">
+
+                                <TextView
+                                    android:id="@+id/tv_attention_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5px"
+                                    android:text="@{viewModel.userBean.attentNum}"
+                                    android:textColor="@color/personalNumText"
+                                    android:textSize="26px" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="关注"
+                                    android:textColor="@color/personalText"
+                                    android:textSize="24px" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/ll_fans"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:onClick="onClick"
+                                android:orientation="vertical"
+                                android:paddingBottom="10px">
+
+                                <TextView
+                                    android:id="@+id/tv_fans_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5px"
+                                    android:text="@{viewModel.userBean.fansNum}"
+                                    android:textColor="@color/personalNumText"
+                                    android:textSize="26px" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="粉丝"
+                                    android:textColor="@color/personalText"
+                                    android:textSize="24px" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/mobile_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolBarSize"
+                    android:layout_marginTop="45px"
+                    app:layout_collapseMode="pin"
+                    app:theme="@style/ToolbarTheme" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <com.shizhefei.view.indicator.FixedIndicatorView
+                android:id="@+id/fiv_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolBarSize"
+                android:background="@color/view_bg"
+                android:elevation="@dimen/elevation_height" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/view_bg"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.R"/>
+
+        <import type="com.puxiang.mall.utils.MyTextUtils"/>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils"/>
+
+        <import type="com.puxiang.mall.utils.AppUtil"/>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.ShopCartData"/>
+
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/recycler_bg"
+                    android:paddingLeft="@dimen/sideMargin"
+                    android:paddingRight="@dimen/sideMargin">
+
+        <CheckBox
+            android:id="@+id/iv_item_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/shop_select"
+            android:checked="@{item.cartProduct.isSelect}"
+            android:layout_centerVertical="true"
+            />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_item_pic"
+            android:layout_width="160px"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="45px"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="40px"
+            android:layout_toRightOf="@+id/iv_item_box"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:viewAspectRatio="1"
+            app:url="@{item.cartProduct.mainPictureUrl}"/>
+
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            style="@style/titleTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:textSize="30px"
+            android:layout_toRightOf="@+id/sdv_item_pic"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="@{item.cartProduct.productName}"/>
+
+        <TextView
+            android:id="@+id/tv_skuAttr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_item_name"
+            android:layout_below="@id/tv_item_name"
+            android:layout_marginTop="5px"
+            android:text="@{item.cartProduct.skuAttr}"
+            android:textColor="#a4adc1"
+            android:textSize="22px"/>
+
+        <TextView
+            android:id="@+id/tv_item_salePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_item_name"
+            android:layout_below="@+id/tv_skuAttr"
+            android:layout_marginBottom="8px"
+            android:layout_marginTop="5px"
+            android:text="@{MyTextUtils.getSalePrice(item.cartProduct.salePrice)}"
+            android:textColor="@color/sale_price"
+            android:textSize="32px"/>
+
+        <TextView
+            android:id="@+id/tv_item_reduce"
+            style="@style/modifiedBtn"
+            android:layout_below="@+id/tv_item_salePrice"
+            android:layout_toRightOf="@+id/sdv_item_pic"
+            android:background="@drawable/select_add"
+            android:gravity="center"
+            android:textSize="30px"
+            android:text="—"
+            android:textColor="#666"/>
+
+        <TextView
+            android:id="@+id/tv_item_num"
+            android:layout_width="90px"
+            android:layout_height="55px"
+            android:layout_alignTop="@+id/tv_item_reduce"
+            android:layout_marginLeft="-1px"
+            android:layout_marginRight="-1px"
+            android:layout_toRightOf="@+id/tv_item_reduce"
+            android:background="@drawable/zhijiao"
+            android:gravity="center"
+            android:text="@{String.valueOf(item.cartProduct.buyQtyObser)}"
+            android:textColor="#333333"
+            android:textSize="25px"/>
+
+        <TextView
+            android:id="@+id/tv_item_add"
+            style="@style/modifiedBtn"
+            android:layout_alignTop="@+id/tv_item_num"
+            android:layout_toRightOf="@+id/tv_item_num"
+            android:background="@drawable/select_add"
+            android:gravity="center"
+            android:text="+"
+            android:textSize="30px"
+            android:textColor="#666"/>
+
+
+        <ImageView
+            android:id="@+id/iv_item_close"
+            android:layout_width="60px"
+            android:layout_height="70px"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/tv_item_name"
+            android:layout_alignTop="@+id/tv_item_add"
+            android:scaleType="centerInside"
+            android:src="@mipmap/shop_cancel"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/iv_item_close"
+            android:background="#ebebeb"/>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loading_view"
+    android:layout_width="match_parent"
+    android:layout_height="80px"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <com.puxiang.mall.widget.LoadMoreFooter
+        android:id="@+id/pb"
+        android:layout_width="70px"
+        android:layout_height="70px"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:background="@mipmap/icon_loading" />
+
+    <TextView
+        android:id="@+id/tv_loading"
+        style="@style/noneTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:gravity="center"
+        android:text="加载更多数据中" />
+
+    <TextView
+        android:id="@+id/tv_load_fail"
+        style="@style/noneTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:gravity="center"
+        android:text="数据加载失败"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/tv_load_end"
+        style="@style/noneTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:background="@mipmap/bottom_line"
+        android:gravity="center"
+        android:visibility="gone" />
+
+</LinearLayout>

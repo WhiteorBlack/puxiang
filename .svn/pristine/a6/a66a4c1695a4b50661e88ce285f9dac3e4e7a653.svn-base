@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.R"/>
+        <import type="com.puxiang.mall.utils.AppUtil"/>
+
+        <variable
+            name="headModel"
+            type="com.puxiang.mall.module.shop.viewModel.ShopHeadViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.shop.viewModel.ShopViewModel" />
+
+        <variable
+            name="msgModel"
+            type="com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_shop"
+            bind:msgModel="@{msgModel}"
+            bind:selectModel="@{headModel}"
+            bind:viewModel="@{viewModel}" />
+
+        <com.puxiang.mall.widget.StickyNavLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/topview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.puxiang.mall.widget.MyBanner
+                        android:id="@+id/banner"
+                        style="@style/BannerDefaultStyle"
+                        app:banner_indicatorGravity="bottom|left"
+                        app:banner_transitionEffect="alpha"
+                        bind:bannerShop="@{headModel.bannerList}" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="55px"
+                        android:layout_alignBottom="@id/banner"
+                        android:background="@color/white"
+                        android:paddingLeft="290px"
+                        android:paddingTop="5px"
+                        android:text="搜索"
+                        android:textColor="@color/mall_title_info"
+                        android:textSize="20px" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="70px"
+                    android:layout_alignBottom="@+id/ll_parent"
+                    android:background="@mipmap/title_bg_blue">
+
+                    <FrameLayout
+                        android:layout_width="250px"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/iv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/best_shop" />
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fl_title"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ll_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="@{viewModel.isTopVisible?View.GONE:View.VISIBLE}">
+
+                        <TextView
+                            android:id="@+id/tv_city"
+                            android:layout_width="150px"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="53px"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical|right"
+                            android:maxEms="4"
+                            android:onClick="@{headModel.headClick}"
+                            android:singleLine="true"
+                            android:text="@{viewModel.cityText}"
+                            android:textColor="@{AppUtil.getColor(!headModel.isCityOpen?R.color.bbsText:R.color.mall_activity)}"
+                            android:textSize="32px" />
+
+                        <CheckBox
+                            android:id="@+id/iv_city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10px"
+                            android:button="@drawable/select_arrow"
+                            android:checked="@{headModel.isCityOpen}"
+                            android:clickable="false" />
+
+
+                        <TextView
+                            android:id="@+id/tv_order"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="80px"
+                            android:gravity="center"
+                            android:onClick="@{headModel.headClick}"
+                            android:text="智能排序"
+                            android:textColor="@{AppUtil.getColor(!headModel.isOrderOpen?R.color.bbsText:R.color.mall_activity)}"
+                            android:textSize="32px" />
+
+                        <CheckBox
+                            android:id="@+id/iv_order"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10px"
+                            android:button="@drawable/select_arrow"
+                            android:checked="@{headModel.isOrderOpen}"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60px"
+                        android:layout_below="@+id/ll_indicator"
+                        android:visibility="@{viewModel.isTopVisible?View.GONE:View.VISIBLE}">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2px"
+                            android:layout_gravity="top"
+                            android:background="@color/line" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2px"
+                            android:layout_gravity="bottom"
+                            android:background="@color/line" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="73px"
+                            android:text="@{`当前：`}"
+                            android:textSize="32px" />
+
+                        <ImageView
+                            android:id="@+id/iv_refresh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="30px"
+                            android:background="@mipmap/icon_refresh"
+                            android:onClick="@{headModel.headClick}" />
+                    </FrameLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/bottom_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}" />
+        </com.puxiang.mall.widget.StickyNavLayout>
+    </LinearLayout>
+</layout>

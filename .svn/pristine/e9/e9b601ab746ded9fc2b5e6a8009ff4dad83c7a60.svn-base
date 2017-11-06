@@ -1,0 +1,51 @@
+package com.puxiang.mall.module.shop.viewModel;
+
+import android.app.Activity;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+
+import com.puxiang.mall.mvvm.base.ViewModel;
+
+/**
+ * Created by zhaoyong bai on 2017/10/12.
+ */
+
+public class ShopViewModel  extends BaseObservable implements ViewModel {
+
+    private Activity activity;
+    public ObservableField<String> searchText=new ObservableField<>("请输入商户名、地点");
+    private ObservableBoolean isTopVisible=new ObservableBoolean(false);
+
+
+    public ShopViewModel(Activity activity){
+        this.activity=activity;
+    }
+
+    public boolean getIsTopVisible() {
+        return isTopVisible.get();
+    }
+
+    public void setIsTopVisible(boolean isTopVisible) {
+        this.isTopVisible.set(isTopVisible);
+    }
+
+    @Bindable
+    public String getSearchText() {
+        return searchText.get();
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText.set(searchText);
+    }
+
+    public void loadMore(){
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}

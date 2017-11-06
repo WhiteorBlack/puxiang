@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="explain"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <TextView
+            android:id="@+id/tv_version_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30px"
+            android:paddingLeft="@dimen/sideMargin"
+            android:paddingRight="@dimen/sideMargin"
+            android:paddingTop="30px"
+            android:text="@{explain}"
+            android:textColor="@color/title"
+            android:textSize="28px" />
+
+    </LinearLayout>
+</layout>

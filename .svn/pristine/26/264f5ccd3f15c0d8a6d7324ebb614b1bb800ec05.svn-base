@@ -1,0 +1,42 @@
+package com.puxiang.mall.widget.dialog;
+
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+
+import com.puxiang.mall.model.data.RxCatalog;
+import com.puxiang.mall.model.data.RxProduct;
+import com.puxiang.mall.module.classify.adapter.ProductClassifyLeftAdapter;
+import com.puxiang.mall.mvvm.base.ViewModel;
+import com.puxiang.mall.widget.verticaltablayout.VTabLayout;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by zhaoyong bai on 2017/10/13.
+ */
+
+public class CityViewModel extends BaseObservable implements ViewModel {
+
+    private List<RxCatalog> catalogList = new ArrayList<>();
+    private Map<String, List<RxProduct>> sa = new HashMap<>();
+
+    @BindingAdapter("catalogData")
+    public static void setCatalogData(VTabLayout vtl, List<RxCatalog> list) {
+        if (!list.isEmpty()) {
+            vtl.setTabAdapter(new ProductClassifyLeftAdapter(list));
+        }
+    }
+
+    @Bindable
+    public List<RxCatalog> getCatalogList() {
+        return this.catalogList;
+    }
+    @Override
+    public void destroy() {
+
+    }
+}

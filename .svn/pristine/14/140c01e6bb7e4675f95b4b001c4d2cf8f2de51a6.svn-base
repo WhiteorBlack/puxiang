@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isInit"
+            type="boolean" />
+
+        <variable
+            name="isInitData"
+            type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:orientation="vertical"
+        android:visibility="@{!isInit?View.GONE:isInitData?View.GONE:View.VISIBLE}">
+
+
+        <TextView
+            android:id="@+id/tv_none"
+            style="@style/noneTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25px"
+            android:gravity="center"
+            android:text="点击屏幕，重新加载" />
+
+    </LinearLayout>
+</layout>

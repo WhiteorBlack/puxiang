@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.userinfo.viewmodel.ForgetActivityViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/drag_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sideMarginTop"
+            android:background="@drawable/shadow"
+            android:elevation="@dimen/elevation_height"
+            android:paddingBottom="30px">
+
+            <TextView
+                android:id="@+id/tv_accounts"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="手机号码：" />
+
+            <EditText
+                android:id="@+id/et_accounts"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_accounts"
+                android:hint="请输入注册手机号码"
+                android:inputType="number"
+                android:maxLength="11" />
+
+            <View
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_accounts" />
+
+            <TextView
+                android:id="@+id/tv_sms_code"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_accounts"
+                android:layout_marginBottom="0px"
+                android:gravity="center"
+                android:text="验  证  码：" />
+
+            <EditText
+                android:id="@+id/et_code"
+                style="@style/ETMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/et_accounts"
+                android:layout_below="@+id/tv_accounts"
+                android:layout_toLeftOf="@+id/cb_sms"
+                android:hint="请输入验证码"
+                android:inputType="text" />
+
+            <CheckBox
+                android:id="@+id/cb_sms"
+                style="@style/SmsCodeStyle"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_accounts"
+                android:checked="@{viewModel.isCounting}"
+                android:clickable="false"
+                android:enabled="@{!viewModel.isCounting}"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="@{viewModel.msg}" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sideMarginTop"
+            android:background="@drawable/shadow"
+            android:elevation="@dimen/elevation_height"
+            android:paddingBottom="30px">
+
+            <TextView
+                android:id="@+id/tv_new_password"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="新  密  码：" />
+
+            <EditText
+                android:id="@+id/et_new_password"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/et_new_password2"
+                android:layout_toRightOf="@+id/tv_new_password"
+                android:hint="请输入新密码"
+                android:inputType="textPassword" />
+
+            <View
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_new_password" />
+
+            <TextView
+                android:id="@+id/tv_new_password2"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_new_password"
+                android:layout_marginBottom="0px"
+                android:gravity="center"
+                android:text="确认密码：" />
+
+            <EditText
+                android:id="@+id/et_new_password2"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_new_password"
+                android:layout_toRightOf="@+id/tv_new_password2"
+                android:background="@null"
+                android:hint="请输入新密码"
+                android:inputType="textPassword" />
+        </RelativeLayout>
+
+
+        <FrameLayout
+            android:id="@+id/fl_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50px">
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="@style/btnStyle"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.isShowBar?View.VISIBLE:View.GONE}" />
+
+            <Button
+                android:id="@+id/btn_save"
+                style="@style/btnStyle"
+                android:background="@drawable/bg_login_btn"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="保存"
+              />
+        </FrameLayout>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</layout>

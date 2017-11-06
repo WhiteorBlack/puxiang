@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100px"
+    android:background="@color/theme"
+    >
+
+    <View
+        style="@style/HomeTypeLienViewStyle"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/sideMargin"
+        android:layout_marginRight="40px"
+        android:layout_toLeftOf="@+id/iv_icon_0" />
+
+    <ImageView
+        android:id="@+id/iv_icon_0"
+        style="@style/HomeTypeIconStyle"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20px"
+        android:layout_toLeftOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/HomeTypeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="最新推荐" />
+
+    <ImageView
+        android:id="@+id/iv_icon_1"
+        style="@style/HomeTypeIconStyle"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20px"
+        android:layout_toRightOf="@+id/tv_title" />
+
+    <View
+        style="@style/HomeTypeLienViewStyle"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="@dimen/sideMargin"
+        android:layout_toRightOf="@+id/iv_icon_1" />
+
+</RelativeLayout>

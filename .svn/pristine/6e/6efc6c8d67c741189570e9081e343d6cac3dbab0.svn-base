@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.mall.viewmodel.MallHeadViewModel" />
+
+        <variable
+            name="classModel"
+            type="com.puxiang.mall.module.mall.viewmodel.MallClassViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.puxiang.mall.widget.MyBanner
+                android:id="@+id/banner"
+                style="@style/BannerDefaultStyle"
+                app:banner_indicatorGravity="bottom|left"
+                app:banner_transitionEffect="alpha"
+                bind:banner="@{viewModel.banner}" />
+
+        </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_classes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20px"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="90px"
+                android:layout_height="90px"
+                android:layout_marginLeft="50px"
+                android:background="@mipmap/hot_comment" />
+
+            <ImageView
+                android:layout_width="4px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20px"
+                android:background="@color/mall_activity" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20px">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_hot_comment"
+                        android:paddingBottom="5px"
+                        android:paddingLeft="10px"
+                        android:paddingRight="10px"
+                        android:paddingTop="5px"
+                        android:text="热评"
+                        android:textColor="@color/sale_price"
+                        android:textSize="20px" />
+
+                    <TextView
+                        android:id="@+id/txt_hot_comment_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20px"
+                        android:layout_marginRight="20px"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textSize="20px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_hot_comment"
+                        android:paddingBottom="5px"
+                        android:paddingLeft="10px"
+                        android:paddingRight="10px"
+                        android:paddingTop="5px"
+                        android:text="热评"
+                        android:textColor="@color/sale_price"
+                        android:textSize="20px" />
+
+                    <TextView
+                        android:id="@+id/txt_hot_comment_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20px"
+                        android:layout_marginRight="20px"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textSize="20px" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20px"
+            android:layout_marginTop="30px"
+            android:background="@color/bg_Gray_light" />
+    </LinearLayout>
+</layout>

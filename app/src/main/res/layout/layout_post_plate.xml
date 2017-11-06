@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils"/>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxPlate"/>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rl_plate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/recycler_bg">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_bbs_pic"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_marginBottom="32px"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="32px"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:roundAsCircle="true"
+            app:url="@{item.platePic}"/>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:layout_below="@+id/sdv_bbs_pic"
+            android:background="#ebebeb"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/BbsCircleTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:layout_toRightOf="@+id/sdv_bbs_pic"
+            android:text="@{item.plateName}"/>
+
+
+        <TextView
+            android:id="@+id/tv_attention_hint"
+            style="@style/BbsCircleFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_bbs_pic"
+            android:layout_alignLeft="@+id/tv_title"
+            android:text="关注"/>
+
+        <TextView
+            android:id="@+id/tv_attention_num"
+            style="@style/BbsCircleFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_bbs_pic"
+            android:layout_marginLeft="10px"
+            android:layout_toRightOf="@+id/tv_attention_hint"
+            android:text="@{String.valueOf(item.attentionQty)}"/>
+
+        <TextView
+            android:id="@+id/tv_post_hint"
+            style="@style/BbsCircleFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_bbs_pic"
+            android:layout_marginLeft="50px"
+            android:layout_toRightOf="@+id/tv_attention_num"
+            android:text="帖子"/>
+
+        <TextView
+            android:id="@+id/tv_post_num"
+            style="@style/BbsCircleFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_bbs_pic"
+            android:layout_marginLeft="10px"
+            android:layout_toRightOf="@+id/tv_post_hint"
+            android:text="@{String.valueOf(item.postQty)}"/>
+
+        <TextView
+            android:id="@+id/cb_attention"
+            style="@style/BbsAttentionStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:text="去圈子"/>
+
+    </RelativeLayout>
+</layout>

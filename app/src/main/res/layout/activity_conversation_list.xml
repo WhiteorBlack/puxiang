@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.im.viewmodel.ImListViewModel"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/view_bg"
+            android:elevation="@dimen/elevation_height"
+            android:onClick="onClick"
+            android:paddingBottom="@dimen/sideMargin"
+            android:paddingLeft="@dimen/sideMargin"
+            android:paddingRight="@dimen/sideMargin"
+            android:visibility="@{viewModel.noticeMessage==null?View.GONE:View.VISIBLE}"
+            >
+
+            <ImageView
+                android:id="@+id/iv_notice_msg"
+                android:layout_width="86px"
+                android:layout_height="86px"
+                android:layout_marginRight="@dimen/sideMargin"
+                android:layout_marginTop="@dimen/sideMargin"
+                android:src="@mipmap/message"
+                />
+
+            <View
+                android:id="@+id/v_notice_point"
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_marginLeft="75px"
+                android:layout_marginTop="18px"
+                android:background="@drawable/point_red"
+                android:visibility="@{viewModel.noticeMessage.unreadCount>0?View.VISIBLE:View.INVISIBLE}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/iv_notice_msg"
+                android:layout_toRightOf="@+id/iv_notice_msg"
+                android:text="通知公告"
+                android:textColor="#000"
+                android:textSize="32px"
+                />
+
+            <TextView
+                android:id="@+id/tv_notice_msg_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/iv_notice_msg"
+                android:text="@{viewModel.systemMessage.newestMessage.messagePublishTime}"
+                android:textColor="@color/et_text"
+                android:textSize="26px"
+                />
+
+            <TextView
+                android:id="@+id/tv_notice_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/iv_notice_msg"
+                android:layout_toRightOf="@+id/iv_notice_msg"
+                android:maxWidth="400px"
+                android:singleLine="true"
+                android:text="@{viewModel.noticeMessage.newestMessage.messageContent}"
+                android:textColor="@color/et_text"
+                android:textSize="26px"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ebebeb"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_system"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/view_bg"
+            android:elevation="@dimen/elevation_height"
+            android:onClick="onClick"
+            android:paddingBottom="@dimen/sideMargin"
+            android:paddingLeft="@dimen/sideMargin"
+            android:paddingRight="@dimen/sideMargin"
+            android:visibility="@{viewModel.systemMessage==null?View.GONE:View.VISIBLE}"
+            >
+
+            <ImageView
+                android:id="@+id/iv_system_msg"
+                android:layout_width="86px"
+                android:layout_height="86px"
+                android:layout_marginRight="@dimen/sideMargin"
+                android:layout_marginTop="@dimen/sideMargin"
+                android:src="@mipmap/voice"
+                />
+
+            <View
+                android:id="@+id/v_system_point"
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_marginLeft="75px"
+                android:layout_marginTop="18px"
+                android:background="@drawable/point_red"
+                android:visibility="@{viewModel.systemMessage.unreadCount>0?View.VISIBLE:View.INVISIBLE}"/>
+
+            <TextView
+                style="@style/titleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/iv_system_msg"
+                android:layout_toRightOf="@+id/iv_system_msg"
+                android:text="系统消息"
+                android:textColor="#000"
+                android:textSize="32px"
+                />
+
+            <TextView
+                android:id="@+id/tv_system_msg_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/iv_system_msg"
+                android:text="@{viewModel.systemMessage.newestMessage.messagePublishTime}"
+                android:textColor="@color/et_text"
+                android:textSize="26px"
+                />
+
+            <TextView
+                android:id="@+id/tv_system_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/iv_system_msg"
+                android:layout_toRightOf="@+id/iv_system_msg"
+                android:maxWidth="400px"
+                android:singleLine="true"
+                android:text="@{viewModel.systemMessage.newestMessage.messageContent}"
+                android:textColor="@color/et_text"
+                android:textSize="26px"
+                />
+
+        </RelativeLayout>
+
+
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1px"-->
+        <!--android:background="#ebebeb"/>-->
+
+        <fragment
+            android:id="@+id/conversationlist"
+            android:name="io.rong.imkit.fragment.ConversationListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/sideMargin"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</layout>

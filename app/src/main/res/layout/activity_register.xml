@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.StringUtil" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.login.viewmodel.RegisterViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42px"
+            android:layout_marginRight="42px"
+            android:layout_marginTop="180px"
+            android:elevation="@dimen/elevation_height">
+
+            <ImageView
+                android:id="@+id/tv_account"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/icon_account" />
+
+            <EditText
+                android:id="@+id/et_account"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_account"
+                android:background="@null"
+                android:hint="请输入手机号"
+                android:inputType="number"
+                android:maxLength="11"
+                android:text="@={viewModel.account}"
+                android:textColorHint="@color/se" />
+
+            <ImageView
+                android:id="@+id/iv_account_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_accounts"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="50px"
+                android:background="@mipmap/icon_cancel"
+                android:onClick="@{viewModel.onClick}"
+                android:visibility="@{StringUtil.isEmpty(viewModel.account)?View.INVISIBLE:View.VISIBLE}" />
+
+            <View
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_account"
+                android:background="#cecece" />
+
+            <ImageView
+                android:id="@+id/tv_sms_code"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_account"
+                android:background="@mipmap/icon_veificat" />
+
+            <EditText
+                android:id="@+id/et_code"
+                style="@style/ETMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/et_account"
+                android:layout_below="@+id/tv_account"
+                android:layout_marginRight="70px"
+                android:layout_toLeftOf="@+id/cb_sms"
+                android:background="@null"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:text="@={viewModel.smsCode}"
+                android:textColorHint="@color/se" />
+
+            <CheckBox
+                android:id="@+id/cb_sms"
+                style="@style/SmsCodeStyle"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_account"
+                android:checked="@{viewModel.isCounting}"
+                android:clickable="false"
+                android:enabled="@{!viewModel.isCounting}"
+                android:gravity="center"
+                android:onClick="@{viewModel.onClick}"
+                android:text="@{viewModel.msg}" />
+
+            <ImageView
+                android:id="@+id/iv_code_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_account"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="50px"
+                android:layout_toLeftOf="@+id/cb_sms"
+                android:background="@mipmap/icon_cancel"
+                android:onClick="@{viewModel.onClick}"
+                android:visibility="@{StringUtil.isEmpty(viewModel.smsCode)?View.INVISIBLE:View.VISIBLE}" />
+
+            <View
+                android:id="@+id/v2"
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_sms_code"
+                android:background="#cecece" />
+
+            <ImageView
+                android:id="@+id/tv_password"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v2"
+                android:background="@mipmap/icon_pass" />
+
+            <EditText
+                android:id="@+id/et_password"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/et_code"
+                android:layout_below="@id/v2"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password1}"
+                android:textColorHint="@color/se" />
+
+
+            <CheckBox
+                android:id="@+id/chb_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/v2"
+                android:layout_marginTop="40px"
+                android:button="@drawable/chb_password"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/iv_pwd_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v2"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="50px"
+                android:layout_toLeftOf="@+id/chb_pass"
+                android:background="@mipmap/icon_cancel"
+                android:onClick="@{viewModel.onClick}"
+                android:visibility="@{StringUtil.isEmpty(viewModel.password1)?View.INVISIBLE:View.VISIBLE}" />
+
+            <View
+                android:id="@+id/v3"
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_password"
+                android:background="#cecece" />
+
+            <ImageView
+                android:id="@+id/tv_password2"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v3"
+                android:layout_marginBottom="0px"
+                android:background="@mipmap/icon_pass" />
+
+            <EditText
+                android:id="@+id/et_password2"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/et_code"
+                android:layout_below="@+id/v3"
+                android:background="@null"
+                android:hint="请确认密码"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password2}"
+                android:textColorHint="@color/se" />
+
+            <CheckBox
+                android:id="@+id/chb_pass_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/v3"
+                android:layout_marginTop="40px"
+                android:button="@drawable/chb_password"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/iv_pwd2_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v3"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="50px"
+                android:layout_toLeftOf="@+id/chb_pass_two"
+                android:background="@mipmap/icon_cancel"
+                android:onClick="@{viewModel.onClick}"
+                android:visibility="@{StringUtil.isEmpty(viewModel.password2)?View.INVISIBLE:View.VISIBLE}" />
+
+            <View
+                android:id="@+id/v4"
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/et_password2"
+                android:layout_marginTop="30px"
+                android:background="#cecece" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_marginTop="40px"
+            android:gravity="center_vertical">
+
+
+            <CheckBox
+                android:id="@+id/cb_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_v3"
+                android:layout_marginLeft="50px"
+                android:button="@drawable/chb_login"
+                android:checked="@={viewModel.isChecked}"
+                android:gravity="center_vertical"
+                android:text="  我已看过并接受"
+                android:textColor="#999999"
+                android:textSize="22px" />
+
+            <TextView
+                android:id="@+id/tv_agreement"
+                style="@style/titleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{viewModel.onClick}"
+                android:text="用户协议"
+                android:textColor="#1a6fd3"
+                android:textSize="22px" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="80px">
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="@style/btnStyle"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.isShowBar?View.VISIBLE:View.GONE}" />
+
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/btnStyle"
+                android:background="@drawable/bg_login_btn"
+                android:gravity="center"
+                android:onClick="@{viewModel.onClick}"
+                android:text="注册" />
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

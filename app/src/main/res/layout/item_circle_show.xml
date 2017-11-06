@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20px"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin"
+        android:paddingTop="30px">
+
+        <TextView
+            android:id="@+id/tv_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15px"
+            android:background="@color/sale_price"
+            android:paddingLeft="4px"
+            android:paddingRight="4px"
+            android:paddingTop="2px"
+            android:paddingBottom="2px"
+            android:text="置顶"
+            android:textColor="@color/white"
+            android:textSize="24px"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/BbsContentTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_top"
+            android:singleLine="true"
+            android:text="立体声"
+            android:textSize="30px"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/BbsContentTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="10px"
+            android:text="电脑游戏耳机耳麦带线控立体声硕美科头戴式电脑游戏耳机耳麦带线控立体声" />
+
+        <FrameLayout
+            android:id="@+id/fl_sdvs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/ll_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36px"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <include
+                    android:id="@+id/show_item_img0"
+                    layout="@layout/item_show_img" />
+
+                <include
+                    android:id="@+id/show_item_img1"
+                    layout="@layout/item_show_img"
+                    android:layout_width="195px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="10px"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/show_item_img2"
+                    layout="@layout/item_show_img" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bbs_picNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="36px"
+                android:background="#99000000"
+                android:paddingBottom="2px"
+                android:paddingLeft="5px"
+                android:paddingRight="5px"
+                android:paddingTop="2px"
+                android:text="共4张"
+                android:textColor="#fff"
+                android:textSize="22px"
+                android:visibility="gone" />
+
+            <com.facebook.drawee.view.SimpleDraweeView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/show_item_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36px"
+                android:visibility="gone"
+                app:actualImageScaleType="focusCrop"
+                app:placeholderImage="@mipmap/ic_launcher"
+                app:placeholderImageScaleType="centerInside" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_time_icon"
+            style="@style/BbsTopIconStyle"
+            android:layout_alignLeft="@id/tv_user_name"
+            android:layout_below="@+id/fl_sdvs"
+            android:layout_marginTop="40px"
+            android:src="@mipmap/icon_time" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/BbsTopTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_time_icon"
+            android:layout_toRightOf="@+id/iv_time_icon"
+            android:text="1天前" />
+
+        <TextView
+            android:id="@+id/tv_like_num"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_from_hint"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/fl_sdvs"
+            android:layout_marginTop="36px"
+            android:text="13" />
+
+        <CheckBox
+            android:id="@+id/cb_like_icon"
+            style="@style/BbsFootIconStyle"
+            android:layout_alignBottom="@+id/tv_like_num"
+            android:layout_toLeftOf="@+id/tv_like_num"
+            android:background="@drawable/select_like"
+            android:button="@null" />
+
+        <TextView
+            android:id="@+id/tv_seeNum"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_like_num"
+            android:layout_marginRight="50px"
+            android:layout_toLeftOf="@+id/cb_like_icon"
+            android:text="12" />
+
+        <ImageView
+            android:id="@+id/iv_see_icon"
+            style="@style/BbsFootIconStyle"
+            android:layout_alignBottom="@+id/tv_seeNum"
+            android:layout_toLeftOf="@+id/tv_seeNum"
+            android:src="@mipmap/officail_eye" />
+
+        <TextView
+            android:id="@+id/tv_from"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_like_num"
+            android:layout_marginBottom="3.5px"
+            android:layout_marginRight="50px"
+            android:layout_toLeftOf="@+id/iv_see_icon"
+            android:text="英雄联盟"
+            android:textColor="@color/sale_price"
+            android:textSize="18px" />
+
+        <ImageView
+            android:id="@+id/iv_from_icon"
+            style="@style/BbsFootIconStyle"
+            android:layout_alignBottom="@+id/tv_like_num"
+            android:layout_toLeftOf="@+id/tv_from"
+            android:src="@mipmap/icon_label" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_bbs_foot" />
+</LinearLayout>

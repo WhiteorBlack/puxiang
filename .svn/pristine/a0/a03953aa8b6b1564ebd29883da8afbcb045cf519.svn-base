@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="com.puxiang.mall.MyApplication" />
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.circle.viewmodel.CirclePageViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolBarSizeHeight"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin">
+
+        <com.shizhefei.view.indicator.FixedIndicatorView
+            android:id="@+id/siv_indicator"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolBarSize"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_weight="6"
+            android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}"
+            bind:showIn="@layout/fragment_circle_page" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolBarSize"
+            android:layout_weight="3"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_bbs_pic"
+                style="@style/BbsHeadPicStyle"
+                android:layout_width="46px"
+                android:layout_height="46px"
+                android:layout_gravity="center_vertical"
+                app:placeholderImage="@mipmap/mine_head"
+                app:placeholderImageScaleType="fitXY"
+                app:roundAsCircle="true"
+                bind:url="@{MyApplication.isLoginOB?viewModel.userInfo.userImage:null}" />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                style="@style/BbsTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16px"
+                android:singleLine="true"
+                android:text='@{MyApplication.isLoginOB?viewModel.userInfo.viewName:"登录/注册"}'
+                android:textColor="@color/white"
+                android:textSize="24px" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

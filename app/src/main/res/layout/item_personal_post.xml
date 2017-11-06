@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.DateUtils" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxPostInfo" />
+
+        <variable
+            name="isOwner"
+            type="boolean" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/recycler_bg"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin"
+        android:paddingTop="30px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_user_pic"
+            style="@style/BbsHeadPicStyle"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:roundAsCircle="true"
+            app:url="@{item.account.userImage}" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/BbsUserNameTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sdv_user_pic"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="5px"
+            android:layout_toRightOf="@+id/sdv_user_pic"
+            android:text="@{item.account.viewName}" />
+
+        <ImageView
+            android:id="@+id/iv_time_icon"
+            style="@style/BbsTopIconStyle"
+            android:layout_alignBottom="@+id/sdv_user_pic"
+            android:layout_alignLeft="@id/tv_user_name"
+            android:layout_marginBottom="3px"
+            android:src="@mipmap/icon_time" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_user_name"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/v_official_reply"
+                android:layout_width="146px"
+                android:layout_height="74px"
+                android:background="@{AppUtil.getDrawable(item.hasReply?R.mipmap.reply:R.mipmap.gain)}"
+                android:visibility="@{item.hasReply ? View.VISIBLE:item.isAward?View.VISIBLE:View.GONE }" />
+
+            <ImageView
+                android:id="@+id/iv_del_icon"
+                android:layout_width="70px"
+                android:layout_height="70px"
+                android:padding="20px"
+                android:src="@mipmap/icon_delite"
+                android:visibility="@{isOwner?View.VISIBLE:View.GONE}" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/BbsTopTimeTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_time_icon"
+            android:layout_toRightOf="@+id/iv_time_icon"
+            android:text="@{DateUtils.getPostTime(item.post.publishTime)}" />
+
+
+        <TextView
+            android:id="@+id/tv_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_title"
+            android:layout_marginRight="15px"
+            android:background="@color/sale_price"
+            android:paddingLeft="3px"
+            android:paddingRight="3px"
+            android:text="置顶"
+            android:textColor="@color/white"
+            android:textSize="26px"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/BbsContentTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sdv_user_pic"
+            android:layout_marginTop="20px"
+            android:text="@{item.post.content}" />
+
+        <FrameLayout
+            android:id="@+id/fl_sdvs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            >
+
+            <LinearLayout
+                android:id="@+id/ll_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px"
+                android:orientation="horizontal"
+                android:visibility="@{(item.post.picUrls==null||item.post.picUrls.length==1)?View.GONE:View.VISIBLE}">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/show_item_img0"
+                    android:layout_width="195px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:actualImageScaleType="focusCrop"
+                    app:placeholderImage="@mipmap/ic_launcher"
+                    app:placeholderImageScaleType="fitXY"
+                    app:url="@{item.post.picOne}"
+                    app:viewAspectRatio="1" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/show_item_img1"
+                    android:layout_width="195px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="10px"
+                    android:layout_weight="1"
+                    app:actualImageScaleType="focusCrop"
+                    app:placeholderImage="@mipmap/ic_launcher"
+                    app:placeholderImageScaleType="fitXY"
+                    app:url="@{item.post.picTwo}"
+                    app:viewAspectRatio="1" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/show_item_img2"
+                    android:layout_width="195px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="@{(item.post.picUrls==null||item.post.picUrls.length==2)?View.GONE:View.VISIBLE}"
+                    app:actualImageScaleType="focusCrop"
+                    app:placeholderImage="@mipmap/ic_launcher"
+                    app:placeholderImageScaleType="fitXY"
+                    app:url="@{item.post.picThree}"
+                    app:viewAspectRatio="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bbs_picNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="30px"
+                android:background="#99000000"
+                android:paddingBottom="2px"
+                android:paddingLeft="5px"
+                android:paddingRight="5px"
+                android:paddingTop="2px"
+                android:text="@{String.valueOf(item.post.picUrls.length)+`张`}"
+                android:textColor="#fff"
+                android:textSize="22px"
+                android:visibility="@{(item.post.picUrls==null||item.post.picUrls.length &lt; 4)?View.GONE:View.VISIBLE}" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/show_item_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36px"
+                android:visibility="@{(item.post.picUrls!=null &amp;&amp; item.post.picUrls.length==1)?View.VISIBLE:View.GONE}"
+                app:actualImageScaleType="focusCrop"
+                app:placeholderImage="@mipmap/ic_launcher"
+                app:placeholderImageScaleType="centerInside"
+                app:url="@{item.post.picOnly}" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/tv_from_hint"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fl_sdvs"
+            android:layout_marginBottom="20px"
+            android:layout_marginTop="30px"
+            android:text="来自" />
+
+        <TextView
+            android:id="@+id/tv_from"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_from_hint"
+            android:layout_marginLeft="15px"
+            android:layout_toRightOf="@+id/tv_from_hint"
+            android:text="@{item.plate.plateName}"
+            android:textColor="#0d81ca" />
+
+        <TextView
+            android:id="@+id/tv_like_num"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_from_hint"
+            android:layout_alignParentRight="true"
+            android:text="@{String.valueOf(item.post.likeQty)}" />
+
+
+        <ImageView
+            android:id="@+id/iv_like_icon"
+            android:layout_width="54px"
+            android:layout_height="44px"
+            android:layout_alignBottom="@+id/tv_like_num"
+            android:layout_toLeftOf="@+id/tv_like_num"
+            android:paddingLeft="18px"
+            android:paddingRight="8px"
+            android:paddingTop="16px"
+            android:src="@{AppUtil.getDrawable(item.isLiked?R.mipmap.liked:R.mipmap.like)}" />
+
+
+        <TextView
+            android:id="@+id/tv_commentNum"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_from_hint"
+            android:layout_marginRight="50px"
+            android:layout_toLeftOf="@+id/iv_like_icon"
+            android:text="@{String.valueOf(item.post.commentQty)}" />
+
+        <ImageView
+            android:id="@+id/iv_comment_icon"
+            style="@style/BbsFootIconStyle"
+            android:layout_alignBottom="@+id/tv_commentNum"
+            android:layout_toLeftOf="@+id/tv_commentNum"
+            android:src="@mipmap/icon_comment" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/tv_from_hint"
+            android:background="@color/line" />
+    </RelativeLayout>
+</layout>

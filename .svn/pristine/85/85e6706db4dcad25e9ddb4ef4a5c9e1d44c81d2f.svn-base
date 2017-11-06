@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="30px"
+            android:background="@drawable/bg_shaidan_ll">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_pic"
+                android:layout_width="125px"
+                android:layout_height="wrap_content"
+                android:layout_margin="15px"
+                app:placeholderImage="@mipmap/ic_launcher"
+                app:placeholderImageScaleType="centerInside"
+                app:viewAspectRatio="1" />
+
+            <TextView
+                android:id="@+id/tv_shaidan_title"
+                style="@style/titleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/sdv_pic"
+                android:layout_marginLeft="@dimen/sideMargin"
+                android:layout_marginTop="15px"
+                android:layout_toRightOf="@+id/sdv_pic"
+                android:text="在水一方" />
+
+            <TextView
+                android:id="@+id/tv_shaidan_price"
+                style="@style/SalPriceStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/sdv_pic"
+                android:layout_alignLeft="@+id/tv_shaidan_title"
+                android:layout_marginBottom="20px"
+                android:text="￥199.00"
+                android:textSize="28px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20px"
+                android:text="查看宝贝详情 >"
+                android:textColor="#0d81ca"
+                android:textSize="24px" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40px"
+            android:layout_marginTop="15px"
+            android:background="@mipmap/get_product"
+            android:gravity="center"
+            android:text="已购买宝贝"
+            android:textColor="@color/view_bg"
+            android:textSize="22px" />
+
+    </RelativeLayout>
+</layout>

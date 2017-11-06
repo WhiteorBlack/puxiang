@@ -1,0 +1,449 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
+        <!--<item name="android:windowBackground">@color/white</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+    </style>
+
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/theme_bg</item>-->
+    <!--<item name="colorPrimaryDark">@color/theme_bg</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--<item name="toolbarStyle">@style/ClubToolbar</item>-->
+    <!--<item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>-->
+    <!--<item name="android:windowIsTranslucent">false</item>-->
+    <!--<item name="android:windowBackground">@color/main_bg</item>-->
+    <!--<item name="android:windowNoTitle">true</item>-->
+    <!--<item name="android:fitsSystemWindows">false</item>-->
+    <!--</style>-->
+
+    <!-- Base application theme. -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textAllCaps">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
+    <style name="AppTranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/theme</item>
+        <item name="colorPrimaryDark">@color/theme</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="toolbarStyle">@style/ClubToolbar</item>
+        <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@mipmap/guide_one</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="ClubToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+    </style>
+
+    <style name="noneTextStyle">
+        <item name="android:textSize">27px</item>
+        <item name="android:textColor">#afb4c1</item>
+    </style>
+
+    <style name="style_ptr">
+        <item name="com.puxiang.mall:ptr_duration_to_close">1000</item>
+        <item name="com.puxiang.mall:ptr_duration_to_close_header">600</item>
+        <item name="com.puxiang.mall:ptr_keep_header_when_refresh">true</item>
+        <item name="com.puxiang.mall:ptr_pull_to_fresh">false</item>
+        <item name="com.puxiang.mall:ptr_ratio_of_header_height_to_refresh">1.5</item>
+        <item name="com.puxiang.mall:ptr_resistance">1.7</item>
+    </style>
+
+    <style name="homeSearchTips">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BannerDefaultStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">300px</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <!-- 自定义属性在styles.xml中不需要命名空间,直接用属性名就可以了 -->
+        <!-- 开启自动轮播 -->
+        <item name="banner_pointAutoPlayAble">true</item>
+        <!-- 自动轮播的时间间隔 -->
+        <item name="banner_pointAutoPlayInterval">5000</item>
+        <!-- 指示点容器背景 -->
+        <item name="banner_pointContainerBackground">#00aaaaaa</item>
+        <!-- 指示点背景 -->
+        <item name="banner_pointDrawable">@drawable/select_point</item>
+        <!-- 指示点容器左右内间距 -->
+        <item name="banner_pointContainerLeftRightPadding">@dimen/sideMargin</item>
+        <!-- 指示点上下外间距 -->
+        <item name="banner_pointTopBottomMargin">10px</item>
+        <!-- 指示点左右外间距 -->
+        <item name="banner_pointLeftRightMargin">-5px</item>
+        <!-- 指示器的位置 -->
+        <item name="banner_indicatorGravity">bottom|center_horizontal</item>
+        <!-- 页码切换过程的时间长度 -->
+        <item name="banner_pageChangeDuration">1000</item>
+        <!-- 提示文案的文字大小 -->
+        <item name="banner_tipTextSize">0sp</item>
+        <!-- 提示文案的文字颜色 -->
+        <item name="banner_tipTextColor">@android:color/white</item>
+        <!-- 加载网络数据时覆盖在BGABanner最上层的占位图 -->
+    </style>
+
+    <!-- Toolbar返回键 -->
+    <style name="ToolbarBackBtnStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:paddingRight">@dimen/sideMargin</item>
+        <item name="android:paddingLeft">20px</item>
+        <item name="android:paddingTop">26px</item>
+        <item name="android:paddingBottom">26px</item>
+        <item name="android:src">@mipmap/nav_back_g</item>
+        <item name="android:onClick">onClick</item>
+    </style>
+
+    <style name="titleTextAlphaStyle">
+        <item name="android:textSize">@dimen/sideMargin</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/title_alpha77</item>
+    </style>
+
+    <style name="homeItemTitleStyle">
+        <item name="android:textSize">27px</item>
+        <item name="android:layout_marginTop">20px</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:paddingLeft">@dimen/sideMargin</item>
+        <item name="android:paddingRight">@dimen/sideMargin</item>
+    </style>
+
+    <style name="titleTextStyle">
+        <item name="android:textSize">@dimen/titleSize</item>
+        <item name="android:textColor">@color/title</item>
+    </style>
+
+    <style name="lineStyle">
+        <item name="android:background">#ebebeb</item>
+        <item name="android:layout_marginLeft">@dimen/sideMargin</item>
+        <item name="android:layout_marginRight">@dimen/sideMargin</item>
+    </style>
+
+    <!-- 圈子用户头像 -->
+    <style name="BbsCircleHeadPicStyle">
+        <item name="android:layout_width">93px</item>
+        <item name="android:layout_height">93px</item>
+    </style>
+    <!-- 圈子title -->
+    <style name="BbsCircleTitleStyle">
+        <item name="android:textSize">28px</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:layout_marginLeft">30px</item>
+        <item name="android:layout_marginTop">30px</item>
+    </style>
+    <!-- 圈子简介 -->
+    <style name="BbsCircleBriefTextStyle">
+        <item name="android:textSize">25px</item>
+        <item name="android:textColor">@color/plateInfoColor</item>
+        <item name="android:layout_marginTop">5px</item>
+        <item name="android:layout_width">400px</item>
+    </style>
+    <!-- 圈子底部文字 -->
+    <style name="BbsCircleFootTextStyle">
+        <item name="android:textSize">20px</item>
+        <item name="android:textColor">@color/plateInfoColor</item>
+    </style>
+    <!-- 论坛全民晒单 -->
+    <style name="BbsContentTextStyle">
+        <item name="android:textSize">32px</item>
+        <item name="android:textColor">@color/bbsText</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+    </style>
+    <!-- 论坛帖子底部文字 -->
+    <style name="BbsFootTextStyle">
+        <item name="android:textSize">22px</item>
+        <item name="android:textColor">#9197a6</item>
+    </style>
+    <!-- 帖子列表底部文字 -->
+    <style name="HomeFootTextStyle">
+        <item name="android:textSize">22px</item>
+        <item name="android:textColor">@color/footTextColor</item>
+    </style>
+    <!-- 论坛帖子顶部图片 -->
+    <style name="FootTimeIconStyle">
+        <item name="android:layout_width">24px</item>
+        <item name="android:layout_height">24px</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_marginRight">8px</item>
+    </style>
+    <!-- 实际价格 -->
+    <style name="SalPriceStyle">
+        <item name="android:textColor">@color/sale_price</item>
+        <item name="android:textSize">@dimen/salePriceSize</item>
+        <item name="android:layout_marginTop">10px</item>
+    </style>
+    <!-- 原价格 -->
+    <style name="PriceStyle">
+        <item name="android:textSize">25px</item>
+        <item name="android:textColor">@color/price</item>
+    </style>
+    <!-- 大号字体 -->
+    <style name="bigTextStyle">
+        <item name="android:textSize">34px</item>
+        <item name="android:textColor">@color/bbsText</item>
+    </style>
+
+    <!-- 论坛帖子用户头像 -->
+    <style name="BbsHeadPicStyle">
+        <item name="android:layout_width">70px</item>
+        <item name="android:layout_height">70px</item>
+    </style>
+    <!-- 论坛帖子顶部图片 -->
+    <style name="BbsTopIconStyle">
+        <item name="android:layout_width">20px</item>
+        <item name="android:layout_height">20px</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_marginRight">5px</item>
+    </style>
+    <!-- 论坛帖子用户名 -->
+    <style name="BbsUserNameTextStyle">
+        <item name="android:textSize">25px</item>
+        <item name="android:textColor">@color/userNameText</item>
+    </style>
+    <!-- 论坛帖子顶部文字 -->
+    <style name="BbsTopTimeTextStyle">
+        <item name="android:textSize">18px</item>
+        <item name="android:textColor">@color/user_time</item>
+    </style>
+    <!-- 论坛帖子底部图片 -->
+    <style name="BbsFootIconStyle">
+        <item name="android:layout_width">28px</item>
+        <item name="android:layout_height">28px</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_marginRight">8px</item>
+    </style>
+    <!-- 订单checkbox -->
+    <style name="selectNormalStyle">
+        <item name="android:layout_width">40px</item>
+        <item name="android:layout_height">40px</item>
+    </style>
+
+    <style name="tabStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#8792aa</item>
+    </style>
+    <!-- 论坛赛事帖子title文字 -->
+    <style name="BbsTitleTextStyle">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">28px</item>
+        <item name="android:textColor">@color/title</item>
+    </style>
+    <!-- 论坛赛事帖子简介文字 -->
+    <style name="BbsBriefTextStyle">
+        <item name="android:maxLines">2</item>
+        <item name="android:textSize">25px</item>
+        <item name="android:textColor">@color/title</item>
+    </style>
+    <!-- 论坛帖子底部条 -->
+    <style name="BbsFootViewStyle">
+        <item name="android:background">@color/main_bg</item>
+        <item name="android:layout_height">15px</item>
+    </style>
+    <!-- 论坛帖子关注 -->
+    <style name="BbsAttentionStyle">
+        <item name="android:background">@drawable/select_follow</item>
+        <item name="android:textSize">20px</item>
+        <item name="android:layout_height">46px</item>
+        <item name="android:layout_width">94px</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/select_follow_color</item>
+    </style>
+    <!-- 首页推荐商品文字 -->
+    <style name="HomeRecommendTextStyle">
+        <item name="android:textSize">30px</item>
+        <item name="android:textColor">@color/title</item>
+    </style>
+    <!-- 首页分类title文字 -->
+    <style name="HomeTypeTextStyle">
+        <item name="android:textSize">32px</item>
+        <item name="android:textColor">@color/sale_price</item>
+    </style>
+    <!-- 首页分类lienView -->
+    <style name="HomeTypeLienViewStyle">
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/sale_price</item>
+    </style>
+    <!-- 首页推荐商品图标 -->
+    <style name="HomeRecommendIconStyle">
+        <item name="android:layout_height">30px</item>
+        <item name="android:layout_width">18px</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+    <!-- 论坛帖子顶部文字 -->
+    <style name="BbsTopTextStyle">
+        <item name="android:textSize">18px</item>
+        <item name="android:textColor">@color/userNameText</item>
+    </style>
+
+    <!-- 首页分类icon -->
+    <style name="HomeTypeIconStyle">
+        <item name="android:layout_height">16px</item>
+        <item name="android:layout_width">16px</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@mipmap/title</item>
+    </style>
+
+    <style name="text_shadow">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:shadowColor">#ff000000</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">5</item>
+    </style>
+    <!-- ToolBar菜单样式 -->
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textSize">10px</item> <!--  搞掂字体大小-->
+    </style>
+    <!-- 订单checkbox -->
+    <style name="checkboxStyle">
+        <item name="android:layout_width">40px</item>
+        <item name="android:layout_height">40px</item>
+        <item name="android:background">@drawable/select_goods</item>
+        <item name="android:button">@null</item>
+    </style>
+
+    <style name="MyFragment_item_style">
+        <item name="android:paddingTop">30px</item>
+        <item name="android:paddingBottom">30px</item>
+        <item name="android:paddingLeft">@dimen/sideMargin</item>
+        <item name="android:paddingRight">@dimen/sideMargin</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/recycler_bg</item>
+    </style>
+
+    <style name="MyTitleStyle" parent="titleTextStyle">
+        <item name="android:layout_marginLeft">28px</item>
+    </style>
+
+    <style name="nextImgStyle">
+        <item name="android:layout_width">30px</item>
+        <item name="android:layout_height">30px</item>
+    </style>
+
+    <style name="titleMarginStyle">
+        <item name="android:paddingRight">@dimen/sideMargin</item>
+        <item name="android:paddingLeft">@dimen/sideMargin</item>
+        <item name="android:paddingTop">30px</item>
+        <item name="android:paddingBottom">30px</item>
+        <item name="android:background">@drawable/recycler_bg</item>
+    </style>
+
+    <style name="titleTextMarginStyle" parent="titleTextStyle">
+        <item name="android:layout_marginTop">30px</item>
+        <item name="android:layout_marginBottom">30px</item>
+        <item name="android:layout_marginLeft">@dimen/sideMargin</item>
+        <item name="android:layout_marginRight">@dimen/sideMargin</item>
+    </style>
+
+    <style name="ETMarginStyle" parent="titleTextStyle">
+        <item name="android:layout_marginTop">30px</item>
+        <item name="android:layout_marginRight">@dimen/sideMargin</item>
+        <item name="android:textColorHint">@color/se</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="SmsCodeStyle">
+        <item name="android:layout_width">170px</item>
+        <item name="android:layout_height">50px</item>
+        <item name="android:paddingLeft">1px</item>
+        <item name="android:paddingRight">1px</item>
+        <item name="android:layout_marginTop">21.5px</item>
+        <item name="android:layout_marginRight">@dimen/sideMargin</item>
+        <item name="android:textSize">24px</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/select_follow</item>
+    </style>
+
+    <style name="btnStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">350px</item>
+        <item name="android:layout_height">75px</item>
+        <item name="android:textSize">32px</item>
+    </style>
+
+    <style name="myInfoTextAlphaStyle2" parent="titleTextAlphaStyle">
+        <item name="android:layout_marginRight">35px</item>
+    </style>
+
+    <style name="myInfoTextAlphaStyle" parent="titleTextAlphaStyle">
+        <item name="android:layout_marginRight">50px</item>
+    </style>
+
+    <!-- 订单数量修改按钮 -->
+    <style name="modifiedBtn">
+        <item name="android:layout_width">55px</item>
+        <item name="android:layout_height">55px</item>
+        <item name="android:textSize">@dimen/titleSize</item>
+    </style>
+
+    <!--退货订单-->
+    <style name="style_refund_order">
+        <item name="android:textColor">@color/refund_order_color</item>
+        <item name="android:textSize">26px</item>
+    </style>
+
+    <style name="style_refund_cause_tv">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">26px</item>
+    </style>
+
+    <style name="SpotsDialogDefault" parent="android:Theme.DeviceDefault.Light.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Loading…</item>
+        <item name="DialogSpotCount">6</item>
+    </style>
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/mall_activity</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+    </style>
+
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="shopCart"
+            type="com.puxiang.mall.model.data.ShopCartData" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20px"
+            android:background="#ebebeb" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="30px">
+
+            <CheckBox
+                android:id="@+id/cb_shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/shop_select"
+                android:checked="@{shopCart.selected}" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_shop"
+                android:layout_width="48px"
+                android:layout_height="48px"
+                android:layout_marginLeft="25px"
+                app:roundingBorderWidth="2px"
+                app:roundingBorderColor="@color/user_time"
+                app:placeholderImageRes="@mipmap/ic_launcher"
+                app:roundAsCircle="true"
+                app:url="@{shopCart.logoUrl}" />
+
+            <TextView
+                android:id="@+id/tv_shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:drawablePadding="20px"
+                android:drawableRight="@mipmap/title_back"
+                android:paddingLeft="20px"
+                android:text="@{shopCart.shopName}"
+                android:textColor="#1e1e1e"
+                android:textSize="30px" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ebebeb" />
+    </LinearLayout>
+</layout>

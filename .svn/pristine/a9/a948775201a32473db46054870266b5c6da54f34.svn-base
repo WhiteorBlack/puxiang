@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxShop" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20px"
+        android:paddingLeft="30px"
+        android:paddingRight="30px"
+        android:paddingTop="20px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_goods"
+            android:layout_width="150px"
+            app:viewAspectRatio="1"
+            android:layout_height="wrap_content"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:url="@{item.shopLogo}"
+            app:roundedCornerRadius="20px" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/titleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25px"
+            android:layout_marginTop="15px"
+            android:layout_toRightOf="@+id/sdv_goods"
+            android:text="@{item.shopName}" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            style="@style/titleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="20px"
+            android:layout_toRightOf="@+id/sdv_goods"
+            android:text="@{item.detailAddress}"
+            android:textSize="25px" />
+    </RelativeLayout>
+</layout>

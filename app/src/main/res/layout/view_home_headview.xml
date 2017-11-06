@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.circle.viewmodel.CircleHeadViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/home_roll_pv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.puxiang.mall.widget.MyBanner
+            android:id="@+id/banner"
+            style="@style/BannerDefaultStyle"
+            app:banner_indicatorGravity="bottom|right"
+            app:banner_transitionEffect="alpha"
+            bind:banner="@{viewModel.banner}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include layout="@layout/view_bbs_foot" />
+
+    </LinearLayout>
+</layout>

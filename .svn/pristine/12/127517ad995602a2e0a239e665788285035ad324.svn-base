@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10px">
+
+    <TextView
+        android:id="@+id/tv_award_remark"
+        style="@style/BbsContentTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/sideMargin"
+        android:layout_marginRight="@dimen/sideMargin"
+        android:layout_marginTop="50px"
+        android:background="@drawable/bg_shaidan_ll"
+        android:lineSpacingExtra="5px"
+        android:maxLines="10000"
+        android:orientation="vertical"
+        android:paddingBottom="20px"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:paddingTop="40px"
+        android:text="11111111111111111111111111111111"/>
+
+    <ImageView
+        android:layout_width="140px"
+        android:layout_height="93px"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40px"
+        android:src="@mipmap/gain_pic"/>
+
+</RelativeLayout>

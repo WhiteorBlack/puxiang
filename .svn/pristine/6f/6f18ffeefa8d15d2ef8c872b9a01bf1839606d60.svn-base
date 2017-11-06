@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.puxiang.mall.R"/>
+
+        <import type="com.puxiang.mall.utils.AppUtil"/>
+
+        <import type="com.puxiang.mall.utils.StringUtil"/>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxTasks"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/view_bg"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10px"
+            android:paddingTop="20px"
+            android:text="@{item.taskName}"
+            android:textColor="@color/title"
+            android:textSize="28px"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_explain"
+            android:layout_width="530px"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:text="@{item.taskIntroduce}"
+            android:textColor="@color/title"
+            android:textSize="26px"/>
+
+        <View
+            style="@style/lineStyle"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/tv_explain"
+            android:layout_marginTop="20px"/>
+
+        <TextView
+            android:id="@+id/iv"
+            android:layout_width="96px"
+            android:layout_height="46px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@{AppUtil.getDrawable(item.completed?R.drawable.bg_none_btn:R.drawable.bg_login_btn)}"
+            android:enabled="@{!item.completed}"
+            android:gravity="center"
+            android:text="@{StringUtil.getString(item.completed?R.string.integral_completed:R.string.integral_no_completed)}"
+            android:textColor="@{AppUtil.getColor(item.completed?R.color.white:R.color.btnText)}"
+            android:textSize="26px"/>
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.shoppingcart.viewmodel.ShoppingCartViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_shop_cart" />
+
+        <include
+            android:id="@+id/ll_none"
+            layout="@layout/view_shopping_none"
+            app:isNone="@{viewModel.isNone}" />
+
+        <LinearLayout
+            android:id="@+id/shopping_cat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.isNone?View.GONE:View.VISIBLE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shadow"
+                    android:elevation="@dimen/elevation_height" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ebebeb" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:layout_alignParentBottom="true"
+                android:background="@color/view_bg"
+                android:visibility="@{viewModel.isNone?View.GONE:View.VISIBLE}">
+
+                <CheckBox
+                    android:id="@+id/cb_all"
+                    style="@style/checkboxStyle"
+                    android:layout_marginLeft="24px"
+                    android:layout_marginRight="@dimen/sideMargin"
+                    android:layout_marginTop="15px"
+                    android:checked="@{viewModel.isAll}"
+                    android:clickable="false" />
+
+
+                <TextView
+                    android:id="@+id/tv_heji"
+                    style="@style/bigTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@+id/cb_all"
+                    android:text="合计："
+                    android:textColor="@color/tipsTitle"
+                    android:textSize="34px" />
+
+                <TextView
+                    android:id="@+id/tv_totalPrices"
+                    style="@style/bigTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_heji"
+                    android:text="@{MyTextUtils.getSalePrice(viewModel.totalPrice)}"
+                    android:textColor="@color/sale_price" />
+
+
+                <TextView
+                    android:id="@+id/tv_qx"
+                    style="@style/titleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cb_all"
+                    android:layout_marginLeft="20px"
+                    android:layout_marginTop="6px"
+                    android:text="全选"
+                    android:textSize="24px" />
+
+                <Button
+                    android:id="@+id/btn_buy"
+                    android:layout_width="220px"
+                    android:layout_height="60px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/sideMargin"
+                    android:background="@drawable/bg_login_btn"
+                    android:text="立即购买"
+                    android:textColor="@color/white"
+                    android:textSize="30px" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

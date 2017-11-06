@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="item"
+            type="cn.finalteam.galleryfinal.model.PhotoInfo" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/publish_item"
+        android:layout_width="250px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sideMarginTop"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_item_pic"
+            android:layout_width="230px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:layout_marginRight="20px"
+            app:placeholderImage="@mipmap/add_pic"
+            app:placeholderImageScaleType="fitCenter"
+            app:viewAspectRatio="1"
+           />
+
+        <ImageView
+            android:id="@+id/publish_item_lose"
+            android:layout_width="40px"
+            android:layout_height="40px"
+            android:layout_gravity="right"
+            android:src="@mipmap/lose_pic"
+            android:visibility="@{item.photoId==0?View.INVISIBLE:View.VISIBLE}" />
+
+    </FrameLayout>
+</layout>

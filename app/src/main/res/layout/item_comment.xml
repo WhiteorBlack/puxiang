@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
+
+        <import type="com.puxiang.mall.utils.StringUtil" />
+
+        <import type="com.puxiang.mall.utils.DateUtils" />
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxCommentInfo" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/recycler_bg"
+        android:paddingLeft="@dimen/sideMargin"
+        android:paddingRight="@dimen/sideMargin"
+        android:paddingTop="15px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_user_pic"
+            style="@style/BbsHeadPicStyle"
+            android:layout_marginRight="@dimen/sideMargin"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:roundAsCircle="true"
+            app:url="@{item.commentUser.userImage}" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/BbsUserNameTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sdv_user_pic"
+            android:layout_marginTop="5px"
+            android:layout_toRightOf="@+id/sdv_user_pic"
+            android:text="@{item.commentUser.viewName}" />
+
+        <ImageView
+            android:id="@+id/iv_time_icon"
+            style="@style/BbsTopIconStyle"
+            android:layout_alignBottom="@+id/sdv_user_pic"
+            android:layout_alignLeft="@id/tv_user_name"
+            android:layout_marginBottom="3px"
+            android:src="@mipmap/icon_time" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/BbsTopTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_time_icon"
+            android:layout_toRightOf="@+id/iv_time_icon"
+            android:text="@{DateUtils.getPostTime(item.comment.commentTime)}"
+            android:textColor="@color/user_time" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_user_name"
+            android:layout_below="@+id/tv_time"
+            android:layout_marginTop="20px"
+            android:lineSpacingExtra="15px"
+            android:text="@{item.comment.comment}"
+            android:textColor="@color/title"
+            android:textSize="26px" />
+
+        <LinearLayout
+            android:id="@+id/ll_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginTop="15px"
+            android:orientation="vertical"
+            android:visibility="@{item.replys.size()==0?View.GONE:View.VISIBLE}">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_comment1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100px"
+                android:layout_marginTop="20px"
+                android:lineSpacingExtra="15px"
+                android:text="@{item.replys.size()>0?MyTextUtils.getCommentText(item.replys.get(0).commentUser.viewName,item.replys.get(0).commentReply.reply):``}"
+                android:textColor="@color/title"
+                android:textSize="22px" />
+
+
+            <TextView
+                android:id="@+id/tv_comment2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100px"
+                android:layout_marginTop="20px"
+                android:lineSpacingExtra="15px"
+                android:text="@{item.replys.size()>1?MyTextUtils.getCommentText(item.replys.get(1).commentUser.viewName,item.replys.get(1).commentReply.reply):``}"
+                android:textColor="@color/title"
+                android:textSize="22px"
+                android:visibility="@{item.replys.size()>1?View.VISIBLE:View.GONE}" />
+
+
+            <TextView
+                android:id="@+id/tv_more_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:paddingLeft="100px"
+                android:text="查看更多评论"
+                android:textColor="@color/comment_text"
+                android:textSize="22px"
+                android:visibility="@{item.replys.size()>2?View.VISIBLE:View.GONE}" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_like_num"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ll_comment"
+            android:layout_marginTop="20px"
+            android:text="@{item.comment.likeQty==0?StringUtil.getString(R.string.like_tips):String.valueOf(item.comment.likeQty)}" />
+
+
+        <ImageView
+            android:id="@+id/fl_like_icon"
+            android:layout_width="54px"
+            android:layout_height="44px"
+            android:layout_alignBottom="@+id/tv_like_num"
+            android:layout_toLeftOf="@+id/tv_like_num"
+            android:paddingLeft="18px"
+            android:paddingRight="8px"
+            android:paddingTop="16px"
+            android:src="@{AppUtil.getDrawable(item.isLiked?R.mipmap.liked:R.mipmap.like)}" />
+
+
+        <TextView
+            android:id="@+id/tv_comment_num"
+            style="@style/BbsFootTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_like_num"
+            android:layout_marginRight="50px"
+            android:layout_toLeftOf="@+id/fl_like_icon"
+            android:text="@{item.comment.commentQty==0?StringUtil.getString(R.string.comment_tips):String.valueOf(item.comment.commentQty)}" />
+
+        <ImageView
+            android:id="@+id/comment_icon"
+            style="@style/BbsFootIconStyle"
+            android:layout_alignBottom="@+id/tv_comment_num"
+            android:layout_toLeftOf="@+id/tv_comment_num"
+            android:src="@mipmap/icon_comment" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/tv_like_num"
+            android:layout_marginTop="15px"
+            android:background="#ccc" />
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.from.viewmodel.FromViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <com.puxiang.mall.widget.CusPtrFrameLayout
+            android:id="@+id/store_house_ptr_frame"
+            style="@style/style_ptr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/view_bg"
+                android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}" />
+        </com.puxiang.mall.widget.CusPtrFrameLayout>
+
+    </LinearLayout>
+</layout>

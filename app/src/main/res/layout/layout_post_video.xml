@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxPost" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            android:id="@+id/post_video"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            bind:videoData="@{item}" />
+    </FrameLayout>
+</layout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.utils.DraweeViewUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxPostLike" />
+    </data>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_user_pic"
+        android:layout_width="70px"
+        android:layout_height="70px"
+        android:layout_marginLeft="5px"
+        android:padding="5px"
+        app:placeholderImage="@mipmap/ic_launcher"
+        app:placeholderImageScaleType="fitXY"
+        app:roundAsCircle="true"
+        app:url="@{item.likeUser.userImage}" />
+</layout>

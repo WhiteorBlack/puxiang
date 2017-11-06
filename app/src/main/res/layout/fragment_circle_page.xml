@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.circle.viewmodel.CirclePageViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_home_search"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/theme_bg"-->
+        <!--android:paddingBottom="10px">-->
+
+        <!--<View-->
+        <!--android:id="@+id/view3"-->
+        <!--android:layout_width="676px"-->
+        <!--android:layout_height="58px"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/bg_home_search"/>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_search"-->
+        <!--android:layout_width="500px"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="60px"-->
+        <!--android:layout_marginTop="16px"-->
+        <!--android:singleLine="true"-->
+        <!--android:text="@{viewModel.keyword}"-->
+        <!--android:textColor="@color/searchTipsText"-->
+        <!--android:textSize="24px"/>-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="40px"-->
+        <!--android:layout_height="40px"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="60px"-->
+        <!--android:layout_marginTop="10px"-->
+        <!--android:src="@mipmap/search"/>-->
+
+
+        <!--</RelativeLayout>-->
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}" />
+
+        <include
+            android:id="@+id/ll_none"
+            layout="@layout/view_home_none"
+            bind:isInit="@{viewModel.isInit}"
+            bind:isInitData="@{viewModel.isInitData}" />
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_home"
+            bind:viewModel="@{viewModel}" />
+    </FrameLayout>
+</layout>

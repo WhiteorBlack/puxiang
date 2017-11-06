@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tabs_kown">
+        <item>销量</item>
+        <item>价格</item>
+        <item>最新</item>
+    </string-array>
+
+    <string-array name="tabs_search">
+        <item>搜帖子</item>
+        <item>搜圈子</item>
+        <item>找人</item>
+    </string-array>
+
+    <string-array name="tabs_bbs">
+        <item>热帖</item>
+        <!-- <item>视频</item>-->
+        <item>圈子</item>
+        <item>我的社区</item>
+        <item>朋友圈</item>
+    </string-array>
+
+    <string-array name="tabs_personal">
+        <item>发布的贴</item>
+        <item>回复的帖</item>
+        <item>收藏的帖</item>
+    </string-array>
+
+    <string-array name="tabs_shop_detial">
+        <item>销量</item>
+        <item>价格</item>
+        <item>最新</item>
+    </string-array>
+</resources>

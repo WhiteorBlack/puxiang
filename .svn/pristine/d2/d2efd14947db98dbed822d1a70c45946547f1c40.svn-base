@@ -1,0 +1,81 @@
+package com.puxiang.mall.module.welcome.view;
+
+import android.databinding.DataBindingUtil;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.puxiang.mall.databinding.ActivitySplashBinding;
+import com.puxiang.mall.module.welcome.viewmodel.SplashViewModel;
+import com.puxiang.mall.utils.ActivityUtil;
+import com.puxiang.mall.utils.SharedPreferences;
+import com.puxiang.mall.utils.WebUtil;
+import com.puxiang.mall.R;
+import com.puxiang.mall.config.Config;
+import com.puxiang.mall.module.main.view.MainActivity;
+import com.gyf.barlibrary.ImmersionBar;
+public class SplashActivity extends AppCompatActivity {
+
+    /**
+     * viewModel.
+     */
+    private SplashViewModel viewModel;
+    private ActivitySplashBinding binding;
+    private String ISFIRST = "isFirst";
+
+    protected final void initBind() {
+        binding = DataBindingUtil.setContentView(this, R.layout
+                .activity_splash);
+        viewModel = new SplashViewModel(this);
+        viewModel.setIsFirst(SharedPreferences.getInstance().getBoolean(ISFIRST, true));
+        WebUtil.initWebViewSettings(binding.webview, viewModel.getWebViewClient());
+        binding.setViewModel(viewModel);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        MainActivity.handler.postDelayed(() -> Intent(), Config.SPLASH_TIME);
+        super.onCreate(savedInstanceState);
+        initBind();
+        setImmerStatue();
+    }
+
+    private void setImmerStatue() {
+        ImmersionBar.with(this).transparentNavigationBar().init();
+    }
+
+
+    @Override
+    protected final void onDestroy() {
+        super.onDestroy();
+        Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(viewModel.uriStr.get()));
+    }
+
+
+    @Override
+    protected final void onStart() {
+        super.onStart();
+
+    }
+
+    private void Intent() {
+
+        if (SharedPreferences.getInstance().getBoolean(ISFIRST, true)) {
+            ActivityUtil.startGuideActivity(this);
+            SharedPreferences.getInstance().putBoolean(ISFIRST, false);
+            finish();
+        } else {
+            viewModel.jumpNextPage();
+        }
+    }
+
+    @Override
+    public final boolean onKeyDown(final int keyCode, final KeyEvent event) {
+        return keyCode == KeyEvent.KEYCODE_BACK || super.onKeyDown(keyCode, event);
+    }
+
+
+}

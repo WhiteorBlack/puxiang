@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="baidu"
+            type="Boolean" />
+
+        <variable
+            name="gaode"
+            type="Boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_product_search"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/sideMargin">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择导航"
+            android:textColor="@color/tipsTitle"
+            android:textSize="32px" />
+
+        <Button
+            android:id="@+id/btn_baidu"
+            android:layout_width="360px"
+            android:layout_height="70px"
+            android:layout_marginTop="20px"
+            android:background="@drawable/bg_login_btn"
+            android:text="百度地图"
+            android:textSize="30px"
+            android:textColor="@color/white"
+            android:visibility="@{baidu?View.VISIBLE:View.GONE}" />
+
+        <Button
+            android:id="@+id/btn_gaode"
+            android:layout_width="360px"
+            android:layout_height="70px"
+            android:layout_marginTop="20px"
+            android:background="@drawable/bg_login_btn"
+            android:text="高德地图"
+            android:textSize="30px"
+            android:textColor="@color/white"
+            android:visibility="@{gaode?View.VISIBLE:View.GONE}" />
+
+        <Button
+            android:id="@+id/btn_none"
+            android:layout_width="360px"
+            android:layout_height="70px"
+            android:layout_marginTop="20px"
+            android:background="@drawable/bg_login_btn"
+            android:text="未安装地图"
+            android:textSize="30px"
+            android:textColor="@color/white"
+            android:visibility="@{baidu?View.GONE:gaode?View.GONE:View.VISIBLE}" />
+    </LinearLayout>
+</layout>

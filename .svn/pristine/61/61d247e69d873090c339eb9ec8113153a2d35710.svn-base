@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="headModel"
+            type="com.puxiang.mall.module.shop.viewModel.ShopHeadViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.shop.viewModel.ShopViewModel" />
+        <variable
+            name="msgModel"
+            type="com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar_shop"
+            layout="@layout/toolbar_shop"
+            bind:selectModel="@{headModel}"
+            bind:msgModel="@{msgModel}"
+            bind:viewModel="@{viewModel}" />
+
+        <com.puxiang.mall.widget.CusPtrFrameLayout
+            android:id="@+id/ptr_frame"
+            style="@style/style_ptr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_shop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}" />
+        </com.puxiang.mall.widget.CusPtrFrameLayout>
+    </LinearLayout>
+</layout>

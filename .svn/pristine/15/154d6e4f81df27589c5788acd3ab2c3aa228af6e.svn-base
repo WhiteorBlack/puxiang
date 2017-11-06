@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolBarSizeHeight"
+        android:background="@color/white"
+        android:elevation="@dimen/elevation_height">
+
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:layout_marginTop="30px"
+            style="@style/ToolbarBackBtnStyle" />
+
+        <LinearLayout
+            android:id="@+id/ll_classify_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="65px"
+            android:layout_marginTop="50px"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="50dp"
+            android:layout_toRightOf="@+id/iv_back"
+            android:background="@drawable/bg_search_bar"
+            android:onClick="onClick">
+
+            <ImageView
+                android:id="@+id/iv_search_icon"
+                android:layout_width="@dimen/searchBarIconSize"
+                android:layout_height="@dimen/searchBarIconSize"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="35px"
+                android:layout_marginRight="25px"
+                android:src="@mipmap/nav_search_g" />
+
+            <TextView
+                style="@style/titleTextAlphaStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="输入你喜欢的商品"
+                android:textSize="30px"
+                android:textColor="@color/searchTextColor" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#ccc" />
+    </RelativeLayout>
+</layout>

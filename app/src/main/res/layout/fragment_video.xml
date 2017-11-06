@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><!--<com.somic.mall.widget.CusPtrFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/store_house_ptr_frame"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--cube_ptr:ptr_duration_to_close="300"--><!--cube_ptr:ptr_duration_to_close_header="500"--><!--cube_ptr:ptr_keep_header_when_refresh="true"--><!--cube_ptr:ptr_pull_to_fresh="false"--><!--cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"--><!--cube_ptr:ptr_resistance="2.7">-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <com.puxiang.mall.widget.verticaltablayout.VTabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/video_left_new_bg"
+            android:visibility="visible"
+            app:vindicator_color="@color/indicator_color"
+            app:vindicator_gravity="left"
+            app:vtab_mode="scrollable" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_video_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@color/white" />
+    </LinearLayout>
+</layout>

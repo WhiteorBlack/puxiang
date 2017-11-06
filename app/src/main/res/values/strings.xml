@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">蒲象商城</string>
+    <!--通用错误类型-->
+    <string name="server_error">服务端错误</string>
+    <string name="net_error">网络错误</string>
+    <string name="net_timeout">网络连接超时</string>
+    <string name="http_error">http错误: %d</string>
+    <string name="version_ignore_tips">此版本更新不再提示，若需要可在“我的--设置--版本”选择更新。</string>
+    <string name="no_network">当前网络不可用</string>
+    <string name="home_search_tips">请输入商品名称</string>
+    <string name="none_loading">—————— 已经到底了 ——————</string>
+
+
+    <!-- 发帖 -->
+    <string name="publish_title">创建话题</string>
+    <string name="publish_toolbar_btn_name">发布</string>
+    <string name="publish_to">发布到：</string>
+    <string name="publish_to_select_plate">发布到：请选择圈子</string>
+    <string name="publish_no_select_plate_tips">请选择圈子</string>
+    <string name="publish_none_post_content_tips">帖子内容不能为空</string>
+
+    <string name="verify_null_tip">账号或密码不能为空</string>
+    <string name="rationale_camera">需要访问您的相机功能</string>
+    <string name="rationale_audio">需要使用您的录音功能</string>
+    <string name="rationale_gps_and_audio">需要使用GPS功能和语音功能</string>
+    <string name="rationale_gps">需要使用GPS功能</string>
+
+    <string name="friend_plate">朋友圈</string>
+    <string name="post_comment_none">暂时还没有评论，快来抢沙发吧~</string>
+    <string name="phoneNumberInvalid">请输入有效手机号码</string>
+    <string name="verify_password_tip">两次密码必须保持一致</string>
+    <string name="verify_password_length_tip">密码长度至少为6个字符</string>
+    <string name="no_select_agreement_tips">请阅读用户协议并接受，以便我们更好地为您服务。</string>
+    <!-- 朋友圈 -->
+    <string name="friend_none_data_tips">暂时还没有好友动态哦~</string>
+
+    <!--选择圈子-->
+    <string name="select_plate_err">抱歉，出错啦~</string>
+    <string name="select_plate">选择圈子</string>
+    <string name="plate_attentionQty">关注&#160;</string>
+    <string name="btn_send">发送</string>
+    <string name="plate_postQty">帖子&#160;</string>
+    <!-- emotion -->
+    <string name="emotion_et_mini_hint">我也来说一说</string>
+    <string name="like_tips">赞</string>
+    <string name="emotion_et_big_hint">请输入评论内容</string>
+    <string name="comment_tips">评论</string>
+    <string name="post_order_tips_0">最新评论↑</string>
+    <string name="post_order_tips_1">最早评论↓</string>
+
+    <!-- userInfo -->
+    <string name="user_info_nick_name_change_tis">昵        称 (只能修改一次)</string>
+    <string name="user_info_nick_name_no_change_tis">昵        称</string>
+    <!-- comment -->
+    <string name="comment_left_brace">【</string>
+    <string name="comment_right_brace">】</string>
+    <!-- attention -->
+    <string name="joined">已加入</string>
+    <string name="join">+加入</string>
+
+    <string name="attention">已关注</string>
+    <string name="no_attention">+关注</string>
+
+
+    <!-- pay -->
+    <string name="pay_fail_explain">对不起，本次支付不成功，您可以点击查看订单了解订单详情</string>
+    <string name="pay_fail_btn_text">查看订单</string>
+    <string name="pay_fail_result_text">支付不成功！</string>
+    <string name="pay_succeed_result_text">支付成功!</string>
+    <string name="pay_succeed_explain">你已成功支付</string>
+    <string name="pay_succeed_btn_text">继续逛逛</string>
+    <string name="pay_btn_go_home">返回首页</string>
+    <string name="refund_payed">退款</string>
+    <string name="refund_payed_two">退货/退款</string>
+    <string name="refund_hint_orderId">订单号：</string>
+    <string name="refund_hint_time">成交时间：</string>
+    <string name="refund_hint_total">共</string>
+    <string name="refund_hint_prodictNumber">件商品</string>
+    <string name="refund_input_max_money_hint">最大可以输入金额：</string>
+
+    <!-- integral -->
+    <string name="integral_completed">已完成</string>
+    <string name="integral_no_completed">前往</string>
+</resources>

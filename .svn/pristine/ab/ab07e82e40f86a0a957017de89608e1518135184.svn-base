@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.shop.viewModel.ShopViewModel" />
+
+        <variable
+            name="selectModel"
+            type="com.puxiang.mall.module.shop.viewModel.ShopHeadViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolBarSizeHeight"
+            android:background="@color/mall_activity"
+            android:clickable="true"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="horizontal"
+            android:paddingBottom="15px">
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42px"
+                android:layout_marginTop="10px"
+                android:text="郑州"
+                android:textColor="@color/white"
+                android:textSize="32px" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30px"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/ll_search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/searchEditHeight"
+                    android:alpha="0.36"
+                    android:background="@drawable/bg_search_bar"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30px"
+                    android:alpha="1"
+                    android:background="@mipmap/nav_search_w" />
+
+                <TextView
+                    android:id="@+id/tv_search"
+                    style="@style/homeSearchTips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="100px"
+                    android:layout_marginRight="30px"
+                    android:alpha="1"
+                    android:text="@{viewModel.searchText}"
+                    android:textColor="#fff"
+                    android:textSize="30px" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_warn"
+                android:layout_width="@dimen/searchBarIconSize"
+                android:layout_height="@dimen/searchBarIconSize"
+                android:layout_marginBottom="5px"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:background="@mipmap/nav_warn_w" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_select"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_below="@+id/fl_title"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.isTopVisible?View.VISIBLE:View.GONE}">
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="73px"
+                android:text="全城"
+                android:textColor="@{selectModel.isCityOpen?R.color.bbsText:R.color.mall_activity}"
+                android:textSize="32px" />
+
+            <ImageView
+                android:id="@+id/iv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:background="@{selectModel.isCityOpen?R.mipmap.icon_arrow_bottom:R.mipmap.icon_arrow_bottom}" />
+
+
+            <TextView
+                android:id="@+id/tv_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80px"
+                android:text="智能排序"
+                android:textColor="@{selectModel.isOrderOpen?R.color.bbsText:R.color.mall_activity}"
+                android:textSize="32px" />
+
+            <ImageView
+                android:id="@+id/iv_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:background="@{selectModel.isOrderOpen?R.mipmap.icon_arrow_bottom:R.mipmap.icon_arrow_bottom}" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_below="@id/ll_select"
+            android:visibility="@{viewModel.isTopVisible?View.VISIBLE:View.GONE}">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_gravity="top"
+                android:background="@color/line" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_gravity="bottom"
+                android:background="@color/line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="73px"
+                android:text="@{`当前：`}"
+                android:textSize="32px" />
+
+            <ImageView
+                android:id="@+id/iv_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="30px"
+                android:background="@mipmap/icon_refresh" />
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>
