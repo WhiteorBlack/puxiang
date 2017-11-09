@@ -18,6 +18,7 @@ import com.puxiang.mall.module.classify.view.ClassifyFragment;
 import com.puxiang.mall.module.from.view.FromActivity;
 import com.puxiang.mall.module.integral.view.IntegralActivity;
 import com.puxiang.mall.module.login.view.BindingMobileActivity;
+import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.login.view.RegisterFragment;
 import com.puxiang.mall.module.main.view.MainActivity;
 import com.puxiang.mall.module.my.view.ShowHeadPicActivity;
@@ -153,7 +154,12 @@ public class ActivityUtil {
                 String linkUrl = bean.getLinkUrl();
                 if (linkUrl.contains("stock_list.htm")) {
                     //跳转到进货页面
-                    startStockListActivity(activity);
+                    if (MyApplication.isLogin())
+                    {
+                        startStockListActivity(activity);
+                    }else {
+                        startLoginActivity(activity);
+                    }
                     return;
                 }
                 if (linkUrl.contains("shop_list.html")) {
@@ -387,7 +393,7 @@ public class ActivityUtil {
     }
 
     public static void startLoginActivity(Activity activity) {
-        Intent intent = new Intent(activity, LoginFragment.class);
+        Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
 

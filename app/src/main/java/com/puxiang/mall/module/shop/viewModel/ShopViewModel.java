@@ -39,6 +39,7 @@ import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.ActivityUtil;
+import com.puxiang.mall.utils.LoadingWindow;
 import com.puxiang.mall.utils.ToastUtil;
 import com.puxiang.mall.utils.permissions.EasyPermission;
 import com.puxiang.mall.utils.permissions.PermissionCode;
@@ -74,11 +75,13 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
     private ObservableBoolean isInitData = new ObservableBoolean(false);
     private boolean isUpdate = false;  //只有第一次进入获取定位数据，之后更新定位只更新当前位置，不跟新商铺
 
+    private LoadingWindow loadingWindow;
 
     public ShopViewModel(BaseBindFragment fragment, ShopListAdapter adapter) {
         this.fragment = fragment;
         this.adapter = adapter;
         EventBus.getDefault().register(this);
+        loadingWindow=new LoadingWindow(fragment.getActivity());
     }
 
 
@@ -86,6 +89,7 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
         this.activity = fragment;
         this.adapter = adapter;
         EventBus.getDefault().register(this);
+        loadingWindow=new LoadingWindow(activity);
     }
 
 
@@ -147,9 +151,11 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
             this.keyword = keyword;
             this.areaCode = areaCode;
         }
+        loadingWindow.showWindow();
         ApiWrapper.getInstance()
                 .getShopList(keyword, this.areaCode, this.pageNo, currentCity.get(), orderBy)
                 .compose(fragment != null ? fragment.bindUntilEvent(FragmentEvent.DESTROY) : activity.bindUntilEvent(ActivityEvent.DESTROY))
+                .doOnTerminate(loadingWindow::hidWindow)
                 .subscribe(new NetworkSubscriber<RxShopList>() {
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
@@ -289,7 +295,7 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_location:
-                ActivityUtil.startCityActivity(activity, areaName);
+                ActivityUtil.startCityActivity(activity, getCurrentCity());
                 break;
             case R.id.iv_back:
                 activity.onBackPressed();

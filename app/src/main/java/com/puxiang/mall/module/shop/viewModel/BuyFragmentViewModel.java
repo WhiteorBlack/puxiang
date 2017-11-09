@@ -2,6 +2,7 @@ package com.puxiang.mall.module.shop.viewModel;
 
 import android.app.Activity;
 import android.databinding.BaseObservable;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -84,7 +85,11 @@ public class BuyFragmentViewModel extends BaseObservable implements ViewModel {
 //        if (pageNo==1&&type.equals("1")){
 //            loadingWindow.delayedShowWindow();
 //        }
-        ApiWrapper.getInstance().getBatchProducts("", pageNo)
+
+        if (TextUtils.isEmpty(keyWord)) {
+            return;
+        }
+        ApiWrapper.getInstance().getBatchProducts(keyWord, pageNo)
                 .doOnTerminate(() -> {
                     loadingWindow.hidWindow();
                     if (isInitData) return;
@@ -146,6 +151,15 @@ public class BuyFragmentViewModel extends BaseObservable implements ViewModel {
         if (orderEvent != null && type.equals(orderEvent.getType())) {
             pageNo = 1;
             order = orderEvent.getOrder();
+            update(pageNo);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Bundle bundle) {
+        if (bundle.getBoolean("search") && type.equals("4")) {
+            pageNo = 1;
+            keyWord = bundle.getString("keyword");
             update(pageNo);
         }
     }

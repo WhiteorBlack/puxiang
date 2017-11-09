@@ -5,13 +5,17 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mcxtzhang.indexlib.suspension.SuspensionDecoration;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
@@ -38,7 +42,7 @@ import java.util.List;
  * Created by zhaoyong bai on 2017/10/24.
  */
 
-public class SelectCityActivity extends BaseBindActivity {
+public class SelectCityActivity extends BaseBindActivity implements TextView.OnEditorActionListener {
     private ActivitySelectCityBinding binding;
     private SelectCityViewModel viewModel;
     private CityAdapter adapter;
@@ -94,6 +98,7 @@ public class SelectCityActivity extends BaseBindActivity {
         headBinding.rvHot.setAdapter(hotAdapter);
         headBinding.rvLatest.setLayoutManager(new GridLayoutManager(this, 3));
         headBinding.rvLatest.setAdapter(latestAdapter);
+        binding.toolbar.et.setOnEditorActionListener(this);
         getCityData();
     }
 
@@ -198,4 +203,32 @@ public class SelectCityActivity extends BaseBindActivity {
         viewModel.destroy();
         headViewModel.destroy();
     }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        if (i == EditorInfo.IME_ACTION_SEARCH) {
+            // 当按了搜索之后关闭软键盘
+            closeInput();
+            String city = binding.toolbar.et.getText().toString();
+            if (!TextUtils.isEmpty(city)) {
+                searchCity(city);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void searchCity(String city) {
+        if (cityList != null && cityList.size() > 0) {
+            for (int i = 0; i < cityList.size(); i++) {
+                if (cityList.get(i).getName().contains(city)) {
+                    mManager.scrollToPositionWithOffset(i,0);
+                    Logger.e("pos  " + i);
+                    break;
+                }
+            }
+        }
+    }
+
+
 }

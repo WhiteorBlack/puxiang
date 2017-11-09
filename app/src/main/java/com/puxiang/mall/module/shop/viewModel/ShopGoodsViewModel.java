@@ -70,7 +70,7 @@ public class ShopGoodsViewModel extends BaseObservable implements ViewModel {
         if (TextUtils.equals(type, "1")) {
 //            loadingWindow.showWindow();
         }
-        ApiWrapper.getInstance().getShopGoods("", type, order,pageSize, pageNo)
+        ApiWrapper.getInstance().getShopGoods(shopId, type, order,pageSize, pageNo)
                 .doOnTerminate(() -> {
 //                    loadingWindow.hidWindow();
 

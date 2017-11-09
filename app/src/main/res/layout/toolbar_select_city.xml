@@ -76,6 +76,7 @@
                     android:background="@null"
                     android:hint="输入所在城市"
                     android:singleLine="true"
+                    android:imeOptions="actionSearch"
                     android:textColor="#aaa"
                     android:textColorHint="@color/searchTextColor"
                     android:textSize="32px" />

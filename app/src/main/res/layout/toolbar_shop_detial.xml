@@ -78,6 +78,7 @@
                     android:background="@null"
                     android:hint="输入您喜欢的商品"
                     android:singleLine="true"
+                    android:imeOptions="actionSearch"
                     android:text="@{viewModel.keyword}"
                     android:textColor="#fff"
                     android:textColorHint="@color/white"

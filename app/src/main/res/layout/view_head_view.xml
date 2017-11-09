@@ -49,9 +49,11 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="62px"
-                android:layout_height="62px"
+                android:layout_width="80px"
+                android:layout_height="80px"
                 android:layout_marginLeft="40px"
+                android:layout_marginTop="5px"
+                android:layout_marginBottom="5px"
                 android:background="@mipmap/hot_comment" />
 
             <ImageView
@@ -81,7 +83,7 @@
                         android:paddingTop="3px"
                         android:text="热评"
                         android:textColor="@color/sale_price"
-                        android:textSize="20px" />
+                        android:textSize="22px" />
 
                     <TextView
                         android:id="@+id/txt_hot_comment_one"
@@ -93,7 +95,7 @@
                         android:singleLine="true"
                         android:onClick="@{viewModel.onClick}"
                         android:text="@{viewModel.hotLineOne}"
-                        android:textSize="20px" />
+                        android:textSize="22px" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,7 +115,7 @@
                         android:paddingTop="3px"
                         android:text="热评"
                         android:textColor="@color/sale_price"
-                        android:textSize="20px" />
+                        android:textSize="22px" />
 
                     <TextView
                         android:id="@+id/txt_hot_comment_two"
@@ -125,7 +127,7 @@
                         android:onClick="@{viewModel.onClick}"
                         android:singleLine="true"
                         android:text="@{viewModel.hotLineTwo}"
-                        android:textSize="20px" />
+                        android:textSize="22px" />
                 </LinearLayout>
 
             </RelativeLayout>

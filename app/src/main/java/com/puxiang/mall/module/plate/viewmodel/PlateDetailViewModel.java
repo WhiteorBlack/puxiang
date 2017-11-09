@@ -63,7 +63,7 @@ public class PlateDetailViewModel implements ViewModel {
         this.activity = activity;
         this.adapter = adapter;
         initData();
-        loadingWindow.delayedShowWindow();
+        loadingWindow.showWindow();
         getPlateDetailData();
         getPlatePosts(1);
     }

@@ -49,7 +49,6 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
     private ShopHeadViewModel shopHeadViewModel;
     private MsgCountViewModel msgCountViewModel;
     private ShopListAdapter shopListAdapter;
-
     private LocationManager locationManager;
     private Location location;
 

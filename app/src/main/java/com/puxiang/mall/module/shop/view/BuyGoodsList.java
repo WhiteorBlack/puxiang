@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -19,6 +23,8 @@ import com.puxiang.mall.module.shop.adapter.SimpleFragmentAdapter;
 import com.puxiang.mall.module.shop.viewModel.BuyListViewModel;
 import com.puxiang.mall.network.URLs;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +32,13 @@ import java.util.List;
  * Created by zhaoyong bai on 2017/10/17.
  */
 
-public class BuyGoodsList extends BaseBindActivity {
+public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorActionListener {
     private ActivityBuyListBinding binding;
     private BuyListViewModel viewModel;
     private MsgCountViewModel msgCountViewModel;
     private HeadBannerViewModel headBannerViewModel;
     private String shopId;
-    private String[] keyword = new String[]{"白酒", "红酒", "茶"};
+    private String[] keyword = new String[]{"白酒", "葡萄酒", "茶",""};
 
     @Override
     protected void initBind() {
@@ -54,12 +60,13 @@ public class BuyGoodsList extends BaseBindActivity {
         LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) binding.headBanner.headBanner.getLayoutParams();
         params.height=(int) (MyApplication.widthPixels * 0.347);
         binding.headBanner.headBanner.setLayoutParams(params);
+        binding.toolbarShopDetial.et.setOnEditorActionListener(this);
     }
 
 
     private List<Fragment> initData() {
         List<Fragment> fragments = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             fragments.add(newInstance(i, this.keyword[i], shopId));
         }
         return fragments;
@@ -108,5 +115,21 @@ public class BuyGoodsList extends BaseBindActivity {
     @Override
     protected void viewModelDestroy() {
         if (viewModel != null) viewModel.destroy();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        if (i == EditorInfo.IME_ACTION_SEARCH) {
+            String keyword = binding.toolbarShopDetial.et.getText().toString();
+            if (!TextUtils.isEmpty(keyword)) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("search", true);
+                bundle.putString("keyword", keyword);
+                EventBus.getDefault().post(bundle);
+                viewModel.setSelectPos(4);
+            }
+            return true;
+        }
+        return false;
     }
 }
