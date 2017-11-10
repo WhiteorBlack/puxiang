@@ -128,6 +128,7 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
                 EventBus.getDefault().post(bundle);
                 viewModel.setSelectPos(4);
             }
+            closeInput();
             return true;
         }
         return false;

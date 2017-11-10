@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="42px"
             android:layout_marginRight="42px"
-            android:layout_marginTop="180px"
+            android:layout_marginTop="150px"
             android:elevation="@dimen/elevation_height"
             android:paddingBottom="40px">
 

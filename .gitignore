@@ -118,6 +118,9 @@ gen/
 out/
 
 
+#SVN
+.svn/
+
 
 # Gradle files
 

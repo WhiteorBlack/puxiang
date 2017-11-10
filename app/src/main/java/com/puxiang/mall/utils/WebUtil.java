@@ -113,6 +113,20 @@ public class WebUtil {
     }
 
     /**
+     * 跳转到进货商品详情
+     *
+     * @param context
+     * @param id
+     */
+    public static void jumpGoodsWeb(Context context, String id,String type) {
+        Intent intent = new Intent(context, WebActivity.class);
+        String url = URLs.HTML_GOODS + "&productId=" + id+"&type="+type;
+        intent.putExtra(URL, url);
+        intent.putExtra("productId", id);
+        context.startActivity(intent);
+    }
+
+    /**
      * 跳转到店铺详情
      *
      * @param context

@@ -254,10 +254,10 @@ public class MallHeadViewModel extends BaseObservable implements ViewModel, BGAB
                 ActivityUtil.startLink(activity, picList.get(3));
                 break;
             case R.id.txt_hot_comment_one:
-                ActivityUtil.startLink(activity, picList.get(0));
+                ActivityUtil.startLink(activity, hotList.get(0));
                 break;
             case R.id.txt_hot_comment_two:
-                ActivityUtil.startLink(activity, picList.get(1));
+                ActivityUtil.startLink(activity, hotList.get(1));
                 break;
         }
     }

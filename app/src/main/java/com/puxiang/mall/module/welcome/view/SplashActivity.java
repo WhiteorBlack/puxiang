@@ -2,13 +2,17 @@ package com.puxiang.mall.module.welcome.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.Logger;
@@ -45,7 +49,6 @@ public class SplashActivity extends AppCompatActivity {
         viewModel.setIsFirst(SharedPreferences.getInstance().getBoolean(ISFIRST, true));
         WebUtil.initWebViewSettings(binding.webview, viewModel.getWebViewClient());
         binding.setViewModel(viewModel);
-
     }
 
     /**
@@ -74,12 +77,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /**
-     * <p>连接服务器，在整个应用程序全局，只需要调用一次，需在 {@link #init(Context)} 之后调用。</p>
+     * <p>连接服务器，在整个应用程序全局，只需要调用一次，需在 {init(Context)} 之后调用。</p>
      * <p>如果调用此接口遇到连接失败，SDK 会自动启动重连机制进行最多10次重连，分别是1, 2, 4, 8, 16, 32, 64, 128, 256, 512秒后。
      * 在这之后如果仍没有连接成功，还会在当检测到设备网络状态变化时再次进行重连。</p>
      *
-     * @param token    从服务端获取的用户身份令牌（Token）。
-     * @param callback 连接回调。
+     * @param token 从服务端获取的用户身份令牌（Token）。
      * @return RongIM  客户端核心类的实例。
      */
     private void connect(String token) {
@@ -92,7 +94,7 @@ public class SplashActivity extends AppCompatActivity {
              */
             @Override
             public void onTokenIncorrect() {
-                Logger.e("rong","tokenIncorrect");
+                Logger.e("rong", "tokenIncorrect");
                 getRongToken();
             }
 
@@ -118,11 +120,23 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        MainActivity.handler.postDelayed(() -> Intent(), Config.SPLASH_TIME);
+        intent();
         super.onCreate(savedInstanceState);
         initBind();
+        initView();
         setImmerStatue();
         initRong();
+    }
+
+    private void initView() {
+//        TranslateAnimation animation = new TranslateAnimation(0, -MyApplication.widthPixels-200, 0, 0);
+//        animation.setDuration(8 * 1000);
+//        animation.setInterpolator(new LinearInterpolator());
+//        animation.setRepeatCount(-1);
+//        binding.ivLogo.setAnimation(animation);
+//        animation.startNow();
+        AnimationDrawable animationDrawable = (AnimationDrawable) binding.ivLogo.getDrawable();
+        animationDrawable.start();
     }
 
     private void setImmerStatue() {
@@ -143,14 +157,14 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private void Intent() {
-
+    private void intent() {
         if (SharedPreferences.getInstance().getBoolean(ISFIRST, true)) {
             ActivityUtil.startGuideActivity(this);
             SharedPreferences.getInstance().putBoolean(ISFIRST, false);
             finish();
         } else {
-            viewModel.jumpNextPage();
+            new Handler().postDelayed(() -> viewModel.jumpNextPage(), Config.SPLASH_TIME);
+
         }
     }
 

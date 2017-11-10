@@ -58,13 +58,13 @@ public class BuyFragmentViewModel extends BaseObservable implements ViewModel {
     private boolean isLoaded = true;
 
 
+
     public BuyFragmentViewModel(BuyListFragment fragment, BuyListAdapter adapter) {
         this.fragment = fragment;
         this.activity = (BuyGoodsList) fragment.getActivity();
         this.adapter = adapter;
         EventBus.getDefault().register(this);
         loadingWindow = new LoadingWindow(activity);
-//        loadingWindow.delayedShowWindow();
         initData();
         update(pageNo);
 
@@ -82,9 +82,9 @@ public class BuyFragmentViewModel extends BaseObservable implements ViewModel {
      * @param pageNo 页码
      */
     public void update(final int pageNo) {
-//        if (pageNo==1&&type.equals("1")){
-//            loadingWindow.delayedShowWindow();
-//        }
+        if (pageNo==1&&type.equals("1")){
+            loadingWindow.showWindow();
+        }
 
         if (TextUtils.isEmpty(keyWord)) {
             return;
@@ -227,7 +227,7 @@ public class BuyFragmentViewModel extends BaseObservable implements ViewModel {
                     case R.id.sdv_item_pic:
                     case R.id.tv_goods_name:
                     case R.id.tv_goods_info:
-                        WebUtil.jumpGoodsWeb(activity, rxProduct.getProductId());
+                        WebUtil.jumpGoodsWeb(activity, rxProduct.getProductId(),"batch");
                         break;
                 }
             }

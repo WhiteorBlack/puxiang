@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/loading_animation" />
+            android:src="@drawable/guide_animation" />
 
         <TextView
             android:id="@+id/tv_loading"

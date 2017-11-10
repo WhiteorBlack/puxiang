@@ -95,6 +95,8 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
         <activity
             android:name="com.puxiang.mall.module.welcome.view.SplashActivity"
             android:screenOrientation="portrait"
@@ -274,8 +276,7 @@
         <activity
             android:name="com.puxiang.mall.module.im.view.ConversationActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-           >
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -408,16 +409,26 @@
             android:name="UMENG_CHANNEL"
             android:value="123456" />
 
+        <!--百度地图-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="开发者申请的AK"></meta-data>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
+
         <!--融云IM-->
-         <provider
-             android:name="android.support.v4.content.FileProvider"
-             android:authorities="com.puxiang.mall.FileProvider"
-             android:exported="false"
-             android:grantUriPermissions="true">
-             <meta-data
-                 android:name="android.support.FILE_PROVIDER_PATHS"
-                 android:resource="@xml/rc_file_path" />
-         </provider>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.puxiang.mall.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
     </application>
 
 </manifest>

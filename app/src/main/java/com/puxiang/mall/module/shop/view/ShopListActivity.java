@@ -20,6 +20,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -51,6 +56,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
     private ShopListAdapter shopListAdapter;
     private LocationManager locationManager;
     private Location location;
+    private LocationClient locationClient;
 
     @Override
     protected void initBind() {
@@ -77,8 +83,35 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         shopBinding.setViewModel(shopViewModel);
         shopBinding.setMsgModel(msgCountViewModel);
         shopBinding.ivRefresh.setOnClickListener(this);
-
+        locationClient=new LocationClient(getApplicationContext());
+        initClient();
     }
+
+    private void initClient() {
+        LocationClientOption mOption = new LocationClientOption();
+        mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        mOption.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
+        mOption.setScanSpan(60*1000);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        mOption.setIsNeedAddress(false);//可选，设置是否需要地址信息，默认不需要
+        mOption.setIsNeedLocationDescribe(false);//可选，设置是否需要地址描述
+        mOption.setNeedDeviceDirect(false);//可选，设置是否需要设备方向结果
+        mOption.setLocationNotify(false);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+        mOption.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        mOption.setIsNeedLocationDescribe(false);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        mOption.setIsNeedLocationPoiList(false);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        mOption.SetIgnoreCacheException(true);//可选，默认false，设置是否收集CRASH信息，默认收集
+
+        mOption.setIsNeedAltitude(false);//可选，默认false，设置定位时是否需要海拔信息，默认不需要，除基础定位版本都可用
+        locationClient.setLocOption(mOption);
+        locationClient.registerLocationListener(listener);
+    }
+
+  private   BDLocationListener listener=new BDLocationListener() {
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            shopViewModel.getCurrentLocation(bdLocation.getLatitude(), bdLocation.getLongitude());
+        }
+    };
 
     @Override
     protected void onStart() {
@@ -91,8 +124,10 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            requestPermission();
             return;
         }
+        locationClient.start();
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 80, locationListener);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             new AlertDialog.Builder(this)
@@ -249,6 +284,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
     protected void onDestroy() {
         super.onDestroy();
         locationManager.removeUpdates(locationListener);
+        locationClient.unRegisterLocationListener(listener);
     }
 
     @Override
@@ -278,6 +314,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 000, 80, locationListener);
             location = getLastKnownLocation();
             updateLocation(location);
+            locationClient.start();
         }
     }
 
@@ -303,4 +340,5 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
                 break;
         }
     }
+
 }
