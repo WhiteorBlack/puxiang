@@ -4,47 +4,67 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarSizeHeight"
-        android:background="@color/white"
+        android:background="@color/toolbar_bg"
         android:elevation="@dimen/elevation_height">
 
 
         <ImageView
             android:id="@+id/iv_back"
-            android:background="@color/white"
-            android:visibility="gone"
+            style="@style/ToolbarBackBtnStyle"
             android:layout_marginTop="30px"
-            style="@style/ToolbarBackBtnStyle" />
+            android:background="@color/white"
+            android:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/ll_classify_toolbar"
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="65px"
-            android:layout_marginTop="50px"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="50dp"
-            android:layout_toRightOf="@+id/iv_back"
-            android:background="@drawable/bg_search_bar"
-            android:onClick="onClick">
+            android:layout_marginTop="50px">
 
-            <ImageView
-                android:id="@+id/iv_search_icon"
-                android:layout_width="@dimen/searchBarIconSize"
-                android:layout_height="@dimen/searchBarIconSize"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="35px"
-                android:layout_marginRight="25px"
-                android:src="@mipmap/nav_search_g" />
+            <LinearLayout
+                android:id="@+id/ll_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/searchEditHeight"
+                android:alpha="0.36"
+                android:background="@drawable/bg_search_bar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                style="@style/titleTextAlphaStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_classify_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="65px"
+
                 android:layout_gravity="center_vertical"
-                android:text="输入你喜欢的商品"
-                android:textSize="30px"
-                android:textColor="@color/searchTextColor" />
-        </LinearLayout>
+
+                android:layout_toRightOf="@+id/iv_back"
+                android:onClick="onClick">
+
+                <ImageView
+                    android:id="@+id/iv_search_icon"
+                    android:layout_width="46px"
+                    android:layout_height="46px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="35px"
+                    android:layout_marginRight="15px"
+                    android:src="@mipmap/nav_search_g" />
+
+                <TextView
+                    style="@style/titleTextAlphaStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="输入你喜欢的商品"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/searchTextSize" />
+            </LinearLayout>
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"

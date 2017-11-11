@@ -27,9 +27,8 @@
         android:paddingBottom="15px">
 
         <ImageView
-            android:layout_width="136px"
-            android:layout_height="50px"
-            android:layout_marginBottom="5px"
+            android:layout_width="147px"
+            android:layout_height="60px"
             android:layout_marginLeft="40px"
             android:background="@mipmap/sc_logo" />
 
@@ -37,14 +36,14 @@
             android:id="@+id/iv_scan"
             android:layout_width="@dimen/searchBarIconSize"
             android:layout_height="@dimen/searchBarIconSize"
-            android:layout_marginBottom="5px"
-            android:layout_marginLeft="44px"
+            android:layout_marginBottom="1px"
+            android:layout_marginLeft="10px"
             android:background="@mipmap/nav_scan_w" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30px"
+            android:layout_marginLeft="20px"
             android:layout_weight="1">
 
             <LinearLayout
@@ -60,32 +59,33 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50px"
+                android:layout_height="50px"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30px"
+                android:layout_marginLeft="20px"
                 android:alpha="1"
                 android:background="@mipmap/nav_search_w" />
 
             <TextView
                 android:id="@+id/tv_search"
                 style="@style/homeSearchTips"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="100px"
-                android:layout_marginRight="30px"
+                android:layout_marginLeft="80px"
+                android:layout_marginRight="20px"
                 android:alpha="1"
                 android:text="@{viewModel.searchText}"
                 android:textColor="#fff"
-                android:textSize="30px" />
+                android:textSize="25px" />
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="55px"
             android:layout_height="52px"
-            android:layout_marginBottom="5px"
-            android:layout_marginLeft="30px"
+            android:layout_marginBottom="1px"
+            android:layout_marginLeft="20px"
             android:layout_marginRight="30px">
 
             <ImageView

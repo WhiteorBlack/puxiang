@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public abstract class NetworkSubscriber<T> implements Observer<T> {
-    private boolean isShowToast = true;
+    private boolean isShowToast = false;
     public Disposable mDisposable;
 
     protected NetworkSubscriber() {

@@ -21,10 +21,7 @@ import io.rong.imkit.utils.SystemUtils;
 import io.rong.imkit.widget.provider.RealTimeLocationMessageProvider;
 import io.rong.imlib.ipc.RongExceptionHandler;
 
-/**
- * Desc : 热更新Tinker接入，需要定义Application
- * version : v1.0
- */
+
 
 public class SampleApplication extends Application {
     private ApplicationLike applicationLike;
@@ -80,7 +77,7 @@ public class SampleApplication extends Application {
             Constructor var2 = var1.getConstructor(new Class[]{Application.class});
             return (ApplicationLike) var2.newInstance(new Object[]{this});
         } catch (Throwable var3) {
-            throw new TinkerRuntimeException("createDelegate failed", var3);
+            throw new RuntimeException("createDelegate failed", var3);
         }
     }
 

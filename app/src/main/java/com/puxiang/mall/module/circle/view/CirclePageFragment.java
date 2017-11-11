@@ -125,7 +125,7 @@ public class CirclePageFragment extends BaseBindFragment implements View.OnClick
     @Override
     public void onIndicatorPageChange(int preItem, int currentItem) {
         if (currentItem == 1) {
-            binding.toolbar.llTop.setBackgroundColor(getResources().getColor(R.color.sale_price));
+            binding.toolbar.llTop.setBackgroundColor(getResources().getColor(R.color.mall_activity));
         } else {
             if (!isRed) {
                 binding.toolbar.llTop.setBackgroundColor(0);

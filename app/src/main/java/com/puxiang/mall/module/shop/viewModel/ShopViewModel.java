@@ -81,7 +81,8 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
         this.fragment = fragment;
         this.adapter = adapter;
         EventBus.getDefault().register(this);
-        loadingWindow=new LoadingWindow(fragment.getActivity());
+        loadingWindow = new LoadingWindow(fragment.getActivity());
+        loadingWindow.delayedShowWindow();
     }
 
 
@@ -89,7 +90,8 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
         this.activity = fragment;
         this.adapter = adapter;
         EventBus.getDefault().register(this);
-        loadingWindow=new LoadingWindow(activity);
+        loadingWindow = new LoadingWindow(activity);
+        loadingWindow.delayedShowWindow();
     }
 
 
@@ -151,7 +153,7 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
             this.keyword = keyword;
             this.areaCode = areaCode;
         }
-        loadingWindow.showWindow();
+
         ApiWrapper.getInstance()
                 .getShopList(keyword, this.areaCode, this.pageNo, currentCity.get(), orderBy)
                 .compose(fragment != null ? fragment.bindUntilEvent(FragmentEvent.DESTROY) : activity.bindUntilEvent(ActivityEvent.DESTROY))

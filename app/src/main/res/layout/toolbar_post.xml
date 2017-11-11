@@ -16,7 +16,7 @@
         android:id="@+id/login_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarSizeHeight"
-        android:background="@color/view_bg"
+        android:background="@color/toolbar_bg"
         android:elevation="@dimen/elevation_height"
        >
 
@@ -24,7 +24,6 @@
             android:id="@+id/iv_back"
             style="@style/ToolbarBackBtnStyle"
             android:layout_alignParentBottom="true"
-            android:background="@color/white"
             android:onClick="onClick" />
 
         <TextView
@@ -32,6 +31,7 @@
             style="@style/bigTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:paddingBottom="@dimen/toolBarBottomMargin"

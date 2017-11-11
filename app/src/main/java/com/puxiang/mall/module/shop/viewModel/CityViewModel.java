@@ -2,6 +2,7 @@ package com.puxiang.mall.module.shop.viewModel;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableBoolean;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.puxiang.mall.BR;
 import com.puxiang.mall.model.data.RxArea;
 import com.puxiang.mall.model.data.RxCityArea;
 import com.puxiang.mall.model.data.RxLocation;
@@ -36,12 +38,13 @@ public class CityViewModel extends BaseObservable implements ViewModel {
     private CityListAdapter rightAdapter;
     private CityListLeftAdapter leftAdapter;
     private CityDialog dialog;
-    private String areaCode="";
+    private String areaCode = "";
+    public ObservableBoolean isInitData = new ObservableBoolean(false);
 
-    public CityViewModel(CityListAdapter adapter, CityListLeftAdapter leftAdapter,CityDialog dialog) {
+    public CityViewModel(CityListAdapter adapter, CityListLeftAdapter leftAdapter, CityDialog dialog) {
         this.rightAdapter = adapter;
         this.leftAdapter = leftAdapter;
-        this.dialog=dialog;
+        this.dialog = dialog;
     }
 
 
@@ -52,10 +55,13 @@ public class CityViewModel extends BaseObservable implements ViewModel {
 
 
     public void getLocation(String areaCode) {
-        if (catalogList!=null&&catalogList.size()>0&&TextUtils.equals(areaCode,this.areaCode)){
+        if (catalogList != null && catalogList.size() > 0 && TextUtils.equals(areaCode, this.areaCode)) {
             return;
         }
-        this.areaCode=areaCode;
+        if (TextUtils.isEmpty(areaCode)) {
+            return;
+        }
+        this.areaCode = areaCode;
         ApiWrapper.getInstance()
                 .getAllChildArea(areaCode)
                 .subscribe(new NetworkSubscriber<List<RxCityArea>>() {
@@ -63,6 +69,7 @@ public class CityViewModel extends BaseObservable implements ViewModel {
                     public void onSuccess(List<RxCityArea> data) {
                         catalogList.addAll(data);
                         leftAdapter.setNewData(catalogList);
+                        setIsInitData(true);
                     }
                 });
 
@@ -72,11 +79,11 @@ public class CityViewModel extends BaseObservable implements ViewModel {
         return new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                RxArea rxArea= (RxArea) adapter.getData().get(position);
-                Bundle bundle=new Bundle();
-                bundle.putInt("type",0);
-                bundle.putString("content",rxArea.getName());
-                bundle.putString("code",rxArea.getAreaCode());
+                RxArea rxArea = (RxArea) adapter.getData().get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 0);
+                bundle.putString("content", rxArea.getName());
+                bundle.putString("code", rxArea.getAreaCode());
                 EventBus.getDefault().post(bundle);
                 dialog.dismiss();
             }
@@ -87,25 +94,35 @@ public class CityViewModel extends BaseObservable implements ViewModel {
         return new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                List<RxArea> areaList=catalogList.get(position).getChildren();
-                if (areaList!=null&&areaList.size()>0){
+                List<RxArea> areaList = catalogList.get(position).getChildren();
+                if (areaList != null && areaList.size() > 0) {
                     for (int i = 0; i < catalogList.size(); i++) {
-                        catalogList.get(i).setIsVisiable(position==i);
+                        catalogList.get(i).setIsVisiable(position == i);
                     }
                     rightAdapter.setNewData(areaList);
-                }else {
+                } else {
                     rightAdapter.setNewData(null);
-                    RxCityArea rxArea=  catalogList.get(position);
-                    Bundle bundle=new Bundle();
-                    bundle.putInt("type",0);
-                    bundle.putString("content",rxArea.getName());
-                    bundle.putString("code",rxArea.getCode());
+                    RxCityArea rxArea = catalogList.get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", 0);
+                    bundle.putString("content", rxArea.getName());
+                    bundle.putString("code", rxArea.getCode());
                     EventBus.getDefault().post(bundle);
                     dialog.dismiss();
                 }
                 leftAdapter.notifyDataSetChanged();
             }
         };
+    }
+
+    @Bindable
+    public boolean getIsInitData() {
+        return isInitData.get();
+    }
+
+    public void setIsInitData(boolean isInitData) {
+        this.isInitData.set(isInitData);
+        notifyPropertyChanged(BR.isInitData);
     }
 
     @Override

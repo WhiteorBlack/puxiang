@@ -114,9 +114,9 @@
         <item name="android:paddingRight">@dimen/sideMargin</item>
         <item name="android:paddingLeft">20px</item>
         <item name="android:paddingTop">26px</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/mall_activity</item>
         <item name="android:paddingBottom">26px</item>
-        <item name="android:src">@mipmap/nav_back_g</item>
+        <item name="android:src">@mipmap/nav_back_w</item>
         <item name="android:onClick">onClick</item>
     </style>
 

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.gyf.barlibrary.ImmersionBar;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentMallBinding;
@@ -50,7 +51,7 @@ import io.rong.imlib.model.Conversation;
 public class MallFragment extends BaseBindFragment implements View.OnClickListener {
 
     private FragmentMallBinding binding;
-//    private ViewHeadViewBinding headViewBinding;
+    //    private ViewHeadViewBinding headViewBinding;
     private MallViewModel viewModel;
     private ViewBottomLineBinding bottomLineBinding;
     private SectionAdapterNew adapter;
@@ -58,7 +59,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
     private BadgeView badge;
     private MallClassAdapter mallClassAdapter;
 
-//    private ViewMallPicAddsBinding picAddsBinding;
+    //    private ViewMallPicAddsBinding picAddsBinding;
     private MallPicAdds mallPicAdds;
     private MsgCountViewModel msgCountViewModel;
 
@@ -93,7 +94,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
                 ActivityUtil.startSearchActivity(this.getActivity(), TextUtils.isEmpty(searchText) ? "" : searchText);
                 break;
             case R.id.iv_to_top:
-                binding.nsvParent.smoothScrollBy(0,20);
+                binding.nsvParent.smoothScrollBy(0, 20);
                 break;
         }
     }
@@ -153,8 +154,8 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
         initBanner(binding.layoutHead.banner);
         initGoodsRecyclerView(binding.rvMall);
         initRefresh(binding.ptrFrame);
+        ImmersionBar.with(this).statusBarDarkFont(false).init();
     }
-
 
 
     private void initGoodsRecyclerView(RecyclerView rvMall) {
@@ -191,7 +192,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
         binding.layoutHead.banner.setAdapter(headViewModel);
         binding.layoutHead.banner.setDelegate(headViewModel);
         binding.layoutHead.banner.setParentView(binding.ptrFrame);
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)  binding.layoutHead.banner.getLayoutParams();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) binding.layoutHead.banner.getLayoutParams();
         params.height = (int) (MyApplication.widthPixels * 0.347);
         binding.layoutHead.banner.setLayoutParams(params);
         binding.toolbarMall.llSearchBar.setOnClickListener(this);

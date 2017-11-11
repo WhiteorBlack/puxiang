@@ -48,6 +48,9 @@ public class CityDialog extends BaseDialog<CityDialog> {
 
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
+        if (isShowing()){
+            viewModel.getLocation(areaCode);
+        }
     }
 
     @Override

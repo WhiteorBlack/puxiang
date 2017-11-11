@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.puxiang.mall.module.shop.viewModel.CityViewModel" />
@@ -23,19 +25,28 @@
             android:layout_width="match_parent"
             android:layout_height="456px"
             android:background="@color/white"
+            android:gravity="center"
             android:orientation="horizontal">
+
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isInitData?View.GONE:View.VISIBLE}" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_left"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2" />
+                android:layout_weight="2"
+                android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_shop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}" />
         </LinearLayout>
 
         <View
