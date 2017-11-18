@@ -30,7 +30,7 @@
             app:actualImageScaleType="fitXY"
             app:viewAspectRatio="1"
             app:placeholderImageScaleType="fitXY"
-            app:url="@{item.isGif?item.gifUrl:item.imgUrl}"
+            app:url="@{item.gifUrl}"
             />
 
         <ImageView
@@ -39,7 +39,7 @@
             android:layout_height="96px"
             android:layout_gravity="center"
             android:src="@mipmap/play_gif"
-            android:visibility="@{item.isGif?View.GONE:View.VISIBLE}"
+            android:visibility="gone"
             />
 
     </FrameLayout>

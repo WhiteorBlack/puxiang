@@ -1,10 +1,14 @@
 package com.puxiang.mall.module.userinfo.viewmodel;
 
+import android.databinding.ObservableField;
+
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.config.Event;
+import com.puxiang.mall.model.data.RxMyUserInfo;
 import com.puxiang.mall.mvvm.base.ViewModel;
+import com.puxiang.mall.utils.ACache;
 import com.puxiang.mall.utils.ToastUtil;
 import com.puxiang.mall.utils.WebUtil;
 import com.puxiang.mall.widget.dialog.DefaultDialog;
@@ -25,10 +29,22 @@ import io.rong.imkit.RongIM;
 public class SettingsViewModel implements ViewModel {
     private final BaseBindActivity activity;
     private DefaultDialog dialog;
-
+    public ObservableField<RxMyUserInfo> userBean = new ObservableField<>();
     public SettingsViewModel(BaseBindActivity activity) {
         EventBus.getDefault().register(this);
         this.activity = activity;
+        getUserInfo();
+    }
+
+    private void getUserInfo() {
+        //TODO: 获取用户信息
+        MyApplication.mCache.getAsJSONBean(CacheKey.USER_INFO, RxMyUserInfo.class
+                , new ACache.CacheResultListener<RxMyUserInfo>() {
+                    @Override
+                    public void onResult(RxMyUserInfo myUserInfo) {
+                        userBean.set(myUserInfo);
+                    }
+                });
     }
 
     /**

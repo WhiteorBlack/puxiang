@@ -43,7 +43,7 @@ public class MyNestScrollView extends NestedScrollView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-       Logger.e("onFinishInflate");
+//       Logger.e("onFinishInflate");
     }
 
 

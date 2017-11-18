@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
@@ -29,6 +32,7 @@ import com.puxiang.mall.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class PostDetailAdapter extends BaseMultiItemQuickAdapter<PostDetailMultiItemEntity,
         BaseViewHolder> {
 
@@ -207,10 +211,39 @@ public class PostDetailAdapter extends BaseMultiItemQuickAdapter<PostDetailMulti
                 break;
             case POST_TYPE_STATIC_IMG:
                 String url = bean.getBean();
+                if (url.contains("?")) {
+                    try {
+                        String[] size = url.substring(url.indexOf("?") + 1).split("x");
+                        int wide = Integer.parseInt(size[0]);
+                        int height = Integer.parseInt(size[1]);
+                        float wh = wide * 1.0f / height;
+                        ((SimpleDraweeView) holder.getView(R.id.sdv)).setAspectRatio(wh);
+                    } catch (Exception e) {
+
+                    }
+                }
                 binding.setVariable(BR.item, url);
                 break;
             case POST_TYPE_GIF_IMG:
                 GifModel gifModel = bean.getBean();
+                String urlGif=gifModel.getGifUrl();
+                if (urlGif.contains("?")) {
+                    try {
+                        String[] size = urlGif.substring(urlGif.indexOf("?") + 1).split("x");
+                        int wide = Integer.parseInt(size[0]);
+                        int height = Integer.parseInt(size[1]);
+                        float wh = wide * 1.0f / height;
+                        ((SimpleDraweeView) holder.getView(R.id.sdv)).setAspectRatio(wh);
+                        urlGif=urlGif.substring(0,urlGif.indexOf("?"));
+                    } catch (Exception e) {
+
+                    }
+                }
+                DraweeController controller = Fresco.newDraweeControllerBuilder()
+                        .setAutoPlayAnimations(true)
+                        .setUri(urlGif)
+                        .build();
+                ((SimpleDraweeView) holder.getView(R.id.sdv)).setController(controller);
                 binding.setVariable(BR.item, gifModel);
                 break;
             case POST_TYPE_TEXT:

@@ -32,6 +32,8 @@
         <ImageView
             android:id="@+id/iv_back"
             style="@style/ToolbarBackBtnStyle"
+            android:background="@color/white"
+           android:src="@mipmap/nav_back_g"
             android:layout_alignParentBottom="true" />
 
         <TextView

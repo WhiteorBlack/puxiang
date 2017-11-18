@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10px"
         app:actualImageScaleType="fitXY"
-        app:viewAspectRatio="1"
+        app:viewAspectRatio="1.2"
         app:placeholderImage="@mipmap/ic_launcher"
         app:placeholderImageScaleType="fitXY"
         app:url="@{item}"

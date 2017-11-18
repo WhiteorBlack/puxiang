@@ -9,7 +9,9 @@ import com.puxiang.mall.R;
 import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.databinding.ActivitySettingsBinding;
 import com.puxiang.mall.module.userinfo.viewmodel.SettingsViewModel;
+import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.utils.ActivityUtil;
+import com.puxiang.mall.utils.WebUtil;
 
 public class SettingActivity extends BaseBindActivity implements View.OnClickListener {
     private Intent mIntent;
@@ -20,6 +22,7 @@ public class SettingActivity extends BaseBindActivity implements View.OnClickLis
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
         viewModel = new SettingsViewModel(this);
+        binding.setViewModel(viewModel);
     }
 
     @Override
@@ -28,25 +31,15 @@ public class SettingActivity extends BaseBindActivity implements View.OnClickLis
         mIntent = getIntent();
         boolean isNewestVersion = mIntent.getBooleanExtra(CacheKey.IS_NEWEST_VERSION, false);
         binding.setIsNewestVersion(isNewestVersion);
-//        binding.toolbar.tvToolbarText.setOnClickListener(this);
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.tv_toolbar_text:
-//                if (Config.ENVIRONMENT == Config.Environment.DEVELOP) {
-//                    Config.ENVIRONMENT = Config.Environment.ONLINE;
-//                    ToastUtil.toast("已切换到正式环境");
-//                } else {
-//                    Config.ENVIRONMENT = Config.Environment.DEVELOP;
-//                    ToastUtil.toast("已切换到开发环境");
-//                }
-//                Config.setEnvironment();
-//                break;
             case R.id.iv_back:
                 onBackPressed();
                 break;
             case R.id.ll_settings_password:
+                //修改为账户与安全
                 ActivityUtil.startForgetActivity(this);
                 break;
             case R.id.ll_settings_info:
@@ -56,6 +49,9 @@ public class SettingActivity extends BaseBindActivity implements View.OnClickLis
                 Intent intent = mIntent;
                 intent.setClass(this, VersionActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.ll_about:
+                WebUtil.jumpWeb(URLs.HTML_MY_ABOUT,this);
                 break;
             case R.id.ll_settings_logout:
                 viewModel.logOutDialog();

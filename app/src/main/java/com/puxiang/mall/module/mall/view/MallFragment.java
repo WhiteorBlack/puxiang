@@ -184,7 +184,6 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
         rvMall.addOnItemTouchListener(viewModel.itemClickListener());
     }
 
-
     private void initHeadView() {
         mallClassAdapter = new MallClassAdapter(R.layout.item_circle_navigate, null);
         headViewModel = new MallHeadViewModel(this, mallClassAdapter);

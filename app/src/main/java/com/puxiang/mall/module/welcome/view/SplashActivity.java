@@ -94,7 +94,6 @@ public class SplashActivity extends AppCompatActivity {
              */
             @Override
             public void onTokenIncorrect() {
-                Logger.e("rong", "tokenIncorrect");
                 getRongToken();
             }
 

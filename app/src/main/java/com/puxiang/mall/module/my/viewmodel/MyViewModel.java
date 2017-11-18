@@ -4,10 +4,12 @@ import android.databinding.ObservableField;
 import android.support.v4.app.FragmentActivity;
 
 import com.puxiang.mall.MyApplication;
+import com.puxiang.mall.R;
 import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.model.data.AppVersionJSON;
 import com.puxiang.mall.model.data.RxAds;
 import com.puxiang.mall.model.data.RxMessageState;
+import com.puxiang.mall.model.data.RxMyItem;
 import com.puxiang.mall.model.data.RxMyUserInfo;
 import com.puxiang.mall.module.im.model.IMRequest;
 import com.puxiang.mall.module.im.model.IMUserInfoProvider;
@@ -26,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
@@ -60,6 +63,66 @@ public class MyViewModel implements ViewModel {
             IMRequest.IMConnect();
             MyApplication.isLoginOB.set(true);
         }
+    }
+
+    /**
+     * 初始化订单模块数据
+     *
+     * @return
+     */
+    public List<RxMyItem> getOrderList() {
+        List<RxMyItem> items = new ArrayList<>();
+        items.add(new RxMyItem("待支付", R.mipmap.my_ordering));
+        items.add(new RxMyItem("待发货", R.mipmap.my_wait_post));
+        items.add(new RxMyItem("待收货", R.mipmap.my_receving));
+        items.add(new RxMyItem("待评价", R.mipmap.my_goods_comment));
+        items.add(new RxMyItem("退货", R.mipmap.my_reback));
+        return items;
+    }
+
+    /**
+     * 初始化我是买家模块数据
+     *
+     * @return
+     */
+    public List<RxMyItem> getBuyList() {
+        List<RxMyItem> items = new ArrayList<>();
+        items.add(new RxMyItem("我的收藏", R.mipmap.my_coll));
+        items.add(new RxMyItem("收货地址", R.mipmap.my_map));
+        items.add(new RxMyItem("我的社区", R.mipmap.my_circle));
+        items.add(new RxMyItem("我的发帖", R.mipmap.my_post));
+        items.add(new RxMyItem("评论我的", R.mipmap.my_comment));
+        items.add(new RxMyItem("赞我的", R.mipmap.my_zan));
+        items.add(new RxMyItem("我的积分", R.mipmap.my_integra_gray));
+        items.add(new RxMyItem("积分商城", R.mipmap.my_integra_shop_gray));
+        items.add(new RxMyItem("任务中心", R.mipmap.my_mession_center_gray));
+        return items;
+    }
+
+    /**
+     * 初始化 你想要的模块数据
+     *
+     * @return
+     */
+    public List<RxMyItem> getSaleList() {
+        List<RxMyItem> items = new ArrayList<>();
+        items.add(new RxMyItem("我要开店", R.mipmap.my_new_shop));
+        items.add(new RxMyItem("进货订单", R.mipmap.my_buy_order));
+        items.add(new RxMyItem("店铺管理", R.mipmap.my_man_shop));
+        items.add(new RxMyItem("我要进货", R.mipmap.my_buy_man));
+        return items;
+    }
+
+    /**
+     * 初始化 系统中心模块数据
+     *
+     * @return
+     */
+    public List<RxMyItem> getSettingList() {
+        List<RxMyItem> items = new ArrayList<>();
+        items.add(new RxMyItem("我的消息", R.mipmap.my_message));
+        items.add(new RxMyItem("设置", R.mipmap.my_setting));
+        return items;
     }
 
     /**

@@ -197,6 +197,7 @@ public class MyApplication extends ApplicationLike {
         } else {
             RONG_TOKEN = rongToken;
         }
+        Logger.e("token--"+token);
     }
 
 

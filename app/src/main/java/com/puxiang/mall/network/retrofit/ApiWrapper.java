@@ -34,6 +34,7 @@ import com.puxiang.mall.model.data.RxPayChannel;
 import com.puxiang.mall.model.data.RxPayPrice;
 import com.puxiang.mall.model.data.RxPlate;
 import com.puxiang.mall.model.data.RxPlateType;
+import com.puxiang.mall.model.data.RxPostAddress;
 import com.puxiang.mall.model.data.RxPostComment;
 import com.puxiang.mall.model.data.RxPostInfo;
 import com.puxiang.mall.model.data.RxPostLike;
@@ -387,15 +388,6 @@ public class ApiWrapper extends RetrofitUtil {
                 .compose(this.apply());
     }
 
-    /**
-     * 删除收货地址
-     *
-     * @param addressId 地址ID
-     */
-    public Observable<String> deleteAddress(String addressId) {
-        return getService().deleteAddress(addressId, MyApplication.USER_ID, MyApplication.TOKEN)
-                .compose(this.applySchedulers());
-    }
 
     /**
      * 获取消息状态
@@ -1320,8 +1312,72 @@ public class ApiWrapper extends RetrofitUtil {
      *
      * @return
      */
-    public Observable<String> getRongToken(String userId,String token) {
+    public Observable<String> getRongToken(String userId, String token) {
         return getService().getRongToken(userId, token)
+                .compose(this.applySchedulers());
+    }
+
+    public Observable<List<RxPostAddress>> getAddresses() {
+        return getService().getAddresses(MyApplication.USER_ID, MyApplication.TOKEN)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 删除收货地址
+     *
+     * @param addressId
+     * @return
+     */
+    public Observable<String> deleteAddress(String addressId) {
+        return getService().deleteAddress(addressId,MyApplication.USER_ID, MyApplication.TOKEN )
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 修改收货地址
+     *
+     * @param addressId
+     * @return
+     */
+    public Observable<String> modifyAddress(String addressId, String shipName, String shipAddress, String phone, String province, String provinceCode, String city,
+                                            String cityCode, String area, String areaCode, String tel, String isDefault) {
+        return getService().modifyAddress(MyApplication.USER_ID,
+                MyApplication.TOKEN,
+                addressId,
+                shipName,
+                shipAddress,
+                phone,
+                province,
+                provinceCode,
+                city,
+                cityCode,
+                area,
+                areaCode,
+                tel,
+                isDefault)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 添加收货地址
+     *
+     * @return
+     */
+    public Observable<String> addAddress( String shipName, String shipAddress, String phone, String province, String provinceCode, String city,
+                                            String cityCode, String area, String areaCode, String tel, String isDefault) {
+        return getService().addAddress(MyApplication.USER_ID,
+                MyApplication.TOKEN,
+                shipName,
+                shipAddress,
+                phone,
+                province,
+                provinceCode,
+                city,
+                cityCode,
+                area,
+                areaCode,
+                tel,
+                isDefault)
                 .compose(this.applySchedulers());
     }
 }

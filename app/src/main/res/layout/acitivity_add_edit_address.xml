@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.my.viewmodel.AddEditViewModel" />
+
+        <variable
+            name="address"
+            type="com.puxiang.mall.model.data.RxPostAddress" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_post_edit" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/MyTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收货人：" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请填写收货人姓名"
+                android:text="@={viewModel.postAddress.shipName}"
+                android:textColor="@color/text_black"
+                android:textSize="28px" />
+        </LinearLayout>
+
+        <include layout="@layout/view_lien_ccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/MyTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号：" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请填写收货人手机号"
+                android:inputType="number"
+                android:text="@={viewModel.postAddress.phone}"
+                android:textColor="@color/text_black"
+                android:textSize="28px" />
+        </LinearLayout>
+
+        <include layout="@layout/view_lien_ccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/MyTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="所在地：" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:text="@{viewModel.postAddress.province+` `+viewModel.postAddress.city+` `+viewModel.postAddress.area}"
+                android:textColor="@color/text_black"
+                android:textSize="28px" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="26px"
+                android:background="@mipmap/my_open" />
+        </LinearLayout>
+
+        <include layout="@layout/view_lien_ccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/MyTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="详细街道：" />
+
+            <EditText
+                android:id="@+id/et_detial"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请填写具体地址信息"
+                android:text="@={viewModel.postAddress.shipAddress}"
+                android:textColor="@color/text_black"
+                android:textSize="28px" />
+        </LinearLayout>
+
+        <include layout="@layout/view_lien_ccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/chb_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26px"
+                android:button="@drawable/chb_login"
+                android:checked="@{viewModel.postAddress.isDefault()==1}"
+                android:padding="5px"
+                android:text="设为默认"
+                android:textSize="28px" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="@color/bg_Gray_light" />
+
+        <LinearLayout
+            android:id="@+id/ll_del"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="26px"
+            android:visibility="@{viewModel.add?View.GONE:View.VISIBLE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="删除地址"
+                android:textColor="@color/gray_text"
+                android:textSize="28px" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

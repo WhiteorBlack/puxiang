@@ -167,6 +167,7 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
                         else activity.refreshFail();
                     }
 
+
                     @Override
                     public void onSuccess(RxShopList data) {
                         if (fragment != null)

@@ -2,6 +2,7 @@ package com.puxiang.mall.module.login.view;
 
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.puxiang.mall.BaseBindActivity;
@@ -20,16 +21,24 @@ import java.util.List;
 public class LoginActivity extends BaseBindActivity {
     private ActivityLoginNewBinding binding;
     private String[] titles = new String[]{"登录", "注册"};
+    private boolean isLogin = true;
 
     @Override
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_new);
+        isLogin = getIntent().getBooleanExtra("isLogin", true);
     }
 
     @Override
     public void initView() {
         binding.tbLogin.setupWithViewPager(binding.viewpager);
         binding.viewpager.setAdapter(new SimpleFragmentAdapter(getSupportFragmentManager(), getFragments(), titles));
+        if (isLogin){
+            binding.viewpager.setCurrentItem(0);
+        }else {
+            binding.viewpager.setCurrentItem(1);
+        }
+
     }
 
     private List<Fragment> getFragments() {

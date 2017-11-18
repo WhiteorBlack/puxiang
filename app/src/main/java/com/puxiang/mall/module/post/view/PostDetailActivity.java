@@ -52,7 +52,7 @@ public class PostDetailActivity extends BaseBindActivity implements OnClickListe
         binding.toolbar.setTitle("帖子详情");
         initEmotionMainFragment();
         initRv();
-        mImmersionBar.statusBarDarkFont(true).flymeOSStatusBarFontColor(R.color.text_black);
+//        mImmersionBar.statusBarDarkFont(true).flymeOSStatusBarFontColor(R.color.text_black);
     }
 
     public void initEmotionData() {

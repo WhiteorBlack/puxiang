@@ -25,6 +25,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.CoordinateConverter;
 import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -54,13 +56,10 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
     private ShopHeadViewModel shopHeadViewModel;
     private MsgCountViewModel msgCountViewModel;
     private ShopListAdapter shopListAdapter;
-    private LocationManager locationManager;
-    private Location location;
     private LocationClient locationClient;
 
     @Override
     protected void initBind() {
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -70,8 +69,6 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             requestPermission();
-        } else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 80, locationListener);
         }
         shopBinding = DataBindingUtil.setContentView(this, R.layout.activity_shop);
         shopListAdapter = new ShopListAdapter(R.layout.item_shop);
@@ -92,7 +89,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         mOption.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
         mOption.setScanSpan(60*1000);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        mOption.setIsNeedAddress(false);//可选，设置是否需要地址信息，默认不需要
+        mOption.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         mOption.setIsNeedLocationDescribe(false);//可选，设置是否需要地址描述
         mOption.setNeedDeviceDirect(false);//可选，设置是否需要设备方向结果
         mOption.setLocationNotify(false);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
@@ -109,9 +106,16 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
   private   BDLocationListener listener=new BDLocationListener() {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            shopViewModel.getCurrentLocation(bdLocation.getLatitude(), bdLocation.getLongitude());
+            Logger.e("location----"+ bdLocation.getLatitude()+" --- "+bdLocation.getLongitude()+"--"+bdLocation.getStreet());
+            if (bdLocation == null) {
+                shopViewModel.getShopList(1,"","","");
+            } else {
+                shopViewModel.getCurrentLocation(bdLocation.getLatitude(), bdLocation.getLongitude());
+            }
         }
     };
+
+
 
     @Override
     protected void onStart() {
@@ -128,23 +132,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
             return;
         }
         locationClient.start();
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 80, locationListener);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            new AlertDialog.Builder(this)
-                    .setMessage("GPS未开启，是否马上设置")
-                    .setNegativeButton("取消", (dialogInterface, i) -> {
 
-                    }).setPositiveButton("去设置", (dialogInterface, i) -> {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(intent, 0);
-            });
-
-            return;
-        }
-        location = getLastKnownLocation();
-
-        // 判断GPS是否正常启动
-        updateLocation(location);
     }
 
     public void requestPermission() {
@@ -182,108 +170,10 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         shopHeadViewModel.setAreaCode(code);
     }
 
-    // 位置监听
-    private LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onStatusChanged(String provider, int status,
-                                    Bundle extras) {
-            Logger.e("stateChange  " + status);
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            Logger.e("oooooooo");
-            if (location != null) {
-                updateLocation(location);
-            } else {
-                location = getLastKnownLocation();
-                updateLocation(location);
-            }
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            new AlertDialog.Builder(ShopListActivity.this)
-                    .setMessage("GPS未开启，是否马上设置")
-                    .setNegativeButton("取消", (dialogInterface, i) -> {
-
-                    }).setPositiveButton("去设置", (dialogInterface, i) -> {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(intent, 0);
-            });
-        }
-
-        @Override
-        public void onLocationChanged(Location location) {
-            Logger.e("onChanged");
-            if (location != null) {
-                updateLocation(location);
-            } else {
-                location = getLastKnownLocation();
-                updateLocation(location);
-            }
-
-        }
-
-    };
-
-    /**
-     * 防止拿到空的 location
-     *
-     * @return
-     */
-    private Location getLastKnownLocation() {
-        List<String> providers = locationManager.getProviders(true);
-        Location bestLocation = null;
-        for (String provider : providers) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return null;
-            }
-            Location l = locationManager.getLastKnownLocation(provider);
-            if (l == null) {
-                continue;
-            }
-            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                // Found best last known location: %s", l);
-                bestLocation = l;
-            }
-        }
-        if (bestLocation != null) {
-            Logger.e("location" + bestLocation.getLongitude());
-        } else {
-            Logger.e("retry");
-        }
-        return bestLocation;
-    }
-
-
-    /**
-     * 更新定位信息
-     *
-     * @param location
-     */
-    private void updateLocation(Location location) {
-        if (location == null) {
-            shopViewModel.getShopList(1,"","","");
-        } else {
-            shopViewModel.getCurrentLocation(location.getLatitude(), location.getLongitude());
-        }
-
-        Logger.e("location:--"+location.getLatitude()+"  lng"+location.getLongitude());
-    }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        locationManager.removeUpdates(locationListener);
         locationClient.unRegisterLocationListener(listener);
     }
 
@@ -311,9 +201,6 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 000, 80, locationListener);
-            location = getLastKnownLocation();
-            updateLocation(location);
             locationClient.start();
         }
     }
@@ -335,8 +222,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_refresh:
-                location = getLastKnownLocation();
-                updateLocation(location);
+                locationClient.requestLocation();
                 break;
         }
     }

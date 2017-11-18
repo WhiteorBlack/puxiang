@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -95,6 +96,12 @@ public class ShopHeadViewModel extends BaseObservable implements ViewModel, BGAB
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
                         super.onFail(e);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Logger.e("getBannerData");
                     }
 
                     @Override

@@ -6,6 +6,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
+import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.model.data.PostDetailMultiItemEntity;
 import com.puxiang.mall.model.data.RxComment;
@@ -27,6 +29,7 @@ import com.puxiang.mall.model.data.RxPlateFormReply;
 import com.puxiang.mall.model.data.RxPost;
 import com.puxiang.mall.model.data.RxPostInfo;
 import com.puxiang.mall.model.data.RxPostLike;
+import com.puxiang.mall.model.data.RxUserInfo;
 import com.puxiang.mall.module.emotion.viewmodel.adapter.ShareBottomDialog;
 import com.puxiang.mall.module.post.adapter.PostDetailAdapter;
 import com.puxiang.mall.module.post.adapter.PostLikeQuickAdapter;
@@ -75,6 +78,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
     public ObservableField<RxPostInfo> postInfoBean = new ObservableField<>();
     public String postId;
     private List<PostDetailMultiItemEntity> entityList;
+    private List<RxPostLike> postLikeList=new ArrayList<>();
     private String rawUrl;
     private String shareUrl;
     private ShareInfo shareInfo;
@@ -250,7 +254,6 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                     .subscribe(new NetworkSubscriber<String>() {
                         @Override
                         public void onSuccess(String bean) {
-
                         }
                     });
         }
@@ -508,7 +511,12 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                 .subscribe(new NetworkSubscriber<RxList<RxPostLike>>() {
                     @Override
                     public void onSuccess(RxList<RxPostLike> bean) {
-                        likeAdapter.setNewData(bean.getList());
+                        postLikeList.clear();
+                        postLikeList.addAll(bean.getList());
+                        if (postLikeList.size()>10){
+                            postLikeList=postLikeList.subList(0,10);
+                        }
+                        likeAdapter.setNewData(postLikeList);
                     }
                 });
     }
@@ -520,6 +528,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
      */
     private void setDetailData(RxPostInfo bean) {
         postInfoBean.set(bean);
+        notifyPropertyChanged(BR.postInfoBean);
         activity.initEmotionData();
         RxPost post = bean.getPost();
         int postType = post.getPostType();
@@ -744,6 +753,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
      */
     public void like() {
         boolean isLiked = !postInfoBean.get().getIsLiked();
+        dealPostLike(isLiked);
         postInfoBean.get().setIsLiked(isLiked);
         postInfoBean.get().getPost().setLikeQty(postInfoBean.get().getPost().getLikeQty() + (isLiked ? 1 : -1));
         String postId = postInfoBean.get().getPost().getId();
@@ -753,9 +763,36 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String bean) {
-                        getPostLikeData();
+                        ToastUtil.toast(postId+"--result--"+bean);
+
                     }
                 });
+    }
+
+    /**
+     * 本地处理点赞用户数据
+     * @param isLiked
+     */
+    private void dealPostLike(boolean isLiked) {
+        RxUserInfo userInfo=MyApplication.mCache.getAsJSONBean(CacheKey.USER_INFO,RxUserInfo.class);
+        if (userInfo==null){
+            return;
+        }
+        if (isLiked){
+            RxPostLike postLike=new RxPostLike();
+            postLike.setLikeUserId(userInfo.getUserId());
+            postLike.setLikeUser(userInfo);
+            postLikeList.add(0,postLike);
+            likeAdapter.notifyItemInserted(0);
+        }else {
+            for (int i = 0; i <postLikeList.size() ; i++) {
+                if (TextUtils.equals(postLikeList.get(i).getLikeUserId(),userInfo.getUserId())){
+                    postLikeList.remove(i);
+                    likeAdapter.notifyItemRemoved(i);
+                    break;
+                }
+            }
+        }
     }
 
 }

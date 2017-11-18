@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +22,8 @@ import com.puxiang.mall.module.login.view.BindingMobileActivity;
 import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.login.view.RegisterFragment;
 import com.puxiang.mall.module.main.view.MainActivity;
+import com.puxiang.mall.module.my.view.AddEditAddressActivity;
+import com.puxiang.mall.module.my.view.PostAddress;
 import com.puxiang.mall.module.my.view.ShowHeadPicActivity;
 import com.puxiang.mall.module.pay.view.PayActivity;
 import com.puxiang.mall.module.pay.view.PayResultActivity;
@@ -397,6 +400,18 @@ public class ActivityUtil {
         activity.startActivity(intent);
     }
 
+    /**
+     * 跳转登录注册页面
+     * @param activity
+     * @param isLogin 标识登录或注册，if true viewpager显示登录
+     */
+    public static void startLoginActivity(Activity activity,boolean isLogin) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        intent.putExtra("isLogin",isLogin);
+        activity.startActivity(intent);
+    }
+
+
     public static void startShowHeadPicActivity(Activity activity, String url, String userId) {
         Intent intent = new Intent(activity, ShowHeadPicActivity.class);
         intent.putExtra("url", url);
@@ -643,6 +658,22 @@ public class ActivityUtil {
     public static void startCityActivity(Activity activity, String areaName) {
         Intent intent = new Intent(activity, SelectCityActivity.class);
         intent.putExtra("city", areaName);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 收货地址
+     *
+     * @param activity
+     */
+    public static void startPostAddressActivity(Activity activity) {
+        Intent intent = new Intent(activity, PostAddress.class);
+        activity.startActivity(intent);
+    }
+
+    public static void startAddEditAddressActivity(Activity activity, Bundle bundle){
+        Intent intent = new Intent(activity, AddEditAddressActivity.class);
+        intent.putExtra("bundle",bundle);
         activity.startActivity(intent);
     }
 

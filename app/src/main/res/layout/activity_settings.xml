@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="com.puxiang.mall.module.userinfo.viewmodel.SettingsViewModel"/>
+            type="com.puxiang.mall.module.userinfo.viewmodel.SettingsViewModel" />
 
         <variable
             name="isNewestVersion"
-            type="Boolean"/>
+            type="Boolean" />
     </data>
 
     <LinearLayout
@@ -21,7 +22,7 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar_layout"/>
+            layout="@layout/toolbar_layout" />
 
 
         <LinearLayout
@@ -31,6 +32,42 @@
             android:background="@drawable/shadow"
             android:elevation="@dimen/elevation_height"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_settings_info"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:layout_width="100px"
+                    android:layout_height="100px"
+                    app:placeholderImage="@mipmap/mine_head"
+                    app:placeholderImageScaleType="fitXY"
+                    app:roundAsCircle="true"
+                    app:url="@{viewModel.userBean.userImage}" />
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="10px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{viewModel.userBean.viewName}" />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v2"
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
 
             <LinearLayout
                 android:id="@+id/ll_settings_password"
@@ -46,21 +83,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="修改密码"/>
+                    android:text="账户与安全" />
 
                 <ImageView
                     style="@style/nextImgStyle"
-                    android:src="@mipmap/my_open"/>
+                    android:src="@mipmap/my_open" />
             </LinearLayout>
 
             <View
                 android:id="@+id/v1"
                 style="@style/lineStyle"
                 android:layout_width="match_parent"
-                android:layout_height="1px"/>
+                android:layout_height="1px" />
 
             <LinearLayout
-                android:id="@+id/ll_settings_info"
+                android:id="@+id/ll_service"
                 style="@style/titleMarginStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,24 +110,52 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="个人信息"/>
+                    android:text="客户服务和意见反馈" />
 
                 <ImageView
                     style="@style/nextImgStyle"
-                    android:src="@mipmap/my_open"/>
+                    android:src="@mipmap/my_open" />
             </LinearLayout>
 
             <View
-                android:id="@+id/v2"
-                style="@style/lineStyle"
+                android:id="@+id/v4"
+                android:background="@color/bg_Gray_light"
                 android:layout_width="match_parent"
-                android:layout_height="1px"/>
+                android:layout_height="10px" />
+
+            <LinearLayout
+                android:id="@+id/ll_about"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="关于蒲象" />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v5"
+                android:background="@color/bg_Gray_light"
+                android:layout_width="match_parent"
+                android:layout_height="10px" />
 
             <LinearLayout
                 android:id="@+id/ll_settings_version"
                 style="@style/titleMarginStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal">
@@ -102,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15px"
                     android:layout_weight="1"
-                    android:text="版本"/>
+                    android:text="版本" />
 
                 <TextView
                     android:id="@+id/tv_version_isNew"
@@ -117,18 +182,18 @@
                     android:text="New"
                     android:textColor="@color/white"
                     android:textSize="23px"
-                    android:visibility="@{isNewestVersion?View.INVISIBLE:View.VISIBLE}"/>
+                    android:visibility="@{isNewestVersion?View.INVISIBLE:View.VISIBLE}" />
 
                 <ImageView
                     style="@style/nextImgStyle"
-                    android:src="@mipmap/my_open"/>
+                    android:src="@mipmap/my_open" />
             </LinearLayout>
 
             <View
                 android:id="@+id/v3"
                 style="@style/lineStyle"
                 android:layout_width="match_parent"
-                android:layout_height="1px"/>
+                android:layout_height="1px" />
 
             <LinearLayout
                 android:id="@+id/ll_settings_logout"
@@ -145,11 +210,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="退出登录"/>
+                    android:text="退出登录" />
 
                 <ImageView
                     style="@style/nextImgStyle"
-                    android:src="@mipmap/my_open"/>
+                    android:src="@mipmap/my_open" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

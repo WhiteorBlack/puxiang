@@ -23,7 +23,7 @@
 
     </data>
 
-    <ScrollView
+    <com.puxiang.mall.widget.MyNestScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_bg"
@@ -40,439 +40,257 @@
             <RelativeLayout
                 android:id="@+id/rl_head"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/sdv_my_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="350px"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    app:placeholderImageRes="@mipmap/ic_launcher"
-                    app:placeholderImageScaleType="fitXY"
-                    app:url="@{viewModel.bgUrl}" />
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/my_pic"
-                    android:layout_width="130px"
-                    android:layout_height="130px"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="45px"
-                    app:placeholderImage="@mipmap/mine_head"
-                    app:placeholderImageScaleType="fitXY"
-                    app:roundAsCircle="true"
-                    app:url="@{MyApplication.isLoginOB?viewModel.userBean.userImage:null}" />
+                android:layout_height="286px"
+                android:background="@color/mall_activity">
 
                 <LinearLayout
+                    android:id="@+id/ll_person"
                     android:layout_width="wrap_content"
-                    android:layout_height="130px"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="60px"
-                    android:layout_toRightOf="@+id/my_pic"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="30px"
+                    android:visibility="@{MyApplication.isLoginOB?View.VISIBLE:View.GONE}">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/my_pic"
+                        android:layout_width="100px"
+                        android:layout_height="100px"
+                        app:placeholderImage="@mipmap/mine_head"
+                        app:placeholderImageScaleType="fitXY"
+                        app:roundAsCircle="true"
+                        app:url="@{viewModel.userBean.userImage}" />
 
                     <TextView
-                        android:id="@+id/my_login_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="35px"
+                        android:layout_below="@+id/my_pic"
+                        android:layout_marginTop="20px"
                         android:maxLines="1"
-                        android:text='@{MyApplication.isLoginOB?viewModel.userBean.viewName:"登录/注册"}'
+                        android:text='@{viewModel.userBean.viewName}'
                         android:textColor="@color/white"
-                        android:textSize="30px" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="35px"
-                        android:layout_marginTop="10px"
-                        android:gravity="bottom"
-                        android:orientation="horizontal"
-                        android:visibility="@{MyApplication.isLoginOB?View.VISIBLE:View.GONE}">
-
-                        <TextView
-                            android:id="@+id/tv_my_level"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/my_login_text"
-
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/my_pic"
-                            android:text='@{MyApplication.isLoginOB?viewModel.userBean.county:""}'
-                            android:textColor="@color/white"
-                            android:textSize="30px" />
-
-                        <TextView
-                            android:id="@+id/tv_my_role"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/my_login_text"
-                            android:layout_marginLeft="15px"
-                            android:layout_toRightOf="@+id/tv_my_level"
-                            android:text='@{MyApplication.isLoginOB?viewModel.userBean.userRole:""}'
-                            android:textColor="@color/white"
-                            android:textSize="25px" />
-                    </LinearLayout>
+                        android:textSize="34px" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/my_next_up"
-                    android:layout_width="38px"
-                    android:layout_height="55px"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/sideMargin"
-                    android:src="@mipmap/my_open" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingTop="30px"
+                    android:visibility="@{MyApplication.isLoginOB?View.GONE:View.VISIBLE}">
+
+                    <Button
+                        android:id="@+id/my_login_text"
+                        android:layout_width="200px"
+                        android:layout_height="60px"
+                        android:background="@drawable/btn_login"
+                        android:text="登录"
+                        android:textColor="@color/white"
+                        android:textSize="28px" />
+
+                    <Button
+                        android:id="@+id/btn_register"
+                        android:layout_width="200px"
+                        android:layout_height="60px"
+                        android:layout_marginLeft="50px"
+                        android:background="@drawable/btn_register"
+                        android:text="注册"
+                        android:textColor="@color/text_black"
+                        android:textSize="28px" />
+                </LinearLayout>
+
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/my_mall_ll"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20px"
-                android:background="@color/view_bg"
-                android:elevation="4px"
-                android:orientation="vertical">
+                android:background="@color/white"
+                android:paddingBottom="10px"
+                android:paddingTop="35px">
 
-                <LinearLayout
-                    android:id="@+id/ll_my_order"
-                    style="@style/MyFragment_item_style"
+                <RelativeLayout
+                    android:id="@+id/ll_all_order"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="24px"
+                    android:paddingRight="24px">
 
                     <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_order" />
+                        android:id="@+id/iv_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/my_orders" />
 
                     <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginLeft="10px"
+                        android:textSize="30px"
+                        android:textColor="#535353"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/iv_order"
                         android:text="我的订单" />
 
                     <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-                <include layout="@layout/view_lien" />
-
-                <LinearLayout
-                    android:id="@+id/ll_my_collect"
-                    style="@style/MyFragment_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_coll" />
+                        android:id="@+id/iv_order_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/my_open" />
 
                     <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="我的收藏"
-                        />
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/iv_order_arrow"
+                        android:paddingRight="14px"
+                        android:text="查看全部订单"
+                        android:textColor="#b2b2b2"
+                        android:textSize="24px" />
 
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
+                </RelativeLayout>
 
-                </LinearLayout>
-
-                <include layout="@layout/view_lien" />
-
-                <LinearLayout
-                    android:id="@+id/ll_my_address"
-                    style="@style/MyFragment_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_map" />
-
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="收货地址"
-                       />
-
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/my_bbs_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20px"
-                android:background="@color/view_bg"
-                android:elevation="4px"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/ll_my_agent"
-                    style="@style/MyFragment_item_style"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_order"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility='@{!MyApplication.isLoginOB?View.GONE:viewModel.userBean.userRole.equals("agent")?View.VISIBLE:View.GONE}'>
+                    android:layout_below="@+id/ll_all_order"
+                    android:layout_marginTop="30px" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_agent" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bg_Gray_light" />
 
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="我的代理"
-                        />
-
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-                <include
-                    android:id="@+id/v_lien_agent"
-                    layout="@layout/view_lien" />
-
-
-                <LinearLayout
-                    android:id="@+id/ll_my_message"
-                    style="@style/MyFragment_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_message" />
-
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="我的消息"
-                       />
-
-                    <View
-                        android:id="@+id/message_red_point"
-                        android:layout_width="16px"
-                        android:layout_height="16px"
-                        android:layout_marginRight="15px"
-                        android:background="@drawable/point_red"
-                        android:visibility="@{messageState.hasMyMessage?View.VISIBLE:View.INVISIBLE}" />
-
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-                <include layout="@layout/view_lien" />
-
-                <LinearLayout
-                    android:id="@+id/ll_my_topic"
-                    style="@style/MyFragment_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_topic" />
-
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="我的发帖" />
-
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-                <include layout="@layout/view_lien" />
-
-                <LinearLayout
-                    android:id="@+id/ll_my_reply"
-                    style="@style/MyFragment_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_reply" />
-
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="评论我的" />
-
-                    <View
-                        android:id="@+id/reply_red_point"
-                        android:layout_width="16px"
-                        android:layout_height="16px"
-                        android:layout_marginRight="15px"
-                        android:background="@drawable/point_red"
-                        android:visibility="@{messageState.commentMe==0?View.GONE:View.VISIBLE}" />
-
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-                <include layout="@layout/view_lien" />
-
-                <LinearLayout
-                    android:id="@+id/ll_my_like"
-                    style="@style/MyFragment_item_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_like" />
-
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="赞我的" />
-
-                    <View
-                        android:id="@+id/like_red_point"
-                        android:layout_width="16px"
-                        android:layout_height="16px"
-                        android:layout_marginRight="15px"
-                        android:background="@drawable/point_red"
-                        android:visibility="@{messageState.likeMe==0?View.GONE:View.VISIBLE}" />
-
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/my_service_ll"
+            <RelativeLayout
+                android:id="@+id/rl_buyer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/view_bg"
-                android:elevation="4px"
-                android:orientation="vertical">
+                android:background="@color/white">
+                <View
+                    android:id="@+id/v1"
+                    android:layout_width="4px"
+                    android:layout_height="16px"
+                    android:layout_marginTop="30px"
+                    android:layout_marginLeft="24px"
+                    android:background="@color/mall_activity"/>
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_toRightOf="@+id/v1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginTop="20px"
+                    android:text="我是买家"
+                    android:textColor="#8e8d8d"
+                    android:textSize="24px" />
 
-                <LinearLayout
-                    android:id="@+id/ll_my_server"
-                    style="@style/MyFragment_item_style"
+                <View
+                    android:id="@+id/view_line1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_title"
+                    android:layout_marginTop="5px"
+                    android:background="@color/bg_Gray_light" />
 
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_custom" />
-
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="客服中心"
-                        />
-
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-                <include layout="@layout/view_lien" />
-
-                <LinearLayout
-                    android:id="@+id/ll_my_about"
-                    android:visibility="gone"
-                    style="@style/MyFragment_item_style"
-
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_buyer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_line1" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_about" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bg_Gray_light" />
 
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="关于我们"
-                       />
+            <RelativeLayout
+                android:id="@+id/rl_saler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <View
+                    android:id="@+id/v2"
+                    android:layout_width="4px"
+                    android:layout_height="16px"
+                    android:layout_marginTop="30px"
+                    android:layout_marginLeft="24px"
+                    android:background="@color/mall_activity"/>
+                <TextView
+                    android:layout_toRightOf="@+id/v2"
+                    android:id="@+id/tv_title_saler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginTop="20px"
+                    android:text="你想要的"
+                    android:textColor="@color/gray_text"
+                    android:textSize="24px" />
 
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-
-                <include layout="@layout/view_lien" />
-
-                <LinearLayout
-                    android:id="@+id/ll_my_settings"
-                    style="@style/MyFragment_item_style"
+                <View
+                    android:id="@+id/view_line2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_title_saler"
+                    android:layout_marginTop="5px"
+                    android:background="@color/bg_Gray_light" />
 
-                    <ImageView
-                        android:layout_width="40px"
-                        android:layout_height="40px"
-                        android:src="@mipmap/my_set" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_saler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_line2" />
+            </RelativeLayout>
 
-                    <TextView
-                        style="@style/MyTitleStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="设置"
-                       />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bg_Gray_light" />
 
-                    <View
-                        android:id="@+id/settings_red_point"
-                        android:layout_width="16px"
-                        android:layout_height="16px"
-                        android:layout_marginRight="15px"
-                        android:background="@drawable/point_red"
-                        android:visibility="@{messageState.newestVersion?View.GONE:View.VISIBLE}" />
+            <RelativeLayout
+                android:id="@+id/rl_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <View
+                    android:id="@+id/v3"
+                    android:layout_width="4px"
+                    android:layout_height="16px"
+                    android:layout_marginTop="30px"
+                    android:layout_marginLeft="24px"
+                    android:background="@color/mall_activity"/>
+                <TextView
+                    android:layout_toRightOf="@+id/v3"
+                    android:id="@+id/tv_title_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginTop="20px"
+                    android:text="系统中心"
+                    android:textColor="@color/gray_text"
+                    android:textSize="24px" />
 
-                    <ImageView
-                        style="@style/nextImgStyle"
-                        android:src="@mipmap/my_open" />
-                </LinearLayout>
-            </LinearLayout>
+                <View
+                    android:id="@+id/view_line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_title_setting"
+                    android:layout_marginTop="5px"
+                    android:background="@color/bg_Gray_light" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_line3" />
+            </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.puxiang.mall.widget.MyNestScrollView>
 </layout>

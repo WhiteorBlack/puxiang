@@ -90,4 +90,5 @@
     <color name="pop_bg_color">#99020202</color>
     <color name="toolbar_bg">#FFB71E14</color>
     <color name="searchBarTextColor">#FF514F4F</color>
+    <color name="address_default">#FFFDA002</color>
 </resources>

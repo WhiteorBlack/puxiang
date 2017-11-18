@@ -29,6 +29,7 @@ import com.puxiang.mall.model.data.RxPayChannel;
 import com.puxiang.mall.model.data.RxPayPrice;
 import com.puxiang.mall.model.data.RxPlate;
 import com.puxiang.mall.model.data.RxPlateType;
+import com.puxiang.mall.model.data.RxPostAddress;
 import com.puxiang.mall.model.data.RxPostComment;
 import com.puxiang.mall.model.data.RxPostInfo;
 import com.puxiang.mall.model.data.RxPostLike;
@@ -784,13 +785,13 @@ public interface ApiService {
                                                    @Field("keyword") String keyword,
                                                    @Field("areaCode") String areaCode,
                                                    @Field("areaName") String areaName,
-                                                   @Field("orderBy")String orderBy);
+                                                   @Field("orderBy") String orderBy);
 
     //获取定位信息
     @FormUrlEncoded
     @POST("location/getLocation.do")
     Observable<HttpResult<RxLocation>> getLocation(@Field("lat") double lat,
-                                                         @Field("lng") double lng);
+                                                   @Field("lng") double lng);
 
     //获取商家详情
     @FormUrlEncoded
@@ -801,12 +802,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("mall/product/getBatchProducts.do")
     Observable<HttpResult<RxBatchList>> getBatchProducts(@Field("pageNo") String pageNo,
-                                                        @Field("pageSize") String pageSize,
-                                                        @Field("keyword") String keyword,
-                                                        @Field("order") String areaCode,
-                                                        @Field("orderBy") String orderBy,
-                                                        @Field("userId") String userId,
-                                                        @Field("token") String token);
+                                                         @Field("pageSize") String pageSize,
+                                                         @Field("keyword") String keyword,
+                                                         @Field("order") String areaCode,
+                                                         @Field("orderBy") String orderBy,
+                                                         @Field("userId") String userId,
+                                                         @Field("token") String token);
 
     //获取进货商品列表
     @FormUrlEncoded
@@ -825,5 +826,48 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("rongCloud/getToken.do")
     Observable<HttpResult<String>> getRongToken(@Field("userId") String userId,
-                                    @Field("token") String token);
+                                                @Field("token") String token);
+
+    //获取收货地址
+    @FormUrlEncoded
+    @POST("mall/member/deliveryAddr/getAddresses.do")
+    Observable<HttpResult<List<RxPostAddress>>> getAddresses(@Field("userId") String userId,
+                                                             @Field("token") String token);
+
+
+    //修改收货地址
+    @FormUrlEncoded
+    @POST("mall/member/deliveryAddr/modifyAddress.do")
+    Observable<HttpResult<String>> modifyAddress(@Field("userId") String userId,
+                                                 @Field("token") String token,
+                                                 @Field("addressId") String addressId,
+                                                 @Field("shipName") String shipName,
+                                                 @Field("shipAddress") String shipAddress,
+                                                 @Field("phone") String phone,
+                                                 @Field("province") String province,
+                                                 @Field("provinceCode") String provinceCode,
+                                                 @Field("city") String city,
+                                                 @Field("cityCode") String cityCode,
+                                                 @Field("area") String area,
+                                                 @Field("areaCode") String areaCode,
+                                                 @Field("tel") String tel,
+                                                 @Field("isDefault") String isDefault);
+
+    //添加收货地址
+    @FormUrlEncoded
+    @POST("mall/member/deliveryAddr/addAddress.do")
+    Observable<HttpResult<String>> addAddress(@Field("userId") String userId,
+                                                 @Field("token") String token,
+                                                 @Field("shipName") String shipName,
+                                                 @Field("shipAddress") String shipAddress,
+                                                 @Field("phone") String phone,
+                                                 @Field("province") String province,
+                                                 @Field("provinceCode") String provinceCode,
+                                                 @Field("city") String city,
+                                                 @Field("cityCode") String cityCode,
+                                                 @Field("area") String area,
+                                                 @Field("areaCode") String areaCode,
+                                                 @Field("tel") String tel,
+                                                 @Field("isDefault") String isDefault);
+
 }

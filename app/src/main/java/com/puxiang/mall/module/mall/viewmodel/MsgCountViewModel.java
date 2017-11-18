@@ -5,6 +5,7 @@ import android.databinding.Bindable;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.fragment.BaseBindFragment;
@@ -54,6 +55,12 @@ public class MsgCountViewModel extends BaseObservable implements ViewModel {
                 .getUnreadMessage()
                 .compose(activity == null ? fragment.bindUntilEvent(FragmentEvent.DESTROY) : activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new NetworkSubscriber<List<RxUnreadMessage>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Logger.e("getMsgCount");
+                    }
+
                     @Override
                     public void onSuccess(List<RxUnreadMessage> data) {
                         if (data.size() > 0) {

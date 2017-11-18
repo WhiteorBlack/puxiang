@@ -264,6 +264,16 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".module.my.view.PostAddress"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.my.view.AddEditAddressActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
         <service
             android:name="com.puxiang.mall.service.InitializeService"
             android:exported="false">
@@ -412,7 +422,7 @@
         <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="开发者申请的AK"></meta-data>
+            android:value="IrX4DNbdqLfdyKltrkc50DFG96mmOB1j"></meta-data>
 
         <service
             android:name="com.baidu.location.f"

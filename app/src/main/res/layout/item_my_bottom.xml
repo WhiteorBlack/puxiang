@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxMyItem" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
+        <import type="android.view.View"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30px"
+        android:layout_marginTop="30px"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{AppUtil.getDrawable(item.resId)}" />
+            <ImageView
+                android:layout_width="8px"
+                android:layout_height="8px"
+                android:layout_gravity="top|right"
+                android:layout_marginRight="5px"
+                android:visibility="@{item.hasMsg?View.VISIBLE:View.GONE}"
+                android:background="@drawable/point_selected"/>
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.name}"
+            android:layout_marginTop="15px"
+            android:textColor="#303846"
+            android:textSize="24px" />
+    </LinearLayout>
+</layout>
