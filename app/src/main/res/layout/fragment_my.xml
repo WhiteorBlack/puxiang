@@ -177,7 +177,7 @@
                     android:id="@+id/v1"
                     android:layout_width="4px"
                     android:layout_height="16px"
-                    android:layout_marginTop="30px"
+                    android:layout_marginTop="27px"
                     android:layout_marginLeft="24px"
                     android:background="@color/mall_activity"/>
                 <TextView
@@ -220,7 +220,7 @@
                     android:id="@+id/v2"
                     android:layout_width="4px"
                     android:layout_height="16px"
-                    android:layout_marginTop="30px"
+                    android:layout_marginTop="27px"
                     android:layout_marginLeft="24px"
                     android:background="@color/mall_activity"/>
                 <TextView
@@ -263,7 +263,7 @@
                     android:id="@+id/v3"
                     android:layout_width="4px"
                     android:layout_height="16px"
-                    android:layout_marginTop="30px"
+                    android:layout_marginTop="27px"
                     android:layout_marginLeft="24px"
                     android:background="@color/mall_activity"/>
                 <TextView
