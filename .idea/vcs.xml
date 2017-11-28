@@ -5,6 +5,7 @@
     <mapping directory="$PROJECT_DIR$/IMKit" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/IMLib" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/app" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/galleryfinal" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/indexlib" vcs="svn" />
   </component>
 </project>
