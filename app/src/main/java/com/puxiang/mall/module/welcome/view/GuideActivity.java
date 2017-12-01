@@ -3,6 +3,7 @@ package com.puxiang.mall.module.welcome.view;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -56,6 +57,7 @@ public class GuideActivity extends BaseBindActivity {
         points = new View[res.length];
         adapter = new GuideAdapter();
         binding.viewpager.setAdapter(adapter);
+
         binding.viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

@@ -41,7 +41,7 @@ public class BindingMobileViewModel implements ViewModel {
      */
     public void checkMobile(String account) {
         if (StringUtil.isEmpty(account)) {
-            ToastUtil.toast("账号不能为空");
+            ToastUtil.toast("手机号码不能为空");
         } else {
             if (!StringUtil.isPhoneNumberValid(account)) {
                 ToastUtil.toast(getString(R.string.phoneNumberInvalid));
@@ -61,7 +61,8 @@ public class BindingMobileViewModel implements ViewModel {
             ToastUtil.toast(getString(R.string.phoneNumberInvalid));
         } else {
             isShowBar.set(true);
-            MainActivity.handler.postDelayed(() -> binding(accounts, smsCode), 1500);
+            binding(accounts,smsCode);
+//            MainActivity.handler.postDelayed(() -> binding(accounts, smsCode), 1500);
 
         }
     }

@@ -78,7 +78,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
     public ObservableField<RxPostInfo> postInfoBean = new ObservableField<>();
     public String postId;
     private List<PostDetailMultiItemEntity> entityList;
-    private List<RxPostLike> postLikeList=new ArrayList<>();
+    private List<RxPostLike> postLikeList = new ArrayList<>();
     private String rawUrl;
     private String shareUrl;
     private ShareInfo shareInfo;
@@ -513,8 +513,8 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                     public void onSuccess(RxList<RxPostLike> bean) {
                         postLikeList.clear();
                         postLikeList.addAll(bean.getList());
-                        if (postLikeList.size()>10){
-                            postLikeList=postLikeList.subList(0,10);
+                        if (postLikeList.size() > 10) {
+                            postLikeList = postLikeList.subList(0, 10);
                         }
                         likeAdapter.setNewData(postLikeList);
                     }
@@ -528,6 +528,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
      */
     private void setDetailData(RxPostInfo bean) {
         postInfoBean.set(bean);
+        postInfoBean.get().setIsZan(postInfoBean.get().getIsLiked());
         notifyPropertyChanged(BR.postInfoBean);
         activity.initEmotionData();
         RxPost post = bean.getPost();
@@ -590,7 +591,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
         //处理图片和文字
         for (String string : stringList) {
             //图片处理
-            if (string.contains("http://huangyicheng.")) {
+            if (isPicUrl(string)) {
                 ImageDispose(string);
             } else { //文字处理
                 textDispose(string);
@@ -639,34 +640,27 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
      * @param content
      * @return
      */
-    public static List<String> getStringList(String content) {
+    public List<String> getStringList(String content) {
         List<String> stringList = new ArrayList<>();
         //抽取文字和图片
         String[] split = content.split("<img src=");
         for (String s : split) {
 
-            if (s.contains("http://huangyicheng.")) {
-//                if (s.contains("?")) {
-//                    int i = s.indexOf("?");
-//                    int j = s.indexOf(">");
-//                    String imgUrl = s.substring(0, i);
-//
-//                    if (imgUrl.contains("\"")) {
-//                        imgUrl = imgUrl.substring(1);
-//                    }
-//                    stringList.add(imgUrl);
-//                    if (j < s.length()) {
-//                        stringList.add(s.substring(j + 1));
-//                    }
-//                } else {
+            if (isPicUrl(s)) {
+
+                int i = 0;
+                if (s.contains("\"")) {
                     s = s.substring(1);
-                    int i = s.indexOf("\"");
-                    int j = s.indexOf(">");
-                    String imgUrl = s.substring(0, i);
-                    stringList.add(imgUrl);
-                    if (j < s.length()) {
-                        stringList.add(s.substring(j + 1));
-//                    }
+                    i = s.indexOf("\"");
+                } else {
+                    i = s.indexOf(">")-1;
+                }
+                int j = s.indexOf(">");
+                String imgUrl = s.substring(0, i);
+                stringList.add(imgUrl);
+                if (j < s.length()) {
+                    s.replaceAll("/>", "");
+                    stringList.add(s.substring(j + 1));
                 }
 
             } else {
@@ -674,6 +668,15 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
             }
         }
         return stringList;
+    }
+
+    private boolean isPicUrl(String url) {
+        if ((url.contains("http://") || url.contains("https://")) && (url.contains(".jpg") || url.contains(".jpeg")
+                || url.contains(".png") || url.contains(".bmp") || url.contains(".JPG") || url.contains(".JPEG")
+                || url.contains(".PNG") || url.contains(".BMP")||url.contains(".gif"))) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -763,7 +766,6 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String bean) {
-                        ToastUtil.toast(postId+"--result--"+bean);
 
                     }
                 });
@@ -771,22 +773,23 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
 
     /**
      * 本地处理点赞用户数据
+     *
      * @param isLiked
      */
     private void dealPostLike(boolean isLiked) {
-        RxUserInfo userInfo=MyApplication.mCache.getAsJSONBean(CacheKey.USER_INFO,RxUserInfo.class);
-        if (userInfo==null){
+        RxUserInfo userInfo = MyApplication.mCache.getAsJSONBean(CacheKey.USER_INFO, RxUserInfo.class);
+        if (userInfo == null) {
             return;
         }
-        if (isLiked){
-            RxPostLike postLike=new RxPostLike();
+        if (isLiked) {
+            RxPostLike postLike = new RxPostLike();
             postLike.setLikeUserId(userInfo.getUserId());
             postLike.setLikeUser(userInfo);
-            postLikeList.add(0,postLike);
+            postLikeList.add(0, postLike);
             likeAdapter.notifyItemInserted(0);
-        }else {
-            for (int i = 0; i <postLikeList.size() ; i++) {
-                if (TextUtils.equals(postLikeList.get(i).getLikeUserId(),userInfo.getUserId())){
+        } else {
+            for (int i = 0; i < postLikeList.size(); i++) {
+                if (TextUtils.equals(postLikeList.get(i).getLikeUserId(), userInfo.getUserId())) {
                     postLikeList.remove(i);
                     likeAdapter.notifyItemRemoved(i);
                     break;

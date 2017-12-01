@@ -5,6 +5,7 @@ import android.databinding.ViewDataBinding;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.R;
 import com.puxiang.mall.adapter.BindingViewHolder;
@@ -22,27 +23,24 @@ public class PlatePostAdapter extends EasyBindQuickAdapter<RxPostInfo> {
         holder.addOnClickListener(R.id.tv_user_name)
                 .addOnClickListener(R.id.sdv_bbs_pic)
                 .addOnClickListener(R.id.iv_like_icon);
-    }
+        if (item.getPost().getPicUrls() != null && item.getPost().getPicUrls().length == 1) {
+            String url = item.getPost().getPicOnly().get();
+            if (url.contains("?")) {
+                try {
+                    String[] size = url.substring(url.indexOf("?") + 1).split("x");
+                    int wide = Integer.parseInt(size[0]);
+                    int height = Integer.parseInt(size[1]);
+                    float wh = wide * 1.0f / height;
+                    ((SimpleDraweeView) holder.getView(R.id.show_item_one)).setAspectRatio(wh);
+                } catch (Exception e) {
 
-    @Override
-    protected View getItemView(int layoutResId, ViewGroup parent) {
-        ViewDataBinding binding = DataBindingUtil.inflate(mLayoutInflater, layoutResId, parent, false);
-        if (binding == null) {
-            return super.getItemView(layoutResId, parent);
+                }
+            }
         }
-        View view = binding.getRoot();
-        view.setTag(R.id.BaseQuickAdapter_databinding_support, binding);
-        return view;
-    }
-
-    @Override
-    protected void convert(BindingViewHolder holder, RxPostInfo item) {
-        super.convert(holder, item);
         ViewDataBinding binding = holder.getBinding();
         binding.setVariable(BR.item, item);
         binding.executePendingBindings();
         binding.getRoot().setTag(item);
-
-
     }
+
 }

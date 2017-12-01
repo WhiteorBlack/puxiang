@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -61,6 +62,9 @@ public class MainActivity extends BaseBindActivity implements EasyPermission.Per
     protected void onResume() {
         super.onResume();
         viewModel.getShopData();
+        if (MyApplication.isLogin()) {
+            viewModel.getMessageState();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

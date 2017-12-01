@@ -107,7 +107,6 @@ public class LoadingWindow {
             createProgressWindow();
         }
         if (!popIsShow()) {
-            Logger.e("show window");
             try {
                 backgroundAlpha(0.5f);
                 popWindow.showAtLocation(windowView, Gravity.CENTER, 0, 0);

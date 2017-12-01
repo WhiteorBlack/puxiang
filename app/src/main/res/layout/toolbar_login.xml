@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <import type="com.puxiang.mall.utils.AppUtil"/>
+        <import type="com.puxiang.mall.R"/>
         <variable
             name="title"
             type="String" />
@@ -14,19 +15,31 @@
         <variable
             name="isPublishing"
             type="boolean" />
+
+        <variable
+            name="color"
+            type="int"/>
+        <variable
+            name="backSrc"
+            type="int"/>
+        <variable
+            name="textColor"
+            type="int"/>
     </data>
 
     <RelativeLayout
         android:id="@+id/login_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarSizeHeight"
-        android:background="@color/toolbar_bg"
+        android:background="@{AppUtil.getColor(color,R.color.mall_activity)}"
         android:elevation="@dimen/elevation_height">
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_alignParentBottom="true"
             style="@style/ToolbarBackBtnStyle"
+            android:background="@{AppUtil.getColor(color,R.color.mall_activity)}"
+            android:src="@{AppUtil.getDrawable(backSrc,R.mipmap.nav_back_w)}"
             android:onClick="onClick" />
 
         <TextView
@@ -35,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/toolBarBottomMargin"
+            android:textColor="@{AppUtil.getColor(textColor,R.color.white)}"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:text="@{title}" />
@@ -45,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/toolBarSize"
             android:layout_alignParentRight="true"
+            android:textColor="@{AppUtil.getColor(textColor,R.color.white)}"
             android:enabled="@{!isPublishing}"
             android:gravity="center"
             android:onClick="onClick"

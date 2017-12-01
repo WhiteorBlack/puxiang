@@ -7,6 +7,7 @@ import android.databinding.BindingAdapter;
 import android.util.Log;
 import android.view.View;
 
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;

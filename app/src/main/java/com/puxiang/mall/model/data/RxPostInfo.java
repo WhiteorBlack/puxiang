@@ -128,8 +128,18 @@ public class RxPostInfo extends BaseObservable implements MultiItemEntity {
 
     public void setIsLiked(boolean isLiked) {
         this.isLiked = isLiked;
-        isZan.set(isLiked);
+        setIsZan(isLiked);
         notifyPropertyChanged(BR.isLiked);
+    }
+
+    @Bindable
+    public boolean getIsZan() {
+        return isZan.get();
+    }
+
+    public void setIsZan(boolean isZan) {
+        this.isZan.set(isZan);
+        notifyPropertyChanged(BR.isZan);
     }
 
     public boolean getIsOwner() {

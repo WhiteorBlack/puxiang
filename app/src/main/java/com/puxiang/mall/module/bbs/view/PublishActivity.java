@@ -2,6 +2,7 @@ package com.puxiang.mall.module.bbs.view;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,6 +63,10 @@ public class PublishActivity extends BaseBindActivity implements EasyPermission.
             String plateName = data.getStringExtra(Config.PLATE_NAME);
             viewModel.plateName.set(getString(R.string.publish_to) + plateName);
         }
+//        if (resultCode==-1){
+//            List<Uri> picList=data.getParcelableArrayListExtra("android.intent.extra.RETURN_RESULT");
+//            viewModel.setPicList(picList);
+//        }
     }
 
     public void onClick(View view) {

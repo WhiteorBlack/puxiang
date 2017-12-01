@@ -7,9 +7,16 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig;
+import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.model.data.RongMessage;
 import com.puxiang.mall.mvvm.base.ApplicationLike;
+import com.puxiang.mall.service.InitializeService;
 import com.tencent.tinker.loader.TinkerRuntimeException;
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
@@ -31,31 +38,7 @@ public class SampleApplication extends Application {
     public void onCreate() {
         super.onCreate();
         applicationLike.onCreate();
-        RongIM.init(this);
-        initRongIM();
-    }
-
-    private void initRongIM() {
-        /**
-         * 注意：
-         *
-         * IMKit SDK调用第一步 初始化
-         *
-         * context上下文
-         *
-         * 只有两个进程需要初始化，主进程和 push 进程
-         */
-//        RongIM.setServerInfo("nav.cn.ronghub.com", "up.qbox.me");
-        RongIM.init(this,"cpj2xarlc19nn");
-//        Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
-
-//        try {
-//            RongIM.registerMessageTemplate(new RealTimeLocationMessageProvider());
-//            RongIM.registerMessageType(RongMessage.class);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
+//        InitializeService.start(this, InitializeService.ACTION_INIT_WHEN_APP_CREATE);
     }
 
     @Override

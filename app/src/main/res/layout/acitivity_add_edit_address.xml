@@ -132,7 +132,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请填写具体地址信息"
-                android:text="@={viewModel.postAddress.shipAddress}"
+                android:text="@={viewModel.postAddress.detailAddress}"
                 android:textColor="@color/text_black"
                 android:textSize="28px" />
         </LinearLayout>

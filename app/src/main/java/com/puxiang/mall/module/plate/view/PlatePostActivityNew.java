@@ -155,10 +155,12 @@ public class PlatePostActivityNew extends BaseBindActivity {
                     binding.ctl.setTitle("");
                     binding.ctl.setContentScrimColor(getResources().getColor(R.color.Alpha_theme));
                     mImmersionBar.transparentBar();
+                    binding.mobileToolbar.setNavigationIcon(R.mipmap.nav_back_w);
                     //展开状态
                 } else if (state == State.COLLAPSED) {
                     binding.mPtrFrame.setEnabled(false);
                     //折叠状态
+                    binding.mobileToolbar.setNavigationIcon(R.mipmap.nav_back_g);
 //                    ctl.setCollapsedTitleGravity(View.TEXT_ALIGNMENT_GRAVITY);
                     binding.ctl.setTitle("圈子");
                     binding.ctl.setCollapsedTitleTextColor(getResources().getColor(R.color.searchTextColor));
@@ -190,7 +192,7 @@ public class PlatePostActivityNew extends BaseBindActivity {
         switch (view.getId()) {
             case R.id.iv_put:
                 if (StringUtil.isEmpty(MyApplication.TOKEN)) {
-                    startActivity(new Intent(this, LoginFragment.class));
+                   ActivityUtil.startLoginActivity(this);
                 } else {
                     if (!NetworkUtil.isNetworkAvailable(this)) {
                         ToastUtil.toast("当前网络不可用！");
@@ -206,7 +208,7 @@ public class PlatePostActivityNew extends BaseBindActivity {
                 break;
             case R.id.v_plate_jion:
                 if (StringUtil.isEmpty(MyApplication.TOKEN)) {
-                    startActivity(new Intent(this, LoginFragment.class));
+                    ActivityUtil.startLoginActivity(this);
                 } else {
                     viewModel.setAttentPlate();
                 }

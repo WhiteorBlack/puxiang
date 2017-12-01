@@ -41,10 +41,10 @@
             android:layout_height="16px"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/tab_main_indicator"
-            android:layout_marginRight="37px"
-            android:layout_marginTop="13px"
+            android:layout_marginRight="39px"
+            android:layout_marginTop="10px"
             android:background="@drawable/point_red"
-            android:visibility="@{messageState.total == 0 ?View.INVISIBLE:View.VISIBLE}" />
+            android:visibility="@{messageState.isMine ?View.VISIBLE:View.INVISIBLE}" />
 
         <TextView
             android:id="@+id/tv_shop_count"

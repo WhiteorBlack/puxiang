@@ -9,6 +9,15 @@ public class RxMyItem {
     private String name;
     private int resId;
     private boolean hasMsg = false;
+    private int pos;
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
 
     public boolean isHasMsg() {
         return hasMsg;
@@ -20,6 +29,12 @@ public class RxMyItem {
 
     public RxMyItem(String name, int resId) {
         this.name = name;
+        this.resId = resId;
+    }
+
+    public RxMyItem(String name, int resId,int pos) {
+        this.name = name;
+        this.pos=pos;
         this.resId = resId;
     }
 

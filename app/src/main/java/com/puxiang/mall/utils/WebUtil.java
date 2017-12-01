@@ -17,7 +17,7 @@ import android.webkit.WebViewClient;
 
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.config.Config;
-import com.puxiang.mall.module.login.view.LoginFragment;
+import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.web.view.WebActivity;
 import com.puxiang.mall.module.web.view.WebWithSearchActivity;
 import com.puxiang.mall.network.URLs;
@@ -144,7 +144,7 @@ public class WebUtil {
 
         Intent intent;
         if (StringUtil.isEmpty(MyApplication.TOKEN)) {
-            intent = new Intent(context, LoginFragment.class);
+            intent = new Intent(context, LoginActivity.class);
         } else {
             intent = new Intent(context, WebActivity.class);
             intent.putExtra(URL, url);

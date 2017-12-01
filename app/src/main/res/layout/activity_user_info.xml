@@ -32,7 +32,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/sideMarginTop"
             android:background="@drawable/shadow"
             android:elevation="@dimen/elevation_height"
             android:orientation="vertical">
@@ -59,7 +58,7 @@
                     android:layout_width="100px"
                     android:layout_height="100px"
                     android:layout_marginRight="35px"
-                    app:placeholderImage="@mipmap/mine_head"
+                    app:placeholderImage="@mipmap/mine_head_red"
                     app:placeholderImageScaleType="fitXY"
                     app:roundAsCircle="true"
                     app:url="@{viewModel.userBean.userImage}"
@@ -259,6 +258,7 @@
                     android:id="@+id/tv_birthday"
                     style="@style/myInfoTextAlphaStyle2"
                     android:layout_width="wrap_content"
+                    android:text="@{viewModel.userBean.birthday}"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/myInfoTextSize" />
 

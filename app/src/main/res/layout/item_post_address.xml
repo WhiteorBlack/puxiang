@@ -72,7 +72,7 @@
                     android:drawableLeft="@mipmap/icon_red_location"
                     android:drawablePadding="10px"
                     android:gravity="center_vertical"
-                    android:text="@{item.province+` `+item.city+` `+item.area+` `+item.shipAddress}"
+                    android:text="@{item.shipAddress}"
                     android:textColor="@color/userNameText"
                     android:textSize="24px" />
 

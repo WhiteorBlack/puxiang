@@ -92,8 +92,10 @@
 
         <FrameLayout
             android:id="@+id/fl_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
             android:layout_gravity="center"
             android:layout_marginTop="50px">
 
@@ -106,9 +108,10 @@
             <Button
                 android:id="@+id/btn_register"
                 style="@style/btnStyle"
-                android:background="@drawable/bg_login_btn"
+                android:background="@drawable/btn_bind_phone"
                 android:gravity="center"
                 android:onClick="onClick"
+
                 android:text="绑定手机号"
                 android:textColor="@color/white" />
         </FrameLayout>

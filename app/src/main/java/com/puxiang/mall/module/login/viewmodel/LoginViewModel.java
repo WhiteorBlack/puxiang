@@ -72,7 +72,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
 
     public LoginViewModel(BaseBindFragment fragment) {
         EventBus.getDefault().register(this);
-        getCacheData();
+//        getCacheData();
         this.fragment = fragment;
         activity = fragment.getActivity();
         loadingWindow = new LoadingWindow(activity);
@@ -199,7 +199,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
                     @Override
                     public void onSuccess(HttpResult<RxMyUserInfo> bean) {
                         if (bean.isSuccess()) {
-                            ACache.saveAccount(account, password, bean);
+                            MyApplication.mCache.saveAccount(account, password, bean);
                             getRongToken(bean.getReturnObject().getUserId(),bean.getToken());
                             activity.onBackPressed();
                             notifyRefresh();

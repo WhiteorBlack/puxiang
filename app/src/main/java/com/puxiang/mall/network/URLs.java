@@ -46,7 +46,7 @@ public class URLs {
     //积分规则
     public static final String HTML_EXCHANGE_RULE = Config.HTTP_MALL_ROOT_URL + "exchange_rule.html?from=app";
     public static final String HTML_EXCHANGE_PAGE_KEY = "exchange_page.html";
-    public static final String HTML_EXCHANGE_PAGE = Config.HTTP_MALL_ROOT_URL + "exchange_page.html";
+    public static final String HTML_EXCHANGE_PAGE = Config.HTTP_MALL_ROOT_URL + "exchange_page.html?from=app";
 
     //积分详情KEY
     public static final String HTML_EXCHANGE_DETAIL_KEY = "exchange_detail.html";

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30px"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="22px"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -25,15 +25,16 @@
 
             <ImageView
                 android:layout_width="wrap_content"
+                android:layout_marginTop="8px"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5px"
                 android:background="@{AppUtil.getDrawable(item.resId)}" />
             <ImageView
-                android:layout_width="8px"
-                android:layout_height="8px"
+                android:layout_width="16px"
+                android:layout_height="16px"
                 android:layout_gravity="top|right"
-                android:layout_marginRight="5px"
                 android:visibility="@{item.hasMsg?View.VISIBLE:View.GONE}"
-                android:background="@drawable/point_selected"/>
+                android:background="@drawable/point_red"/>
         </FrameLayout>
 
         <TextView

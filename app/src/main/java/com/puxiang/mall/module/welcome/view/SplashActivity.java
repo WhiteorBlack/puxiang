@@ -119,21 +119,22 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        intent();
+        if (SharedPreferences.getInstance().getBoolean(ISFIRST, true)) {
+            setTheme(R.style.FullScreenTheme);
+        } else {
+            setTheme(R.style.SplashTheme);
+        }
         super.onCreate(savedInstanceState);
-        initBind();
+        intent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initView();
-        setImmerStatue();
-        initRong();
     }
 
     private void initView() {
-//        TranslateAnimation animation = new TranslateAnimation(0, -MyApplication.widthPixels-200, 0, 0);
-//        animation.setDuration(8 * 1000);
-//        animation.setInterpolator(new LinearInterpolator());
-//        animation.setRepeatCount(-1);
-//        binding.ivLogo.setAnimation(animation);
-//        animation.startNow();
         AnimationDrawable animationDrawable = (AnimationDrawable) binding.ivLogo.getDrawable();
         animationDrawable.start();
     }
@@ -146,14 +147,16 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected final void onDestroy() {
         super.onDestroy();
-        Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(viewModel.uriStr.get()));
+//        Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(viewModel.uriStr.get()));
     }
 
 
     @Override
     protected final void onStart() {
         super.onStart();
-
+        initBind();
+        setImmerStatue();
+        initRong();
     }
 
     private void intent() {

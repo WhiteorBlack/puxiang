@@ -23,7 +23,7 @@ public class ForgetActivity extends BaseBindActivity implements View.OnClickList
 
     @Override
     public void initView() {
-        binding.toolbar.setTitle("修改密码");
+        binding.toolbar.setTitle("忘记密码");
     }
 
     public void onClick(View view) {

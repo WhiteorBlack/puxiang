@@ -33,7 +33,7 @@
                 android:id="@+id/cb_zan"
                 style="@style/checkboxStyle"
                 android:background="@drawable/select_zan"
-                android:checked="@{item.isLiked}"
+                android:checked="@{item.isZan}"
                 android:clickable="false"
                 android:enabled="false"
                 android:visibility="visible"/>

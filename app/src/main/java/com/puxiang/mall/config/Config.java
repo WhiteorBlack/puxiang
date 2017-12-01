@@ -25,6 +25,7 @@ public class Config {
     public static final String PLATE_NAME = "plateName";
     public static final String KEYWORD = "keyword";
     public static final String USER_ID = "userId";
+    public static final int PIC_REQUEST=10;
 
     public static final String PRODUCTORDER = "productOrder";
 

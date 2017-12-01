@@ -29,6 +29,7 @@ import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
+import com.puxiang.mall.utils.ActivityUtil;
 import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
 import com.puxiang.mall.utils.WebUtil;
@@ -467,7 +468,8 @@ public class ShoppingCartViewModel extends BaseObservable implements ViewModel, 
 
     @Override
     public void onShopClickListener(String shopId) {
-        WebUtil.jumpShopWeb(activity.getContext(), shopId);
+//        WebUtil.jumpShopWeb(activity.getContext(), shopId);
+        ActivityUtil.startShopDetialActivity(activity.getActivity(),shopId);
     }
 
     @Override

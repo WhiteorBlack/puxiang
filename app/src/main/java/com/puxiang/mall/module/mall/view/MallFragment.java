@@ -144,6 +144,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
 //        headViewBinding.setViewModel(headViewModel);
 //        headViewBinding.setPicModel(mallPicAdds);
         bottomLineBinding.setViewModel(viewModel);
+        binding.toolbarMall.setMessageState(MyApplication.messageState);
         return binding.getRoot();
     }
 

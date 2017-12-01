@@ -28,6 +28,9 @@ public class ImListActivity extends BaseBindActivity implements EasyPermission.P
         binding = DataBindingUtil.setContentView(this, R.layout.activity_conversation_list);
         viewModel = new ImListViewModel(this);
         binding.setViewModel(viewModel);
+        binding.toolbar.setBackSrc(R.mipmap.nav_back_g);
+        binding.toolbar.setColor(R.color.white);
+        binding.toolbar.setTextColor(R.color.bbsText);
     }
 
     @Override

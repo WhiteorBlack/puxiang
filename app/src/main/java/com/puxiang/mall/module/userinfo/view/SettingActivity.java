@@ -31,6 +31,9 @@ public class SettingActivity extends BaseBindActivity implements View.OnClickLis
         mIntent = getIntent();
         boolean isNewestVersion = mIntent.getBooleanExtra(CacheKey.IS_NEWEST_VERSION, false);
         binding.setIsNewestVersion(isNewestVersion);
+        binding.toolbar.setBackSrc(R.mipmap.nav_back_g);
+        binding.toolbar.setColor(R.color.white);
+        binding.toolbar.setTextColor(R.color.bbsText);
     }
 
     public void onClick(View view) {
@@ -51,7 +54,7 @@ public class SettingActivity extends BaseBindActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.ll_about:
-                WebUtil.jumpWeb(URLs.HTML_MY_ABOUT,this);
+                WebUtil.jumpWeb(URLs.HTML_MY_ABOUT, this);
                 break;
             case R.id.ll_settings_logout:
                 viewModel.logOutDialog();

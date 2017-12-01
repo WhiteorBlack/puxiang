@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.base.ErrorShow;
 import com.puxiang.mall.config.Event;
@@ -103,7 +104,7 @@ public class WebViewModel implements ViewModel {
             activity.goBack();
         } else if (i == Event.KILL_WEB) {
             activity.finish();
-        }else if (i== Event.GO_MALL){
+        } else if (i == Event.GO_MALL) {
             activity.finish();
         }
     }
@@ -255,6 +256,16 @@ public class WebViewModel implements ViewModel {
                 Log.e(TAG, "url: " + url);
                 if (url.contains(URLs.HTML_LOTTERY_NEW_KEY)) {
                     getShareInfo();
+                } else if (url.contains("shop_detail.html")) {
+                    //跳转到商家详情
+                    try {
+                        String shopId = url.substring(url.indexOf("=") + 1,url.indexOf("&"));
+                        ActivityUtil.startShopDetialActivity(activity, shopId);
+                        Logger.e("shopId--"+shopId);
+                    } catch (Exception e) {
+
+                    }
+
                 } else if (url.contains(URLs.HTML_LOGIN_KEY)) {
                     ActivityUtil.startLoginActivity(activity);
                 } else if (url.contains(URLs.HTML_PAY_KEY)) {

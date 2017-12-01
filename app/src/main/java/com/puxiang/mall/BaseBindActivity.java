@@ -43,7 +43,7 @@ public abstract class BaseBindActivity extends RxAppCompatActivity implements Bb
         super.onCreate(savedInstanceState);
         TAG = this.getClass().getSimpleName();
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.statusBarDarkFont(true).flymeOSStatusBarFontColor(R.color.text_black).init();
+        mImmersionBar.statusBarDarkFont(true).flymeOSStatusBarFontColor(R.color.text_black).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
         initBind();
         rootView = (ViewGroup) getWindow().getDecorView();
         //是否自动适配
@@ -116,7 +116,7 @@ public abstract class BaseBindActivity extends RxAppCompatActivity implements Bb
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        toolbar.setNavigationIcon(R.mipmap.nav_back_g);
+        toolbar.setNavigationIcon(R.mipmap.nav_back_w);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 

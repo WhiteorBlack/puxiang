@@ -102,6 +102,7 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
 
     public void setCityText(String cityText) {
         this.cityText.set(cityText);
+        this.areaName=cityText;
         notifyPropertyChanged(BR.cityText);
     }
 

@@ -127,11 +127,12 @@
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/show_item_one"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300px"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36px"
-                    android:visibility="@{(item.post.picUrls!=null &amp;&amp; item.post.picUrls.length==1)?View.VISIBLE:View.GONE}"
+                    android:visibility="@{!TextUtils.isEmpty(item.post.picOnly)?View.VISIBLE:View.GONE}"
                     app:actualImageScaleType="focusCrop"
+                    app:viewAspectRatio="1"
                     app:placeholderImage="@mipmap/ic_launcher"
                     app:placeholderImageScaleType="centerInside"
                     app:url="@{item.post.picOnly}" />

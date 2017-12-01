@@ -96,7 +96,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
         <activity
             android:name="com.puxiang.mall.module.welcome.view.SplashActivity"
             android:screenOrientation="portrait"
@@ -274,6 +273,16 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".module.userinfo.view.VerifyPhoneActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.userinfo.view.ChangeMobileActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
         <service
             android:name="com.puxiang.mall.service.InitializeService"
             android:exported="false">
@@ -439,6 +448,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
         </provider>
+
+
     </application>
 
 </manifest>

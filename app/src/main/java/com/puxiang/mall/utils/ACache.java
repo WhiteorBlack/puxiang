@@ -30,6 +30,7 @@ import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.model.data.HttpResult;
 import com.puxiang.mall.model.data.RxMyUserInfo;
+import com.puxiang.mall.module.im.model.IMRequest;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.umeng.analytics.MobclickAgent;
 
@@ -108,7 +109,7 @@ public class ACache {
         MyApplication.USER_ID = userId;
         MyApplication.TOKEN = token;
         MyApplication.INFO = info;
-//        IMRequest.IMConnect();  //暂时不集成 2017.09.01
+        IMRequest.IMConnect();  //暂时不集成 2017.09.01
         update(myUserInfo);
     }
 

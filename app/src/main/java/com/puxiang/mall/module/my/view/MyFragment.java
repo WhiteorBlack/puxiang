@@ -3,6 +3,8 @@ package com.puxiang.mall.module.my.view;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.orhanobut.logger.Logger;
+import com.puxiang.mall.BR;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentMyBinding;
@@ -55,10 +59,39 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         binding.myLoginText.setOnClickListener(this);
         binding.llAllOrder.setOnClickListener(this);
         binding.btnRegister.setOnClickListener(this);
+        binding.llUserInfo.setOnClickListener(this);
+        binding.tvLogin.setOnClickListener(this);
+        binding.tvRegister.setOnClickListener(this);
         initOrderRecyclerView(binding.rvOrder);
         initBuyRecyclerView(binding.rvBuyer);
         initSaleRecyclerView(binding.rvSaler);
         initSettingRecyclerView(binding.rvSetting);
+        binding.nsvParent.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY < binding.rlHead.getHeight() - binding.rlBar.getHeight()) {
+                viewModel.setIsBarVis(false);
+            } else {
+                viewModel.setIsBarVis(true);
+            }
+        });
+        MyApplication.messageState.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                if (i == BR.like) {
+                    //赞我的
+                    buyAdapter.getData().get(5).setHasMsg(MyApplication.messageState.isLike());
+                    buyAdapter.notifyItemChanged(5);
+                }
+                if (i == BR.commentMe) {
+                    //评论我的
+                    buyAdapter.getData().get(4).setHasMsg(MyApplication.messageState.isCommentMe());
+                    buyAdapter.notifyItemChanged(4);
+                }
+                if (i==BR.warnMessage){
+                    //我的消息
+                    settingAdapter.getData().get(0).setHasMsg(MyApplication.messageState.isWarnMessage());
+                }
+            }
+        });
     }
 
     /**
@@ -72,7 +105,11 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvBuyer.setNestedScrollingEnabled(false);
         rvBuyer.setAdapter(settingAdapter);
         settingAdapter.setOnItemClickListener((adapter, view, position) -> {
-            switch (position) {
+            if (!MyApplication.isLogin()){
+                ActivityUtil.startLoginActivity(getActivity());
+                return;
+            }
+            switch (viewModel.getSettingList().get(position).getPos()) {
                 case 0:
                     if (RongIM.getInstance() != null) {
                         WeakReference<Context> wr = new WeakReference<>(
@@ -105,10 +142,13 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvBuyer.setNestedScrollingEnabled(false);
         rvBuyer.setAdapter(saleAdapter);
         saleAdapter.setOnItemClickListener((adapter, view, position) -> {
-            switch (position) {
+            switch (viewModel.getSaleList().get(position).getPos()) {
                 case 0:
+                    //我要进货
+                    ActivityUtil.startStockListActivity(getActivity());
                     break;
                 case 1:
+
                     break;
             }
         });
@@ -125,10 +165,10 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvBuyer.setNestedScrollingEnabled(false);
         rvBuyer.setAdapter(buyAdapter);
         buyAdapter.setOnItemClickListener((adapter, view, position) -> {
-            switch (position) {
+            switch (viewModel.getBuyList().get(position).getPos()) {
                 case 0:
                     //我的收藏
-                    WebUtil.jumpMyWeb(URLs.HTML_MY_COLLECT, getContext());
+                    WebUtil.jumpMyWeb(URLs.HTML_MY_COLLECT, getActivity());
                     break;
                 case 1:
                     //收货地址
@@ -136,7 +176,12 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     break;
                 case 2:
                     //我的社区
-
+                    if (StringUtil.isEmpty(MyApplication.TOKEN)) {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
+                    ActivityUtil.startPersonalActivity(getActivity(), MyApplication.USER_ID);
                     break;
                 case 3:
                     //我的发帖
@@ -145,13 +190,13 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                 case 4:
                     //评论我的
                     viewModel.setMessageReadTime(Constant.MESSAGE_CODE_COMMENT_ME);
-                    MyApplication.messageState.setCommentMe(0);
+                    MyApplication.messageState.setCommentMe(false);
                     WebUtil.jumpMyWeb(URLs.HTML_MY_COMMENT, getContext());
                     break;
                 case 5:
                     //赞我的
                     viewModel.setMessageReadTime(Constant.MESSAGE_CODE_LIKE_ME);
-                    MyApplication.messageState.setLikeMe(0);
+                    MyApplication.messageState.setLike(false);
                     WebUtil.jumpMyWeb(URLs.HTML_MY_LAUD, getContext());
                     break;
                 case 6:
@@ -159,7 +204,7 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     break;
                 case 7:
                     //积分商城
-
+                    WebUtil.jumpWeb(URLs.HTML_EXCHANGE_PAGE, getActivity());
                     break;
                 case 8:
                     //任务中心
@@ -180,7 +225,8 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvOrder.setNestedScrollingEnabled(false);
         rvOrder.setAdapter(orderAdapter);
         orderAdapter.setOnItemClickListener((adapter, view, position) -> {
-            switch (position) {
+            WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER) + "&tabIndex=" + viewModel.getOrderList().get(position).getPos() + 1, getContext());
+            switch (viewModel.getOrderList().get(position).getPos()) {
                 case 0:
 
                     break;
@@ -208,9 +254,9 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        if (!StringUtil.isEmpty(MyApplication.TOKEN)) {
-            viewModel.getMessageState();
-        }
+//        if (!StringUtil.isEmpty(MyApplication.TOKEN)) {
+//            viewModel.getMessageState();
+//        }
     }
 
     public void onClick(View view) {
@@ -229,17 +275,20 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                 WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER), getContext());
                 break;
             case R.id.my_pic:
+            case R.id.ll_user_info:
                 if (StringUtil.isEmpty(MyApplication.TOKEN)) {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                     return;
                 }
-                ActivityUtil.startPersonalActivity(getActivity(), MyApplication.USER_ID);
+                ActivityUtil.startInfoActivity(getActivity());
                 break;
             case R.id.my_login_text:
+            case R.id.tv_login:
                 ActivityUtil.startLoginActivity(getActivity(), true);
                 break;
             case R.id.btn_register:
+            case R.id.tv_register:
                 ActivityUtil.startLoginActivity(getActivity(), false);
                 break;
 

@@ -35,6 +35,7 @@ public class InfoActivity extends BaseBindActivity {
 
     @Override
     public void initView() {
+        mImmersionBar.statusBarDarkFont(false).init();
         binding.toolbar.setTitle("个人信息");
     }
 
@@ -43,6 +44,7 @@ public class InfoActivity extends BaseBindActivity {
             startActivity(new Intent(this, LoginFragment.class));
             return;
         }
+
         RxMyUserInfo userInfo = viewModel.userBean.get();
         switch (view.getId()) {
             case R.id.iv_back:
@@ -62,7 +64,8 @@ public class InfoActivity extends BaseBindActivity {
                 ActivityUtil.startNameActivityForResult(this, userInfo.getRealName(), 0);
                 break;
             case R.id.ll_info_mobile:
-                WebUtil.jumpWeb(URLs.getHtmlModifyMobile(userInfo.getMobile()), InfoActivity.this);
+//                WebUtil.jumpWeb(URLs.getHtmlModifyMobile(userInfo.getMobile()), InfoActivity.this);
+                ActivityUtil.startVerifyPhoneActivity(this,userInfo.getMobile());
                 break;
             case R.id.ll_info_sex:
                 ActivityUtil.startSexActivityForResult(this, userInfo.getSex(), 0);

@@ -81,13 +81,14 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         shopBinding.setMsgModel(msgCountViewModel);
         shopBinding.ivRefresh.setOnClickListener(this);
         locationClient=new LocationClient(getApplicationContext());
+        mImmersionBar.keyboardEnable(false).init();
         initClient();
     }
 
     private void initClient() {
         LocationClientOption mOption = new LocationClientOption();
         mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        mOption.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
+        mOption.setCoorType("gcj02");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
         mOption.setScanSpan(60*1000);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         mOption.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         mOption.setIsNeedLocationDescribe(false);//可选，设置是否需要地址描述
@@ -110,6 +111,8 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
             if (bdLocation == null) {
                 shopViewModel.getShopList(1,"","","");
             } else {
+//                shopViewModel.setCurrentCity(bdLocation.getCity());
+//                shopViewModel.setCurrentStreet(bdLocation.getAddress().address);
                 shopViewModel.getCurrentLocation(bdLocation.getLatitude(), bdLocation.getLongitude());
             }
         }

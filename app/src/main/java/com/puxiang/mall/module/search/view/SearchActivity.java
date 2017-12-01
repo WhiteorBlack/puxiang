@@ -23,6 +23,7 @@ public class SearchActivity extends BaseBindActivity implements TagFlowLayout.On
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         viewModel = new SearchViewModel(this);
+        mImmersionBar.keyboardEnable(false).init();
     }
 
     public void initView() {

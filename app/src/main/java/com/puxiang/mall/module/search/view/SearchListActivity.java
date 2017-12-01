@@ -49,6 +49,7 @@ public class SearchListActivity extends BaseBindActivity implements View.OnClick
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_list);
         viewModel = new SearchListViewModel(keyword);
         binding.setViewModel(viewModel);
+        mImmersionBar.keyboardEnable(false).init();
     }
 
     public void initView() {

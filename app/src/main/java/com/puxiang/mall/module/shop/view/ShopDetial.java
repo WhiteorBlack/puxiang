@@ -50,6 +50,7 @@ public class ShopDetial extends BaseBindActivity {
         binding.setViewModel(viewModel);
         binding.headBanner.setAdapter(viewModel);
         shopId = getIntent().getStringExtra("shopId");
+        mImmersionBar.keyboardEnable(false).init();
     }
 
     @Override

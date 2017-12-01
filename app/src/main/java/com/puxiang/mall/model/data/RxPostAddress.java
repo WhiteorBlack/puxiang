@@ -18,6 +18,15 @@ public class RxPostAddress  {
     private String shipName;
     private String addressId;
     private String shipAddress;
+    private String detailAddress;
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
 
     public String getArea() {
         return area;

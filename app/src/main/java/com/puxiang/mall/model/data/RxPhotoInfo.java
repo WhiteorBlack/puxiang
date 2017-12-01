@@ -7,13 +7,5 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
  */
 
 public class RxPhotoInfo extends PhotoInfo {
-    private String photoUri;
 
-    public String getPhotoUri() {
-        return photoUri;
-    }
-
-    public void setPhotoUri(String photoUri) {
-        this.photoUri = photoUri;
-    }
 }

@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.module.emotion.utils.LogUtils;
 
 
@@ -181,6 +182,7 @@ public class EmotionKeyboard {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mContentView.getLayoutParams();
         params.height = mContentView.getHeight();
         params.weight = 0.0F;
+        mContentView.setLayoutParams(params);
     }
 
     /**

@@ -30,8 +30,16 @@ public class AppUtil {
         return resId == 0 ? null : ContextCompat.getDrawable(MyApplication.getContext(), resId);
     }
 
+    public static Drawable getDrawable(int resId,int defaultres) {
+        return resId == 0 ? getDrawable(defaultres) : ContextCompat.getDrawable(MyApplication.getContext(), resId);
+    }
+
     public static int getColor(int resId) {
         return ContextCompat.getColor(MyApplication.getContext(), resId == 0 ? R.color.transparent : resId);
+    }
+
+    public static int getColor(int resId,int defaultColor) {
+        return ContextCompat.getColor(MyApplication.getContext(), resId == 0 ? defaultColor : resId);
     }
 
     public static int getColor(String colorString) {

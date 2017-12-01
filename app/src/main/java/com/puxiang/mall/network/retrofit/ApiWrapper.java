@@ -1,6 +1,7 @@
 package com.puxiang.mall.network.retrofit;
 
 
+import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 
@@ -46,6 +47,7 @@ import com.puxiang.mall.model.data.RxShop;
 import com.puxiang.mall.model.data.RxShopList;
 import com.puxiang.mall.model.data.RxShuohuInfo;
 import com.puxiang.mall.model.data.RxSing;
+import com.puxiang.mall.model.data.RxTicket;
 import com.puxiang.mall.model.data.RxUnreadMessage;
 import com.puxiang.mall.model.data.RxUploadUrl;
 import com.puxiang.mall.model.data.RxUserCommunity;
@@ -1329,7 +1331,7 @@ public class ApiWrapper extends RetrofitUtil {
      * @return
      */
     public Observable<String> deleteAddress(String addressId) {
-        return getService().deleteAddress(addressId,MyApplication.USER_ID, MyApplication.TOKEN )
+        return getService().deleteAddress(addressId, MyApplication.USER_ID, MyApplication.TOKEN)
                 .compose(this.applySchedulers());
     }
 
@@ -1363,8 +1365,8 @@ public class ApiWrapper extends RetrofitUtil {
      *
      * @return
      */
-    public Observable<String> addAddress( String shipName, String shipAddress, String phone, String province, String provinceCode, String city,
-                                            String cityCode, String area, String areaCode, String tel, String isDefault) {
+    public Observable<String> addAddress(String shipName, String shipAddress, String phone, String province, String provinceCode, String city,
+                                         String cityCode, String area, String areaCode, String tel, String isDefault) {
         return getService().addAddress(MyApplication.USER_ID,
                 MyApplication.TOKEN,
                 shipName,
@@ -1380,4 +1382,16 @@ public class ApiWrapper extends RetrofitUtil {
                 isDefault)
                 .compose(this.applySchedulers());
     }
+
+    public Observable<RxTicket> checkOldMobile(String code) {
+        return getService().checkOldMobile(MyApplication.USER_ID, code, MyApplication.TOKEN)
+                .compose(this.applySchedulers());
+    }
+
+    public Observable<String> changeNewMobile(String code, String ticket, String mobile) {
+        return getService().changeNewMobile(MyApplication.USER_ID, code, MyApplication.TOKEN, ticket, mobile)
+                .compose(this.applySchedulers());
+    }
+
+
 }

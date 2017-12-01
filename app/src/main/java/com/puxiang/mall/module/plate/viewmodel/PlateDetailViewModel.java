@@ -63,7 +63,7 @@ public class PlateDetailViewModel implements ViewModel {
         this.activity = activity;
         this.adapter = adapter;
         initData();
-        loadingWindow.showWindow();
+        loadingWindow.delayedShowWindow();
         getPlateDetailData();
         getPlatePosts(1);
     }
@@ -130,7 +130,6 @@ public class PlateDetailViewModel implements ViewModel {
         ApiWrapper.getInstance()
                 .getPlateDetail(plateId)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(loadingWindow::hidWindow)
                 .subscribe(new NetworkSubscriber<RxPlate>() {
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
@@ -229,6 +228,7 @@ public class PlateDetailViewModel implements ViewModel {
 
                     @Override
                     public void onSuccess(RxList<RxPostInfo> bean) {
+                        loadingWindow.hidWindow();
                         List<RxPostInfo> postInfos = bean.getList();
                         dealData(postInfos);
                         adapter.setPagingData(postInfos, pageNo);

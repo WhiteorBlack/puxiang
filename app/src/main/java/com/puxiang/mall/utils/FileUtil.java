@@ -1,7 +1,11 @@
 package com.puxiang.mall.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 import com.orhanobut.logger.Logger;
 
@@ -274,5 +278,16 @@ public class FileUtil {
             }
         }
         return srcDir.delete();
+    }
+
+    public static String UriToString(Uri uri, Activity act) {
+        Cursor cursor = act.getContentResolver().query(uri,
+                new String[]{MediaStore.Images.Media.DATA},
+                null,
+                null,
+                null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
+        return path;
     }
 }

@@ -2,6 +2,7 @@ package com.puxiang.mall.module.userinfo.viewmodel;
 
 import android.app.DatePickerDialog;
 import android.databinding.ObservableField;
+import android.text.TextUtils;
 
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -43,6 +44,18 @@ public class InfoViewModel implements ViewModel {
     public void onEvent(Integer i) {
         if (i == Event.KILL_INFO) {
             activity.finish();
+        }
+    }
+
+    /**
+     * 事件订阅
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(String phone) {
+        if (!TextUtils.isEmpty(phone)) {
+            RxMyUserInfo rxMyUserInfo = userBean.get();
+            rxMyUserInfo.setMobile(phone);
+            userBean.set(rxMyUserInfo);
         }
     }
 

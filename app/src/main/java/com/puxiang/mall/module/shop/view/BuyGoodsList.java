@@ -50,6 +50,7 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
         headBannerViewModel = new HeadBannerViewModel(this);
         binding.headBanner.headBanner.setAdapter(headBannerViewModel);
         binding.setHeadModel(headBannerViewModel);
+        mImmersionBar.keyboardEnable(false).init();
     }
 
     @Override

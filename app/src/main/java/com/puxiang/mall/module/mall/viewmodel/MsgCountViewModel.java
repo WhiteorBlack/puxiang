@@ -51,27 +51,28 @@ public class MsgCountViewModel extends BaseObservable implements ViewModel {
     }
 
     public void getMsgCountData() {
-        ApiWrapper.getInstance()
-                .getUnreadMessage()
-                .compose(activity == null ? fragment.bindUntilEvent(FragmentEvent.DESTROY) : activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(new NetworkSubscriber<List<RxUnreadMessage>>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        Logger.e("getMsgCount");
-                    }
 
-                    @Override
-                    public void onSuccess(List<RxUnreadMessage> data) {
-                        if (data.size() > 0) {
-                            int count = 0;
-                            for (int i = 0; i < data.size(); i++) {
-                                count += data.get(i).getUnreadCount();
-                            }
-                            msgCount.set(count);
-                        }
-                    }
-                });
+//        ApiWrapper.getInstance()
+//                .getUnreadMessage()
+//                .compose(activity == null ? fragment.bindUntilEvent(FragmentEvent.DESTROY) : activity.bindUntilEvent(ActivityEvent.DESTROY))
+//                .subscribe(new NetworkSubscriber<List<RxUnreadMessage>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        super.onError(e);
+//                        Logger.e("getMsgCount");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<RxUnreadMessage> data) {
+//                        if (data.size() > 0) {
+//                            int count = 0;
+//                            for (int i = 0; i < data.size(); i++) {
+//                                count += data.get(i).getUnreadCount();
+//                            }
+//                            msgCount.set(count);
+//                        }
+//                    }
+//                });
     }
 
 

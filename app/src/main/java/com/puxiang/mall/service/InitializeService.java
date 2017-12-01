@@ -5,10 +5,16 @@ import android.app.Dialog;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig;
+import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
 import com.flyco.animation.BounceEnter.BounceLeftEnter;
 import com.flyco.animation.SlideExit.SlideLeftExit;
 import com.flyco.dialog.listener.OnBtnClickL;
@@ -20,13 +26,16 @@ import com.puxiang.mall.config.Config;
 import com.puxiang.mall.model.data.AppVersionJSON;
 import com.puxiang.mall.network.FrescoImageLoader;
 import com.puxiang.mall.network.URLs;
+import com.puxiang.mall.utils.ACache;
 import com.puxiang.mall.utils.AppUtil;
 import com.puxiang.mall.utils.DateUtils;
 import com.puxiang.mall.utils.NetworkUtil;
+import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
 import com.puxiang.mall.widget.MyMaterialDialog;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
 
@@ -39,13 +48,15 @@ import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.ThemeConfig;
+import io.rong.imkit.RongIM;
 
 public class InitializeService extends IntentService {
     private boolean isConfirm;
     private boolean isUpdateConfirm;
     private String createTime = "";
-    public static final String ACTION_INIT_WHEN_APP_CREATE = "com.somic.mall.service.action.init";
+    public static final String ACTION_INIT_WHEN_APP_CREATE = "com.puxiang.mall.service.action.init";
     private static String TAG = "InitializeService";
+    private static final String BUGLY_APPID = "7af15a29f3";
 
     public InitializeService() {
         super("InitializeService");
@@ -79,8 +90,10 @@ public class InitializeService extends IntentService {
         if (MyApplication.isInit) {
             return;
         }
+
         MyApplication.isInit = true;
-        Log.e(TAG, "performInit begin: " + System.currentTimeMillis());
+//        init();
+        Bugly.init(this.getApplicationContext(), BUGLY_APPID, false);
         //  QbSdk.initX5Environment(this, null);
         initLogger();
 //        initCloudChannel();
@@ -89,14 +102,113 @@ public class InitializeService extends IntentService {
         initUpdateConfig();
 //        RongIM.init(this);
 //        initSpeech();
-        initHotFix();
+//        initHotFix();
 //        BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        Stetho.initialize(
 //                Stetho.newInitializerBuilder(this)
 //                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
 //                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
 //                        .build());
-        Log.e(TAG, "performInit end: " + System.currentTimeMillis());
+
+        RongIM.init(this);
+        initRongIM();
+    }
+
+    private void initRongIM() {
+        /**
+         * 注意：
+         *
+         * IMKit SDK调用第一步 初始化
+         *
+         * context上下文
+         *
+         * 只有两个进程需要初始化，主进程和 push 进程
+         */
+//        RongIM.setServerInfo("nav.cn.ronghub.com", "up.qbox.me");
+        RongIM.init(this, "cpj2xarlc19nn");
+//        Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+
+//        try {
+//            RongIM.registerMessageTemplate(new RealTimeLocationMessageProvider());
+//            RongIM.registerMessageType(RongMessage.class);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
+    private void init() {
+        initNative();
+        initThirdParty();
+    }
+
+
+    private void initNative() {
+        MyApplication.mCache = ACache.get(this.getApplicationContext());
+        initCacheData();
+        initPixels();
+    }
+
+    private void initThirdParty() {
+        initFresco();
+//        initLeakCanary();
+    }
+
+    /**
+     * 初始化本地缓存策略
+     */
+    private void initCacheData() {
+        //  MD5_Utils.test();
+        String userId = MyApplication.mCache.getAsString(CacheKey.USER_ID);
+        String token = MyApplication.mCache.getAsString(CacheKey.TOKEN);
+        String info = MyApplication.mCache.getAsString(CacheKey.INFO);
+        String rongToken = MyApplication.mCache.getAsString(CacheKey.RONG_TOKEN);
+        // Log.e(TAG, "onCreate: " + userId + "----" + token);
+        if (!StringUtil.isEmpty(userId)) {
+            MyApplication.USER_ID = userId;
+        } else {
+            MyApplication.USER_ID = "";
+        }
+        if (!StringUtil.isEmpty(token)) {
+            MyApplication.TOKEN = token;
+            MyApplication.isLoginOB.set(true);
+        } else {
+            MyApplication.TOKEN = "";
+        }
+        if (!StringUtil.isEmpty(token)) {
+            MyApplication.INFO = info;
+        } else {
+            MyApplication.INFO = "";
+        }
+
+        if (TextUtils.isEmpty(rongToken)) {
+            MyApplication.RONG_TOKEN = "";
+        } else {
+            MyApplication.RONG_TOKEN = rongToken;
+        }
+        Logger.e("token--" + token);
+    }
+
+
+    /**
+     * 图片框架Fresco 初始化配置
+     */
+    private void initFresco() {
+        ProgressiveJpegConfig pjpegConfig = new SimpleProgressiveJpegConfig();
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this.getApplicationContext())
+                .setDownsampleEnabled(true)
+                .setProgressiveJpegConfig(pjpegConfig)
+                .setBitmapsConfig(Bitmap.Config.RGB_565)
+                .build();
+        Fresco.initialize(this.getApplicationContext());
+        Fresco.initialize(this.getApplicationContext(), config);
+    }
+
+
+    //获取屏幕宽高像素
+    private void initPixels() {
+        MyApplication.widthPixels = this.getApplicationContext().getResources().getDisplayMetrics().widthPixels;
+        MyApplication.heightPixels = this.getApplicationContext().getResources().getDisplayMetrics().heightPixels;
     }
 
     private void initHotFix() {
@@ -269,6 +381,7 @@ public class InitializeService extends IntentService {
                                 .style(NormalDialog.STYLE_TWO).titleTextSize(18).title("温馨提示")
                                 .cornerRadius(0)
                                 .content("检测到当前使用的是移动流量，是否确定更新？")
+                                
                                 .contentGravity(Gravity.START)
                                 .showAnim(new BounceLeftEnter()).dismissAnim(new SlideLeftExit())
                                 .btnText("取消", "立即更新").setOnBtnClickL(() -> {
@@ -376,10 +489,8 @@ public class InitializeService extends IntentService {
 //            }
 //        });
 //    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e(TAG, "onDestroy: ");
     }
 }

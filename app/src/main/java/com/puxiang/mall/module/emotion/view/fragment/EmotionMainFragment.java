@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentMainEmotionBinding;
@@ -76,6 +77,7 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_emotion, container, false);
         initView();
         initDatas();
+        ImmersionBar.with(getActivity(),this).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
         return binding.getRoot();
     }
 
@@ -115,13 +117,13 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
                         .emotionBar.etEmotion)//判断绑定那种EditView
                 .bindToEmotionButton(binding.emotionBar.ivEmotionBtn)//绑定表情按钮
                 .build();
-        GlobalOnItemClickManagerUtils.getInstance().attachToEditText(binding.emotionBar.etEmotion);
+//        GlobalOnItemClickManagerUtils.getInstance().attachToEditText(binding.emotionBar.etEmotion);
         postDetail = (PostDetailActivity) getActivity();
 
         binding.emotionBar.vZan.setOnClickListener(this);
         binding.emotionBar.btnSend.setOnClickListener(this);
         binding.emotionBar.ivShareBtn.setOnClickListener(this);
-        ImmersionBar.with(this).statusBarDarkFont(true).flymeOSStatusBarFontColor(R.color.text_black).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
+
     }
 
     @Override
@@ -139,6 +141,7 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
 
 
     public void setBarState(boolean b) {
+        Logger.e("barState---"+b);
         if (viewModer == null) return;
         if (b) {
             viewModer.bigBar.set(true);

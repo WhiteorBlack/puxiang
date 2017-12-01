@@ -79,9 +79,8 @@ public class MyApplication extends ApplicationLike {
                 }
             }
         });
-        Bugly.init(application, BUGLY_APPID, false);
         init();
-        InitializeService.start(MyApplication.getContext(), InitializeService.ACTION_INIT_WHEN_APP_CREATE);
+        InitializeService.start(this.getContext(), InitializeService.ACTION_INIT_WHEN_APP_CREATE);
     }
 
 
@@ -89,12 +88,6 @@ public class MyApplication extends ApplicationLike {
     @Override
     public void onBaseContextAttached(Context base) {
         super.onBaseContextAttached(base);
-        // you must install multiDex whatever tinker is installed!
-//        MultiDex.install(base);
-
-        // 安装tinker
-        // TinkerManager.installTinker(this); 替换成下面Bugly提供的方法
-//        Beta.installTinker(this);
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -105,14 +98,8 @@ public class MyApplication extends ApplicationLike {
     private void init() {
         initNative();
         initThirdParty();
-        // initExceptionHandler();
     }
 
-    private void initExceptionHandler() {
-        if (Config.isIsOnline()) {
-            Thread.setDefaultUncaughtExceptionHandler(new MyUnCaughtExceptionHandler());
-        }
-    }
 
     private void initNative() {
         context = application.getApplicationContext();
@@ -123,7 +110,6 @@ public class MyApplication extends ApplicationLike {
 
     private void initThirdParty() {
         initFresco();
-//        initLeakCanary();
     }
 
 
@@ -133,32 +119,11 @@ public class MyApplication extends ApplicationLike {
         heightPixels = application.getResources().getDisplayMetrics().heightPixels;
     }
 
-    private void initLeakCanary() {
-        if (!Config.isIsOnline()) {
-            if (LeakCanary.isInAnalyzerProcess(application)) {
-                // This process is dedicated to LeakCanary for heap analysis.
-                // You should not init your app in this process.
-                return;
-            }
-            LeakCanary.install(application);
-        }
-    }
 
     public static boolean isLogin() {
         return !StringUtil.isEmpty(MyApplication.TOKEN);
     }
 
-    private class MyUnCaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
-        @Override
-        public void uncaughtException(Thread thread, Throwable ex) {
-            ex.printStackTrace();
-            Logger.e("UncaughtException", ex.getMessage());
-            MobclickAgent.reportError(getContext(), ex);
-            // do some work here
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
-        }
-    }
 
     public static Context getContext() {
         return context;
@@ -197,7 +162,6 @@ public class MyApplication extends ApplicationLike {
         } else {
             RONG_TOKEN = rongToken;
         }
-        Logger.e("token--"+token);
     }
 
 

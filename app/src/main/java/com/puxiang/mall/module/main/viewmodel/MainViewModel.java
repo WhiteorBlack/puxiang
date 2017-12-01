@@ -9,12 +9,15 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.config.updata.NotificationDownloadCreator;
 import com.puxiang.mall.config.updata.NotificationInstallCreator;
 import com.puxiang.mall.model.data.HttpResult;
 import com.puxiang.mall.model.data.RxAds;
+import com.puxiang.mall.model.data.RxMessageState;
 import com.puxiang.mall.module.bbs.viewmodel.BbsRequest;
 import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
@@ -25,6 +28,7 @@ import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.permissions.EasyPermission;
 import com.puxiang.mall.utils.permissions.PermissionCode;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import org.lzh.framework.updatepluginlib.UpdateBuilder;
 import org.lzh.framework.updatepluginlib.model.Update;
@@ -80,8 +84,8 @@ public class MainViewModel extends BaseObservable implements ViewModel {
         this.activity = activity;
 
         checkPermission();
-//        versionCheck();
-        getSplashImage();
+        versionCheck();
+//        getSplashImage();
         //签到
         BbsRequest.setSigned();
     }
@@ -132,6 +136,19 @@ public class MainViewModel extends BaseObservable implements ViewModel {
                 .subscribe(observer);
     }
 
+    public void getMessageState(){
+        ApiWrapper.getInstance()
+                .getMessageState()
+                .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribe(new NetworkSubscriber<RxMessageState>() {
+                    @Override
+                    public void onSuccess(RxMessageState bean) {
+                        MyApplication.messageState.setData(bean);
+                        notifyPropertyChanged(BR.messageState);
+                    }
+                });
+    }
+
     /**
      * 检测地址图片是否已缓存
      *
@@ -160,7 +177,7 @@ public class MainViewModel extends BaseObservable implements ViewModel {
      * ps:采取延时检测提升用户体验
      */
     private void versionCheck() {
-        Observable.timer(4, TimeUnit.SECONDS)
+        Observable.timer(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
                     if (MyApplication.isInit) {

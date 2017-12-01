@@ -62,7 +62,7 @@ public class ClassifyFragment extends BaseBindFragment implements View.OnClickLi
         initBanner(binding.layoutHead.headBanner);
         binding.toolbar.llClassifyToolbar.setOnClickListener(this);
         LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) binding.layoutHead.headBanner.getLayoutParams();
-        params.height=(int) (MyApplication.widthPixels * 0.347);
+        params.height=(int) (MyApplication.widthPixels * 0.347*0.7);
         binding.layoutHead.headBanner.setLayoutParams(params);
     }
 

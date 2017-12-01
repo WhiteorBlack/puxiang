@@ -1,5 +1,7 @@
 package com.puxiang.mall.network;
 
+import android.databinding.ObservableField;
+
 import com.puxiang.mall.model.data.HttpResult;
 import com.puxiang.mall.model.data.LocationInfo;
 import com.puxiang.mall.model.data.RxAds;
@@ -41,6 +43,7 @@ import com.puxiang.mall.model.data.RxShop;
 import com.puxiang.mall.model.data.RxShopList;
 import com.puxiang.mall.model.data.RxShuohuInfo;
 import com.puxiang.mall.model.data.RxSing;
+import com.puxiang.mall.model.data.RxTicket;
 import com.puxiang.mall.model.data.RxUnreadMessage;
 import com.puxiang.mall.model.data.RxUploadUrl;
 import com.puxiang.mall.model.data.RxUserCommunity;
@@ -857,17 +860,31 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("mall/member/deliveryAddr/addAddress.do")
     Observable<HttpResult<String>> addAddress(@Field("userId") String userId,
-                                                 @Field("token") String token,
-                                                 @Field("shipName") String shipName,
-                                                 @Field("shipAddress") String shipAddress,
-                                                 @Field("phone") String phone,
-                                                 @Field("province") String province,
-                                                 @Field("provinceCode") String provinceCode,
-                                                 @Field("city") String city,
-                                                 @Field("cityCode") String cityCode,
-                                                 @Field("area") String area,
-                                                 @Field("areaCode") String areaCode,
-                                                 @Field("tel") String tel,
-                                                 @Field("isDefault") String isDefault);
+                                              @Field("token") String token,
+                                              @Field("shipName") String shipName,
+                                              @Field("shipAddress") String shipAddress,
+                                              @Field("phone") String phone,
+                                              @Field("province") String province,
+                                              @Field("provinceCode") String provinceCode,
+                                              @Field("city") String city,
+                                              @Field("cityCode") String cityCode,
+                                              @Field("area") String area,
+                                              @Field("areaCode") String areaCode,
+                                              @Field("tel") String tel,
+                                              @Field("isDefault") String isDefault);
+
+    @FormUrlEncoded
+    @POST("mall/member/mobile/checkOldMobile.do")
+    Observable<HttpResult<RxTicket>> checkOldMobile(@Field("userId") String userId,
+                                                    @Field("code") String code,
+                                                    @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("mall/member/mobile/checkOldMobile.do")
+    Observable<HttpResult<String>> changeNewMobile(@Field("userId") String userId,
+                                                     @Field("newCode") String newCode,
+                                                     @Field("token") String token,
+                                                     @Field("ticket") String ticket,
+                                                     @Field("newMobile") String newMobile);
 
 }

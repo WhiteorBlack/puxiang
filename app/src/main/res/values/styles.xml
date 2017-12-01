@@ -49,9 +49,10 @@
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@mipmap/img_splash</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
     </style>
+
 
     <style name="ClubToolbar" parent="Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
@@ -121,7 +122,7 @@
     </style>
 
     <style name="titleTextAlphaStyle">
-        <item name="android:textSize">@dimen/sideMargin</item>
+        <item name="android:textSize">@dimen/titleSize</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/title_alpha77</item>
     </style>

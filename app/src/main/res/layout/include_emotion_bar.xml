@@ -3,17 +3,17 @@
 
     <data>
 
-        <import type="com.puxiang.mall.utils.AppUtil"/>
+        <import type="com.puxiang.mall.utils.AppUtil" />
 
-        <import type="com.puxiang.mall.R"/>
+        <import type="com.puxiang.mall.R" />
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
-        <import type="com.puxiang.mall.utils.StringUtil"/>
+        <import type="com.puxiang.mall.utils.StringUtil" />
 
         <variable
             name="viewModel"
-            type="com.puxiang.mall.module.emotion.viewmodel.EmotionViewModer"/>
+            type="com.puxiang.mall.module.emotion.viewmodel.EmotionViewModer" />
     </data>
 
     <LinearLayout
@@ -42,7 +42,7 @@
                 android:layout_marginRight="@dimen/sideMargin"
                 android:clickable="true"
                 android:src="@mipmap/tip_icon"
-                android:visibility="@{viewModel.bigBar?View.VISIBLE:View.GONE}"/>
+                android:visibility="@{viewModel.bigBar?View.VISIBLE:View.GONE}" />
 
             <LinearLayout
                 android:id="@+id/ll_edit_bar_bg"
@@ -64,7 +64,7 @@
                     android:layout_marginRight="15px"
                     android:clickable="true"
                     android:src="@mipmap/icon_edit_bar"
-                    android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}"/>
+                    android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}" />
 
                 <EditText
                     android:id="@+id/et_emotion"
@@ -78,7 +78,7 @@
                     android:paddingBottom="12px"
                     android:paddingTop="12px"
                     android:textColorHint="@color/se"
-                    android:textSize="30px"/>
+                    android:textSize="30px" />
 
                 <!-- <ImageView
                      android:id="@+id/emotion_button"
@@ -94,7 +94,7 @@
                 android:layout_marginRight="5px"
                 android:background="@drawable/select_zan"
                 android:checked="@{viewModel.postInfoBean.get().isZan}"
-                android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}"/>
+                android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}" />
 
             <TextView
                 android:id="@+id/tv_zanNum"
@@ -104,7 +104,7 @@
                 android:text="@{viewModel.postInfoBean.get().post.likeQty!=0?String.valueOf(viewModel.postInfoBean.post.likeQty):StringUtil.getString(R.string.like_tips)}"
                 android:textColor="@color/tipsText"
                 android:textSize="27px"
-                android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}"/>
+                android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}" />
 
             <ImageView
                 android:id="@+id/iv_share_btn"
@@ -112,7 +112,7 @@
                 android:layout_height="40px"
                 android:clickable="true"
                 android:src="@mipmap/icon_share_bar"
-                android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}"/>
+                android:visibility="@{viewModel.bigBar?View.GONE:View.VISIBLE}" />
 
             <TextView
                 android:id="@+id/btn_send"
@@ -122,7 +122,7 @@
                 android:text="@string/btn_send"
                 android:textColor="@color/tipsText"
                 android:textSize="34px"
-                android:visibility="@{viewModel.bigBar?View.VISIBLE:View.GONE}"/>
+                android:visibility="@{viewModel.bigBar?View.VISIBLE:View.GONE}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

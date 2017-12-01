@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -50,9 +51,9 @@ public class PostDetailActivity extends BaseBindActivity implements OnClickListe
     @Override
     public void initView() {
         binding.toolbar.setTitle("帖子详情");
-        initEmotionMainFragment();
+//        mImmersionBar.statusBarDarkFont(false).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
         initRv();
-//        mImmersionBar.statusBarDarkFont(true).flymeOSStatusBarFontColor(R.color.text_black);
+        initEmotionMainFragment();
     }
 
     public void initEmotionData() {
@@ -88,11 +89,11 @@ public class PostDetailActivity extends BaseBindActivity implements OnClickListe
             bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, true);
             //替换fragment
             //创建修改实例
-            //emotionMainFragment = EmotionMainFragment.newInstance(EmotionMainFragment.class, bundle);
+//            emotionMainFragment = EmotionMainFragment.newInstance(EmotionMainFragment.class, bundle);
             emotionMainFragment = new EmotionMainFragment();
             emotionMainFragment.setArguments(bundle);
             emotionMainFragment.bindToContentView(binding.rvPost);
-            final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             // Replace whatever is in thefragment_container view with this fragment,
             // and add the transaction to the backstack
             transaction.replace(R.id.fl_emotion, emotionMainFragment);
@@ -172,6 +173,8 @@ public class PostDetailActivity extends BaseBindActivity implements OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isInitEmotionMainFragment=false;
+
         if (adapter != null) {
             try {
                 if (adapter.getItemCount() > 0) {

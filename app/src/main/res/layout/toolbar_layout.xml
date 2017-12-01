@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="com.puxiang.mall.utils.AppUtil"/>
+        <import type="com.puxiang.mall.R"/>
         <variable
             name="title"
             type="String" />
+        <variable
+            name="color"
+            type="int"/>
+        <variable
+            name="backSrc"
+            type="int"/>
+        <variable
+            name="textColor"
+            type="int"/>
     </data>
 
     <RelativeLayout
         android:id="@+id/order_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarSizeHeight"
-        android:background="@color/toolbar_bg"
+        android:background="@{AppUtil.getColor(color,R.color.mall_activity)}"
         android:elevation="@dimen/elevation_height">
 
         <ImageView
             android:id="@+id/iv_back"
             style="@style/ToolbarBackBtnStyle"
+            android:background="@{AppUtil.getColor(color,R.color.mall_activity)}"
             android:layout_alignParentBottom="true"
+            android:src="@{AppUtil.getDrawable(backSrc,R.mipmap.nav_back_w)}"
             android:onClick="onClick" />
 
         <TextView
@@ -28,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:textColor="@{AppUtil.getColor(textColor,R.color.white)}"
             android:layout_centerHorizontal="true"
             android:paddingBottom="@dimen/toolBarBottomMargin"
             android:text="@{title}" />

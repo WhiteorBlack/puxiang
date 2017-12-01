@@ -39,6 +39,7 @@ public class ShowHeadPicActivity extends BaseBindActivity implements EasyPermiss
             viewModel.saveImg();
             return true;
         });
+        mImmersionBar.statusBarDarkFont(false).init();
     }
 
     public void onClick(View view) {

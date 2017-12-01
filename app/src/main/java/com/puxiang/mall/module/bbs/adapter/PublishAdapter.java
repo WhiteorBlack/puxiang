@@ -5,6 +5,7 @@ import com.puxiang.mall.BR;
 import com.puxiang.mall.R;
 import com.puxiang.mall.adapter.BindingViewHolder;
 import com.puxiang.mall.adapter.EasyBindQuickAdapter;
+import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.DraweeViewUtils;
 
 import cn.finalteam.galleryfinal.model.PhotoInfo;

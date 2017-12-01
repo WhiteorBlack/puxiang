@@ -36,7 +36,8 @@
             android:id="@+id/fl_emotion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}" />
+            android:layout_gravity="bottom"
+            android:visibility="@{viewModel.isInitData?View.VISIBLE:View.GONE}"/>
 
         <include
             android:id="@+id/ll_none"

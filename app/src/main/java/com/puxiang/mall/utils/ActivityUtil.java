@@ -44,12 +44,15 @@ import com.puxiang.mall.module.shop.view.SelectCityActivity;
 import com.puxiang.mall.module.shop.view.ShopDetial;
 import com.puxiang.mall.module.shop.view.ShopListActivity;
 import com.puxiang.mall.module.shoppingcart.view.ShoppCartActivity;
+import com.puxiang.mall.module.userinfo.view.ChangeMobileActivity;
 import com.puxiang.mall.module.userinfo.view.ForgetActivity;
 import com.puxiang.mall.module.userinfo.view.InfoActivity;
 import com.puxiang.mall.module.userinfo.view.NameActivity;
 import com.puxiang.mall.module.userinfo.view.NickActivity;
 import com.puxiang.mall.module.userinfo.view.SettingActivity;
 import com.puxiang.mall.module.userinfo.view.SexActivity;
+import com.puxiang.mall.module.userinfo.view.VerifyPhoneActivity;
+import com.puxiang.mall.module.userinfo.viewmodel.ChangeMobileViewModel;
 import com.puxiang.mall.module.welcome.view.GuideActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -157,10 +160,9 @@ public class ActivityUtil {
                 String linkUrl = bean.getLinkUrl();
                 if (linkUrl.contains("stock_list.htm")) {
                     //跳转到进货页面
-                    if (MyApplication.isLogin())
-                    {
+                    if (MyApplication.isLogin()) {
                         startStockListActivity(activity);
-                    }else {
+                    } else {
                         startLoginActivity(activity);
                     }
                     return;
@@ -402,12 +404,13 @@ public class ActivityUtil {
 
     /**
      * 跳转登录注册页面
+     *
      * @param activity
-     * @param isLogin 标识登录或注册，if true viewpager显示登录
+     * @param isLogin  标识登录或注册，if true viewpager显示登录
      */
-    public static void startLoginActivity(Activity activity,boolean isLogin) {
+    public static void startLoginActivity(Activity activity, boolean isLogin) {
         Intent intent = new Intent(activity, LoginActivity.class);
-        intent.putExtra("isLogin",isLogin);
+        intent.putExtra("isLogin", isLogin);
         activity.startActivity(intent);
     }
 
@@ -671,9 +674,21 @@ public class ActivityUtil {
         activity.startActivity(intent);
     }
 
-    public static void startAddEditAddressActivity(Activity activity, Bundle bundle){
+    public static void startAddEditAddressActivity(Activity activity, Bundle bundle) {
         Intent intent = new Intent(activity, AddEditAddressActivity.class);
-        intent.putExtra("bundle",bundle);
+        intent.putExtra("bundle", bundle);
+        activity.startActivity(intent);
+    }
+
+    public static void startChangePhoneActivity(Activity activity, String ticket) {
+        Intent intent = new Intent(activity, ChangeMobileActivity.class);
+        intent.putExtra("ticket", ticket);
+        activity.startActivity(intent);
+    }
+
+    public static void startVerifyPhoneActivity(Activity activity, String phone) {
+        Intent intent = new Intent(activity, VerifyPhoneActivity.class);
+        intent.putExtra("phone", phone);
         activity.startActivity(intent);
     }
 

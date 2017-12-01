@@ -77,6 +77,7 @@ public class SelectCityActivity extends BaseBindActivity implements TextView.OnE
             postCity(rxArea);
             onBackPressed();
         });
+        mImmersionBar.keyboardEnable(false).init();
     }
 
     private void postCity(RxArea rxCity) {

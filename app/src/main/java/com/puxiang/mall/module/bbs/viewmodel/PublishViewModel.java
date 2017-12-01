@@ -1,8 +1,10 @@
 package com.puxiang.mall.module.bbs.viewmodel;
 
 import android.Manifest;
+import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,6 +24,7 @@ import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.ActivityUtil;
+import com.puxiang.mall.utils.FileUtil;
 import com.puxiang.mall.utils.LoadingWindow;
 import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
@@ -31,6 +34,7 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +48,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
+import io.rong.imkit.plugin.image.PictureSelectorActivity;
 
 import static com.puxiang.mall.utils.StringUtil.getString;
 
@@ -106,6 +111,17 @@ public class PublishViewModel implements ViewModel {
         }
     }
 
+    public void setPicList(List<Uri> picList) {
+        if (picList != null && picList.size() > 0) {
+            for (int i = 0; i < picList.size(); i++) {
+                PhotoInfo photoInfo = new PhotoInfo();
+                photoInfo.setPhotoUri(picList.get(i));
+                list.add(0,photoInfo);
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     /**
      * 获取相册图片
      */
@@ -135,8 +151,8 @@ public class PublishViewModel implements ViewModel {
                                         .addRequestCode(PermissionCode.RG_CAMERA_PERM)
                                         .permissions(Manifest.permission.CAMERA)
                                         .request();
-                                // GalleryFinal.openCamera(REQUEST_CODE_CAMERA, GalleryFinal
-                                // .getCoreConfig().getFunctionConfig(), InfoActivity.this);
+//                                 GalleryFinal.openCamera(REQUEST_CODE_CAMERA, GalleryFinal
+//                                 .getCoreConfig().getFunctionConfig());
                                 break;
                             default:
                                 break;
@@ -225,9 +241,6 @@ public class PublishViewModel implements ViewModel {
         int size = isMax ? list.size() : list.size() - 1;
         for (int i = 0; i < size; i++) {
             String photoPath = list.get(i).getPhotoPath();
-//            if (StringUtil.isEmpty(picMap.get(photoPath))) {
-//                photoPathList.add(photoPath);
-//            }
             if (!TextUtils.isEmpty(photoPath)) {
                 photoPathList.add(photoPath);
             }
@@ -441,8 +454,10 @@ public class PublishViewModel implements ViewModel {
                         break;
                     case R.id.sdv_item_pic:
                         String photoPath = ((PhotoInfo) baseQuickAdapter.getData().get(i)).getPhotoPath();
-                        if (StringUtil.isEmpty(photoPath)) {
+                        if (TextUtils.isEmpty(photoPath)) {
                             getPic();
+//                            Intent intent = new Intent(activity, PictureSelectorActivity.class);
+//                            activity.startActivityForResult(intent, Config.PIC_REQUEST);
                         }
                         break;
                 }

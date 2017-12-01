@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.userinfo.viewmodel.VerifyPhoneViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sideMarginTop"
+            android:background="@drawable/shadow"
+            android:elevation="@dimen/elevation_height">
+
+            <TextView
+                android:id="@+id/tv_account"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="手机号码：" />
+
+            <TextView
+                android:id="@+id/et_account"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_account"
+                android:background="@null"
+                android:text="@{viewModel.phone}"
+                android:maxLength="11"
+                android:textColorHint="@color/se" />
+
+            <View
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_account" />
+
+            <TextView
+                android:id="@+id/tv_sms_code"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_account"
+                android:gravity="center"
+                android:text="验  证  码："
+                android:textColor="@color/title" />
+
+            <EditText
+                android:id="@+id/et_code"
+                style="@style/ETMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/et_account"
+                android:layout_below="@+id/tv_account"
+                android:layout_toLeftOf="@+id/cb_sms"
+                android:background="@null"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:textColorHint="@color/se" />
+
+            <CheckBox
+                android:id="@+id/cb_sms"
+                style="@style/SmsCodeStyle"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_account"
+                android:checked="@{viewModel.isCounting}"
+                android:clickable="false"
+                android:enabled="@{!viewModel.isCounting}"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="@{viewModel.msg}" />
+        </RelativeLayout>
+
+
+        <FrameLayout
+            android:id="@+id/fl_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:layout_gravity="center"
+            android:layout_marginTop="50px">
+
+
+
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/btnStyle"
+                android:background="@drawable/btn_bind_phone"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="验证手机号码"
+                android:textColor="@color/white" />
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

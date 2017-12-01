@@ -2,6 +2,7 @@ package com.puxiang.mall.module.my.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableBoolean;
 
 import com.puxiang.mall.BR;
 import com.puxiang.mall.model.data.RxMessageState;
@@ -17,12 +18,61 @@ public class ObMessageState extends BaseObservable {
     private boolean hasMyMessage = false;
     private boolean isNewestVersion = true;
 
+    private ObservableBoolean isWarnMessage=new ObservableBoolean(false);
+    private ObservableBoolean isLike=new ObservableBoolean(false);
+    private ObservableBoolean isCommentMe=new ObservableBoolean(false);
+    private ObservableBoolean isMine=new ObservableBoolean(false);
+
+    @Bindable
+    public boolean isMine() {
+        return isMine.get();
+    }
+
+    public void setMine(boolean mine) {
+        isMine.set(mine);
+        notifyPropertyChanged(BR.mine);
+    }
+
+    @Bindable
+    public boolean isWarnMessage() {
+        return isWarnMessage.get();
+    }
+
+    public void setWarnMessage(boolean warnMessage) {
+        isWarnMessage.set(warnMessage);
+        notifyPropertyChanged(BR.warnMessage);
+    }
+
+    @Bindable
+    public boolean isLike() {
+        return isLike.get();
+    }
+
+    public void setLike(boolean like) {
+        isLike .set(like);
+        notifyPropertyChanged(BR.like);
+    }
+
+    @Bindable
+    public boolean isCommentMe() {
+        return isCommentMe.get();
+    }
+
+    public void setCommentMe(boolean commentMe) {
+        isCommentMe.set(commentMe);
+        notifyPropertyChanged(BR.commentMe);
+    }
+
     public void setData(RxMessageState messageState) {
         setTotal(messageState.getTotal());
         setCommentMe(messageState.getCommentMe());
         setLikeMe(messageState.getLikeMe());
         setSysMessage(messageState.getSysMessage());
         setNotifyMessage(messageState.getNotifyMessage());
+        setLike(messageState.getLikeMe()>0);
+        setCommentMe(messageState.getCommentMe()>0);
+        setMine(messageState.getTotal()>0);
+        setWarnMessage(messageState.getSysMessage()>0||messageState.getNotifyMessage()>0);
     }
 
     @Bindable
