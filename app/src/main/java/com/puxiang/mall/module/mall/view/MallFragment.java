@@ -162,7 +162,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
     private void initGoodsRecyclerView(RecyclerView rvMall) {
 //        adapter.addHeaderView(headViewBinding.getRoot());
         adapter.addFooterView(bottomLineBinding.getRoot());
-        rvMall.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
+        rvMall.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         rvMall.setAdapter(adapter);
         rvMall.setFocusableInTouchMode(false);
         rvMall.setFocusable(false);

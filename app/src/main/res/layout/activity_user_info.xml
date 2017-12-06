@@ -126,13 +126,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
+                    android:textSize="@dimen/myInfoTextSize"
                     android:text="@{viewModel.userBean.nickname}" />
 
                 <ImageView
                     android:id="@+id/iv_nick"
                     style="@style/nextImgStyle"
                     android:src="@mipmap/my_open"
-                    android:visibility="@{viewModel.check.changeAble==0?View.INVISIBLE:View.VISIBLE}" />
+                    />
             </LinearLayout>
 
             <include layout="@layout/view_lien" />

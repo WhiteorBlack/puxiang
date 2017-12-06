@@ -8,6 +8,7 @@ import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
+import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -55,6 +56,16 @@ public class NameViewModel extends BaseObservable implements ViewModel {
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+
+                    @Override
                     public void onSuccess(String bean) {
                         ToastUtil.toast("修改成功");
                         activity.setResult(RESULT_OK);
@@ -75,6 +86,16 @@ public class NameViewModel extends BaseObservable implements ViewModel {
         ApiWrapper.getInstance().modifyNickname(nickName)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new NetworkSubscriber<String>() {
+                    @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+
                     @Override
                     public void onSuccess(String bean) {
                         ToastUtil.toast("修改成功");

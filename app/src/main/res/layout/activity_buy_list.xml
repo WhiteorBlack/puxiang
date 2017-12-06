@@ -115,7 +115,7 @@
                         android:layout_centerInParent="true"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="红酒"
+                        android:text="葡萄酒"
                         android:textColor="@{AppUtil.getColor(viewModel.selectPos==1?R.color.mall_activity:R.color.shop_detial_indicator)}"
                         android:textSize="28px" />
 

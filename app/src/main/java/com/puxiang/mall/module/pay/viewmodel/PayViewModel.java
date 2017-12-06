@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.config.Config;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.model.data.RxPayChannel;
@@ -48,7 +49,7 @@ public class PayViewModel implements ViewModel {
     private final String mMode = "00";
 
     private final PayActivity activity;
-    public ObservableDouble totalPrices = new ObservableDouble(0);
+    public ObservableDouble totalPrices = new ObservableDouble(0.00);
     public ObservableBoolean isInitData = new ObservableBoolean();
     public ObservableField<RxPayChannel> aliPayChannel = new ObservableField<>();
     public ObservableField<RxPayChannel> wxPayChannel = new ObservableField<>();
@@ -63,6 +64,7 @@ public class PayViewModel implements ViewModel {
         EventBus.getDefault().register(this);
         this.activity = activity;
         loadingWindow = new LoadingWindow(activity);
+        loadingWindow.delayedShowWindow();
         getCache();
         getPayInfo(Config.PRODUCTORDER, orderId);
         getPayChannel();
@@ -93,6 +95,7 @@ public class PayViewModel implements ViewModel {
         ApiWrapper.getInstance()
                 .getPayChannel()
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+                .doOnComplete(() -> isInitData.set(true))
                 .subscribe(new NetworkSubscriber<List<RxPayChannel>>() {
                     @Override
                     public void onSuccess(List<RxPayChannel> list) {
@@ -122,6 +125,7 @@ public class PayViewModel implements ViewModel {
         ApiWrapper.getInstance()
                 .getPayInfo(orderType, orderId)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+                .doOnTerminate(loadingWindow::hidWindow)
                 .doOnComplete(() -> isInitData.set(true))
                 .subscribe(new NetworkSubscriber<RxPayPrice>() {
                     @Override
@@ -132,6 +136,7 @@ public class PayViewModel implements ViewModel {
 
                     @Override
                     public void onSuccess(RxPayPrice bean) {
+                        Logger.e("totalPrice--"+bean.getTotalPrice());
                         totalPrices.set(bean.getTotalPrice());
                     }
                 });
@@ -203,6 +208,7 @@ public class PayViewModel implements ViewModel {
      * call alipay sdk pay. 调用SDK支付
      */
     public void aliPay() {
+        loadingWindow.showWindow();
         ApiWrapper.getInstance()
                 .alipaySign(0, orderId)
                 .subscribeOn(Schedulers.io())

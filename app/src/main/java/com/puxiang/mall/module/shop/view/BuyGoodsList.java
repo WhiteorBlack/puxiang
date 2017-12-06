@@ -38,7 +38,7 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
     private MsgCountViewModel msgCountViewModel;
     private HeadBannerViewModel headBannerViewModel;
     private String shopId;
-    private String[] keyword = new String[]{"白酒", "葡萄酒", "茶",""};
+    private String[] keyword = new String[]{"白酒", "葡萄酒", "茶", ""};
 
     @Override
     protected void initBind() {
@@ -50,7 +50,7 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
         headBannerViewModel = new HeadBannerViewModel(this);
         binding.headBanner.headBanner.setAdapter(headBannerViewModel);
         binding.setHeadModel(headBannerViewModel);
-        mImmersionBar.keyboardEnable(false).init();
+        mImmersionBar.statusBarDarkFont(false).keyboardEnable(false).init();
     }
 
     @Override
@@ -58,8 +58,8 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
         initIndicator(binding.bottomView);
 //        viewModel.getShopDetialData();
         headBannerViewModel.getBannerData(URLs.STOK_CAROUSEL);
-        LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) binding.headBanner.headBanner.getLayoutParams();
-        params.height=(int) (MyApplication.widthPixels * 0.347);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.headBanner.headBanner.getLayoutParams();
+        params.height = (int) (MyApplication.widthPixels * 0.347);
         binding.headBanner.headBanner.setLayoutParams(params);
         binding.toolbarShopDetial.et.setOnEditorActionListener(this);
     }
@@ -98,6 +98,15 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
             case R.id.btn_commit:
                 viewModel.buy();
                 break;
+            case R.id.txt_search:
+                String keyword = binding.toolbarShopDetial.et.getText().toString();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("search", true);
+                bundle.putString("keyword", keyword);
+                EventBus.getDefault().post(bundle);
+                viewModel.setSelectPos(4);
+                closeInput();
+                break;
         }
     }
 
@@ -105,12 +114,12 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
         binding.bottomView.setCurrentItem(pos);
     }
 
-    public void setTotalPrice(double money){
+    public void setTotalPrice(double money) {
         viewModel.setTotalMoney(money);
     }
 
-    public void selectGoods(boolean isSelected, RxProduct rxProduct){
-        viewModel.setSelectGoods(isSelected,rxProduct);
+    public void selectGoods(boolean isSelected, RxProduct rxProduct) {
+        viewModel.setSelectGoods(isSelected, rxProduct);
     }
 
     @Override
@@ -122,13 +131,11 @@ public class BuyGoodsList extends BaseBindActivity implements TextView.OnEditorA
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
         if (i == EditorInfo.IME_ACTION_SEARCH) {
             String keyword = binding.toolbarShopDetial.et.getText().toString();
-            if (!TextUtils.isEmpty(keyword)) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("search", true);
-                bundle.putString("keyword", keyword);
-                EventBus.getDefault().post(bundle);
-                viewModel.setSelectPos(4);
-            }
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("search", true);
+            bundle.putString("keyword", keyword);
+            EventBus.getDefault().post(bundle);
+            viewModel.setSelectPos(4);
             closeInput();
             return true;
         }

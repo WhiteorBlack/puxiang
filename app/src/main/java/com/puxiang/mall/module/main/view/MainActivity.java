@@ -14,6 +14,7 @@ import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
+import com.puxiang.mall.config.Config;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.databinding.ActivityMainBinding;
 import com.puxiang.mall.module.main.adapter.ViewPagerAdapter;
@@ -21,6 +22,7 @@ import com.puxiang.mall.module.main.viewmodel.MainViewModel;
 import com.puxiang.mall.utils.ActivityUtil;
 import com.puxiang.mall.utils.WebUtil;
 import com.puxiang.mall.utils.permissions.EasyPermission;
+import com.qihoo.appstore.common.updatesdk.lib.UpdateHelper;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -76,6 +78,14 @@ public class MainActivity extends BaseBindActivity implements EasyPermission.Per
         binding.setMessageState(MyApplication.messageState);
         isInit = true;
         binding.imgPos.setOnClickListener((view -> ActivityUtil.startPublishActivity(MainActivity.this)));
+        switch (Config.PLATEID) {
+            case 0:
+                viewModel.versionCheck();
+                break;
+            case 1:
+                UpdateHelper.getInstance().init(this.getApplicationContext(), R.color.mall_activity);
+                break;
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

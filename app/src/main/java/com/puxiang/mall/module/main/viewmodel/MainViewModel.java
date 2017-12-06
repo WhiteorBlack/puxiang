@@ -84,7 +84,6 @@ public class MainViewModel extends BaseObservable implements ViewModel {
         this.activity = activity;
 
         checkPermission();
-        versionCheck();
 //        getSplashImage();
         //签到
         BbsRequest.setSigned();
@@ -176,7 +175,7 @@ public class MainViewModel extends BaseObservable implements ViewModel {
      * 版本检测
      * ps:采取延时检测提升用户体验
      */
-    private void versionCheck() {
+    public void versionCheck() {
         Observable.timer(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {

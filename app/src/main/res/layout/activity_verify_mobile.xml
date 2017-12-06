@@ -93,8 +93,8 @@
             android:id="@+id/fl_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20px"
-            android:paddingRight="20px"
+            android:paddingLeft="45px"
+            android:paddingRight="45px"
             android:layout_gravity="center"
             android:layout_marginTop="50px">
 
@@ -103,7 +103,7 @@
             <Button
                 android:id="@+id/btn_register"
                 style="@style/btnStyle"
-                android:background="@drawable/btn_bind_phone"
+                android:background="@drawable/bg_login_btn"
                 android:gravity="center"
                 android:onClick="onClick"
                 android:text="验证手机号码"

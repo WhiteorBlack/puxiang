@@ -22,7 +22,6 @@
 
         <include
             android:id="@+id/toolbar"
-
             layout="@layout/toolbar_layout" />
 
 
@@ -74,6 +73,7 @@
                 style="@style/titleMarginStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal">
@@ -93,6 +93,7 @@
             <View
                 android:id="@+id/v1"
                 style="@style/lineStyle"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
 
@@ -130,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -146,6 +148,7 @@
 
             <View
                 android:id="@+id/v5"
+                android:visibility="gone"
                 android:background="@color/bg_Gray_light"
                 android:layout_width="match_parent"
                 android:layout_height="10px" />

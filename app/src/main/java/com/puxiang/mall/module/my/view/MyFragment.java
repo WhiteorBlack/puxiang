@@ -281,7 +281,9 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     startActivity(intent);
                     return;
                 }
-                ActivityUtil.startInfoActivity(getActivity());
+//                ActivityUtil.startInfoActivity(getActivity());
+                ActivityUtil.startSettingActivity(getActivity(), MyApplication.messageState.isNewestVersion(),
+                        viewModel.introduce, viewModel.versionName);
                 break;
             case R.id.my_login_text:
             case R.id.tv_login:

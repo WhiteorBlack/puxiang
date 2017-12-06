@@ -152,7 +152,6 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
         if (pageNo == 1) {
             this.pageNo = 1;
             this.keyword = keyword;
-            this.areaCode = areaCode;
         }
 
         ApiWrapper.getInstance()
@@ -179,6 +178,11 @@ public class ShopViewModel extends BaseObservable implements ViewModel {
                         notifyPropertyChanged(BR.isInitData);
                     }
                 });
+    }
+
+    public void searchShop(String keyword){
+        loadingWindow.showWindow();
+        getShopList(1,keyword,"","");
     }
 
     public void getCurrentLocation(double lat, double lng) {

@@ -11,6 +11,11 @@ public class Config {
 //        System.loadLibrary("somicAuth-lib");
     }
 
+    /**
+     * 0是不接入其他平台更新策略
+     * 1 是接入360自动更新
+     */
+    public static int PLATEID=0;
     public static int RECOMMENDTOP = 2;
     public static int RECOMMENDBOTTOM = 2;
 
@@ -33,7 +38,6 @@ public class Config {
         return new String[]{"", "", "", "", "", "", "", ""};
     }
 
-    ;
 
     private static String[] authKey = getAuthKey(MyApplication.getContext());
 
@@ -48,7 +52,7 @@ public class Config {
     public static final String SINA_APP_SECRET = authKey[5];
     public static final String LINJU_APP_KEY = authKey[6];
 
-    public static final String LOG_TAG = "GMZ";
+    public static final String LOG_TAG = "PUXIANG";
     public static final String SERVER_HOST;
     public static final String HTTP_MALL_ROOT_URL;
     public static final String HTTP_BBS_ROOT_URL;

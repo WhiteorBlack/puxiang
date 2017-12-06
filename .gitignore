@@ -174,3 +174,4 @@ captures/
 
 *.jks
 
+keystore_pwd.txt

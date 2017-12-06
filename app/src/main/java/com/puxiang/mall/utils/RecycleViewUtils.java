@@ -22,6 +22,16 @@ public class RecycleViewUtils {
         return none_tv;
     }
 
+    public static TextView setEmptyViewTop(BaseQuickAdapter adapter, RecyclerView recycle, LayoutInflater inflater,
+                                        String noneStr) {
+        View emptyView = inflater.inflate(R.layout.view_buy_list_none, ((ViewGroup) recycle.getParent()), false);
+        AutoUtils.auto(emptyView);
+        TextView none_tv = (TextView) emptyView.findViewById(R.id.tv_none);
+        none_tv.setText(noneStr);
+        adapter.setEmptyView(emptyView);
+        return none_tv;
+    }
+
     public static TextView setCollapseEmptyView(BaseQuickAdapter adapter, RecyclerView recycle, LayoutInflater
             inflater, String noneStr) {
         View emptyView = inflater.inflate(R.layout.view_collapse_none, ((ViewGroup) recycle.getParent()), false);

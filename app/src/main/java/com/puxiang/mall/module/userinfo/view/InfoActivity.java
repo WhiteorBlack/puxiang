@@ -10,6 +10,7 @@ import com.puxiang.mall.R;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.databinding.ActivityUserInfoBinding;
 import com.puxiang.mall.model.data.RxMyUserInfo;
+import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.login.view.LoginFragment;
 import com.puxiang.mall.module.userinfo.viewmodel.InfoViewModel;
 import com.puxiang.mall.network.URLs;
@@ -18,6 +19,7 @@ import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.WebUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
 public class InfoActivity extends BaseBindActivity {
 
 
@@ -41,7 +43,7 @@ public class InfoActivity extends BaseBindActivity {
 
     public void onClick(View view) {
         if (StringUtil.isEmpty(MyApplication.TOKEN)) {
-            startActivity(new Intent(this, LoginFragment.class));
+            startActivity(new Intent(this, LoginActivity.class));
             return;
         }
 
@@ -54,18 +56,14 @@ public class InfoActivity extends BaseBindActivity {
                 ActivityUtil.startShowHeadPicActivity(this, userInfo.getUserImage(), userInfo.getUserId());
                 break;
             case R.id.ll_info_nick:
-                if (viewModel.check.get() != null) {
-                    if (viewModel.check.get().getChangeAble() == 1) {
-                        ActivityUtil.startNickActivityForResult(this, userInfo.getNickname(), 0);
-                    }
-                }
+                ActivityUtil.startNickActivityForResult(this, userInfo.getNickname(), 0);
                 break;
             case R.id.ll_info_realName:
                 ActivityUtil.startNameActivityForResult(this, userInfo.getRealName(), 0);
                 break;
             case R.id.ll_info_mobile:
 //                WebUtil.jumpWeb(URLs.getHtmlModifyMobile(userInfo.getMobile()), InfoActivity.this);
-                ActivityUtil.startVerifyPhoneActivity(this,userInfo.getMobile());
+                ActivityUtil.startVerifyPhoneActivity(this, userInfo.getMobile());
                 break;
             case R.id.ll_info_sex:
                 ActivityUtil.startSexActivityForResult(this, userInfo.getSex(), 0);

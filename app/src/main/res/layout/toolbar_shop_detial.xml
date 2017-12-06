@@ -84,10 +84,20 @@
                     android:textColorHint="@color/white"
                     android:textSize="32px" />
             </RelativeLayout>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_search"
+                android:text="搜索"
+                android:textSize="32px"
+                android:onClick="onClick"
+                android:textColor="@color/white"
+                android:layout_marginLeft="30px"
+                android:paddingRight="30px"/>
             <FrameLayout
                 android:layout_width="55px"
                 android:layout_height="52px"
+                android:visibility="gone"
                 android:layout_marginLeft="30px"
                 android:layout_marginRight="30px">
 
@@ -114,10 +124,5 @@
             </FrameLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#ccc" />
     </RelativeLayout>
 </layout>

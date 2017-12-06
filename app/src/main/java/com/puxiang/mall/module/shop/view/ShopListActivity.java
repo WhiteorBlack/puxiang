@@ -17,8 +17,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -50,7 +55,7 @@ import static com.puxiang.mall.utils.StringUtil.getString;
  * 精选商家列表页面
  */
 
-public class ShopListActivity extends BaseBindActivity implements EasyPermission.PermissionCallback, View.OnClickListener {
+public class ShopListActivity extends BaseBindActivity implements EasyPermission.PermissionCallback, View.OnClickListener, TextView.OnEditorActionListener {
     private ActivityShopBinding shopBinding;
     private ShopViewModel shopViewModel;
     private ShopHeadViewModel shopHeadViewModel;
@@ -71,6 +76,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
             requestPermission();
         }
         shopBinding = DataBindingUtil.setContentView(this, R.layout.activity_shop);
+        shopBinding.toolbar.txtSearch.setOnClickListener(this);
         shopListAdapter = new ShopListAdapter(R.layout.item_shop);
         shopViewModel = new ShopViewModel(this, shopListAdapter);
         shopHeadViewModel = new ShopHeadViewModel(this);
@@ -148,6 +154,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
 
     @Override
     public void initView() {
+        RecycleViewUtils.setEmptyViewTop(shopListAdapter, shopBinding.bottomView, LayoutInflater.from(this), "该地区暂无店铺~");
         shopListAdapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());
         shopListAdapter.setEnableLoadMore(true);
         shopListAdapter.setOnLoadMoreListener(() -> shopViewModel.loadMore(), shopBinding.bottomView);
@@ -162,6 +169,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         shopBinding.banner.setAdapter(shopHeadViewModel);
         shopHeadViewModel.getBannerData();
         msgCountViewModel.getMsgCountData();
+        shopBinding.toolbar.tvSearch.setOnEditorActionListener(this);
     }
 
     /**
@@ -227,7 +235,29 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
             case R.id.iv_refresh:
                 locationClient.requestLocation();
                 break;
+            case R.id.txt_search:
+                String keyword=shopBinding.toolbar.tvSearch.getText().toString();
+//                if (TextUtils.isEmpty(keyword)){
+//                    ToastUtil.toast("请输入要搜索的内容");
+//                    return;
+//                }
+                closeInput();
+                shopViewModel.searchShop(keyword);
+                break;
         }
     }
 
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            String keyword=shopBinding.toolbar.tvSearch.getText().toString();
+//                if (TextUtils.isEmpty(keyword)){
+//                    ToastUtil.toast("请输入要搜索的内容");
+//                    return;
+//                }
+            closeInput();
+            shopViewModel.searchShop(keyword);
+        }
+        return false;
+    }
 }

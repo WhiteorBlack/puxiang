@@ -53,6 +53,7 @@ public class ShopGoodsFragment extends BaseBindFragment {
     int viewY = 0;
 
     private void initRecycle(RecyclerView rv) {
+        RecycleViewUtils.setEmptyViewTop(adapter, rv, inflater, "搜索不到该商品~");
         adapter.setHasStableIds(true);
         //上拉加载更多设置
         adapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());

@@ -48,6 +48,7 @@ public class BuyListFragment extends BaseBindFragment {
     }
 
     private void initRecycle(RecyclerView rv) {
+        RecycleViewUtils.setEmptyViewTop(adapter, rv, inflater, "搜索不到该商品~");
         adapter.setHasStableIds(true);
         //上拉加载更多设置
         adapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());

@@ -90,7 +90,7 @@ public class InfoViewModel implements ViewModel {
      * 请求网络，获取用户信息
      */
     public void getInfo() {
-        checkNick();
+//        checkNick();
         ApiWrapper.getInstance()
                 .getMyUserInfo()
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))

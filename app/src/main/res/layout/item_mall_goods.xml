@@ -21,10 +21,6 @@
         android:background="@drawable/bg_goods"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/bg_Gray_light" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_item_pic"
@@ -47,7 +43,9 @@
             android:layout_marginRight="20px"
             android:layout_marginTop="10px"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="left"
+            android:lines="2"
             android:text="@{mallItem.bean.productName}"
             android:textColor="#FF454444"
             android:textSize="22px" />
@@ -63,6 +61,11 @@
             android:text="@{MyTextUtils.getSalePrice(mallItem.bean.salePrice)}"
             android:textColor="@color/sale_price"
             android:textSize="32px" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_Gray_light" />
     </LinearLayout>
 
 </layout>

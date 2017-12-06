@@ -381,7 +381,7 @@ public class InitializeService extends IntentService {
                                 .style(NormalDialog.STYLE_TWO).titleTextSize(18).title("温馨提示")
                                 .cornerRadius(0)
                                 .content("检测到当前使用的是移动流量，是否确定更新？")
-                                
+
                                 .contentGravity(Gravity.START)
                                 .showAnim(new BounceLeftEnter()).dismissAnim(new SlideLeftExit())
                                 .btnText("取消", "立即更新").setOnBtnClickL(() -> {

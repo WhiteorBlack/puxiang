@@ -41,7 +41,7 @@ public class DescViewModel implements ViewModel {
         descShopList.add(rxDescShop);
 
         RxDescShop rxDescShop1 = new RxDescShop();
-        rxDescShop1.setDescName("理我最近");
+        rxDescShop1.setDescName("离我最近");
         rxDescShop1.setIsSelect(false);
         rxDescShop.setDescCode("nearby");
         descShopList.add(rxDescShop1);

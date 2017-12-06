@@ -13,7 +13,37 @@ public class RxUserInfo extends BaseObservable {
     private String userId;
     private String userImage;
     private String userName;
+    private String userRole;
+    private RxShop shop;
 
+    /**
+     * member  普通会员
+     * seller  商家
+     * dealer 经销商
+     *
+     * @return
+     */
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
+
+    /**
+     * 当userRole 为seller时返回商家信息
+     *
+     * @return
+     */
+    public RxShop getShop() {
+        return shop;
+    }
+
+    public void setShop(RxShop shop) {
+        this.shop = shop;
+    }
 
     public String getBirthday() {
         return birthday;
