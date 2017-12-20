@@ -4,12 +4,15 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="com.puxiang.mall.utils.StringUtil"/>
+
+        <import type="com.puxiang.mall.utils.StringUtil" />
+
         <variable
             name="viewModel"
             type="com.puxiang.mall.module.login.viewmodel.LoginViewModel" />
 
     </data>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,11 +56,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:onClick="@{viewModel.onClick}"
                 android:layout_marginRight="20px"
-                android:visibility="@{StringUtil.isEmpty(viewModel.account)?View.INVISIBLE:View.VISIBLE}"
                 android:layout_marginTop="50px"
-                android:background="@mipmap/icon_cancel" />
+                android:background="@mipmap/icon_cancel"
+                android:onClick="@{viewModel.onClick}"
+                android:visibility="@{StringUtil.isEmpty(viewModel.account)?View.INVISIBLE:View.VISIBLE}" />
 
             <View
                 style="@style/lineStyle"
@@ -104,13 +107,13 @@
                 android:id="@+id/iv_pwd_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20px"
                 android:layout_below="@+id/tv_accounts"
-                android:onClick="@{viewModel.onClick}"
+                android:layout_marginRight="20px"
                 android:layout_marginTop="50px"
-                android:visibility="@{StringUtil.isEmpty(viewModel.password)?View.INVISIBLE:View.VISIBLE}"
                 android:layout_toLeftOf="@+id/chb_pass"
-                android:background="@mipmap/icon_cancel" />
+                android:background="@mipmap/icon_cancel"
+                android:onClick="@{viewModel.onClick}"
+                android:visibility="@{StringUtil.isEmpty(viewModel.password)?View.INVISIBLE:View.VISIBLE}" />
 
             <View
                 android:id="@+id/login_v3"
@@ -127,37 +130,14 @@
                 android:layout_alignBaseline="@+id/tv_forget"
                 android:layout_alignBottom="@+id/tv_forget"
                 android:layout_alignStart="@+id/login_v3"
+                android:layout_marginLeft="8px"
                 android:button="@drawable/chb_login"
                 android:drawablePadding="10px"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="8px"
                 android:text="  自动登录"
                 android:textColor="#999999"
                 android:textSize="22px" />
 
-            <FrameLayout
-                android:id="@+id/fl_login"
-                android:layout_width="match_parent"
-                android:layout_height="90px"
-                android:layout_below="@+id/chb_login"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="80px">
-
-                <ProgressBar
-                    android:id="@+id/pb"
-                    style="@style/btnStyle"
-                    android:layout_gravity="center"
-                    android:visibility="@{viewModel.isLogging?View.VISIBLE:View.GONE}" />
-
-                <Button
-                    android:id="@+id/btn_login"
-                    style="@style/btnStyle"
-                    android:layout_gravity="center"
-                    android:background="@drawable/bg_login_btn"
-                    android:gravity="center"
-                    android:onClick="@{viewModel.onClick}"
-                    android:text="登录" />
-            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_forget"
@@ -174,6 +154,32 @@
                 android:textSize="22px" />
 
         </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_login"
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:layout_marginLeft="42px"
+            android:layout_marginRight="42px"
+            android:layout_below="@+id/chb_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px">
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="@style/btnStyle"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.isLogging?View.VISIBLE:View.GONE}" />
+
+            <Button
+                android:id="@+id/btn_login"
+                style="@style/btnStyle"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_login_btn"
+                android:gravity="center"
+                android:onClick="@{viewModel.onClick}"
+                android:text="登录" />
+        </FrameLayout>
 
         <View
             android:layout_width="0dp"

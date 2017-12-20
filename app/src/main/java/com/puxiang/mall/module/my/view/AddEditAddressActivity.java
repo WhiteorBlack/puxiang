@@ -49,6 +49,7 @@ public class AddEditAddressActivity extends BaseBindActivity {
                 closeInput();
                 break;
             case R.id.tv_address:
+                closeInput();
                 viewModel.showPicker();
                 break;
             case R.id.ll_del:

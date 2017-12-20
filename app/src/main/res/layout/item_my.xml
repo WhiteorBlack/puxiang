@@ -16,26 +16,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30px"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="16px"
         android:gravity="center"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="wrap_content"
+            android:paddingLeft="18px"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="18px"
+                android:layout_marginTop="14px"
                 android:background="@{AppUtil.getDrawable(item.resId)}" />
 
-            <ImageView
-                android:layout_width="8px"
-                android:layout_height="8px"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="top|right"
-                android:layout_marginRight="5px"
-                android:background="@drawable/point_selected"
-                android:visibility="@{item.hasMsg?View.VISIBLE:View.GONE}" />
+                android:background="@drawable/order_msg_count_bg"
+                android:gravity="center"
+                android:text="@{AppUtil.getMsgCount(item.msgCount)}"
+                android:textColor="@color/white"
+                android:textSize="24px"
+                android:visibility="@{item.msgCount>0?View.VISIBLE:View.INVISIBLE}" />
         </FrameLayout>
 
         <TextView

@@ -7,10 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
@@ -23,7 +26,9 @@ import com.puxiang.mall.module.shop.adapter.SimpleFragmentAdapter;
 import com.puxiang.mall.module.shop.viewModel.ShopDetialViewModel;
 import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.utils.AppUtil;
+import com.puxiang.mall.utils.MyTextUtils;
 import com.puxiang.mall.utils.ScreenUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -34,7 +39,7 @@ import java.util.List;
  * Created by zhaoyong bai on 2017/10/17.
  */
 
-public class ShopDetial extends BaseBindActivity {
+public class ShopDetial extends BaseBindActivity implements TextView.OnEditorActionListener {
     private ActivityShopDetialBinding binding;
     private ShopDetialViewModel viewModel;
     private MsgCountViewModel msgCountViewModel;
@@ -61,6 +66,7 @@ public class ShopDetial extends BaseBindActivity {
         FrameLayout.LayoutParams params= (FrameLayout.LayoutParams) binding.headBanner.getLayoutParams();
         params.height=(int) (MyApplication.widthPixels * 0.347);
         binding.headBanner.setLayoutParams(params);
+        binding.toolbarShopDetial.et.setOnEditorActionListener(this);
     }
 
 
@@ -93,6 +99,11 @@ public class ShopDetial extends BaseBindActivity {
             case R.id.iv_back:
                 onBackPressed();
                 break;
+            case R.id.txt_search:
+                String keyword = MyTextUtils.getEditTextString(binding.toolbarShopDetial.et);
+                //请求SearchFragment刷新数据
+                EventBus.getDefault().post(keyword);
+                break;
         }
     }
 
@@ -103,5 +114,16 @@ public class ShopDetial extends BaseBindActivity {
     @Override
     protected void viewModelDestroy() {
         if (viewModel != null) viewModel.destroy();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            String keyword = binding.toolbarShopDetial.et.getText().toString();
+            EventBus.getDefault().post(keyword);
+            closeInput();
+            return true;
+        }
+        return false;
     }
 }

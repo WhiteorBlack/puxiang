@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120px"
+            android:background="@mipmap/icon_dealer_notify" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80px"
+            android:text="温馨提示"
+            android:textColor="@color/text_black"
+            android:textSize="38px"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:text="您还不是经销商，点击查看"
+            android:textColor="#000000"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/tv_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:onClick="onClick"
+            android:text="“如何成为经销商”"
+            android:textColor="#f9930f"
+            android:textSize="28px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_go_home"
+                android:layout_width="200px"
+                android:layout_height="66px"
+                android:layout_margin="20px"
+                android:background="@drawable/btn_gohome_bg"
+                android:onClick="onClick"
+                android:text="返回首页"
+                android:textSize="30px"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_to_dealer"
+                android:layout_width="230px"
+                android:layout_height="66px"
+                android:layout_margin="20px"
+                android:textSize="30px"
+                android:background="@drawable/btn_gobuy_bg"
+                android:onClick="onClick"
+                android:text="成为经销商"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

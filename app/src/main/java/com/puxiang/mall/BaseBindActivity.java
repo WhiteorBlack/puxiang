@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.puxiang.mall.base.ErrorShow;
+import com.puxiang.mall.databinding.ToolbarLayoutBinding;
 import com.puxiang.mall.module.bbs.viewmodel.BbsRequest;
 import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.ToastUtil;
@@ -120,6 +121,25 @@ public abstract class BaseBindActivity extends RxAppCompatActivity implements Bb
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
+    /**
+     * 设置红色title
+     * @param toolbar
+     */
+    public void setRedTitle(ToolbarLayoutBinding toolbar){
+        toolbar.setBackSrc(R.mipmap.nav_back_w);
+        toolbar.setColor(R.color.mall_activity);
+        toolbar.setTextColor(R.color.white);
+    }
+
+    /**
+     * 设置白色title
+     * @param toolbar
+     */
+    public void setWhiteTitle(ToolbarLayoutBinding toolbar){
+        toolbar.setBackSrc(R.mipmap.nav_back_g);
+        toolbar.setColor(R.color.white);
+        toolbar.setTextColor(R.color.text_black);
+    }
     /**
      * 初始化 banner
      *

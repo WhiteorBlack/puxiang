@@ -23,6 +23,7 @@ import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.login.view.RegisterFragment;
 import com.puxiang.mall.module.main.view.MainActivity;
 import com.puxiang.mall.module.my.view.AddEditAddressActivity;
+import com.puxiang.mall.module.my.view.CollectionActivity;
 import com.puxiang.mall.module.my.view.PostAddress;
 import com.puxiang.mall.module.my.view.ShowHeadPicActivity;
 import com.puxiang.mall.module.pay.view.PayActivity;
@@ -39,6 +40,8 @@ import com.puxiang.mall.module.scan.view.QRCodeActivity;
 import com.puxiang.mall.module.search.view.SearchActivity;
 import com.puxiang.mall.module.search.view.SearchBBsListActivity;
 import com.puxiang.mall.module.search.view.SearchListActivity;
+import com.puxiang.mall.module.seller.view.ApplyDealerActivity;
+import com.puxiang.mall.module.seller.view.SellerNotifyActivity;
 import com.puxiang.mall.module.shop.view.BuyGoodsList;
 import com.puxiang.mall.module.shop.view.SelectCityActivity;
 import com.puxiang.mall.module.shop.view.ShopDetial;
@@ -159,7 +162,10 @@ public class ActivityUtil {
             case ListType.LINK_INTEGRAL_MALL:
                 String linkUrl = bean.getLinkUrl();
                 if (linkUrl.contains("stock_list.htm")) {
-                    //跳转到进货页面
+                    /**
+                     * 跳转到进货页面
+                     * 如果是普通用户则跳转到开通经销商页面
+                     */
                     if (MyApplication.isLogin()) {
                         startStockListActivity(activity);
                     } else {
@@ -639,8 +645,12 @@ public class ActivityUtil {
      * @param activity
      */
     public static void startStockListActivity(Activity activity) {
-        Intent intent = new Intent(activity, BuyGoodsList.class);
-        activity.startActivity(intent);
+        if (MyApplication.messageState.getIsDealer()) {
+            Intent intent = new Intent(activity, BuyGoodsList.class);
+            activity.startActivity(intent);
+        } else {
+            startSellerNotifyActivity(activity);
+        }
     }
 
     /**
@@ -670,6 +680,10 @@ public class ActivityUtil {
      * @param activity
      */
     public static void startPostAddressActivity(Activity activity) {
+        if (!MyApplication.isLogin()) {
+            ActivityUtil.startLoginActivity(activity);
+            return;
+        }
         Intent intent = new Intent(activity, PostAddress.class);
         activity.startActivity(intent);
     }
@@ -689,6 +703,34 @@ public class ActivityUtil {
     public static void startVerifyPhoneActivity(Activity activity, String phone) {
         Intent intent = new Intent(activity, VerifyPhoneActivity.class);
         intent.putExtra("phone", phone);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转 我的收藏页面
+     *
+     * @param activity
+     */
+    public static void startCollectionActivity(Activity activity) {
+        Intent intent = new Intent(activity, CollectionActivity.class);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 开通经销商提示页面
+     * @param activity
+     */
+    public static void startSellerNotifyActivity(Activity activity) {
+        Intent intent = new Intent(activity, SellerNotifyActivity.class);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 申请开通经销商
+     * @param activity
+     */
+    public static void startApplySellerActivity(Activity activity) {
+        Intent intent = new Intent(activity, ApplyDealerActivity.class);
         activity.startActivity(intent);
     }
 

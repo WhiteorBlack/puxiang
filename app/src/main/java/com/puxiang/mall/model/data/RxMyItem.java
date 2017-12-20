@@ -10,6 +10,15 @@ public class RxMyItem {
     private int resId;
     private boolean hasMsg = false;
     private int pos;
+    private int msgCount;
+
+    public int getMsgCount() {
+        return msgCount;
+    }
+
+    public void setMsgCount(int msgCount) {
+        this.msgCount = msgCount;
+    }
 
     public int getPos() {
         return pos;

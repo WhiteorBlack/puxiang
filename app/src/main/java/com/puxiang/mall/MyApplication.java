@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.Bindable;
 import android.databinding.Observable;
 import android.databinding.ObservableBoolean;
 import android.graphics.Bitmap;
@@ -83,7 +84,6 @@ public class MyApplication extends ApplicationLike {
         InitializeService.start(this.getContext(), InitializeService.ACTION_INIT_WHEN_APP_CREATE);
     }
 
-
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void onBaseContextAttached(Context base) {
@@ -162,6 +162,9 @@ public class MyApplication extends ApplicationLike {
         } else {
             RONG_TOKEN = rongToken;
         }
+        messageState.setIsDealer(mCache.getAsBoolean(CacheKey.ISDEALER));
+        messageState.setIsMember(mCache.getAsBoolean(CacheKey.ISMEMBER));
+        messageState.setIsSeller(mCache.getAsBoolean(CacheKey.ISSELLER));
     }
 
 

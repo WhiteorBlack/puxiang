@@ -42,6 +42,9 @@ import com.puxiang.mall.widget.dialog.MapDialog;
 import com.puxiang.mall.widget.dialog.OnDialogExecuteListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -105,6 +108,8 @@ public class WebViewModel implements ViewModel {
         } else if (i == Event.KILL_WEB) {
             activity.finish();
         } else if (i == Event.GO_MALL) {
+            activity.finish();
+        } else if (i == Event.GO_HOME) {
             activity.finish();
         }
     }
@@ -259,9 +264,9 @@ public class WebViewModel implements ViewModel {
                 } else if (url.contains("shop_detail.html")) {
                     //跳转到商家详情
                     try {
-                        String shopId = url.substring(url.indexOf("=") + 1,url.indexOf("&"));
+                        String shopId = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
                         ActivityUtil.startShopDetialActivity(activity, shopId);
-                        Logger.e("shopId--"+shopId);
+                        Logger.e("shopId--" + shopId);
                     } catch (Exception e) {
 
                     }
@@ -271,11 +276,11 @@ public class WebViewModel implements ViewModel {
                 } else if (url.contains(URLs.HTML_PAY_KEY)) {
                     String orderId = StringUtil.getUrlValue(url, "orderIds=");
                     ActivityUtil.startPayActivity(activity, orderId);
-                    if (web.canGoBack()) {
-                        web.goBack();
-                    } else {
-                        activity.onBackPressed();
-                    }
+//                    if (web.canGoBack()) {
+//                        web.goBack();
+//                    } else {
+//                        activity.onBackPressed();
+//                    }
                 } else if (url.contains(URLs.CREATE_TOPIC_KEY)) {
                     if (StringUtil.isEmpty(MyApplication.TOKEN)) {
                         ActivityUtil.startLoginActivity(activity);
@@ -488,24 +493,25 @@ public class WebViewModel implements ViewModel {
      */
     private void shareProduct(String rawUrl) {
         String id = StringUtil.getUrlValue(rawUrl, "productId=");
-        Observable.zip(getProduct(id), getShareUrl(rawUrl), (product, shareUrl) -> {
-            String title = "我在《甘美之》发现了 " + product.getName();
-            String picture = product.getPicture();
-            return new ShareInfo(shareUrl, title, picture, rawUrl);
-        })
-                .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(loadingWindow::hidWindow)
-                .subscribe(new NetworkSubscriber<ShareInfo>() {
-                    @Override
-                    public void onFail(RetrofitUtil.APIException e) {
-                        super.onFail(e);
-                    }
-
-                    @Override
-                    public void onSuccess(ShareInfo shareInfo) {
-                        share(shareInfo);
-                    }
-                });
+//        Observable.zip(getProduct(id), getShareUrl(rawUrl), (product, shareUrl) -> {
+//            String title = "我在《蒲象商城》发现了 " + product.getName();
+//            String picture = product.getPicture();
+//            return new ShareInfo(shareUrl, title, picture, rawUrl);
+//        })
+//                .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+//                .doOnTerminate(loadingWindow::hidWindow)
+//                .subscribe(new NetworkSubscriber<ShareInfo>() {
+//                    @Override
+//                    public void onFail(RetrofitUtil.APIException e) {
+//                        super.onFail(e);
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(ShareInfo shareInfo) {
+//                        share(shareInfo);
+//                    }
+//                });
+        getProduct(id, rawUrl);
     }
 
     /**
@@ -515,19 +521,20 @@ public class WebViewModel implements ViewModel {
      */
     private void shareIntegralProduct(String url) {
         String id = StringUtil.getUrlValue(url, "pid=");
-        Observable.zip(getIntegralProduct(id), getShareUrl(url), (integralProduct, shareUrl) -> {
-            String title = "我在《甘美之》发现了 " + integralProduct.getProductIntroduce();
-            String imgUrl = integralProduct.getProductMainPicUrl();
-            return new ShareInfo(shareUrl, title, imgUrl, url);
-        })
-                .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(loadingWindow::hidWindow)
-                .subscribe(new NetworkSubscriber<ShareInfo>() {
-                    @Override
-                    public void onSuccess(ShareInfo shareInfo) {
-                        share(shareInfo);
-                    }
-                });
+//        Observable.zip(getIntegralProduct(id), getShareUrl(url), (integralProduct, shareUrl) -> {
+//            String title = "我在《蒲象商城》发现了 " + integralProduct.getProductIntroduce();
+//            String imgUrl = integralProduct.getProductMainPicUrl();
+//            return new ShareInfo(shareUrl, title, imgUrl, url);
+//        })
+//                .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+//                .doOnTerminate(loadingWindow::hidWindow)
+//                .subscribe(new NetworkSubscriber<ShareInfo>() {
+//                    @Override
+//                    public void onSuccess(ShareInfo shareInfo) {
+//                        share(shareInfo);
+//                    }
+//                });
+
     }
 
     public void share(ShareInfo shareInfo) {
@@ -546,8 +553,18 @@ public class WebViewModel implements ViewModel {
         return ApiWrapper.getInstance().getShareUrl(url);
     }
 
-    private Observable<RxProduct> getProduct(final String id) {
-        return ApiWrapper.getInstance().getProduct(id);
+    private void getProduct(final String id, String url) {
+        ApiWrapper.getInstance().getProduct(id)
+                .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+                .doOnTerminate(loadingWindow::hidWindow)
+                .subscribe(new NetworkSubscriber<RxProduct>() {
+                    @Override
+                    public void onSuccess(RxProduct data) {
+                        String title = "蒲象商城";
+                        String picture = data.getMainPictureUrl();
+                        share(new ShareInfo("", title, picture, url,"我在《蒲象商城》发现了 "+data.getIntroduce()));
+                    }
+                });
     }
 
     private Observable<RxIntegralProduct> getIntegralProduct(final String id) {

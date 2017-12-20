@@ -86,7 +86,7 @@ public class MainViewModel extends BaseObservable implements ViewModel {
         checkPermission();
 //        getSplashImage();
         //签到
-        BbsRequest.setSigned();
+//        BbsRequest.setSigned();
     }
 
     /**

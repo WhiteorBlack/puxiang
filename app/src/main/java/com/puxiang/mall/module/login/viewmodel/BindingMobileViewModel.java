@@ -14,6 +14,7 @@ import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.ACache;
+import com.puxiang.mall.utils.LoadingWindow;
 import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -27,9 +28,9 @@ import static com.puxiang.mall.utils.StringUtil.getString;
 
 public class BindingMobileViewModel implements ViewModel {
     private final BaseBindActivity activity;
-    public ObservableBoolean isCounting = new ObservableBoolean();
+    public ObservableBoolean isCounting = new ObservableBoolean(false);
     public ObservableField<String> msg = new ObservableField<>("获取验证码");
-    public ObservableBoolean isShowBar = new ObservableBoolean();
+    public ObservableBoolean isShowBar = new ObservableBoolean(false);
 
     public BindingMobileViewModel(BaseBindActivity activity) {
         EventBus.getDefault().register(this);
@@ -55,6 +56,7 @@ public class BindingMobileViewModel implements ViewModel {
      * 验证输入信息
      */
     public void verifyInput(String accounts, String smsCode) {
+
         if (StringUtil.isEmpty(accounts)) {
             ToastUtil.toast("手机号码不能为空");
         } else if (!StringUtil.isPhoneNumberValid(accounts)) {
@@ -79,6 +81,17 @@ public class BindingMobileViewModel implements ViewModel {
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .doOnTerminate(() -> isShowBar.set(false))
                 .subscribe(new NetworkSubscriber<RxAuthorizeUserInfo>() {
+                    @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        ToastUtil.toast(e.toString());
+                    }
+
                     @Override
                     public void onSuccess(RxAuthorizeUserInfo bean) {
                         ACache.saveInfo(bean.getUserInfo(), bean.getToken());

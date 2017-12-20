@@ -123,7 +123,7 @@ public class LoadingWindow {
     }
 
     public void delayedShowWindow() {
-        delayedShowWindow(200);
+        delayedShowWindow(100);
     }
 
     public void delayedShowWindow(int t) {
@@ -131,11 +131,16 @@ public class LoadingWindow {
     }
 
     public void hidWindow() {
-        if (popWindow != null && popIsShow()) {
-            animationDrawable.stop();
-            handler.removeCallbacks(runnable);
-            popWindow.dismiss();
-        }
+//        if (popWindow != null && popIsShow()) {
+//            popWindow.dismiss();
+//            animationDrawable.stop();
+//            handler.removeCallbacks(runnable);
+//        }
+        delayHideWindow();
+    }
+
+    public void delayHideWindow(){
+        MainActivity.handler.postDelayed(this::dismiss, 150);
     }
 
     public void dismiss() {

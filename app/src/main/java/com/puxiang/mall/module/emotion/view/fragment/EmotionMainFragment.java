@@ -141,7 +141,6 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
 
 
     public void setBarState(boolean b) {
-        Logger.e("barState---"+b);
         if (viewModer == null) return;
         if (b) {
             viewModer.bigBar.set(true);

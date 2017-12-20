@@ -31,6 +31,7 @@ import com.puxiang.mall.model.data.RxLocation;
 import com.puxiang.mall.model.data.RxMallInfo;
 import com.puxiang.mall.model.data.RxMessageState;
 import com.puxiang.mall.model.data.RxMyUserInfo;
+import com.puxiang.mall.model.data.RxOrderState;
 import com.puxiang.mall.model.data.RxPayChannel;
 import com.puxiang.mall.model.data.RxPayPrice;
 import com.puxiang.mall.model.data.RxPlate;
@@ -234,10 +235,10 @@ public class ApiWrapper extends RetrofitUtil {
     /**
      * 获取商家商品
      */
-    public Observable<RxList<RxProduct>> getShopGoods(String shopId, String orderBy, String
+    public Observable<RxList<RxProduct>> getShopGoods(String keyword,String shopId, String orderBy, String
             order, int pageSize, int pageNo) {
         return getService()
-                .searchProduct(shopId, orderBy, order, pageSize, pageNo)
+                .searchShopProduct(keyword,shopId, orderBy, order, pageSize, pageNo)
                 .compose(this.applySchedulers());
     }
 
@@ -491,7 +492,7 @@ public class ApiWrapper extends RetrofitUtil {
      * @param orderType 订单类型
      * @param orderId   订单ID
      */
-    public Observable<String> alipaySign(int orderType, String orderId) {
+    public Observable<String> alipaySign(String orderType, String orderId) {
         return getService().alipaySign(orderType, orderId, MyApplication.USER_ID, MyApplication.TOKEN)
                 .compose(this.apply());
     }
@@ -514,7 +515,7 @@ public class ApiWrapper extends RetrofitUtil {
      * @param appType   app类型
      * @param orderId   订单ID
      */
-    public Observable<RxWXPayInfo> weixinPaySign(int orderType, int appType, String orderId) {
+    public Observable<RxWXPayInfo> weixinPaySign(String orderType, int appType, String orderId) {
         return getService()
                 .weixinPaySign(orderType, appType, orderId, MyApplication.USER_ID, MyApplication.TOKEN)
                 .compose(this.applySchedulers());
@@ -1393,5 +1394,14 @@ public class ApiWrapper extends RetrofitUtil {
                 .compose(this.applySchedulers());
     }
 
+    public Observable<RxOrderState> getOrderStatusNum() {
+        return getService().getOrderStatusNum(MyApplication.USER_ID, MyApplication.TOKEN)
+                .compose(this.applySchedulers());
+    }
+
+    public Observable<RxList<RxProduct>> getCollectProducts(int pageNo, int pageSize) {
+        return getService().getCollectProducts(MyApplication.USER_ID, MyApplication.TOKEN, pageNo, pageSize)
+                .compose(this.applySchedulers());
+    }
 
 }

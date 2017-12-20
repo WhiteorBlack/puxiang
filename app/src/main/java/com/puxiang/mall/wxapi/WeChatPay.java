@@ -38,7 +38,6 @@ public class WeChatPay {
         this.nonceStr = bean.getNoncestr();
         msgApi = WXAPIFactory.createWXAPI(mContext, appid);
         msgApi.registerApp(Config.WX_APP_ID);
-
     }
 
     public void payWechat() {

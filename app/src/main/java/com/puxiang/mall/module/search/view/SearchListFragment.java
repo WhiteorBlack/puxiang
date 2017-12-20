@@ -44,7 +44,9 @@ public class SearchListFragment extends BaseBindFragment {
         //上拉刷新设置
         adapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());
         adapter.setEnableLoadMore(true);
-        adapter.setOnLoadMoreListener(() -> viewModel.loadMore(),rv);
+        adapter.setOnLoadMoreListener(() -> {
+            viewModel.loadMore();
+        },rv);
         rv.addOnItemTouchListener(viewModel.itemClickListener());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);

@@ -109,7 +109,7 @@
 
         <activity
             android:name="com.puxiang.mall.module.main.view.MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -282,6 +282,23 @@
             android:name=".module.userinfo.view.ChangeMobileActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.my.view.CollectionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.seller.view.SellerNotifyActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.seller.view.ApplyDealerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.login.view.BindingMobileActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.puxiang.mall.service.InitializeService"
@@ -366,7 +383,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="wx34c7852577114c70" />
+                <data android:scheme="wxcf7500ef8e821ee4" />
             </intent-filter>
         </activity>
 
@@ -382,7 +399,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="101445135" />
             </intent-filter>
 
         </activity>
@@ -416,22 +433,18 @@
 
         </activity>
         <!-- 友盟分享 -->
-        <!-- <activity
-             android:name="com.umeng.socialize.editorpage.ShareActivity"
-             android:excludeFromRecents="true"
-             android:theme="@style/Theme.UMDefault" />-->
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="57bfb22be0f55a76580028c6" />
+            android:value="5a333882b27b0a78df0000b8" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="123456" />
+            android:value="360" />
 
         <!--百度地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="IrX4DNbdqLfdyKltrkc50DFG96mmOB1j"></meta-data>
+            android:value="IrX4DNbdqLfdyKltrkc50DFG96mmOB1j" />
 
         <service
             android:name="com.baidu.location.f"
@@ -454,7 +467,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name="com.qihoo.appstore.updatelib.CheckUpdateService"
@@ -463,8 +476,8 @@
         <provider
             android:name="com.qihoo.appstore.updatelib.UpdateProvider"
             android:authorities="com.puxiang.mall"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/update_apk_path" />

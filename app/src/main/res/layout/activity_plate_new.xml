@@ -189,12 +189,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:onClick="onClick"
-                android:src="@android:drawable/ic_input_add"
+                android:src="@mipmap/icon_post_bbs"
                 app:pressedTranslationZ="12dp"
                 app:rippleColor="#a6a6a6"
+                app:backgroundTint="#F1CF39"
                 app:elevation="6px"
-                app:backgroundTint="@color/sale_price"
-                app:fabSize="normal" />
+                app:fabSize="auto" />
         </android.support.design.widget.CoordinatorLayout>
     </in.srain.cube.views.ptr.PtrFrameLayout>
 </layout>

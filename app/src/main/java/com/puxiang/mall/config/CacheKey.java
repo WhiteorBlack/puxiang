@@ -41,4 +41,7 @@ public interface CacheKey {
     String ESPORTS ="esport";
     String SHOPLISTBANNER="shopListCarousel";
     String LATESTCITY="latestCity";
+    String ISSELLER="isSeller";
+    String ISMEMBER="isMember";
+    String ISDEALER="isDealer";
 }

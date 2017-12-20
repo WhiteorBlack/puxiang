@@ -38,6 +38,9 @@ import com.orhanobut.logger.Logger;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import org.lzh.framework.updatepluginlib.UpdateConfig;
 import org.lzh.framework.updatepluginlib.creator.DialogCreator;
@@ -90,14 +93,13 @@ public class InitializeService extends IntentService {
         if (MyApplication.isInit) {
             return;
         }
-
         MyApplication.isInit = true;
-//        init();
+        UMShareAPI.get(this);
         Bugly.init(this.getApplicationContext(), BUGLY_APPID, false);
         //  QbSdk.initX5Environment(this, null);
         initLogger();
 //        initCloudChannel();
-//        initPlatformConfig();
+        initPlatformConfig();
         initGalleryFinal();
         initUpdateConfig();
 //        RongIM.init(this);
@@ -110,7 +112,6 @@ public class InitializeService extends IntentService {
 //                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
 //                        .build());
 
-        RongIM.init(this);
         initRongIM();
     }
 
@@ -137,79 +138,7 @@ public class InitializeService extends IntentService {
 
     }
 
-    private void init() {
-        initNative();
-        initThirdParty();
-    }
 
-
-    private void initNative() {
-        MyApplication.mCache = ACache.get(this.getApplicationContext());
-        initCacheData();
-        initPixels();
-    }
-
-    private void initThirdParty() {
-        initFresco();
-//        initLeakCanary();
-    }
-
-    /**
-     * 初始化本地缓存策略
-     */
-    private void initCacheData() {
-        //  MD5_Utils.test();
-        String userId = MyApplication.mCache.getAsString(CacheKey.USER_ID);
-        String token = MyApplication.mCache.getAsString(CacheKey.TOKEN);
-        String info = MyApplication.mCache.getAsString(CacheKey.INFO);
-        String rongToken = MyApplication.mCache.getAsString(CacheKey.RONG_TOKEN);
-        // Log.e(TAG, "onCreate: " + userId + "----" + token);
-        if (!StringUtil.isEmpty(userId)) {
-            MyApplication.USER_ID = userId;
-        } else {
-            MyApplication.USER_ID = "";
-        }
-        if (!StringUtil.isEmpty(token)) {
-            MyApplication.TOKEN = token;
-            MyApplication.isLoginOB.set(true);
-        } else {
-            MyApplication.TOKEN = "";
-        }
-        if (!StringUtil.isEmpty(token)) {
-            MyApplication.INFO = info;
-        } else {
-            MyApplication.INFO = "";
-        }
-
-        if (TextUtils.isEmpty(rongToken)) {
-            MyApplication.RONG_TOKEN = "";
-        } else {
-            MyApplication.RONG_TOKEN = rongToken;
-        }
-        Logger.e("token--" + token);
-    }
-
-
-    /**
-     * 图片框架Fresco 初始化配置
-     */
-    private void initFresco() {
-        ProgressiveJpegConfig pjpegConfig = new SimpleProgressiveJpegConfig();
-        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this.getApplicationContext())
-                .setDownsampleEnabled(true)
-                .setProgressiveJpegConfig(pjpegConfig)
-                .setBitmapsConfig(Bitmap.Config.RGB_565)
-                .build();
-        Fresco.initialize(this.getApplicationContext());
-        Fresco.initialize(this.getApplicationContext(), config);
-    }
-
-
-    //获取屏幕宽高像素
-    private void initPixels() {
-        MyApplication.widthPixels = this.getApplicationContext().getResources().getDisplayMetrics().widthPixels;
-        MyApplication.heightPixels = this.getApplicationContext().getResources().getDisplayMetrics().heightPixels;
-    }
 
     private void initHotFix() {
         Beta.betaPatchListener = new BetaPatchListener() {
@@ -258,18 +187,16 @@ public class InitializeService extends IntentService {
     /**
      * 暂时不集成，后续再加  2017.09.01
      */
-//    private void initPlatformConfig() {
-//        //微信 appid appsecret
-//        PlatformConfig.setWeixin(Config.WX_APP_ID, Config.WX_APP_SECRET);
-//        PlatformConfig.setQQZone(Config.QQ_APP_ID, Config.QQ_APP_SECRET);
-//        PlatformConfig.setSinaWeibo(Config.SINA_APP_ID, Config.SINA_APP_SECRET);
-//
-//        com.umeng.socialize.Config.DEBUG = true;
-//        com.umeng.socialize.Config.IsToastTip = false;
-//        com.umeng.socialize.Config.dialogSwitch = false;
-//        com.umeng.socialize.Config.REDIRECT_URL = "http://api.esomic.com/weibo/callback.do";
-//        MobclickAgent.setCatchUncaughtExceptions(true);
-//    }
+    private void initPlatformConfig() {
+        //微信 appid appsecret
+        PlatformConfig.setWeixin(Config.WX_APP_ID, Config.WX_APP_SECRET);
+        PlatformConfig.setQQZone(Config.QQ_APP_ID, Config.QQ_APP_SECRET);
+        PlatformConfig.setSinaWeibo(Config.SINA_APP_ID, Config.SINA_APP_SECRET,Config.SINA_REDICT_URL);
+
+        com.umeng.socialize.Config.DEBUG = true;
+//        com.umeng.socialize.Config.isUmengWx=true;
+        MobclickAgent.setCatchUncaughtExceptions(true);
+    }
 
     /**
      * 版本升级配置

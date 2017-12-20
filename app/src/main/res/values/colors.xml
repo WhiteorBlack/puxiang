@@ -91,4 +91,5 @@
     <color name="toolbar_bg">#FFB71E14</color>
     <color name="searchBarTextColor">#FF514F4F</color>
     <color name="address_default">#FFFDA002</color>
+    <color name="apply_step_color">#FFFD5A01</color>
 </resources>

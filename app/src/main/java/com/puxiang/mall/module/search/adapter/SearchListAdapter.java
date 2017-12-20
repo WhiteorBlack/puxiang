@@ -23,6 +23,7 @@ public class SearchListAdapter extends EasyBindQuickAdapter<RxProduct> {
         binding.setVariable(BR.item, item);
         binding.executePendingBindings();
         holder.getBinding().getRoot().setTag(item);
+        holder.addOnClickListener(R.id.tv_get_in);
     }
 
 }

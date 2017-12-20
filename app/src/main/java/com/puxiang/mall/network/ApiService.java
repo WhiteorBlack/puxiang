@@ -27,6 +27,7 @@ import com.puxiang.mall.model.data.RxLocation;
 import com.puxiang.mall.model.data.RxMallInfo;
 import com.puxiang.mall.model.data.RxMessageState;
 import com.puxiang.mall.model.data.RxMyUserInfo;
+import com.puxiang.mall.model.data.RxOrderState;
 import com.puxiang.mall.model.data.RxPayChannel;
 import com.puxiang.mall.model.data.RxPayPrice;
 import com.puxiang.mall.model.data.RxPlate;
@@ -250,7 +251,8 @@ public interface ApiService {
 
     //获取商家商品
     @GET("mall/search/searchProduct.do")
-    Observable<HttpResult<RxList<RxProduct>>> searchProduct(
+    Observable<HttpResult<RxList<RxProduct>>> searchShopProduct(
+            @Query("keyword") String keyword,
             @Query("shopId") String shopId,
             @Query("orderBy") String orderBy,
             @Query("order") String order,
@@ -481,7 +483,7 @@ public interface ApiService {
     //获取支付宝支付签名
     @FormUrlEncoded
     @POST("pay/alipay/app/pay.do")
-    Observable<HttpResult<String>> alipaySign(@Field("orderType") int orderType,
+    Observable<HttpResult<String>> alipaySign(@Field("orderType") String orderType,
                                               @Field("orderIds") String orderId,
                                               @Field("userId") String userId,
                                               @Field("token") String token);
@@ -490,7 +492,7 @@ public interface ApiService {
     //获取微信支付签名
     @FormUrlEncoded
     @POST("pay/weixin/app/pay.do")
-    Observable<HttpResult<RxWXPayInfo>> weixinPaySign(@Field("orderType") int orderType,
+    Observable<HttpResult<RxWXPayInfo>> weixinPaySign(@Field("orderType") String orderType,
                                                       @Field("appType") int appType,
                                                       @Field("orderIds") String orderId,
                                                       @Field("userId") String userId,
@@ -887,4 +889,15 @@ public interface ApiService {
                                                      @Field("ticket") String ticket,
                                                      @Field("newMobile") String newMobile);
 
+    @FormUrlEncoded
+    @POST("mall/trade/orderState/getOrderStatusNum.do")
+    Observable<HttpResult<RxOrderState>> getOrderStatusNum(@Field("userId") String userId,
+                                                           @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("mall/product/collect/getCollectProducts.do")
+    Observable<HttpResult<RxList<RxProduct>>> getCollectProducts(@Field("userId") String userId,
+                                                               @Field("token") String token,
+                                                               @Field("pageNo") int pageNo,
+                                                               @Field("pageSize")int pageSize);
 }

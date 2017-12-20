@@ -98,6 +98,9 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
         if (i == Event.LOGOUT) {
             getData();
         }
+        if (i==Event.GO_HOME){
+            activity.finish();
+        }
     }
 
 
@@ -238,7 +241,7 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
                         orders.add(rxOrder);
                     }
                     rxOrder.shopId = shopId;
-
+                    rxOrder.userId = MyApplication.USER_ID;
                 }
                 RxOrder.Product product = new RxOrder.Product();
                 product.buyQty = cartData.getCartProduct().getBuyQty() + "";

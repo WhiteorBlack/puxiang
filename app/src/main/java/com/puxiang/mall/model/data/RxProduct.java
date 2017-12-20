@@ -46,6 +46,15 @@ public class RxProduct extends BaseObservable {
     private String prices;
     private String shopId;
     private double initTotalPrice;
+    private String shopName;
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
 
     @Bindable
     public double getInitTotalPrice() {

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.puxiang.mall.R" />
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.seller.viewmodel.ApplyDealerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_Gray_light"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.isInit?View.VISIBLE:View.INVISIBLE}"
+            android:paddingBottom="30px"
+            android:paddingTop="30px">
+
+            <LinearLayout
+                android:id="@+id/ll_step_one"
+                android:layout_width="120px"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_dealer_step_one_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="个人信息"
+                    android:textColor="@color/apply_step_color"
+                    android:textSize="25px" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"
+                android:layout_marginTop="15px"
+                android:src="@mipmap/icon_step_arrow" />
+
+            <LinearLayout
+                android:id="@+id/ll_step_two"
+                android:layout_width="120px"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/bg_step_two"
+                    android:checked="@{viewModel.stepTwo}"
+                    android:clickable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="身份认证"
+                    android:textColor="@{viewModel.stepTwo?AppUtil.getColor(R.color.apply_step_color):AppUtil.getColor(R.color.gray_text)}"
+                    android:textSize="25px" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"
+                android:layout_marginTop="15px"
+                android:src="@mipmap/icon_step_arrow" />
+
+            <LinearLayout
+                android:id="@+id/ll_step_three"
+                android:layout_width="120px"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/bg_step_three"
+                    android:checked="@{viewModel.stepThree}"
+                    android:clickable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="审核"
+                    android:textColor="@{viewModel.stepThree?AppUtil.getColor(R.color.apply_step_color):AppUtil.getColor(R.color.gray_text)}"
+                    android:textSize="25px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.shizhefei.view.viewpager.SViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_step"
+            android:layout_width="match_parent"
+            android:layout_height="86px"
+            android:visibility="@{viewModel.isInit?View.VISIBLE:View.INVISIBLE}"
+            android:background="@drawable/btn_step"
+            android:enabled="@{viewModel.btnStepEnable}"
+            android:text="下一步"
+            android:onClick="onClick"
+            android:textColor="@color/white"
+            android:textSize="30px" />
+    </LinearLayout>
+</layout>

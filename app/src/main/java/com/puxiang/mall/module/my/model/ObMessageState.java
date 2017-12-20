@@ -3,6 +3,7 @@ package com.puxiang.mall.module.my.model;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableInt;
 
 import com.puxiang.mall.BR;
 import com.puxiang.mall.model.data.RxMessageState;
@@ -18,10 +19,43 @@ public class ObMessageState extends BaseObservable {
     private boolean hasMyMessage = false;
     private boolean isNewestVersion = true;
 
-    private ObservableBoolean isWarnMessage=new ObservableBoolean(false);
-    private ObservableBoolean isLike=new ObservableBoolean(false);
-    private ObservableBoolean isCommentMe=new ObservableBoolean(false);
-    private ObservableBoolean isMine=new ObservableBoolean(false);
+    private ObservableBoolean isWarnMessage = new ObservableBoolean(false);
+    private ObservableBoolean isLike = new ObservableBoolean(false);
+    private ObservableBoolean isCommentMe = new ObservableBoolean(false);
+    private ObservableBoolean isMine = new ObservableBoolean(false);
+    private ObservableBoolean isSeller = new ObservableBoolean(false);
+    private ObservableBoolean isMember = new ObservableBoolean(false);
+    private ObservableBoolean isDealer = new ObservableBoolean(false);
+
+    @Bindable
+    public boolean getIsMember() {
+        return isMember.get();
+    }
+
+    public void setIsMember(boolean isMember) {
+        this.isMember.set(isMember);
+        notifyPropertyChanged(BR.isMember);
+    }
+
+    @Bindable
+    public boolean getIsDealer() {
+        return isDealer.get();
+    }
+
+    public void setIsDealer(boolean isDealer) {
+        this.isDealer.set(isDealer);
+        notifyPropertyChanged(BR.isDealer);
+    }
+
+    @Bindable
+    public boolean getIsSeller() {
+        return isSeller.get();
+    }
+
+    public void setIsSeller(boolean isSeller) {
+        this.isSeller.set(isSeller);
+        notifyPropertyChanged(BR.isSeller);
+    }
 
     @Bindable
     public boolean isMine() {
@@ -49,7 +83,7 @@ public class ObMessageState extends BaseObservable {
     }
 
     public void setLike(boolean like) {
-        isLike .set(like);
+        isLike.set(like);
         notifyPropertyChanged(BR.like);
     }
 
@@ -64,15 +98,19 @@ public class ObMessageState extends BaseObservable {
     }
 
     public void setData(RxMessageState messageState) {
+        if (messageState == null) {
+            setWarnMessage(false);
+            return;
+        }
         setTotal(messageState.getTotal());
         setCommentMe(messageState.getCommentMe());
         setLikeMe(messageState.getLikeMe());
         setSysMessage(messageState.getSysMessage());
         setNotifyMessage(messageState.getNotifyMessage());
-        setLike(messageState.getLikeMe()>0);
-        setCommentMe(messageState.getCommentMe()>0);
-        setMine(messageState.getTotal()>0);
-        setWarnMessage(messageState.getSysMessage()>0||messageState.getNotifyMessage()>0);
+        setLike(messageState.getLikeMe() > 0);
+        setCommentMe(messageState.getCommentMe() > 0);
+        setMine(messageState.getTotal() > 0);
+        setWarnMessage(messageState.getSysMessage() > 0 || messageState.getNotifyMessage() > 0);
     }
 
     @Bindable

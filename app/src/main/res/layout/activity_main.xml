@@ -44,7 +44,7 @@
             android:layout_marginRight="39px"
             android:layout_marginTop="10px"
             android:background="@drawable/point_red"
-            android:visibility="@{messageState.isMine ?View.VISIBLE:View.INVISIBLE}" />
+            android:visibility="@{messageState.isWarnMessage ?View.VISIBLE:View.INVISIBLE}" />
 
         <TextView
             android:id="@+id/tv_shop_count"

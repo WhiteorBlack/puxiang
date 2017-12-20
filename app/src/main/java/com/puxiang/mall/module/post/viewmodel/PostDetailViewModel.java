@@ -15,6 +15,7 @@ import com.baoyz.actionsheet.ActionSheet;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
@@ -93,11 +94,11 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
     public PostDetailViewModel(PostDetailActivity activity) {
         EventBus.getDefault().register(this);
         this.activity = activity;
+        loadingWindow = new LoadingWindow(activity);
+        loadingWindow.delayedShowWindow();
         likeAdapter = new PostLikeQuickAdapter(R.layout.item_sdv);
         this.adapter = new PostDetailAdapter(new ArrayList<>(), likeAdapter);
         entityList = adapter.getData();
-        loadingWindow = new LoadingWindow(activity);
-        loadingWindow.delayedShowWindow();
         getInitData();
         getData();
     }
@@ -130,10 +131,6 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
         ApiWrapper.getInstance()
                 .postDetail(postId)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(() -> {
-                    loadingWindow.hidWindow();
-                    isInit.set(true);
-                })
                 .subscribe(new NetworkSubscriber<RxPostInfo>() {
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
@@ -143,7 +140,9 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
 
                     @Override
                     public void onSuccess(RxPostInfo postInfo) {
+                        Logger.e("successs");
                         isInitData.set(true);
+                        isInit.set(true);
                         setPostDetailData(postInfo);
                     }
                 });
@@ -161,7 +160,6 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
         ApiWrapper.getInstance()
                 .getPostComments(postId, order, pageNo)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(loadingWindow::hidWindow)
                 .subscribe(new NetworkSubscriber<RxList<RxCommentInfo>>() {
                     @Override
                     public void onSuccess(RxList<RxCommentInfo> bean) {
@@ -174,17 +172,16 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
         initShareData(bean);
         setDetailData(bean);
         detailDataSize = entityList.size();
+        loadingWindow.delayHideWindow();
     }
 
     /**
      * 获取分享链接
      */
     private void getShareUrl() {
-        loadingWindow.showWindow();
         ApiWrapper.getInstance()
                 .getShareUrl(rawUrl)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(loadingWindow::hidWindow)
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
@@ -643,17 +640,16 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
     public List<String> getStringList(String content) {
         List<String> stringList = new ArrayList<>();
         //抽取文字和图片
-        String[] split = content.split("<img src=");
+        String[] split = content.split("<img");
         for (String s : split) {
 
             if (isPicUrl(s)) {
-
+                s=s.substring(s.indexOf("http"));
                 int i = 0;
                 if (s.contains("\"")) {
-                    s = s.substring(1);
                     i = s.indexOf("\"");
                 } else {
-                    i = s.indexOf(">")-1;
+                    i = s.indexOf(">") - 1;
                 }
                 int j = s.indexOf(">");
                 String imgUrl = s.substring(0, i);
@@ -673,7 +669,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
     private boolean isPicUrl(String url) {
         if ((url.contains("http://") || url.contains("https://")) && (url.contains(".jpg") || url.contains(".jpeg")
                 || url.contains(".png") || url.contains(".bmp") || url.contains(".JPG") || url.contains(".JPEG")
-                || url.contains(".PNG") || url.contains(".BMP")||url.contains(".gif"))) {
+                || url.contains(".PNG") || url.contains(".BMP") || url.contains(".gif"))) {
             return true;
         }
         return false;

@@ -67,7 +67,7 @@
     <string name="pay_fail_btn_text">查看订单</string>
     <string name="pay_fail_result_text">支付不成功！</string>
     <string name="pay_succeed_result_text">支付成功!</string>
-    <string name="pay_succeed_explain">你已成功支付</string>
+    <string name="pay_succeed_explain">成功支付</string>
     <string name="pay_succeed_btn_text">继续逛逛</string>
     <string name="pay_btn_go_home">返回首页</string>
     <string name="refund_payed">退款</string>

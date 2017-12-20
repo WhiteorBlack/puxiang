@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.seller.viewmodel.ApplyDealerViewModel" />
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="填写信息"
+                android:textColor="@color/text_black"
+                android:textSize="28px" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line1"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="代理商名称："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_agent"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line1"
+                android:textColor="#373f4a"
+                android:textSize="28px"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_agent"
+                android:background="@null" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/et_agent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line2"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="联系人："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line2"
+                android:textColor="#373f4a"
+                android:textSize="28px"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:background="@null" />
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/et_name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line3"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="联系电话："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:textColor="#373f4a"
+                android:textSize="28px"
+                android:layout_below="@+id/line3"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_phone"
+                android:background="@null"
+                android:inputType="number" />
+
+            <View
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_phone"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line4"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="所在地区："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line4"
+                android:textColor="#373f4a"
+                android:textSize="28px"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@+id/tv_area"
+                android:background="@null"
+                android:paddingRight="10px" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/line4"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="28px"
+                android:background="@mipmap/my_open" />
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_area"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line5"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="详细街道："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line5"
+                android:layout_marginRight="10dp"
+                android:textColor="#373f4a"
+                android:textSize="28px"
+                android:layout_toRightOf="@+id/tv_address"
+                android:background="@null" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_address"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

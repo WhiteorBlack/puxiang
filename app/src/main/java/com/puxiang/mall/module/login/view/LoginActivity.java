@@ -27,6 +27,7 @@ public class LoginActivity extends BaseBindActivity {
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_new);
         isLogin = getIntent().getBooleanExtra("isLogin", true);
+        mImmersionBar.keyboardEnable(false).init();
     }
 
     @Override

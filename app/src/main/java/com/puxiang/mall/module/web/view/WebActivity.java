@@ -107,7 +107,8 @@ public class WebActivity extends BaseBindActivity {
 //    }
 
     public void goBack() {
-        if (binding.web.getUrl().contains(URLs.HTML_ORDER_DEALER_COMMIT)) {
+        String url=binding.web.getUrl();
+        if (url.contains(URLs.HTML_ORDER_DEALER_COMMIT)||url.contains(URLs.HTML_MY_ORDER)||url.contains(URLs.HTML_MY_RETURN_ORDER)) {
             onBackPressed();
         } else {
             binding.web.goBack();

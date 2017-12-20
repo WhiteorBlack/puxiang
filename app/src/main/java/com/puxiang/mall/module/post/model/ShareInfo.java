@@ -4,6 +4,7 @@ public class ShareInfo {
     private String title;
     private String imgUrl;
     private String rawUrl;
+    private String describe;
 
 
     public ShareInfo(String url, String title, String imgUrl, String rawUrl) {
@@ -12,6 +13,24 @@ public class ShareInfo {
         this.imgUrl = imgUrl;
         this.rawUrl = rawUrl;
     }
+
+    public ShareInfo(String url, String title, String imgUrl, String rawUrl,String describe) {
+        this.url = url;
+        this.describe=describe;
+        this.title = title;
+        this.imgUrl = imgUrl;
+        this.rawUrl = rawUrl;
+    }
+
+
+    public void setInfo(String url, String title, String imgUrl, String rawUrl,String describe) {
+        this.url = url;
+        this.describe=describe;
+        this.title = title;
+        this.imgUrl = imgUrl;
+        this.rawUrl = rawUrl;
+    }
+
 
     public void setInfo(String url, String title, String imgUrl, String rawUrl) {
         this.url = url;
@@ -30,6 +49,14 @@ public class ShareInfo {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     public void setTitle(String title) {

@@ -20,6 +20,7 @@ public class URLs {
     public static final String HTML_SHOP = Config.HTTP_MALL_ROOT_URL + "shop_detail.html?from=app";
     public static final String HTML_GOODS = Config.HTTP_MALL_ROOT_URL + "goods_detail.html?from=app";
     public static final String HTML_MY_ORDER = Config.HTTP_MALL_ROOT_URL + "my_order.html?from=app";
+    public static final String HTML_MY_RETURN_ORDER = Config.HTTP_MALL_ROOT_URL + "salesReturn.html?from=app";
     public static final String HTML_MY_COLLECT = Config.HTTP_MALL_ROOT_URL + "myCollect.html?from=app";
     public static final String HTML_MY_GOOD_ADDRESS = Config.HTTP_MALL_ROOT_URL + "goodAddress.html?from=app";
     public static final String HTML_MY_AGENCY_ORDER = Config.HTTP_BBS_ROOT_URL + "agency_page.html?from=app";

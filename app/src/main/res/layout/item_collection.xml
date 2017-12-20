@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxProduct" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20px"
+        android:layout_marginLeft="10px"
+        android:layout_marginRight="10px"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            fresco:roundTopLeft="true"
+            fresco:roundTopRight="true"
+            fresco:roundedCornerRadius="5px"
+            fresco:url="@{item.mainPictureUrl}"
+            fresco:viewAspectRatio="1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="25px"
+            android:paddingTop="25px">
+
+            <TextView
+                android:id="@+id/tv_sale_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20px"
+                android:text="@{MyTextUtils.getSalePrice(item.salePrice)}"
+                android:textColor="@color/sale_price"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/tv_market_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25px"
+                android:layout_toRightOf="@+id/tv_sale_price"
+                android:text="@{item.marketPrice+``}"
+                android:textSize="28px"
+                android:visibility="@{item.marketPrice>0?View.VISIBLE:View.GONE}" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_sale_price"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="20px"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="@{item.productName}"
+                android:textColor="@color/gray_text"
+                android:textSize="30px" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

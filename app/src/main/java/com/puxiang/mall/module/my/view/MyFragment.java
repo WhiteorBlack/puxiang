@@ -19,6 +19,7 @@ import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentMyBinding;
 import com.puxiang.mall.fragment.BaseBindFragment;
 import com.puxiang.mall.model.data.RxMyItem;
+import com.puxiang.mall.model.data.RxOrderState;
 import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.my.adapter.MyItemAdapter;
 import com.puxiang.mall.module.my.viewmodel.MyViewModel;
@@ -47,6 +48,11 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
     public View initBinding(final LayoutInflater inflater, final ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my, container, false);
         viewModel = new MyViewModel(this);
+        if (MyApplication.isLogin()){
+            viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
+        }else {
+            viewModel.setIsSellerVis(true);
+        }
         binding.setViewModel(viewModel);
         binding.setMessageState(MyApplication.messageState);
 //        AutoUtils.auto(binding.getRoot());
@@ -86,9 +92,29 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     buyAdapter.getData().get(4).setHasMsg(MyApplication.messageState.isCommentMe());
                     buyAdapter.notifyItemChanged(4);
                 }
-                if (i==BR.warnMessage){
+                if (i == BR.warnMessage) {
                     //我的消息
                     settingAdapter.getData().get(0).setHasMsg(MyApplication.messageState.isWarnMessage());
+                }
+                if (i == BR.isSeller) {
+                    if (MyApplication.isLogin()) {
+                        viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
+                    }
+                    if (MyApplication.messageState.getIsSeller()) {
+                        buyAdapter.notifyItemRemoved(9);
+                    }
+                }
+                if (i == BR.isDealer) {
+
+                }
+                if (i == BR.isMember) {
+                    if (!MyApplication.messageState.getIsMember()) {
+                        buyAdapter.setNewData(viewModel.getBuyList());
+                        viewModel.setIsSellerVis(true);
+                    }else {
+                        viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
+                    }
+
                 }
             }
         });
@@ -105,7 +131,7 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvBuyer.setNestedScrollingEnabled(false);
         rvBuyer.setAdapter(settingAdapter);
         settingAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (!MyApplication.isLogin()){
+            if (!MyApplication.isLogin()) {
                 ActivityUtil.startLoginActivity(getActivity());
                 return;
             }
@@ -148,7 +174,6 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     ActivityUtil.startStockListActivity(getActivity());
                     break;
                 case 1:
-
                     break;
             }
         });
@@ -165,10 +190,12 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvBuyer.setNestedScrollingEnabled(false);
         rvBuyer.setAdapter(buyAdapter);
         buyAdapter.setOnItemClickListener((adapter, view, position) -> {
-            switch (viewModel.getBuyList().get(position).getPos()) {
+
+            switch (buyAdapter.getData().get(position).getPos()) {
                 case 0:
                     //我的收藏
                     WebUtil.jumpMyWeb(URLs.HTML_MY_COLLECT, getActivity());
+//                    ActivityUtil.startCollectionActivity(getActivity());
                     break;
                 case 1:
                     //收货地址
@@ -225,23 +252,10 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvOrder.setNestedScrollingEnabled(false);
         rvOrder.setAdapter(orderAdapter);
         orderAdapter.setOnItemClickListener((adapter, view, position) -> {
-            WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER) + "&tabIndex=" + viewModel.getOrderList().get(position).getPos() + 1, getContext());
-            switch (viewModel.getOrderList().get(position).getPos()) {
-                case 0:
-
-                    break;
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-                case 3:
-
-                    break;
-                case 4:
-
-                    break;
+            if (position < 4) {
+                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER) + "&tabIndex=" + (position + 1), getContext());
+            } else {
+                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_RETURN_ORDER), getContext());
             }
         });
     }
@@ -251,12 +265,41 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
 //        viewModel.getBgUrl();  //去除我的模块顶部背景图
     }
 
+    /**
+     * 更新订单状态
+     *
+     * @param rxOrderState
+     */
+    public void updateOrderState(RxOrderState rxOrderState) {
+        if (rxOrderState == null) {
+            List<RxMyItem> orderList = orderAdapter.getData();
+            for (int i = 0; i < 4; i++) {
+                orderList.get(i).setMsgCount(0);
+            }
+            orderAdapter.notifyDataSetChanged();
+            buyAdapter.getData().get(1).setMsgCount(0);
+            buyAdapter.notifyItemChanged(1);
+            return;
+        }
+        List<RxMyItem> orderList = orderAdapter.getData();
+        orderList.get(0).setMsgCount(rxOrderState.getBuyerWaitPay());
+        orderList.get(1).setMsgCount(rxOrderState.getBuyerWaitDeliveryGoods());
+        orderList.get(2).setMsgCount(rxOrderState.getBuyerWaitReceiveGoods());
+        orderList.get(3).setMsgCount(rxOrderState.getBuyerWaitComment());
+        orderList.get(4).setMsgCount(rxOrderState.getBuyerWaitRefund());
+        orderAdapter.notifyDataSetChanged();
+        buyAdapter.getData().get(2).setMsgCount(rxOrderState.getSellerCount());
+        buyAdapter.notifyItemChanged(2);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-//        if (!StringUtil.isEmpty(MyApplication.TOKEN)) {
-//            viewModel.getMessageState();
-//        }
+        if (MyApplication.isLogin()) {
+            viewModel.getOrderState();
+        } else {
+            updateOrderState(null);
+        }
     }
 
     public void onClick(View view) {

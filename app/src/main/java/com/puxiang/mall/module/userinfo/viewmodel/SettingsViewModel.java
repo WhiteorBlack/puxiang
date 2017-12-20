@@ -81,6 +81,8 @@ public class SettingsViewModel implements ViewModel {
         MyApplication.mCache.remove(CacheKey.INFO);
         MyApplication.mCache.remove(CacheKey.TOKEN);
         MyApplication.mCache.remove(CacheKey.RONG_TOKEN);
+        MyApplication.mCache.remove(CacheKey.ISSELLER);
+        MyApplication.mCache.remove(CacheKey.ISDEALER);
         MyApplication.RONG_TOKEN="";
         MyApplication.TOKEN = "";
         MyApplication.USER_ID = "";
@@ -93,6 +95,9 @@ public class SettingsViewModel implements ViewModel {
         }
         EventBus.getDefault().post(Event.RELOAD);
         MyApplication.isLoginOB.set(false);
+        MyApplication.messageState.setIsSeller(false);
+        MyApplication.messageState.setIsDealer(false);
+        MyApplication.messageState.setIsMember(false);
     }
 
     //接收关闭请求

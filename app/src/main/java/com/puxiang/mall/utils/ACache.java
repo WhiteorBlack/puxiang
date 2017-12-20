@@ -22,6 +22,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -30,6 +31,7 @@ import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.model.data.HttpResult;
 import com.puxiang.mall.model.data.RxMyUserInfo;
+import com.puxiang.mall.model.data.RxRoles;
 import com.puxiang.mall.module.im.model.IMRequest;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.umeng.analytics.MobclickAgent;
@@ -106,11 +108,49 @@ public class ACache {
         MyApplication.mCache.put(CacheKey.USER_ID, userId);
         MyApplication.mCache.put(CacheKey.TOKEN, token);
         MyApplication.mCache.put(CacheKey.INFO, info);
+        if (myUserInfo.getRoles() != null && myUserInfo.getRoles().size() > 0) {
+            for (int i = 0; i < myUserInfo.getRoles().size(); i++) {
+                RxRoles rxRoles = myUserInfo.getRoles().get(i);
+
+                if (TextUtils.equals(rxRoles.getRoleCode(), "member")) {
+                    MyApplication.mCache.put(CacheKey.ISMEMBER, true);
+                }
+                if (TextUtils.equals(rxRoles.getRoleCode(), "seller")) {
+                    MyApplication.mCache.put(CacheKey.ISSELLER, true);
+                }
+                if (TextUtils.equals(rxRoles.getRoleCode(), "dealer")) {
+                    MyApplication.mCache.put(CacheKey.ISDEALER, true);
+                }
+            }
+        }
+        MyApplication.messageState.setIsSeller(isInRoles("seller", myUserInfo.getRoles()));
+        MyApplication.messageState.setIsDealer(isInRoles("dealer", myUserInfo.getRoles()));
+        MyApplication.messageState.setIsMember(isInRoles("member", myUserInfo.getRoles()));
         MyApplication.USER_ID = userId;
         MyApplication.TOKEN = token;
         MyApplication.INFO = info;
         IMRequest.IMConnect();  //暂时不集成 2017.09.01
         update(myUserInfo);
+    }
+
+    /**
+     * 判断用户属于哪个角色，刷新相关状态
+     *
+     * @param role
+     * @param roles
+     * @return
+     */
+    private static boolean isInRoles(String role, List<RxRoles> roles) {
+        for (int i = 0; i < roles.size(); i++) {
+            RxRoles rxRoles = roles.get(i);
+            if (TextUtils.equals(rxRoles.getRoleCode(), role)) {
+                return true;
+            }else {
+                continue;
+            }
+
+        }
+        return false;
     }
 
     public static void update(RxMyUserInfo myUserInfo) {
@@ -185,6 +225,13 @@ public class ACache {
         }
     }
 
+    public synchronized void put(String key, boolean value) {
+        put(key, value ? "1" : "0");
+    }
+
+    public boolean getAsBoolean(String key) {
+        return TextUtils.equals("1", getAsString(key));
+    }
 
     // =======================================
     // ============ String数据 读写 ==============

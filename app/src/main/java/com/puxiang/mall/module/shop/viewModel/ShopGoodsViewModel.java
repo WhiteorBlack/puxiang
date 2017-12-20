@@ -41,6 +41,7 @@ public class ShopGoodsViewModel extends BaseObservable implements ViewModel {
 //    private final LoadingWindow loadingWindow;
     private boolean isInitData = false;
     private int pageNo = 1,pageSize=12;
+    private String keyword="";
 
 
     public ShopGoodsViewModel(ShopGoodsFragment fragment, SearchListAdapter adapter) {
@@ -67,12 +68,8 @@ public class ShopGoodsViewModel extends BaseObservable implements ViewModel {
      * @param pageNo 页码
      */
     public void update(final int pageNo) {
-        if (TextUtils.equals(type, "1")) {
-//            loadingWindow.showWindow();
-        }
-        ApiWrapper.getInstance().getShopGoods(shopId, type, order,pageSize, pageNo)
+        ApiWrapper.getInstance().getShopGoods(keyword,shopId, type, order,pageSize, pageNo)
                 .doOnTerminate(() -> {
-//                    loadingWindow.hidWindow();
 
                     if (isInitData) return;
                     isInitData = true;
@@ -93,6 +90,15 @@ public class ShopGoodsViewModel extends BaseObservable implements ViewModel {
                 });
     }
 
+    /**
+     * 事件订阅
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(String keyword) {
+        pageNo = 1;
+        this.keyword = keyword;
+        update(pageNo);
+    }
 
     /**
      * 事件订阅

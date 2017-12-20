@@ -1,6 +1,5 @@
 package com.puxiang.mall.module.login.view;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -13,12 +12,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.ActivityLoginBinding;
 import com.puxiang.mall.fragment.BaseBindFragment;
 import com.puxiang.mall.module.login.viewmodel.LoginViewModel;
-import com.puxiang.mall.utils.ActivityUtil;
 
 public class LoginFragment extends BaseBindFragment implements EditText.OnEditorActionListener, CompoundButton.OnCheckedChangeListener {
 

@@ -66,6 +66,8 @@ public class MainActivity extends BaseBindActivity implements EasyPermission.Per
         viewModel.getShopData();
         if (MyApplication.isLogin()) {
             viewModel.getMessageState();
+        }else {
+            MyApplication.messageState.setData(null);
         }
     }
 

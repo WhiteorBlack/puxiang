@@ -9,6 +9,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,6 +26,8 @@ import com.puxiang.mall.module.shop.view.ShopDetial;
 import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
+import com.puxiang.mall.utils.AppUtil;
+import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.MapUtils;
 import com.puxiang.mall.utils.permissions.EasyPermission;
 import com.puxiang.mall.utils.permissions.PermissionCode;
@@ -78,10 +81,17 @@ public class ShopDetialViewModel extends BaseObservable implements ViewModel, BG
     }
 
     private void dealData(RxShop data) {
-        String[] desc = data.getFeature().split(",");
+        String[] desc;
+        if (data.getFeature().contains(",")) {
+            desc = data.getFeature().split(",");
+        } else {
+            desc = data.getFeature().split("，");
+        }
         String[] banner = data.getNvgPics().split(",");
-        for (int i = 0; i < desc.length; i++) {
-            descList.add(desc[i]);
+        if (desc != null) {
+            for (int i = 0; i < desc.length; i++) {
+                descList.add(desc[i]);
+            }
         }
         for (int i = 0; i < banner.length; i++) {
             bannerList.add(banner[i]);
@@ -155,6 +165,7 @@ public class ShopDetialViewModel extends BaseObservable implements ViewModel, BG
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 View view = LayoutInflater.from(activity).inflate(R.layout.item_textview, layout, false);
+                AutoUtils.auto(view);
                 TextView tvName = view.findViewById(R.id.tv_name);
                 tvName.setText(list.get(i));
                 layout.addView(view);
@@ -162,17 +173,54 @@ public class ShopDetialViewModel extends BaseObservable implements ViewModel, BG
         }
     }
 
+    private void callPhone(String phone) {
+        Intent intent1 = new Intent(Intent.ACTION_DIAL);
+        intent1.setData(Uri.parse("tel:" + phone));
+        activity.startActivity(intent1);
+    }
+
     @Bindable
     public List<String> getDescList() {
         return descList;
     }
 
+    /**
+     * 获取相册图片
+     */
+    private void callPhone(String[] phoneNums) {
+        if (phoneNums == null) {
+            return;
+        }
+        ActionSheet.createBuilder(activity, activity.getSupportFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles(phoneNums)
+                .setCancelableOnTouchOutside(true)
+                .setListener(new ActionSheet.ActionSheetListener() {
+                    @Override
+                    public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+                    }
+
+                    @Override
+                    public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+                        callPhone(phoneNums[index]);
+                    }
+                }).show();
+    }
+
     public void detialClick(View v) {
         switch (v.getId()) {
             case R.id.iv_call:
-                Intent intent1 = new Intent(Intent.ACTION_DIAL);
-                intent1.setData(Uri.parse("tel:" + shopDetial.get().getLinkPhone()));
-                activity.startActivity(intent1);
+                String phoneNum = shopDetial.get().getLinkPhone();
+                if (TextUtils.isEmpty(phoneNum)) {
+                    return;
+                }
+                if (phoneNum.contains("/")) {
+                    String[] phoneNums = phoneNum.split("/");
+                    callPhone(phoneNums);
+                } else {
+                    callPhone(phoneNum);
+                }
+
                 break;
             case R.id.ll_sall:
                 setSelectPos(0);

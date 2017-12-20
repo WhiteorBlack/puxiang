@@ -21,6 +21,7 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -70,12 +71,12 @@ public class ShareBottomDialog extends BottomBaseDialog<ShareBottomDialog> {
 
             @Override
             public void onError(SHARE_MEDIA platform, Throwable t) {
-                Log.e("2222", "onError: ");
+                Log.e("2222", "onError: " + t.toString());
             }
 
             @Override
             public void onCancel(SHARE_MEDIA platform) {
-                Log.e("2222", "onCancel: ");
+                Log.e("2222", "onCancel: " + platform.toString());
             }
         };
     }
@@ -104,14 +105,18 @@ public class ShareBottomDialog extends BottomBaseDialog<ShareBottomDialog> {
     private void sharePlatform(SHARE_MEDIA media) {
         dismiss();
         ShareAction shareAction = new ShareAction((Activity) context);
+        UMWeb web = new UMWeb(shareInfo.getRawUrl());
         if (!StringUtil.isEmpty(shareInfo.getImgUrl())) {
-            shareAction.withMedia(new UMImage(context, shareInfo.getImgUrl()));
+//            shareAction.withMedia(new UMImage(context, shareInfo.getImgUrl()));
+            web.setThumb(new UMImage(context, shareInfo.getImgUrl()));
         }
+        web.setTitle(shareInfo.getTitle());
+        web.setDescription(shareInfo.getDescribe());
         shareAction
                 .withText(shareInfo.getTitle())
                 .setPlatform(media)
+                .withMedia(web)
                 .setCallback(umShareListener)
                 .share();
-        WeakReference<ShareAction> weakReference = new WeakReference<>(shareAction);
     }
 }

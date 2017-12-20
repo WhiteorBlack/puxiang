@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
 import com.orhanobut.logger.Logger;
+import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.config.Config;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.model.data.RxPayChannel;
@@ -122,12 +123,19 @@ public class PayViewModel implements ViewModel {
     }
 
     private void getPayInfo(String orderType, String orderId) {
+
         ApiWrapper.getInstance()
                 .getPayInfo(orderType, orderId)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(loadingWindow::hidWindow)
+                .doOnTerminate(loadingWindow::delayHideWindow)
                 .doOnComplete(() -> isInitData.set(true))
                 .subscribe(new NetworkSubscriber<RxPayPrice>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Logger.e(e.toString());
+                    }
+
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
                         super.onFail(e);
@@ -150,7 +158,7 @@ public class PayViewModel implements ViewModel {
         loadingWindow.showWindow();
         ApiWrapper.getInstance()
                 .unionpaySign(0, orderId)
-                .doOnTerminate(() -> loadingWindow.hidWindow())
+                .doOnTerminate(() -> loadingWindow.delayHideWindow())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
@@ -200,24 +208,21 @@ public class PayViewModel implements ViewModel {
             builder.create().show();
         }
         Log.e("UnionPay", "" + ret);
-
-//        UPPayAssistEx.startPay(activity, null, null, tn, mode);
     }
 
     /**
      * call alipay sdk pay. 调用SDK支付
      */
     public void aliPay() {
-        loadingWindow.showWindow();
         ApiWrapper.getInstance()
-                .alipaySign(0, orderId)
+                .alipaySign(Config.PRODUCTORDER, orderId)
                 .subscribeOn(Schedulers.io())
-                .map(alipaySign -> {
+                .map((String alipaySign) -> {
                     PayTask alipay = new PayTask(activity);
+                    Logger.e("alipaySign--"+alipaySign);
                     // 调用支付接口，获取支付结果
                     return alipay.pay(alipaySign, true);
                 })
-                .doOnTerminate(() -> loadingWindow.hidWindow())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
@@ -239,7 +244,6 @@ public class PayViewModel implements ViewModel {
         // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
         if (TextUtils.equals(resultStatus, "9000")) {
             ActivityUtil.startPayResultActivity(activity, 9000, orderId, totalPrices.get());
-            ToastUtil.toast("支付成功");
 
         } else {
             // 判断resultStatus 为非"9000"则代表可能支付失败
@@ -263,12 +267,25 @@ public class PayViewModel implements ViewModel {
     public void getWeixinPayInfo() {
         loadingWindow.showWindow();
         ApiWrapper.getInstance()
-                .weixinPaySign(0, 0, orderId)
+                .weixinPaySign(Config.PRODUCTORDER, 0, orderId)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .doOnTerminate(() -> loadingWindow.hidWindow())
                 .subscribe(new NetworkSubscriber<RxWXPayInfo>() {
                     @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Logger.e("wx"+e.toString());
+                    }
+
+                    @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                        activity.showNoneView("当前网络不可用~");
+                    }
+
+                    @Override
                     public void onSuccess(RxWXPayInfo bean) {
+                        Logger.e("wx"+bean.toString());
                         wxPay(bean);
                     }
                 });
@@ -285,7 +302,7 @@ public class PayViewModel implements ViewModel {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Integer i) {
-        if (i == Event.FINISH) {
+        if (i == Event.FINISH||i==Event.GO_HOME) {
             activity.finish();
         }
     }

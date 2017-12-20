@@ -9,6 +9,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.orhanobut.logger.Logger;
+import com.puxiang.mall.R;
 import com.puxiang.mall.model.data.RxList;
 import com.puxiang.mall.model.data.RxProduct;
 import com.puxiang.mall.module.search.OrderEvent;
@@ -18,6 +19,7 @@ import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
+import com.puxiang.mall.utils.ActivityUtil;
 import com.puxiang.mall.utils.LoadingWindow;
 import com.puxiang.mall.utils.WebUtil;
 import com.trello.rxlifecycle2.android.FragmentEvent;
@@ -25,6 +27,8 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 public class SearchProductViewModel extends BaseObservable implements ViewModel {
 
@@ -66,7 +70,7 @@ public class SearchProductViewModel extends BaseObservable implements ViewModel 
      * @param pageNo 页码
      */
     public void update(final int pageNo) {
-        if (TextUtils.equals(type, "1")) {
+        if (TextUtils.equals(type, "1") && pageNo == 1) {
             loadingWindow.showWindow();
         }
         ApiWrapper.getInstance().searchProduct(keyword, type, order, categoryId, pageNo)
@@ -141,6 +145,16 @@ public class SearchProductViewModel extends BaseObservable implements ViewModel 
                 SearchListAdapter adapter = (SearchListAdapter) baseQuickAdapter;
                 String productId = adapter.getData().get(i).getProductId();
                 WebUtil.jumpGoodsWeb(activity, productId);
+            }
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                super.onItemChildClick(adapter, view, position);
+                switch (view.getId()) {
+                    case R.id.tv_get_in:
+                        WebUtil.jumpShopWeb(activity, ((List<RxProduct>) adapter.getData()).get(position).getShopId());
+                        break;
+                }
             }
         };
     }

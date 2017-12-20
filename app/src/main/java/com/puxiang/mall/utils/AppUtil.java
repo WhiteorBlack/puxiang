@@ -25,6 +25,9 @@ import java.util.TimerTask;
 
 public class AppUtil {
 
+    public static String getMsgCount(int msgCount){
+        return msgCount<100?msgCount+"":"99+";
+    }
 
     public static Drawable getDrawable(int resId) {
         return resId == 0 ? null : ContextCompat.getDrawable(MyApplication.getContext(), resId);

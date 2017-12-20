@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -17,6 +18,10 @@
             name="viewModel"
             type="com.puxiang.mall.module.pay.viewmodel.PayResultViewModel" />
 
+        <variable
+            name="collectViewModel"
+            type="com.puxiang.mall.module.my.viewmodel.CollectionViewModel" />
+
     </data>
 
     <LinearLayout
@@ -28,89 +33,135 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar_layout" />
 
-        <LinearLayout
+        <com.puxiang.mall.widget.MyNestScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shadow"
-            android:elevation="@dimen/elevation_height"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_result_icon"
-                android:layout_width="78px"
-                android:layout_height="68px"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="90px"
-                android:src="@{AppUtil.getDrawable(viewModel.isSucceed?R.mipmap.done:R.mipmap.fail)}" />
-
-            <TextView
-                android:id="@+id/tv_pay_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20px"
-                android:layout_marginTop="30px"
-                android:text="@{viewModel.resultStr}"
-                android:textSize="30px"
-                android:textStyle="bold" />
-
-            <include layout="@layout/view_lien" />
-
-            <TextView
-                android:id="@+id/tv_result_info"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/sideMargin"
-                android:layout_marginRight="@dimen/sideMargin"
-                android:layout_marginTop="30px"
-                android:gravity="center"
-                android:text="@{viewModel.explainStr}"
-                android:textSize="25px"
-                android:textStyle="bold" />
+                android:background="@drawable/shadow"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/sideMargin"
-                android:layout_marginRight="@dimen/sideMargin"
-                android:layout_marginTop="20px"
-                android:gravity="center"
-                android:text="@{MyTextUtils.getSalePrice(viewModel.amount)}"
-                android:textColor="@color/sale_price"
-                android:textSize="30px"
-                android:textStyle="bold"
-                android:visibility="@{viewModel.isSucceed?View.VISIBLE:View.GONE}" />
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_result_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@{viewModel.isSucceed?AppUtil.getDrawable(R.mipmap.bg_pay_result):AppUtil.getDrawable(R.mipmap.bg_pay_fail)}"
+                    app:viewAspectRatio="2.34" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginBottom="40px" />
+                <TextView
+                    android:id="@+id/tv_pay_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20px"
+                    android:layout_marginTop="60px"
+                    android:text="@{viewModel.resultStr}"
+                    android:textSize="38px" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_pay_result"
-            style="@style/btnStyle"
-            android:layout_gravity="center"
-            android:layout_marginTop="30px"
-            android:background="@drawable/bg_login_btn"
-            android:elevation="@dimen/elevation_height"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:text="@{StringUtil.getString(viewModel.isSucceed?R.string.pay_succeed_btn_text:R.string.pay_fail_btn_text)}"
-            android:textColor="@color/btnText" />
+                    <TextView
+                        android:id="@+id/tv_result_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{viewModel.explainStr}"
+                        android:textColor="@color/gray_text"
+                        android:textSize="28px" />
 
-        <Button
-            android:id="@+id/btn_goHome_"
-            style="@style/btnStyle"
-            android:layout_gravity="center"
-            android:layout_marginTop="30px"
-            android:background="@drawable/bg_btn_stroke"
-            android:elevation="@dimen/elevation_height"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:text="@string/pay_btn_go_home"
-            android:textColor="@color/btnText" />
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{MyTextUtils.getSalePrice(viewModel.amount)}"
+                        android:textColor="@color/sale_price"
+                        android:textSize="30px"
+                        android:visibility="@{viewModel.isSucceed?View.VISIBLE:View.GONE}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30px"
+                    android:layout_marginTop="20px"
+                    android:padding="10px"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_goHome_"
+                        android:layout_width="200px"
+                        android:layout_height="66px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_gohome_bg"
+                        android:onClick="onClick"
+                        android:text="@string/pay_btn_go_home"
+                        android:textSize="30px"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_pay_result"
+                        android:layout_width="200px"
+                        android:layout_height="66px"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="40px"
+                        android:background="@drawable/btn_gobuy_bg"
+                        android:textSize="30px"
+                        android:onClick="onClick"
+                        android:text="@{StringUtil.getString(viewModel.isSucceed?R.string.pay_succeed_btn_text:R.string.pay_fail_btn_text)}"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_Gray_light"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="20px"
+                    android:visibility="@{collectViewModel.isInit?View.VISIBLE:View.GONE}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/icon_red_collect"
+                        android:drawablePadding="10px"
+                        android:gravity="center"
+                        android:text="您的收藏"
+                        android:textColor="@color/gray_text"
+                        android:textSize="28px" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_collect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20px"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="120px"
+                    android:layout_height="45px"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="15px"
+                    android:layout_marginTop="15px"
+                    android:onClick="onClick"
+                    android:background="@drawable/btn_more_bg"
+                    android:text="查看全部"
+                    android:id="@+id/btn_more"
+                    android:textColor="@color/gray_text"
+                    android:textSize="20px"
+                    android:visibility="@{collectViewModel.hasMore?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
+        </com.puxiang.mall.widget.MyNestScrollView>
     </LinearLayout>
 </layout>

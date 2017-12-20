@@ -13,6 +13,8 @@
 
         <import type="com.puxiang.mall.utils.DraweeViewUtils" />
 
+        <import type="com.puxiang.mall.utils.AppUtil" />
+
         <variable
             name="viewModel"
             type="com.puxiang.mall.module.my.viewmodel.MyViewModel" />
@@ -63,18 +65,18 @@
                             android:id="@+id/my_pic"
                             android:layout_width="100px"
                             android:layout_height="100px"
+                            android:alpha="@{viewModel.topAlpha}"
                             app:placeholderImage="@mipmap/mine_head"
                             app:placeholderImageScaleType="fitXY"
-                            android:alpha="@{viewModel.topAlpha}"
                             app:roundAsCircle="true"
                             app:url="@{viewModel.userBean.userImage}" />
 
                         <TextView
+                            android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/my_pic"
                             android:layout_marginTop="20px"
-                            android:id="@+id/tv_name"
                             android:alpha="@{viewModel.topAlpha}"
                             android:maxLines="1"
                             android:text='@{viewModel.userBean.viewName}'
@@ -95,9 +97,9 @@
                             android:id="@+id/my_login_text"
                             android:layout_width="200px"
                             android:layout_height="60px"
+                            android:alpha="@{viewModel.topAlpha}"
                             android:background="@drawable/btn_login"
                             android:text="登录"
-                            android:alpha="@{viewModel.topAlpha}"
                             android:textColor="@color/white"
                             android:textSize="28px" />
 
@@ -106,9 +108,9 @@
                             android:layout_width="200px"
                             android:layout_height="60px"
                             android:layout_marginLeft="50px"
+                            android:alpha="@{viewModel.topAlpha}"
                             android:background="@drawable/btn_register"
                             android:text="注册"
-                            android:alpha="@{viewModel.topAlpha}"
                             android:textColor="#616161"
                             android:textSize="28px" />
                     </LinearLayout>
@@ -222,13 +224,15 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="20px"
-                    android:background="@color/bg_Gray_light" />
+                    android:background="@color/bg_Gray_light"
+                    android:visibility="@{viewModel.isSellerVis?View.VISIBLE:View.GONE}" />
 
                 <RelativeLayout
                     android:id="@+id/rl_saler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:visibility="@{viewModel.isSellerVis?View.VISIBLE:View.GONE}">
 
                     <View
                         android:id="@+id/v2"
@@ -316,8 +320,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolBarSizeHeight"
             android:alpha="@{viewModel.barAlpha}"
-            android:visibility="@{viewModel.isBarVis?View.VISIBLE:View.GONE}"
-            android:background="@color/mall_activity">
+            android:background="@color/mall_activity"
+            android:visibility="@{viewModel.isBarVis?View.VISIBLE:View.GONE}">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -362,10 +366,10 @@
                 android:visibility="@{!MyApplication.isLoginOB?View.GONE:View.VISIBLE}">
 
                 <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_bar_pic"
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_marginRight="15px"
-                    android:id="@+id/sdv_bar_pic"
                     android:alpha="@{viewModel.barAlpha}"
                     app:placeholderImage="@mipmap/mine_head"
                     app:placeholderImageScaleType="fitXY"
@@ -373,13 +377,13 @@
                     app:url="@{viewModel.userBean.userImage}" />
 
                 <TextView
+                    android:id="@+id/tv_bar_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/my_pic"
-                    android:id="@+id/tv_bar_name"
-                    android:maxLines="1"
-                    android:background="@color/mall_activity"
                     android:alpha="@{viewModel.barAlpha}"
+                    android:background="@color/mall_activity"
+                    android:maxLines="1"
                     android:text='@{viewModel.userBean.viewName}'
                     android:textColor="@color/white"
                     android:textSize="32px" />

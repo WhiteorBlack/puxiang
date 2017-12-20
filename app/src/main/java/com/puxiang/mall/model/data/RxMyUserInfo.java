@@ -1,5 +1,7 @@
 package com.puxiang.mall.model.data;
 
+import java.util.List;
+
 public class RxMyUserInfo {
     private String birthday;
     private int sex;
@@ -17,14 +19,23 @@ public class RxMyUserInfo {
     private String userName;
     private String realName;
     private String mobile;
-    private String userRole;
+    private List<RxRoles> roles;
+    private RxShop shop;
 
-    public String getUserRole() {
-        return userRole;
+    public List<RxRoles> getRoles() {
+        return roles;
     }
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
+    public void setRoles(List<RxRoles> roles) {
+        this.roles = roles;
+    }
+
+    public RxShop getShop() {
+        return shop;
+    }
+
+    public void setShop(RxShop shop) {
+        this.shop = shop;
     }
 
     public String getBirthday() {

@@ -80,6 +80,10 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
                 ActivityUtil.startQRCodeActivityForResult(this.getActivity(), 0, "", 0.0, 0.0);
                 break;
             case R.id.iv_warn:
+                if (!MyApplication.isLogin()){
+                    ActivityUtil.startLoginActivity(getActivity());
+                    return;
+                }
                 if (RongIM.getInstance() != null) {
                     WeakReference<Context> wr = new WeakReference<>(
                             getContext());

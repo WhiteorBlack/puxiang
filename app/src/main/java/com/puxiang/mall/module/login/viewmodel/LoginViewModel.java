@@ -28,6 +28,7 @@ import com.puxiang.mall.module.main.view.MainActivity;
 import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
+import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.ACache;
 import com.puxiang.mall.utils.ActivityUtil;
 import com.puxiang.mall.utils.LoadingWindow;
@@ -61,7 +62,7 @@ import static com.puxiang.mall.utils.StringUtil.getString;
 
 
 public class LoginViewModel extends BaseObservable implements ViewModel {
-    private final Activity activity;
+    private final BaseBindActivity activity;
     private BaseBindFragment fragment;
     private final LoadingWindow loadingWindow;
     public ObservableField<String> account = new ObservableField<>();
@@ -74,7 +75,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
         EventBus.getDefault().register(this);
 //        getCacheData();
         this.fragment = fragment;
-        activity = fragment.getActivity();
+        activity = (BaseBindActivity) fragment.getActivity();
         loadingWindow = new LoadingWindow(activity);
     }
 
@@ -84,7 +85,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Integer i) {
         if (i == Event.KILL_LOGIN) {
-            activity.finish();
+            activity.onBackPressed();
         } else if (i == Event.HID_WINDOW) {
             loadingWindow.hidWindow();
         } else if (i == Event.KILL_LOGIN_DELAYED) {
@@ -137,7 +138,18 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
     private void wechatAuthLogin(String code) {
         ApiWrapper.getInstance().wechatAuthorize(code)
                 .compose(fragment.bindUntilEvent(FragmentEvent.DESTROY))
+                .doOnTerminate(loadingWindow::hidWindow)
                 .subscribe(new NetworkSubscriber<RxAuthorizeUserInfo>() {
+                    @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+
                     @Override
                     public void onSuccess(RxAuthorizeUserInfo bean) {
                         saveInfo(bean);
@@ -254,7 +266,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
              */
             @Override
             public void onSuccess(String userid) {
-                Logger.e("rong", "--onSuccess" + userid);
             }
 
             /**
@@ -263,7 +274,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Logger.e("rong", "--onError" + errorCode);
             }
         });
     }
@@ -406,6 +416,18 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
                 .doOnTerminate(loadingWindow::hidWindow)
                 .subscribe(new NetworkSubscriber<RxAuthorizeUserInfo>() {
                     @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Logger.e(e.toString());
+                    }
+
+                    @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                        Logger.e(e.toString());
+                    }
+
+                    @Override
                     public void onSuccess(RxAuthorizeUserInfo bean) {
                         saveInfo(bean);
                         activity.onBackPressed();
@@ -423,8 +445,8 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
             ActivityUtil.startBindingMobileActivity(activity);
         } else {
             ACache.saveInfo(rxAuthorizeUserInfo.getUserInfo(), rxAuthorizeUserInfo.getToken());
+            notifyRefresh();
         }
-        notifyRefresh();
     }
 
     public void onClick(View view) {
@@ -443,7 +465,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
                 authQQ();
                 break;
             case R.id.iv_weibo:
-                authWeibo();
+//                authWeibo();
                 break;
             case R.id.iv_account_clear:
                 setAccount("");

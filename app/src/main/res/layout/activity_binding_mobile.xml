@@ -23,7 +23,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/sideMarginTop"
             android:background="@drawable/shadow"
             android:elevation="@dimen/elevation_height">
 
@@ -111,7 +110,7 @@
                 android:background="@drawable/btn_bind_phone"
                 android:gravity="center"
                 android:onClick="onClick"
-
+                android:visibility="@{!viewModel.isShowBar?View.VISIBLE:View.GONE}"
                 android:text="绑定手机号"
                 android:textColor="@color/white" />
         </FrameLayout>
