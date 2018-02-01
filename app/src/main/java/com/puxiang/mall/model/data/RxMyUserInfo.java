@@ -19,8 +19,35 @@ public class RxMyUserInfo {
     private String userName;
     private String realName;
     private String mobile;
+    private String refCode;
+    private String refUserId;
+    private String refUserPhone;
     private List<RxRoles> roles;
     private RxShop shop;
+
+    public String getRefUserId() {
+        return refUserId;
+    }
+
+    public void setRefUserId(String refUserId) {
+        this.refUserId = refUserId;
+    }
+
+    public String getRefUserPhone() {
+        return refUserPhone;
+    }
+
+    public void setRefUserPhone(String refUserPhone) {
+        this.refUserPhone = refUserPhone;
+    }
+
+    public String getRefCode() {
+        return refCode;
+    }
+
+    public void setRefCode(String refCode) {
+        this.refCode = refCode;
+    }
 
     public List<RxRoles> getRoles() {
         return roles;

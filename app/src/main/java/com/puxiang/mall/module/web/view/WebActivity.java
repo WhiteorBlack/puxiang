@@ -41,7 +41,7 @@ public class WebActivity extends BaseBindActivity {
     public void initView() {
         WebView webView = binding.web;
         viewModel = new WebViewModel(this);
-        WebUtil.initWebViewSettings(webView, viewModel.getWebViewClient(this));
+        WebUtil.initWebViewSettings(webView, viewModel.getWebViewClient(this),viewModel);
         binding.setViewModel(viewModel);
     }
 

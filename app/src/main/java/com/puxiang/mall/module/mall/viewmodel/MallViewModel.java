@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.puxiang.mall.BR;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.config.CacheKey;
@@ -177,7 +176,7 @@ public class MallViewModel extends BaseObservable implements ViewModel {
 
                     @Override
                     public void onSuccess(List<RxAds> bean) {
-                        MyApplication.mCache.put(CacheKey.TEXT_SEARCH, bean);
+//                        MyApplication.mCache.put(CacheKey.TEXT_SEARCH, bean);
                         setSerachText(bean);
                     }
                 });

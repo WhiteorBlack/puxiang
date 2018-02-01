@@ -111,7 +111,7 @@ public class MallHeadViewModel extends BaseObservable implements ViewModel, BGAB
 
                     @Override
                     public void onSuccess(List<RxAds> bean) {
-                        MyApplication.mCache.put(CacheKey.MALL_BANNER, bean);
+//                        MyApplication.mCache.put(CacheKey.MALL_BANNER, bean);
                         bannerList.clear();
                         bannerList.addAll(bean);
                         notifyPropertyChanged(BR.banner);

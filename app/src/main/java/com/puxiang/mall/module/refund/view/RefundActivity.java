@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.flyco.dialog.widget.NormalListDialog;
@@ -31,11 +32,14 @@ public class RefundActivity extends BaseBindActivity implements EasyPermission.P
         adapter = new PublishAdapter(R.layout.item_publish);
         viewModel = new RefundViewModel(this, adapter);
         binding.setViewModel(viewModel);
+        mImmersionBar.keyboardEnable(false);
     }
 
     @Override
     public void initView() {
+
         initRV(binding.rvRefund);
+        setWhiteTitle(binding.toolbarLayout);
     }
 
     @Override
@@ -61,10 +65,6 @@ public class RefundActivity extends BaseBindActivity implements EasyPermission.P
         switch (view.getId()) {
             case R.id.iv_back:
                 onBackPressed();
-                break;
-            case R.id.rb_refund_goods:
-                break;
-            case R.id.rb_refund_money:
                 break;
             case R.id.tv_refund_reasons:
                 NormalListDialog dialog = viewModel.dialog;
@@ -106,7 +106,7 @@ public class RefundActivity extends BaseBindActivity implements EasyPermission.P
     @Override
     public void onPermissionGranted(int requestCode, List<String> perms) {
         if (requestCode == PermissionCode.RG_CAMERA_PERM) {
-            if (viewModel!=null){
+            if (viewModel != null) {
                 viewModel.openCamera();
             }
         }

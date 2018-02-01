@@ -294,7 +294,7 @@
                         android:layout_marginLeft="10px"
                         android:layout_marginTop="20px"
                         android:layout_toRightOf="@+id/v3"
-                        android:text="系统中心"
+                        android:text="我是经销商"
                         android:textColor="@color/gray_text"
                         android:textSize="24px" />
 
@@ -321,6 +321,7 @@
             android:layout_height="@dimen/toolBarSizeHeight"
             android:alpha="@{viewModel.barAlpha}"
             android:background="@color/mall_activity"
+            android:clickable="true"
             android:visibility="@{viewModel.isBarVis?View.VISIBLE:View.GONE}">
 
             <LinearLayout

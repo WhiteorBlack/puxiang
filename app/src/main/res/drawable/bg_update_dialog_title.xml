@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <corners android:topRightRadius="30px" android:topLeftRadius="30px"/>
+    <solid android:color="@color/mall_activity"/>
+
+</shape>

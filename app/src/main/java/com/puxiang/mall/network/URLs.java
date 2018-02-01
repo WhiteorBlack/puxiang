@@ -8,26 +8,26 @@ import com.puxiang.mall.config.Config;
 public class URLs {
     public static final String RESPONSE_OK = "000";
     public static final int PAGE_SIZE = 10;
-    //BBS
-    //HOST
-    // private static final String HOST = "http://128.128.129.229:8092/somic-api/";
 
-    public static final String HTML_ORDER_DEALER_COMMIT = Config.HTTP_MALL_ROOT_URL + "order_dealer_commit.html";
-    public static final String HTML_STOCK_LIST = Config.HTTP_MALL_ROOT_URL + "stock_list.html";
-    public static final String HTML_SHOP_LIST = Config.HTTP_MALL_ROOT_URL + "shop_list.html";
-    public static final String HTML_GOODS_DETIAL = Config.HTTP_MALL_ROOT_URL + "goods_detail.html";
-    public static final String HTML_SHOP_DETIAL = Config.HTTP_MALL_ROOT_URL + "shop_detail.html";
+    public static final String HTML_ORDER_DEALER_COMMIT = Config.HTTP_MALL_ROOT_URL + "order_dealer_commit.html";//确认订单
+    public static final String HTML_STOCK_LIST = Config.HTTP_MALL_ROOT_URL + "stock_list.html"; //进货列表
+    public static final String HTML_SHOP_LIST = Config.HTTP_MALL_ROOT_URL + "shop_list.html";  //商家列表
+    public static final String HTML_GOODS_DETIAL = Config.HTTP_MALL_ROOT_URL + "goods_detail.html";  //商品详情
+    public static final String HTML_SHOP_DETIAL = Config.HTTP_MALL_ROOT_URL + "shop_detail.html";  //店铺详情
     public static final String HTML_SHOP = Config.HTTP_MALL_ROOT_URL + "shop_detail.html?from=app";
     public static final String HTML_GOODS = Config.HTTP_MALL_ROOT_URL + "goods_detail.html?from=app";
     public static final String HTML_MY_ORDER = Config.HTTP_MALL_ROOT_URL + "my_order.html?from=app";
-    public static final String HTML_MY_RETURN_ORDER = Config.HTTP_MALL_ROOT_URL + "salesReturn.html?from=app";
-    public static final String HTML_MY_COLLECT = Config.HTTP_MALL_ROOT_URL + "myCollect.html?from=app";
-    public static final String HTML_MY_GOOD_ADDRESS = Config.HTTP_MALL_ROOT_URL + "goodAddress.html?from=app";
+    public static final String HTML_MY_RETURN_ORDER = Config.HTTP_MALL_ROOT_URL + "salesReturn.html?from=app";//待退货
+    public static final String HTML_MY_COLLECT = Config.HTTP_MALL_ROOT_URL + "myCollect.html?from=app";//我的收藏
+    public static final String HTML_MY_GOOD_ADDRESS = Config.HTTP_MALL_ROOT_URL + "goodAddress.html?from=app"; //收货地址
     public static final String HTML_MY_AGENCY_ORDER = Config.HTTP_BBS_ROOT_URL + "agency_page.html?from=app";
     public static final String HTML_MY_GOOD_ADDRESS_KEY = "goodAddress.html";
     public static final String HTML_MY_GOOD_ADDRESS_ADD = Config.HTTP_MALL_ROOT_URL + "goodAddressAdd.html?from=app";
+    public static final String HTML_MY_COUPONS = Config.HTTP_MALL_ROOT_URL + "myDiscountCoupon.html?from=app";
+    public static final String HTML_NEW_SHOP = Config.HTTP_MALL_ROOT_URL + "hintSetUpShop.html?from=app";
     public static final String HTML_MY_GOODADDRESS_MODIFY = Config.HTTP_MALL_ROOT_URL + "goodAddressModify.html";
     public static final String HTML_MY_GOOD_ADDRESS_MODIFY_KEY = "goodAddressModify.html";
+    public static final String HTML_REFUND_ADDRESS = Config.HTTP_MALL_ROOT_URL + "return_address.html"; //添加退货邮件信息
 
     public static final String BATCH_COMMIT = Config.HTTP_MALL_ROOT_URL + "order_dealer_commit.html?from=app";
     public static final String HTML_USER_INFO = "myInfo.html";
@@ -41,12 +41,13 @@ public class URLs {
     public static final String HTML_PAY_KEY = "pay.html?orderId";
     public static final String HTML_REFUND_KEY = "return_refundRequest.html";
     public static final String HTML_USER_CENTER_KEY = "usercenter_page.html";
-    public static final String HTML_ORDER_DETAIL = Config.HTTP_MALL_ROOT_URL + "order_detail.html?from=app&orderid=";
+    public static final String HTML_ORDER_DETAIL = Config.HTTP_MALL_ROOT_URL + "order_detail.html?from=app&orderIds=";
     //发现
     public static final String HTML_DISCOVER = Config.HTTP_MALL_ROOT_URL + "/discover.html?from=app";
     //积分规则
     public static final String HTML_EXCHANGE_RULE = Config.HTTP_MALL_ROOT_URL + "exchange_rule.html?from=app";
     public static final String HTML_EXCHANGE_PAGE_KEY = "exchange_page.html";
+    public static final String HTML_SECKILL_PAGE_KEY = "seckill.html";
     public static final String HTML_EXCHANGE_PAGE = Config.HTTP_MALL_ROOT_URL + "exchange_page.html?from=app";
 
     //积分详情KEY
@@ -56,6 +57,7 @@ public class URLs {
     public static final String HTML_LOTTERY_KEY = "Everyday_lottery.html";
     //任务中心KEY
     public static final String HTML_INTEGRAL_KEY = "mission_center.html";
+    public static final String HTML_INTEGRAL = Config.HTTP_MALL_ROOT_URL+"mission_center.html";
     //注册用户协议
     public static final String AGREEMENT = Config.HTTP_BBS_ROOT_URL + "user_protocol.html?from=app";
 

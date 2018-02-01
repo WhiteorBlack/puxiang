@@ -5,6 +5,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.baoyz.actionsheet.ActionSheet;
@@ -93,6 +94,9 @@ public class RefundViewModel implements ViewModel {
     private void initData() {
         productId = activity.getIntent().getStringExtra("productId");
         orderDetailId = activity.getIntent().getStringExtra("orderDetailId");
+        String tabIndex = activity.getIntent().getStringExtra("tabIndex");
+        isPayed.set(TextUtils.equals(tabIndex, "2"));
+        isRefundMoney.set(TextUtils.equals(tabIndex, "2"));
         activity.setPageTag("orderDetailId:", orderDetailId);
     }
 
@@ -132,7 +136,7 @@ public class RefundViewModel implements ViewModel {
         }
         dialog = new NormalListDialog(activity, menuItems);
         dialog.title("请选择")//
-                .titleBgColor(AppUtil.getColor(R.color.theme))
+                .titleBgColor(AppUtil.getColor(R.color.mall_activity))
                 .showAnim(new BounceBottomEnter())//
                 .dismissAnim(new SlideBottomExit());//
         dialog.setOnOperItemClickL((parent, view, position, id) -> {
@@ -326,7 +330,7 @@ public class RefundViewModel implements ViewModel {
     private StringBuilder urlSb = new StringBuilder("");
 
     /**
-     * 发帖
+     * 提交信息
      */
     public void publish() {
         isPublishing.set(true);

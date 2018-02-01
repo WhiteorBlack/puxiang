@@ -39,6 +39,7 @@ public class SellerNotifyActivity extends BaseBindActivity {
                 break;
             case R.id.btn_to_dealer:
                 ActivityUtil.startApplySellerActivity(this);
+//                onBackPressed();
                 break;
         }
     }

@@ -20,6 +20,8 @@ import com.puxiang.mall.config.Config;
 import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.web.view.WebActivity;
 import com.puxiang.mall.module.web.view.WebWithSearchActivity;
+import com.puxiang.mall.module.web.viewmodel.WebViewModel;
+import com.puxiang.mall.module.web.viewmodel.WebWithSearchViewModel;
 import com.puxiang.mall.network.URLs;
 
 import java.io.UnsupportedEncodingException;
@@ -39,6 +41,24 @@ public class WebUtil {
     public static void initWebViewSettings(WebView webView, WebViewClient webViewClient) {
         webSettings(webView);
         setWebChrome(webView);
+        setWebClient(webView, webViewClient);
+    }
+
+    /**
+     * init WebView Settings
+     */
+    public static void initWebViewSettings(WebView webView, WebViewClient webViewClient, WebViewModel viewModel) {
+        webSettings(webView);
+        setWebChrome(webView, viewModel);
+        setWebClient(webView, webViewClient);
+    }
+
+    /**
+     * init WebView Settings
+     */
+    public static void initWebViewSettings(WebView webView, WebViewClient webViewClient, WebWithSearchViewModel viewModel) {
+        webSettings(webView);
+        setWebChrome(webView, viewModel);
         setWebClient(webView, webViewClient);
     }
 
@@ -88,10 +108,52 @@ public class WebUtil {
     private static void setWebChrome(WebView webView) {
         WebChromeClient chromeClient = new WebChromeClient() {
             @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+            }
+
+            @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                Log.d("MyApplication", consoleMessage.message() + " -- From line "
-                        + consoleMessage.lineNumber() + " of "
-                        + consoleMessage.sourceId());
+                return super.onConsoleMessage(consoleMessage);
+            }
+        };
+        webView.setWebChromeClient(chromeClient);
+    }
+
+    private static void setWebChrome(WebView webView, WebViewModel viewModel) {
+        WebChromeClient chromeClient = new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress>0&&newProgress<100) {
+                    viewModel.webProgress.set(newProgress);
+                } else {
+                    viewModel.webProgress.set(-1);
+                }
+            }
+
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                return super.onConsoleMessage(consoleMessage);
+            }
+        };
+        webView.setWebChromeClient(chromeClient);
+    }
+
+    private static void setWebChrome(WebView webView, WebWithSearchViewModel viewModel) {
+        WebChromeClient chromeClient = new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress>0&&newProgress<100) {
+                    viewModel.webProgress.set(newProgress);
+                } else {
+                    viewModel.webProgress.set(-1);
+                }
+            }
+
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                 return super.onConsoleMessage(consoleMessage);
             }
         };
@@ -118,9 +180,9 @@ public class WebUtil {
      * @param context
      * @param id
      */
-    public static void jumpGoodsWeb(Context context, String id,String type) {
+    public static void jumpGoodsWeb(Context context, String id, String type) {
         Intent intent = new Intent(context, WebActivity.class);
-        String url = URLs.HTML_GOODS + "&productId=" + id+"&type="+type;
+        String url = URLs.HTML_GOODS + "&productId=" + id + "&type=" + type;
         intent.putExtra(URL, url);
         intent.putExtra("productId", id);
         context.startActivity(intent);

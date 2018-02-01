@@ -24,6 +24,7 @@ public class PayActivity extends BaseBindActivity {
     @Override
     public void initView() {
         binding.toolbar.setTitle("确认支付");
+        setWhiteTitle(binding.toolbar);
     }
 
     @Override
@@ -37,15 +38,18 @@ public class PayActivity extends BaseBindActivity {
                 onBackPressed();
                 break;
             case R.id.ll_aliPay:
+                viewModel.isLoading.set(false);
                 viewModel.aliPay();
                 break;
             case R.id.ll_wxPay:
+                viewModel.isLoading.set(false);
                 viewModel.getWeixinPayInfo();
                 break;
             case R.id.ll_unionPay:
                 /*************************************************
                  * 步骤1：从网络开始,获取交易流水号即TN
                  ************************************************/
+                viewModel.isLoading.set(false);
                 viewModel.unionpayPay();
                 break;
         }

@@ -53,7 +53,7 @@
                         android:id="@+id/layout_head"
                         layout="@layout/view_head_banner"
                         android:layout_width="match_parent"
-                        android:layout_height="258px" />
+                        android:layout_height="wrap_content" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv"

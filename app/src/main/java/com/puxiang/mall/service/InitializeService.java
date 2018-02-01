@@ -5,20 +5,16 @@ import android.app.Dialog;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig;
-import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
 import com.flyco.animation.BounceEnter.BounceLeftEnter;
 import com.flyco.animation.SlideExit.SlideLeftExit;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
+import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.config.CacheKey;
@@ -26,19 +22,15 @@ import com.puxiang.mall.config.Config;
 import com.puxiang.mall.model.data.AppVersionJSON;
 import com.puxiang.mall.network.FrescoImageLoader;
 import com.puxiang.mall.network.URLs;
-import com.puxiang.mall.utils.ACache;
 import com.puxiang.mall.utils.AppUtil;
 import com.puxiang.mall.utils.DateUtils;
 import com.puxiang.mall.utils.NetworkUtil;
-import com.puxiang.mall.utils.StringUtil;
-import com.puxiang.mall.utils.ToastUtil;
 import com.puxiang.mall.widget.MyMaterialDialog;
-import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -111,8 +103,18 @@ public class InitializeService extends IntentService {
 //                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
 //                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
 //                        .build());
-
+        initUMeng();
         initRongIM();
+    }
+
+    /**
+     * 初始化友盟统计分析
+     */
+    private void initUMeng() {
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.setLogEnabled(true);
+        UMConfigure.setEncryptEnabled(true);
     }
 
     private void initRongIM() {
@@ -137,7 +139,6 @@ public class InitializeService extends IntentService {
 //        }
 
     }
-
 
 
     private void initHotFix() {
@@ -191,10 +192,9 @@ public class InitializeService extends IntentService {
         //微信 appid appsecret
         PlatformConfig.setWeixin(Config.WX_APP_ID, Config.WX_APP_SECRET);
         PlatformConfig.setQQZone(Config.QQ_APP_ID, Config.QQ_APP_SECRET);
-        PlatformConfig.setSinaWeibo(Config.SINA_APP_ID, Config.SINA_APP_SECRET,Config.SINA_REDICT_URL);
+        PlatformConfig.setSinaWeibo(Config.SINA_APP_ID, Config.SINA_APP_SECRET, Config.SINA_REDICT_URL);
 
         com.umeng.socialize.Config.DEBUG = true;
-//        com.umeng.socialize.Config.isUmengWx=true;
         MobclickAgent.setCatchUncaughtExceptions(true);
     }
 
@@ -231,6 +231,7 @@ public class InitializeService extends IntentService {
                             // 此apk包的更新内容
                             update.setUpdateContent(bean.getIntroduce());
                             // 此apk包是否为强制更新
+//                            update.setForced(false);
                             update.setForced(bean.getIsMustUpdate() == 1);
                             // 是否显示忽略此次版本更新按钮
                             update.setIgnore(true);
@@ -240,66 +241,6 @@ public class InitializeService extends IntentService {
                         return update;
                     }
                 })
-//                .checkCB(new UpdateCheckCB() {
-//
-//                    @Override
-//                    public void onCheckError(int code, String errorMsg) {
-//                        ToastUtil.toast("更新失败：code:" + code + ",errorMsg:" + errorMsg);
-//                    }
-//
-//                    @Override
-//                    public void onUserCancel() {
-//                        ToastUtil.toast("用户取消更新");
-//                    }
-//
-//                    @Override
-//                    public void onCheckIgnore(Update update) {
-//                        ToastUtil.toast("用户忽略此版本更新");
-//                    }
-//
-//                    @Override
-//                    public void onCheckStart() {
-//                        // 此方法的回调所处线程异于其他回调。其他回调所处线程为UI线程。
-//                        // 此方法所处线程为你启动更新任务是所在线程
-//                        HandlerUtil.getMainHandler().post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                ToastUtil.toast("启动更新任务");
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void hasUpdate(Update update) {
-//                        ToastUtil.toast("检查到有更新");
-//                    }
-//
-//                    @Override
-//                    public void noUpdate() {
-//                        ToastUtil.toast("无更新");
-//                    }
-//                })
-//                // apk下载的回调
-//                .downloadCB(new UpdateDownloadCB() {
-//                    @Override
-//                    public void onUpdateStart() {
-//                        ToastUtil.toast("下载开始");
-//                    }
-//
-//                    @Override
-//                    public void onUpdateComplete(File file) {
-//                        ToastUtil.toast("下载完成");
-//                    }
-//
-//                    @Override
-//                    public void onUpdateProgress(long current, long total) {
-//                    }
-//
-//                    @Override
-//                    public void onUpdateError(int code, String errorMsg) {
-//                        ToastUtil.toast("下载失败：code:" + code + ",errorMsg:" + errorMsg);
-//                    }
-//                })
                 .updateDialogCreator(new DialogCreator() {
                     @Override
                     public Dialog create(Update update, Activity context) {
@@ -329,13 +270,15 @@ public class InitializeService extends IntentService {
                         boolean isForced = update.isForced();
                         MyMaterialDialog dialog = new MyMaterialDialog(context, isForced);
                         dialog.title("发现新版本 " + update.getVersionName())
-                                .titleTextColor(AppUtil.getColor(R.color.sale_price))
+                                .titleTextColor(AppUtil.getColor(R.color.white))
                                 .titleTextSize(18)
+                                .contentTextSize(14)
                                 .cornerRadius(10)
                                 .content(update.getUpdateContent()).contentGravity(Gravity.START)
                                 .btnNum(isForced ? 1 : 3)
+                                .btnTextColor(new int[]{R.color.white, R.color.white})
                                 .btnText(isForced ? new String[]{"立即更新"}
-                                        : new String[]{"忽略此版本", "立即更新", "取消"})
+                                        : new String[]{"取消", "", "立即更新"})
                                 .showAnim(new BounceLeftEnter())
                                 .dismissAnim(new SlideLeftExit())
                                 .setOnBtnClickL(isForced ? new OnBtnClickL[]{() -> {
@@ -343,15 +286,12 @@ public class InitializeService extends IntentService {
                                     dialog.dismiss();
                                 }} : new OnBtnClickL[]{() -> {
                                     dialog.dismiss();
-                                    sendUserIgnore(update);
-                                    ToastUtil.longToast(getString(R.string.version_ignore_tips));
+                                    sendUserCancel();
+                                }, () -> {
                                 }, () -> {
                                     isConfirm = true;
                                     MyApplication.mCache.remove(CacheKey.VERSION);
                                     dialog.dismiss();
-                                }, () -> {
-                                    dialog.dismiss();
-                                    sendUserCancel();
                                 }});
                         dialog.setOnDismissListener(dialog1 -> {
                             if (isConfirm) {

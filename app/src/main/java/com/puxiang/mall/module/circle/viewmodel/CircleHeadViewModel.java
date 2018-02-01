@@ -47,7 +47,7 @@ public class CircleHeadViewModel extends BaseObservable implements ViewModel, BG
         this.fragment = fragment;
         this.activity = fragment.getActivity();
         this.navigateAdapter = navigateAdapter;
-        getCache();
+//        getCache();
         getBannerData(URLs.COMMUNITY_CAROUSEL);
 //        getNavigateData();
     }
@@ -100,7 +100,7 @@ public class CircleHeadViewModel extends BaseObservable implements ViewModel, BG
                 .subscribe(new NetworkSubscriber<List<RxAds>>() {
                     @Override
                     public void onSuccess(List<RxAds> list) {
-                        MyApplication.mCache.put(CacheKey.CIRCLE_BANNER, list);
+//                        MyApplication.mCache.put(CacheKey.CIRCLE_BANNER, list);
                         bannerList.clear();
                         bannerList.addAll(list);
                         notifyPropertyChanged(BR.banner);
@@ -135,7 +135,7 @@ public class CircleHeadViewModel extends BaseObservable implements ViewModel, BG
                 .subscribe(new NetworkSubscriber<List<RxAds>>() {
                     @Override
                     public void onSuccess(List<RxAds> adsList) {
-                        MyApplication.mCache.put(CacheKey.HOME_NAVIGATE, adsList);
+//                        MyApplication.mCache.put(CacheKey.HOME_NAVIGATE, adsList);
                         navigateAdapter.setNewData(adsList);
                     }
                 });

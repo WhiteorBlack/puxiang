@@ -1,20 +1,15 @@
 package com.puxiang.mall.module.login.viewmodel;
 
-import android.app.Activity;
-import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
-import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.config.CacheKey;
@@ -29,7 +24,6 @@ import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
-import com.puxiang.mall.utils.ACache;
 import com.puxiang.mall.utils.ActivityUtil;
 import com.puxiang.mall.utils.LoadingWindow;
 import com.puxiang.mall.utils.MD5_Utils;
@@ -39,19 +33,15 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -200,19 +190,23 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
      * @param password 密码
      */
     private void loginRequest(final String account, final String password) {
+        loadingWindow.showWindow();
         ApiWrapper.getInstance()
                 .login(account, password)
                 .compose(fragment.bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnTerminate(() -> isLogging.set(false))
+                .doOnTerminate(() -> {
+                    isLogging.set(false);
+                    loadingWindow.hidWindow();
+                })
                 .subscribe(new NetworkSubscriber<HttpResult<RxMyUserInfo>>() {
                     @Override
                     public void onSuccess(HttpResult<RxMyUserInfo> bean) {
                         if (bean.isSuccess()) {
                             MyApplication.mCache.saveAccount(account, password, bean);
-                            getRongToken(bean.getReturnObject().getUserId(),bean.getToken());
+                            getRongToken(bean.getReturnObject().getUserId(), bean.getToken());
                             activity.onBackPressed();
                             notifyRefresh();
                         }
@@ -225,10 +219,9 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
     }
 
 
-
-    private void getRongToken(String userId,String token) {
+    private void getRongToken(String userId, String token) {
         ApiWrapper.getInstance()
-                .getRongToken(userId,token)
+                .getRongToken(userId, token)
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String data) {
@@ -243,7 +236,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
      * <p>如果调用此接口遇到连接失败，SDK 会自动启动重连机制进行最多10次重连，分别是1, 2, 4, 8, 16, 32, 64, 128, 256, 512秒后。
      * 在这之后如果仍没有连接成功，还会在当检测到设备网络状态变化时再次进行重连。</p>
      *
-     * @param token    从服务端获取的用户身份令牌（Token）。
+     * @param token 从服务端获取的用户身份令牌（Token）。
      * @return RongIM  客户端核心类的实例。
      */
     private void connect(String token) {
@@ -277,7 +270,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
             }
         });
     }
-
 
 
     /**
@@ -444,7 +436,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
         if (rxAuthorizeUserInfo.getState() == 0) {
             ActivityUtil.startBindingMobileActivity(activity);
         } else {
-            ACache.saveInfo(rxAuthorizeUserInfo.getUserInfo(), rxAuthorizeUserInfo.getToken());
+            MyApplication.mCache.saveInfo(rxAuthorizeUserInfo.getUserInfo(), rxAuthorizeUserInfo.getToken());
             notifyRefresh();
         }
     }

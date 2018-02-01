@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.flyco.dialog.widget.NormalDialog;
+import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
@@ -22,18 +24,16 @@ import com.puxiang.mall.model.data.RxOrder;
 import com.puxiang.mall.model.data.ShopCartData;
 import com.puxiang.mall.module.login.view.LoginFragment;
 import com.puxiang.mall.module.shoppingcart.adapter.ShoppingAdapter;
-import com.puxiang.mall.module.shoppingcart.interfacer.ShopSelectListener;
 import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
+import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
 import com.puxiang.mall.utils.WebUtil;
 import com.puxiang.mall.widget.dialog.DefaultDialog;
 import com.puxiang.mall.widget.dialog.OnDialogExecuteListener;
-import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,12 +47,12 @@ import java.util.List;
  * 购物车页面viewModel，用于H5跳转
  */
 
-public class ShoppingCartActivityViewModel extends BaseObservable implements ViewModel, OnDialogExecuteListener, ShopSelectListener {
+public class ShoppingCartActivityViewModel extends BaseObservable implements ViewModel, OnDialogExecuteListener {
 
     private final BaseBindActivity activity;
     private final ShoppingAdapter adapter;
     //    private final LoadingWindow loadingWindow;
-    private final NormalDialog dialog;
+//    private final NormalDialog dialog;
     public ObservableBoolean isNone = new ObservableBoolean(false);
     public ObservableBoolean isAll = new ObservableBoolean(false);
     public ObservableDouble totalPrice = new ObservableDouble(0.00);
@@ -61,15 +61,15 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
     private int count = 0;
     private int selectNum = 0;
     private int selectPosition = 0;
+    public boolean isReload = false; //如果购物车有变动，则重载商品详情
 
     public ShoppingCartActivityViewModel(BaseBindActivity activity, ShoppingAdapter adapter) {
         this.activity = activity;
         this.adapter = adapter;
-        dialog = new DefaultDialog(activity, "是否删除该商品？", this);
+//        dialog = new DefaultDialog(activity, "是否删除该商品？", this);
         EventBus.getDefault().register(this);
 //        loadingWindow = new LoadingWindow(activity.getActivity());
-        this.adapter.setShopSelectListener(this);
-        getData();
+//        getData();
     }
 
     /**
@@ -98,7 +98,7 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
         if (i == Event.LOGOUT) {
             getData();
         }
-        if (i==Event.GO_HOME){
+        if (i == Event.GO_HOME) {
             activity.finish();
         }
     }
@@ -139,8 +139,11 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
      * 请求网络
      * 获取购物车商品
      */
-    private void getData() {
+    public void getData() {
 //        loadingWindow.delayedShowWindow();
+        if (!MyApplication.isLogin()) {
+            return;
+        }
         ApiWrapper.getInstance()
                 .getCarts()
                 .subscribe(new NetworkSubscriber<List<RxCartList>>() {
@@ -233,6 +236,10 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
                     isFirst = false;
 
                 } else {
+                    if (rxOrder != null && products != null) {
+                        rxOrder.products = products;
+                        orders.add(rxOrder);
+                    }
                     shopId = cartData.getShopId();
                     rxOrder = new RxOrder();
                     products = new ArrayList<>();
@@ -249,10 +256,11 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
                 product.productId = cartData.getCartProduct().getProductId();
                 product.skuId = cartData.getCartProduct().getSkuId() + "";
                 products.add(product);
-                if (i == productList.size()) {
-                    rxOrder.products = products;
-                    orders.add(rxOrder);
-                }
+
+            }
+            if (i == productList.size()) {
+                rxOrder.products = products;
+                orders.add(rxOrder);
             }
         }
         String orderString = new Gson().toJson(orders);
@@ -265,10 +273,7 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
      * 删除数据
      */
     private void deleteData() {
-//        RxCartProduct itemData = adapter.getData().get(selectPosition);
         --count;
-//        if (itemData.isSelect()) --selectNum;
-//        del(itemData.getCartId());
         adapter.remove(selectPosition);
         isNone.set(productList.isEmpty());
         ifAll();
@@ -283,38 +288,45 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
                 if (i == -1) {
                     return;
                 }
-                RxCartProduct itemData = new RxCartProduct();
+                ShopCartData shopCartData = productList.get(i);
                 int num;
                 switch (view.getId()) {
-
                     case R.id.tv_item_add:
-                        num = itemData.getProductNum();
-                        int stock = itemData.getStock();
-                        if (num >= stock) {
-                            ToastUtil.toast("库存不足");
-                            return;
-                        } else {
-                            itemData.setProductNum(++num);
-                            setNum(view, num, itemData.getCartId(), itemData.getProductId());
-                        }
+//                        num = itemData.getProductNum();
+//                        int stock = itemData.getStock();
+//                        if (num >= stock) {
+//                            ToastUtil.toast("库存不足");
+//                            return;
+//                        } else {
+//                            itemData.setProductNum(++num);
+//                            setNum(view, num, itemData.getCartId(), itemData.getProductId());
+//                        }
+                        onAddClickListener(i);
                         break;
                     case R.id.tv_item_reduce:
-                        num = itemData.getProductNum();
-                        if (num == 1) {
-                            return;
-                        }
-                        itemData.setProductNum(--num);
-                        setNum(view, num, itemData.getCartId(), itemData.getProductId());
+//                        num = itemData.getProductNum();
+//                        if (num == 1) {
+//                            return;
+//                        }
+//                        itemData.setProductNum(--num);
+//                        setNum(view, num, itemData.getCartId(), itemData.getProductId());
+                        onReduceClickListener(i);
                         break;
                     case R.id.iv_item_close:
-                        selectPosition = i;
-                        dialog.show();
+                        onDeleteClickListener(i);
                         break;
                     case R.id.sdv_item_pic:
-
-                        break;
                     case R.id.tv_item_name:
-                        WebUtil.jumpGoodsWeb(activity, itemData.getProductId());
+                        onGoodsClickListener(shopCartData.getCartProduct().getProductId());
+                        break;
+                    case R.id.tv_shop_name:
+                        onShopClickListener(shopCartData.getShopId());
+                        break;
+                    case R.id.cb_shop:
+                        onShopSelectListener(shopCartData.getShopId(), !shopCartData.isSelected());
+                        break;
+                    case R.id.iv_item_box:
+                        onGoodsSelectListener(shopCartData.getShopId(), shopCartData.getCartProduct().getProductId(), i, !shopCartData.getCartProduct().isSelect());
                         break;
                 }
             }
@@ -344,8 +356,15 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
-                    public void onSuccess(String bean) {
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                        Logger.e("onfail"+e.toString());
+                    }
 
+                    @Override
+                    public void onSuccess(String bean) {
+                        Logger.e("success"+bean);
+                        isReload = true;
                     }
                 });
     }
@@ -361,12 +380,16 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String bean) {
+                        isReload = true;
                     }
                 });
     }
 
     @Override
     public void destroy() {
+        if (isReload) {
+            EventBus.getDefault().post(Event.RELOAD_WEB);
+        }
         EventBus.getDefault().unregister(this);
     }
 
@@ -380,8 +403,7 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
 
     }
 
-    @Override
-    public void onShopSelectListener(String shopId, boolean isSelected) {
+    private void onShopSelectListener(String shopId, boolean isSelected) {
         setShopSelect(shopId, isSelected);
     }
 
@@ -404,8 +426,7 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onGoodsSelectListener(String shopId, String goodsId, int pos, boolean isSelected) {
+    private void onGoodsSelectListener(String shopId, String goodsId, int pos, boolean isSelected) {
         setGoodsSelect(shopId, goodsId, pos, isSelected);
     }
 
@@ -464,27 +485,24 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
 
     }
 
-    @Override
-    public void onShopClickListener(String shopId) {
+    private void onShopClickListener(String shopId) {
         WebUtil.jumpShopWeb(activity, shopId);
     }
 
-    @Override
-    public void onGoodsClickListener(String goodsId) {
+    private void onGoodsClickListener(String goodsId) {
         WebUtil.jumpGoodsWeb(activity, goodsId);
     }
 
-    @Override
-    public void onAddClickListener(int pos) {
+    private void onAddClickListener(int pos) {
         productList.get(pos).getCartProduct().setBuyQty(productList.get(pos).getCartProduct().getBuyQty() + 1);
+        modifyNum(productList.get(pos).getCartProduct().getCartId(), productList.get(pos).getCartProduct().getProductId(), productList.get(pos).getCartProduct().getBuyQty());
         if (productList.get(pos).getCartProduct().isSelect()) {
             total += productList.get(pos).getCartProduct().getSalePrice();
             totalPrice.set(total);
         }
     }
 
-    @Override
-    public void onReduceClickListener(int pos) {
+    private void onReduceClickListener(int pos) {
         int count = productList.get(pos).getCartProduct().getBuyQty();
         count--;
         if (count < 1) {
@@ -495,41 +513,28 @@ public class ShoppingCartActivityViewModel extends BaseObservable implements Vie
                 totalPrice.set(total);
             }
         }
+        modifyNum(productList.get(pos).getCartProduct().getCartId(), productList.get(pos).getCartProduct().getProductId(), count);
         productList.get(pos).getCartProduct().setBuyQty(count);
     }
 
-    @Override
-    public void onDeleteClickListener(int pos) {
+    private void onDeleteClickListener(int pos) {
         if (productList.get(pos).getCartProduct().isSelect()) {
             selectNum--;
         }
         del(productList.get(pos).getCartProduct().getCartId());
+        String shopId = productList.get(pos).getShopId();
         productList.remove(pos);
-        checkShopVoid();
+        int i = 0;
+        for (ShopCartData cartData : productList) {
+            if (TextUtils.equals(cartData.getShopId(), shopId)) {
+                i++;
+            }
+        }
+        if (i == 1) {
+            productList.remove(pos - 1);
+        }
         adapter.notifyDataSetChanged();
         ifAll();
     }
-
-    /**
-     * 检查店铺下面有没有货物，如果有则不删除，如果没有则把该选项删除
-     */
-    private void checkShopVoid() {
-        if (productList.size() > 1) {
-            String shopId = productList.get(0).getShopId();
-            int count = 0;
-            for (int i = 1; i < productList.size(); i++) {
-                if (TextUtils.equals(shopId, productList.get(i).getShopId()) && !productList.get(i).isHeader()) {
-                } else {
-                    productList.remove(i - 1);
-                    break;
-                }
-            }
-
-        } else {
-            productList.clear();
-            isAll.set(false);
-        }
-    }
-
 
 }

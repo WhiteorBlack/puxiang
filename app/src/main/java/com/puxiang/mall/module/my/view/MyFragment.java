@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import com.puxiang.mall.utils.ToastUtil;
 import com.puxiang.mall.utils.WebUtil;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,15 +51,38 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
     public View initBinding(final LayoutInflater inflater, final ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my, container, false);
         viewModel = new MyViewModel(this);
-        if (MyApplication.isLogin()){
-            viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
-        }else {
-            viewModel.setIsSellerVis(true);
-        }
         binding.setViewModel(viewModel);
         binding.setMessageState(MyApplication.messageState);
 //        AutoUtils.auto(binding.getRoot());
         return binding.getRoot();
+    }
+
+    /**
+     * 初始化用户角色不同展示 数据
+     */
+    private void initData() {
+        if (MyApplication.isLogin()) {
+            viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
+//            for (int j = 0; j < buyAdapter.getData().size(); j++) {
+//                if (MyApplication.messageState.getIsDealer() && buyAdapter.getData().get(j).getPos() == 11) {
+//                    buyAdapter.notifyItemRemoved(j);
+//                    break;
+//                }
+//                if (!MyApplication.messageState.getIsDealer() && buyAdapter.getData().get(j).getPos() == 10) {
+//                    buyAdapter.notifyItemRemoved(j);
+//                    break;
+//                }
+//            }
+//            for (int j = 0; j < buyAdapter.getData().size(); j++) {
+//                if (buyAdapter.getData().get(j).getPos() == 9) {
+//                    buyAdapter.notifyItemRemoved(j);
+//                    break;
+//                }
+//            }
+        } else {
+            viewModel.setIsSellerVis(true);
+        }
+
     }
 
     @Override
@@ -72,6 +98,7 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         initBuyRecyclerView(binding.rvBuyer);
         initSaleRecyclerView(binding.rvSaler);
         initSettingRecyclerView(binding.rvSetting);
+        initData();
         binding.nsvParent.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY < binding.rlHead.getHeight() - binding.rlBar.getHeight()) {
                 viewModel.setIsBarVis(false);
@@ -97,21 +124,28 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     settingAdapter.getData().get(0).setHasMsg(MyApplication.messageState.isWarnMessage());
                 }
                 if (i == BR.isSeller) {
-                    if (MyApplication.isLogin()) {
-                        viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
-                    }
                     if (MyApplication.messageState.getIsSeller()) {
-                        buyAdapter.notifyItemRemoved(9);
+                        List<RxMyItem> buyList = buyAdapter.getData();
+                        for (int j = 0; j < buyList.size(); j++) {
+                            if (buyList.get(j).getPos() == 9) {
+                                buyList.remove(j);
+                                buyAdapter.notifyItemRemoved(j);
+                                break;
+                            }
+                        }
+
                     }
                 }
                 if (i == BR.isDealer) {
-
+                    if (MyApplication.isLogin()) {
+                        settingAdapter.setNewData(MyApplication.messageState.getIsDealer() ? viewModel.getDealer() : viewModel.getNoDealer());
+                    }
                 }
                 if (i == BR.isMember) {
-                    if (!MyApplication.messageState.getIsMember()) {
+                    if (!MyApplication.isLogin()) {
                         buyAdapter.setNewData(viewModel.getBuyList());
                         viewModel.setIsSellerVis(true);
-                    }else {
+                    } else {
                         viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
                     }
 
@@ -121,13 +155,17 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
     }
 
     /**
-     * 初始化 系统中心模块儿
+     * 初始化 经销商模块
      *
      * @param rvBuyer
      */
     private void initSettingRecyclerView(RecyclerView rvBuyer) {
         rvBuyer.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        settingAdapter = new MyItemAdapter(R.layout.item_my_bottom, viewModel.getSettingList());
+        if (MyApplication.isLogin() && MyApplication.messageState.getIsDealer()) {
+            settingAdapter = new MyItemAdapter(R.layout.item_my_bottom, viewModel.getDealer());
+        } else {
+            settingAdapter = new MyItemAdapter(R.layout.item_my_bottom, viewModel.getNoDealer());
+        }
         rvBuyer.setNestedScrollingEnabled(false);
         rvBuyer.setAdapter(settingAdapter);
         settingAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -135,30 +173,27 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                 ActivityUtil.startLoginActivity(getActivity());
                 return;
             }
-            switch (viewModel.getSettingList().get(position).getPos()) {
+            switch (settingAdapter.getData().get(position).getPos()) {
                 case 0:
-                    if (RongIM.getInstance() != null) {
-                        WeakReference<Context> wr = new WeakReference<>(
-                                getContext());
-                        Map<String, Boolean> map = new HashMap<>();
-                        map.put(Conversation.ConversationType.PRIVATE.getName(), false);
-                        RongIM.getInstance().startConversationList(wr.get(), map);
-                    }
-                    MyApplication.messageState.setMyMessage(0);
-                    ((List<RxMyItem>) adapter.getData()).get(position).setHasMsg(false);
-                    settingAdapter.notifyItemChanged(position);
+                    //成为经销商
+                    ActivityUtil.startApplySellerActivity(getActivity());
                     break;
-
                 case 1:
-                    ActivityUtil.startSettingActivity(getActivity(), MyApplication.messageState.isNewestVersion(),
-                            viewModel.introduce, viewModel.versionName);
+                    //我要进货 灰色
+                    ActivityUtil.startSellerNotifyActivity(getActivity());
+                    break;
+                case 2://我要进货 可用
+                    ActivityUtil.startStockListActivity(getActivity());
+                    break;
+                case 3://我的订单
+
                     break;
             }
         });
     }
 
     /**
-     * 初始化 你想要的模块儿
+     * 初始化 我是卖家
      *
      * @param rvBuyer
      */
@@ -170,10 +205,16 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         saleAdapter.setOnItemClickListener((adapter, view, position) -> {
             switch (viewModel.getSaleList().get(position).getPos()) {
                 case 0:
-                    //我要进货
-                    ActivityUtil.startStockListActivity(getActivity());
+                    //我的店铺
+                    ActivityUtil.startShopDetialActivity(getActivity(), MyApplication.SHOP_ID);
                     break;
                 case 1:
+                    //店铺管理
+
+                    break;
+                case 2:
+                    //我的订单
+
                     break;
             }
         });
@@ -194,9 +235,11 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
             switch (buyAdapter.getData().get(position).getPos()) {
                 case 0:
                     //我的收藏
+//                    ActivityUtil.startApplySellerActivity(getActivity());
                     WebUtil.jumpMyWeb(URLs.HTML_MY_COLLECT, getActivity());
 //                    ActivityUtil.startCollectionActivity(getActivity());
                     break;
+
                 case 1:
                     //收货地址
                     ActivityUtil.startPostAddressActivity(getActivity());
@@ -235,7 +278,44 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     break;
                 case 8:
                     //任务中心
-
+                    WebUtil.jumpMyWeb(URLs.HTML_INTEGRAL, getActivity());
+                    break;
+                case 9:
+                    //我要开店
+                    WebUtil.jumpMyWeb(URLs.HTML_NEW_SHOP, getActivity());
+                    break;
+                case 10:
+                    //我要进货
+                    ActivityUtil.startStockListActivity(getActivity());
+                    break;
+                case 11:
+                    //成为经销商
+                    ActivityUtil.startApplySellerActivity(getActivity());
+                    break;
+                case 12:
+                    //我的优惠券
+//                    ActivityUtil.startCouponActivity(getActivity());
+                    WebUtil.jumpMyWeb(URLs.HTML_MY_COUPONS, getActivity());
+                    break;
+                case 13:
+                    if (!MyApplication.isLogin()) {
+                        ActivityUtil.startLoginActivity(getActivity());
+                        return;
+                    }
+                    if (RongIM.getInstance() != null) {
+                        WeakReference<Context> wr = new WeakReference<>(
+                                getContext());
+                        Map<String, Boolean> map = new HashMap<>();
+                        map.put(Conversation.ConversationType.PRIVATE.getName(), false);
+                        RongIM.getInstance().startConversationList(wr.get(), map);
+                    }
+                    MyApplication.messageState.setMyMessage(0);
+                    ((List<RxMyItem>) adapter.getData()).get(position).setHasMsg(false);
+                    settingAdapter.notifyItemChanged(position);
+                    break;
+                case 14:
+                    ActivityUtil.startSettingActivity(getActivity(), MyApplication.messageState.isNewestVersion(),
+                            viewModel.introduce, viewModel.versionName);
                     break;
             }
         });

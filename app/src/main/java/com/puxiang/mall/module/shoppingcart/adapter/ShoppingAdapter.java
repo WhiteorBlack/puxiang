@@ -20,7 +20,6 @@ import java.util.List;
 public class ShoppingAdapter extends BaseSectionQuickAdapter<ShopCartData, ShoppingAdapter.MovieViewHolder> {
     public static final int TYPE_LEVEL_0 = 0;
     public static final int TYPE_LEVEL_1 = 1;
-    private ShopSelectListener shopSelectListener;
 
     List<ShopCartData> mallList = new ArrayList<>();
     private int floowerCount = 0;
@@ -43,9 +42,6 @@ public class ShoppingAdapter extends BaseSectionQuickAdapter<ShopCartData, Shopp
         setNewData(beanList);
     }
 
-    public void setShopSelectListener(ShopSelectListener shopSelectListener) {
-        this.shopSelectListener = shopSelectListener;
-    }
 
 
     @Override
@@ -65,43 +61,12 @@ public class ShoppingAdapter extends BaseSectionQuickAdapter<ShopCartData, Shopp
         helper.getBinding().setVariable(BR.item, item);
         helper.getBinding().executePendingBindings();
         helper.getBinding().getRoot().setTag(item);
-        helper.getView(R.id.sdv_item_pic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shopSelectListener.onGoodsClickListener(item.getCartProduct().getProductId());
-            }
-        });
-        helper.getView(R.id.tv_item_name).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shopSelectListener.onGoodsClickListener(item.getCartProduct().getProductId());
-            }
-        });
-        helper.getView(R.id.iv_item_box).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shopSelectListener.onGoodsSelectListener(item.getShopId(), item.getCartProduct().getProductId(), helper.getLayoutPosition(), !item.getCartProduct().isSelect());
-            }
-        });
-        helper.getView(R.id.tv_item_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shopSelectListener.onAddClickListener(helper.getLayoutPosition());
-            }
-        });
-        helper.getView(R.id.tv_item_reduce).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shopSelectListener.onReduceClickListener(helper.getLayoutPosition());
-            }
-        });
-
-        helper.getView(R.id.iv_item_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shopSelectListener.onDeleteClickListener(helper.getLayoutPosition());
-            }
-        });
+        helper.addOnClickListener(R.id.sdv_item_pic)
+                .addOnClickListener(R.id.tv_item_name)
+                .addOnClickListener(R.id.iv_item_box)
+                .addOnClickListener(R.id.tv_item_add)
+                .addOnClickListener(R.id.tv_item_reduce)
+                .addOnClickListener(R.id.iv_item_close);
     }
 
 
@@ -111,22 +76,9 @@ public class ShoppingAdapter extends BaseSectionQuickAdapter<ShopCartData, Shopp
         binding.setVariable(BR.shopCart, item);
         binding.executePendingBindings();
         helper.getBinding().getRoot().setTag(item);
-        helper.getView(R.id.cb_shop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (shopSelectListener != null) {
-                    shopSelectListener.onShopSelectListener(item.getShopId(), !item.isSelected());
-                }
-            }
-        });
-        helper.getView(R.id.tv_shop_name).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (shopSelectListener != null) {
-                    shopSelectListener.onShopClickListener(item.getShopId());
-                }
-            }
-        });
+        helper.addOnClickListener(R.id.cb_shop)
+                .addOnClickListener(R.id.tv_shop_name);
+
     }
 
 

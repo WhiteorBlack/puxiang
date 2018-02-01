@@ -17,6 +17,9 @@
         <variable
             name="textColor"
             type="int"/>
+        <variable
+            name="rightSrc"
+            type="int"/>
     </data>
 
     <RelativeLayout
@@ -44,6 +47,15 @@
             android:layout_centerHorizontal="true"
             android:paddingBottom="@dimen/toolBarBottomMargin"
             android:text="@{title}" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            style="@style/ToolbarRightBtnStyle"
+            android:background="@{AppUtil.getColor(color,R.color.mall_activity)}"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@{AppUtil.getDrawable(rightSrc,0)}"
+            />
 
         <View
             android:layout_width="match_parent"

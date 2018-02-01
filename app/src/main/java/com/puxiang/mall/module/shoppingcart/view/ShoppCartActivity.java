@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.puxiang.mall.BaseBindActivity;
+import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.ActivityShoppingCartBinding;
 import com.puxiang.mall.module.shoppingcart.adapter.ShoppingAdapter;
@@ -30,6 +31,7 @@ public class ShoppCartActivity extends BaseBindActivity implements View.OnClickL
         adapter.openLoadAnimation();
         binding.rv.setLayoutManager(new LinearLayoutManager(this));
         binding.rv.setAdapter(adapter);
+        binding.rv.addOnItemTouchListener(viewModel.itemChildClickListener());
         binding.setViewModel(viewModel);
         binding.tvQx.setOnClickListener(this);
         binding.cbAll.setOnClickListener(this);
@@ -39,6 +41,16 @@ public class ShoppCartActivity extends BaseBindActivity implements View.OnClickL
         binding.llNone.ivStartBuy.setOnClickListener(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (MyApplication.isLogin()) {
+            viewModel.getData();
+        } else {
+            adapter.setData(null);
+            viewModel.isNone.set(true);
+        }
+    }
 
     @Override
     protected void viewModelDestroy() {

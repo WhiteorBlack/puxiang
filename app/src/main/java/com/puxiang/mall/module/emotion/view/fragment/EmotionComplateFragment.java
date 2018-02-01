@@ -148,20 +148,13 @@ public class EmotionComplateFragment extends BaseFragment {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 outRect.bottom = padding;
-                // Add top margin only for the first item to avoid double space between items
-//                if (parent.getChildPosition(view) == 0)
-//                    outRect.top = padding * 2;
             }
         });
-        // 给GridView设置表情图片
-//        EmotionGridViewAdapter adapter = new EmotionGridViewAdapter(getActivity(), emotionNames, itemWidth,
-//                emotionType);
 
         EmotionViewsAdapter adapter = new EmotionViewsAdapter(emotionNames, emotionType, itemWidth);
         rv.setAdapter(adapter);
         //设置全局点击事件
         rv.addOnItemTouchListener(GlobalOnItemClickManagerUtils.getInstance().getOnItemClickListener(emotionType));
-        //   AutoUtils.auto(gv);
         return rv;
     }
 

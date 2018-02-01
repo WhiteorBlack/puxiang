@@ -12,9 +12,7 @@ import com.puxiang.mall.databinding.ActivityPayResultBinding;
 import com.puxiang.mall.module.my.adapter.CollectionAdapter;
 import com.puxiang.mall.module.my.viewmodel.CollectionViewModel;
 import com.puxiang.mall.module.pay.viewmodel.PayResultViewModel;
-import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.utils.ActivityUtil;
-import com.puxiang.mall.utils.WebUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -3,28 +3,21 @@ package com.puxiang.mall.module.mall.view;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
-import android.databinding.ObservableBoolean;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gyf.barlibrary.ImmersionBar;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentMallBinding;
 import com.puxiang.mall.databinding.ViewBottomLineBinding;
-import com.puxiang.mall.databinding.ViewHeadViewBinding;
-import com.puxiang.mall.databinding.ViewMallPicAddsBinding;
 import com.puxiang.mall.fragment.BaseBindFragment;
 import com.puxiang.mall.module.mall.adapter.MallClassAdapter;
 import com.puxiang.mall.module.mall.adapter.SectionAdapterNew;
@@ -33,14 +26,10 @@ import com.puxiang.mall.module.mall.viewmodel.MallPicAdds;
 import com.puxiang.mall.module.mall.viewmodel.MallViewModel;
 import com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel;
 import com.puxiang.mall.utils.ActivityUtil;
-import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.ScreenUtil;
-import com.readystatesoftware.viewbadger.BadgeView;
-
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -51,15 +40,12 @@ import io.rong.imlib.model.Conversation;
 public class MallFragment extends BaseBindFragment implements View.OnClickListener {
 
     private FragmentMallBinding binding;
-    //    private ViewHeadViewBinding headViewBinding;
     private MallViewModel viewModel;
     private ViewBottomLineBinding bottomLineBinding;
     private SectionAdapterNew adapter;
     private MallHeadViewModel headViewModel;
-    private BadgeView badge;
     private MallClassAdapter mallClassAdapter;
 
-    //    private ViewMallPicAddsBinding picAddsBinding;
     private MallPicAdds mallPicAdds;
     private MsgCountViewModel msgCountViewModel;
 
@@ -80,7 +66,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
                 ActivityUtil.startQRCodeActivityForResult(this.getActivity(), 0, "", 0.0, 0.0);
                 break;
             case R.id.iv_warn:
-                if (!MyApplication.isLogin()){
+                if (!MyApplication.isLogin()) {
                     ActivityUtil.startLoginActivity(getActivity());
                     return;
                 }
@@ -129,24 +115,15 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
     @Override
     public View initBinding(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mall, container, false);
-//        headViewBinding = DataBindingUtil.inflate(inflater, R.layout.view_head_view, container, false);
         bottomLineBinding = DataBindingUtil.inflate(inflater, R.layout.view_bottom_line, container, false);
         adapter = new SectionAdapterNew(R.layout.item_mall_goods, R.layout.item_mall_title, null);
         viewModel = new MallViewModel(this, adapter);
-//        picAddsBinding = DataBindingUtil.inflate(inflater, R.layout.view_mall_pic_adds, container, false);
         mallPicAdds = new MallPicAdds(this);
-
         msgCountViewModel = new MsgCountViewModel(this);
-
         binding.setMsgModel(msgCountViewModel);
-
-//        picAddsBinding.setViewModel(mallPicAdds);
         binding.setViewModel(viewModel);
-//        binding.layoutPicAdds.setViewModel(mallPicAdds);
         binding.layoutHead.setViewModel(headViewModel);
         binding.layoutHead.setPicModel(mallPicAdds);
-//        headViewBinding.setViewModel(headViewModel);
-//        headViewBinding.setPicModel(mallPicAdds);
         bottomLineBinding.setViewModel(viewModel);
         binding.toolbarMall.setMessageState(MyApplication.messageState);
         return binding.getRoot();
@@ -155,7 +132,6 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
     @Override
     public void initView() {
         initHeadView();
-//        initBadge();
         initBanner(binding.layoutHead.banner);
         initGoodsRecyclerView(binding.rvMall);
         initRefresh(binding.ptrFrame);
@@ -164,24 +140,19 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
 
 
     private void initGoodsRecyclerView(RecyclerView rvMall) {
-//        adapter.addHeaderView(headViewBinding.getRoot());
         adapter.addFooterView(bottomLineBinding.getRoot());
         rvMall.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         rvMall.setAdapter(adapter);
         rvMall.setFocusableInTouchMode(false);
         rvMall.setFocusable(false);
-//        rvMall.requestFocus();
         rvMall.setNestedScrollingEnabled(false);
 
-        binding.nsvParent.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (oldScrollY > ScreenUtil.getWidthAndHeight().heightPixels) {
-                    viewModel.setIsVisible(true);
+        binding.nsvParent.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (oldScrollY > ScreenUtil.getWidthAndHeight().heightPixels) {
+                viewModel.setIsVisible(true);
 
-                } else {
-                    viewModel.setIsVisible(false);
-                }
+            } else {
+                viewModel.setIsVisible(false);
             }
         });
 
@@ -192,7 +163,6 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
     private void initHeadView() {
         mallClassAdapter = new MallClassAdapter(R.layout.item_circle_navigate, null);
         headViewModel = new MallHeadViewModel(this, mallClassAdapter);
-//        AutoUtils.auto(headViewBinding.getRoot());
         binding.layoutHead.banner.setAdapter(headViewModel);
         binding.layoutHead.banner.setDelegate(headViewModel);
         binding.layoutHead.banner.setParentView(binding.ptrFrame);
@@ -212,12 +182,6 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
     private Observable.OnPropertyChangedCallback callback = new Observable.OnPropertyChangedCallback() {
         @Override
         public void onPropertyChanged(Observable observable, int i) {
-            ObservableBoolean observableBoolean = (ObservableBoolean) observable;
-            if (observableBoolean.get()) {
-                badge.show();
-            } else {
-                badge.hide();
-            }
         }
     };
 

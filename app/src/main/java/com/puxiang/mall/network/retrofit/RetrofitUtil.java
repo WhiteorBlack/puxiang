@@ -254,8 +254,6 @@ public class RetrofitUtil {
      * @return
      */
     public <T> Observable<T> flatResponse(final HttpResult<T> response) {
-        Log.e("Response", "ErrorCode : " + response.getErrorCode() + "\n ErrorMessage :" +
-                response.getErrorMessage());
         return Observable.create(subscriber -> {
             if (response.isSuccess()) {
                 String errorMessage = response.getErrorMessage();
@@ -393,10 +391,14 @@ public class RetrofitUtil {
 //    }
 //
 
-    protected final ObservableTransformer transformer = observable -> ((Observable) observable)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .flatMap((Function) response -> flatResponse((HttpResult<Object>) response));
+    protected final ObservableTransformer transformer = (Observable observable) -> {
+        return ((Observable) observable)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap((Function) (Object response) -> {
+                    return flatResponse((HttpResult<Object>) response);
+                });
+    };
     //    protected final Transformer transformer = observable -> ((Observable) observable)
     // .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())

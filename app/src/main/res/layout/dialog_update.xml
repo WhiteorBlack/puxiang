@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80px"
+        android:layout_marginRight="80px"
+        android:background="@drawable/bg_update_dialog"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_title_contaner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_update_dialog_title"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="15px"
+            android:paddingTop="15px"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="50px"
+            android:paddingLeft="25px"
+            android:paddingRight="25px"
+            android:paddingTop="50px"></LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/fl_btn_contenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="horizontal"
+            android:paddingBottom="50px"
+            android:paddingLeft="15px"
+            android:paddingRight="15px">
+
+            <LinearLayout
+                android:id="@+id/ll_right"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="20px"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@mipmap/icon_update_hand"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

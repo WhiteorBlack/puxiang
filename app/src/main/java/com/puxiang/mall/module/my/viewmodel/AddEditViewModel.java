@@ -153,9 +153,29 @@ public class AddEditViewModel extends BaseObservable implements ViewModel, Optio
         RxPostAddress postAddress = getPostAddress();
         postAddress.setDefault(isChecked ? 1 : 0);
         varifyData(postAddress);
+
+    }
+
+    /**
+     * 判断几个关键值是否为空
+     * @param postAddress
+     */
+    private void varifyData(RxPostAddress postAddress) {
+        if (TextUtils.isEmpty(postAddress.getShipName())) {
+            ToastUtil.toast("请输入收货人姓名");
+            return;
+        }
+        if (TextUtils.isEmpty(postAddress.getPhone())) {
+            ToastUtil.toast("请输入收货人手机号");
+            return;
+        }
+        if (TextUtils.isEmpty(postAddress.getDetailAddress())) {
+            ToastUtil.toast("请输入收货地址详情");
+            return;
+        }
         if (isAdd()) {
             ApiWrapper.getInstance()
-                    .addAddress(postAddress.getShipName(), postAddress.getShipAddress(), postAddress.getPhone(), postAddress.getProvince(), postAddress.getProvinceCode(),
+                    .addAddress(postAddress.getShipName(), postAddress.getDetailAddress(), postAddress.getPhone(), postAddress.getProvince(), postAddress.getProvinceCode(),
                             postAddress.getCity(), postAddress.getCityCode(), postAddress.getArea(), postAddress.getAreaCode(), postAddress.getTel(), postAddress.isDefault() + "")
                     .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                     .subscribe(new NetworkSubscriber<String>() {
@@ -175,25 +195,6 @@ public class AddEditViewModel extends BaseObservable implements ViewModel, Optio
                             activity.onBackPressed();
                         }
                     });
-        }
-    }
-
-    /**
-     * 判断几个关键值是否为空
-     * @param rxPostAddress
-     */
-    private void varifyData(RxPostAddress rxPostAddress) {
-        if (TextUtils.isEmpty(rxPostAddress.getShipName())) {
-            ToastUtil.toast("请输入收货人姓名");
-            return;
-        }
-        if (TextUtils.isEmpty(rxPostAddress.getPhone())) {
-            ToastUtil.toast("请输入收货人手机号");
-            return;
-        }
-        if (TextUtils.isEmpty(rxPostAddress.getShipAddress())) {
-            ToastUtil.toast("请输入收货地址详情");
-            return;
         }
     }
 

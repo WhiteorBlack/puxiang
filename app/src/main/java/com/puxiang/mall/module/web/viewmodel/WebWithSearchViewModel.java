@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
-import android.util.Log;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -68,6 +68,7 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
     public ObservableField<String> toolBarTitle = new ObservableField<>();
     public ObservableBoolean isShowSearch = new ObservableBoolean(true);
     public ObservableBoolean isError = new ObservableBoolean(false);
+    public ObservableInt webProgress=new ObservableInt(-1);
     public String url = "";
     private String TAG = "WebWithSearchViewModel";
     private WebWithSearchActivity activity;
@@ -85,7 +86,6 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
             @Override
             public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
                 boolean b = ((ObservableBoolean) sender).get();
-                Log.e(TAG, "onPropertyChanged: isError  " + b);
                 if (!b) {
                     activity.hidNoneView();
                 }
@@ -177,7 +177,6 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
                     isLoading = true;
                     // 设置是否阻塞图片加载
                     view.getSettings().setBlockNetworkImage(true);
-                    Log.e(TAG, "onPageStarted: " + url);
                     if (initOK) {
                         loadingWindow.showWindow();
                     } else {
@@ -224,7 +223,6 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
                 loadingWindow.hidWindow();
                 // 设置是否阻塞图片加载
                 view.getSettings().setBlockNetworkImage(false);
-                Log.e(TAG, "onPageFinished: " + url);
                 WebWithSearchViewModel.this.url = url;
 
                 if (url.contains(URLs.HTML_GHALL_DETAIL_KEY)) {
@@ -259,7 +257,6 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                Log.e(TAG, "onReceivedError: " + 1);
                 isError.set(true);
                 errorShow.showNoneView("当前网络不可用~", v -> loadUrl.notifyChange());
             }
@@ -267,14 +264,12 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                Log.e(TAG, "onReceivedError: " + 2);
                 isError.set(true);
                 errorShow.showNoneView("当前网络不可用~", v -> loadUrl.notifyChange());
             }
 
             @Override //网页加载 禁止在浏览器打开在本应用打开
             public boolean shouldOverrideUrlLoading(WebView web, String url) {
-                Log.e(TAG, "shouldOverrideUrlLoading: " + url);
                 if (!url.contains("http://")) {
                     if (url.contains("tel:")) {
                         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
@@ -284,13 +279,12 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
                     return true;
                 }
                 url = WebUtil.verifyUrlSuffixed(url);
-                Log.e(TAG, "url: " + url);
                 if (url.contains(URLs.HTML_LOTTERY_NEW_KEY)) {
                     getShareInfo();
                 } else if (url.contains(URLs.HTML_LOGIN_KEY)) {
                     ActivityUtil.startLoginActivity(activity);
                 } else if (url.contains(URLs.HTML_PAY_KEY)) {
-                    String orderId = StringUtil.getUrlValue(url, "orderId=");
+                    String orderId = StringUtil.getUrlValue(url, "orderIds=");
                     ActivityUtil.startPayActivity(activity, orderId);
                     if (web.canGoBack()) {
                         web.goBack();
@@ -380,7 +374,6 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Log.e(TAG, "URLDecoder: " + url);
         return url;
     }
 
@@ -473,7 +466,6 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String shareUrl) {
-                        Log.e(TAG, "onSuccess: " + shareUrl);
                         ShareInfo shareInfo = new ShareInfo(shareUrl, "我在《硕虎娱乐》发现了 ", "", rawUrl);
                         share(shareInfo);
                     }
@@ -486,15 +478,12 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
      * @param rawUrl
      */
     private void shareLottery(String rawUrl) {
-        // String rawUrl = s.replaceAll("_share", "");
-        Log.e(TAG, "shareLottery: " + rawUrl);
         ApiWrapper.getInstance().getShareUrl(rawUrl)
                 .doOnTerminate(loadingWindow::hidWindow)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String shareUrl) {
-                        Log.e(TAG, "onSuccess: " + shareUrl);
                         ShareInfo shareInfo =
                                 new ShareInfo(shareUrl, "福利多多送，来转一转试试运气吧~", "", rawUrl);
                         share(shareInfo);

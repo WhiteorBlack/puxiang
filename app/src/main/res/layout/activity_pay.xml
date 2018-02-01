@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/sideMarginTop"
                 android:background="@drawable/shadow"
+                android:clickable="@{viewModel.isLoading}"
                 android:elevation="@dimen/elevation_height"
                 android:gravity="center_vertical"
                 android:onClick="onClick"

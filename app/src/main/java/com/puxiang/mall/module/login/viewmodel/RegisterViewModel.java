@@ -59,6 +59,7 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
     public ObservableField<String> smsCode = new ObservableField<>();
     public ObservableField<String> password1 = new ObservableField<>();
     public ObservableField<String> password2 = new ObservableField<>();
+    public ObservableField<String> invateCode = new ObservableField<>("");
     public ObservableBoolean isChecked = new ObservableBoolean(true);
 
     public RegisterViewModel(RegisterFragment fragment) {
@@ -83,7 +84,6 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
             ToastUtil.toast(getString(R.string.verify_null_tip));
         } else if (!isChecked.get()) {
             ToastUtil.toast(getString(R.string.no_select_agreement_tips));
-
         } else if (!StringUtil.isPhoneNumberValid(accountValue)) {
             ToastUtil.toast(getString(R.string.phoneNumberInvalid));
         } else if (passwordValue1.length() < 6) {
@@ -94,7 +94,7 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
             // this.password = MD5_Utils.MD5_16(password1);
             isShowBar.set(true);
             MainActivity.handler.postDelayed(() -> registerRequest(accountValue, passwordValue1,
-                    smsCode.get()), 1500);
+                    smsCode.get(),getInvateCode()), 1500);
         }
     }
 
@@ -105,9 +105,9 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
      * @param password
      * @param code
      */
-    private void registerRequest(final String account, final String password, final String code) {
+    private void registerRequest(final String account, final String password, final String code,String invateCode) {
         ApiWrapper.getInstance().register(account, code, password,
-                ScreenUtil.getUniquePsuedoID())
+                ScreenUtil.getUniquePsuedoID(),invateCode)
                 .compose(fragment.bindUntilEvent(FragmentEvent.DESTROY))
                 .doOnTerminate(() -> isShowBar.set(false))
                 .flatMap(new Function<String, Observable<HttpResult<RxMyUserInfo>>>() {
@@ -118,6 +118,12 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
                     }
                 })
                 .subscribe(new NetworkSubscriber<HttpResult<RxMyUserInfo>>() {
+                    @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                        ToastUtil.toast(e.toString());
+                    }
+
                     @Override
                     public void onSuccess(HttpResult<RxMyUserInfo> bean) {
                         if (bean.isSuccess()) {
@@ -190,7 +196,7 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
      * @param mobile 手机号码
      */
     private void getSmsCode(final String mobile) {
-        Logger.e("send---"+mobile);
+        Logger.e("send---" + mobile);
         ApiWrapper.getInstance()
                 .getSmsCode(mobile)
                 .compose(fragment.bindUntilEvent(FragmentEvent.DESTROY))
@@ -203,7 +209,7 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
 
                     @Override
                     public void onSuccess(String bean) {
-                       ToastUtil.toast("发送成功");
+                        ToastUtil.toast("发送成功");
                         ForgetRequest.smsCodeTime();
                         ForgetRequest.isStart = true;
                         isCounting.set(true);
@@ -254,6 +260,9 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
                 break;
             case R.id.iv_pwd2_clear:
                 setPassword2("");
+                break;
+            case R.id.iv_invate_clear:
+                setInvateCode("");
                 break;
         }
     }
@@ -327,6 +336,17 @@ public class RegisterViewModel extends BaseObservable implements ViewModel {
         this.password2.set(password2);
         notifyPropertyChanged(BR.password2);
     }
+
+    @Bindable
+    public String getInvateCode() {
+        return invateCode.get();
+    }
+
+    public void setInvateCode(String password2) {
+        this.invateCode.set(password2);
+        notifyPropertyChanged(BR.invateCode);
+    }
+
 
     @Override
     public void destroy() {

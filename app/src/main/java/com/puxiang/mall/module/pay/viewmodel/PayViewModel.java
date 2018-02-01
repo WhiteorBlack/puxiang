@@ -55,6 +55,7 @@ public class PayViewModel implements ViewModel {
     public ObservableField<RxPayChannel> aliPayChannel = new ObservableField<>();
     public ObservableField<RxPayChannel> wxPayChannel = new ObservableField<>();
     public ObservableField<RxPayChannel> unionPayChannel = new ObservableField<>();
+    public ObservableBoolean isLoading=new ObservableBoolean(true);
     private String orderId;
 
     private LoadingWindow loadingWindow;
@@ -70,6 +71,7 @@ public class PayViewModel implements ViewModel {
         getPayInfo(Config.PRODUCTORDER, orderId);
         getPayChannel();
         createDialog();
+        EventBus.getDefault().post(Event.RELOAD_WEB);
     }
 
     private void createDialog() {
@@ -233,6 +235,7 @@ public class PayViewModel implements ViewModel {
     }
 
     private void aliPayResult(String result) {
+        isLoading.set(true);
         PayResult payResult = new PayResult(result);
 //TODO:同步返回的结果必须放置到服务端进行验证
 //（验证的规则请看https://doc.open.alipay.com/doc2/detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&docType=1)
@@ -296,6 +299,7 @@ public class PayViewModel implements ViewModel {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseResp resp) {
+        isLoading.set(true);
         int errCode = resp.errCode;
         ActivityUtil.startPayResultActivity(activity, errCode, orderId, totalPrices.get());
     }

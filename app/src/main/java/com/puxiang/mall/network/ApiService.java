@@ -17,6 +17,7 @@ import com.puxiang.mall.model.data.RxCityArea;
 import com.puxiang.mall.model.data.RxComment;
 import com.puxiang.mall.model.data.RxCommentInfo;
 import com.puxiang.mall.model.data.RxCommentReply;
+import com.puxiang.mall.model.data.RxDealer;
 import com.puxiang.mall.model.data.RxEsportList;
 import com.puxiang.mall.model.data.RxFans;
 import com.puxiang.mall.model.data.RxIntegral;
@@ -157,6 +158,13 @@ public interface ApiService {
     Observable<HttpResult<RxMyUserInfo>> login(@Field("userName") String userName,
                                                @Field("password") String password);
 
+    //登录
+    @FormUrlEncoded
+    @POST("mall/member/loginAndroid.do")
+    Observable<HttpResult<RxMyUserInfo>> login(@Field("userName") String userName,
+                                               @Field("password") String password,
+                                               @Field("") String invateCode);
+
 //    //检测是否是代理人
 //    @FormUrlEncoded
 //    @POST("agent/user/checkUserIsAgent.do")
@@ -170,6 +178,15 @@ public interface ApiService {
                                             @Field("code") String code,
                                             @Field("password") String password,
                                             @Field("macAddress") String macAddress);
+
+    //注册
+    @FormUrlEncoded
+    @POST("mall/member/registerAndroid.do")
+    Observable<HttpResult<String>> register(@Field("mobile") String mobile,
+                                            @Field("code") String code,
+                                            @Field("password") String password,
+                                            @Field("macAddress") String macAddress,
+                                            @Field("refCode") String invateCode);
 
     //微信第三方登录
     @FormUrlEncoded
@@ -288,7 +305,7 @@ public interface ApiService {
     @POST("mall/member/cart/modifyCart.do")
     Observable<HttpResult<String>> modifyCart(@Field("cartId") String cartId,
                                               @Field("proudctId") String proudctId,
-                                              @Field("productNum") int productNum,
+                                              @Field("buyQty") int productNum,
                                               @Field("userId") String userId,
                                               @Field("token") String token);
 
@@ -864,7 +881,7 @@ public interface ApiService {
     Observable<HttpResult<String>> addAddress(@Field("userId") String userId,
                                               @Field("token") String token,
                                               @Field("shipName") String shipName,
-                                              @Field("shipAddress") String shipAddress,
+                                              @Field("detailAddress") String shipAddress,
                                               @Field("phone") String phone,
                                               @Field("province") String province,
                                               @Field("provinceCode") String provinceCode,
@@ -884,10 +901,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("mall/member/mobile/checkOldMobile.do")
     Observable<HttpResult<String>> changeNewMobile(@Field("userId") String userId,
-                                                     @Field("newCode") String newCode,
-                                                     @Field("token") String token,
-                                                     @Field("ticket") String ticket,
-                                                     @Field("newMobile") String newMobile);
+                                                   @Field("newCode") String newCode,
+                                                   @Field("token") String token,
+                                                   @Field("ticket") String ticket,
+                                                   @Field("newMobile") String newMobile);
 
     @FormUrlEncoded
     @POST("mall/trade/orderState/getOrderStatusNum.do")
@@ -897,7 +914,42 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("mall/product/collect/getCollectProducts.do")
     Observable<HttpResult<RxList<RxProduct>>> getCollectProducts(@Field("userId") String userId,
-                                                               @Field("token") String token,
-                                                               @Field("pageNo") int pageNo,
-                                                               @Field("pageSize")int pageSize);
+                                                                 @Field("token") String token,
+                                                                 @Field("pageNo") int pageNo,
+                                                                 @Field("pageSize") int pageSize);
+
+    @FormUrlEncoded
+    @POST("mall/dealer/getDealer.do")
+    Observable<HttpResult<RxDealer>> getDealer(@Field("userId") String userId,
+                                               @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("mall/dealer/becomeDealer.do")
+    Observable<HttpResult<RxDealer>> becomeDealer(@Field("userId") String userId,
+                                                  @Field("dealerId") String dealerId,
+                                                  @Field("token") String token,
+                                                  @Field("name") String name,
+                                                  @Field("linkMan") String linkMan,
+                                                  @Field("linkPhone") String linkPhone,
+                                                  @Field("idcardFront") String idcardFront,
+                                                  @Field("idcardBack") String idcardBack,
+                                                  @Field("provinceName") String provinceName,
+                                                  @Field("provinceCode") String provinceCode,
+                                                  @Field("cityName") String cityName,
+                                                  @Field("cityCode") String cityCode,
+                                                  @Field("countyName") String countyName,
+                                                  @Field("countyCode") String countyCode,
+                                                  @Field("streetName") String streetName,
+                                                  @Field("streetCode") String streetCode,
+                                                  @Field("detailAddress") String detailAddress);
+
+    @FormUrlEncoded
+    @POST("mall/refund/refundApplication/addLogistics.do")
+    Observable<HttpResult<String>> addLogistics(@Field("userId") String userId,
+                                                @Field("token") String token,
+                                                @Field("refundApplicationId") String refundApplicationId,
+                                                @Field("companyName") String companyName,
+                                                @Field("expressCode") String expressCode,
+                                                @Field("freight") String freight,
+                                                @Field("deliverGoodsTime") String deliverGoodsTime);
 }

@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="android.text.TextUtils" />
+
         <variable
             name="viewModel"
             type="com.puxiang.mall.module.mall.viewmodel.MallHeadViewModel" />
@@ -51,9 +53,9 @@
             <ImageView
                 android:layout_width="80px"
                 android:layout_height="80px"
+                android:layout_marginBottom="2px"
                 android:layout_marginLeft="40px"
                 android:layout_marginTop="2px"
-                android:layout_marginBottom="2px"
                 android:background="@mipmap/hot_comment" />
 
             <ImageView
@@ -92,8 +94,8 @@
                         android:layout_marginLeft="20px"
                         android:layout_marginRight="20px"
                         android:ellipsize="end"
-                        android:singleLine="true"
                         android:onClick="@{viewModel.onClick}"
+                        android:singleLine="true"
                         android:text="@{viewModel.hotLineOne}"
                         android:textSize="24px" />
                 </LinearLayout>
@@ -103,7 +105,7 @@
                     android:layout_height="1px"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="50px"
-                    android:background="@color/bg_Gray"/>
+                    android:background="@color/bg_Gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -145,12 +147,14 @@
             android:layout_width="match_parent"
             android:layout_height="10px"
             android:layout_marginTop="15px"
+            android:visibility="@{TextUtils.isEmpty(viewModel.onePic)?View.GONE:View.VISIBLE}"
             android:background="@color/bg_Gray_light" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:visibility="@{TextUtils.isEmpty(viewModel.onePic)?View.GONE:View.VISIBLE}"
             android:orientation="horizontal"
             android:paddingBottom="5px"
             android:paddingTop="5px">
@@ -176,9 +180,9 @@
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdv_activity"
-                    android:onClick="@{viewModel.onClick}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{viewModel.onClick}"
                     app:placeholderImage="@mipmap/ic_launcher"
                     app:url="@{viewModel.onePic}"
                     app:viewAspectRatio="0.98" />
@@ -208,11 +212,11 @@
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/sdv_left"
-                        android:onClick="@{viewModel.onClick}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="2px"
                         android:layout_weight="1"
+                        android:onClick="@{viewModel.onClick}"
                         app:placeholderImage="@mipmap/ic_launcher"
                         app:url="@{viewModel.threePic}" />
 

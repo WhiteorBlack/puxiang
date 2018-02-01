@@ -31,6 +31,15 @@
             bind:toolBarTitle="@{viewModel.toolBarTitle}"
             android:visibility="@{!viewModel.isShowSearch?View.VISIBLE:View.GONE}" />
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="5px"
+            android:max="100"
+            android:progressBackgroundTint="@color/white"
+            android:progress="@{viewModel.webProgress}"
+            android:visibility="@{viewModel.webProgress>0?View.VISIBLE:View.GONE}"
+            android:progressDrawable="@drawable/progress_drawable"
+            style="@android:style/Widget.ProgressBar.Horizontal"/>
 
         <WebView
             android:id="@+id/web"

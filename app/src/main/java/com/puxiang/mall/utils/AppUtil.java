@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -129,5 +130,9 @@ public class AppUtil {
     public static double getDecimalValue(double value, int count) {
         double newCount = Math.pow(10, count);
         return (int) (value * (int) newCount) / newCount;
+    }
+
+    public static Uri getResUri(int resId){
+        return Uri.parse("res://com.puxiang.mall/" + resId);
     }
 }

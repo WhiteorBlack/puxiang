@@ -100,6 +100,7 @@ public class PersonalActivity extends BaseBindActivity implements View.OnClickLi
                     ctl.setContentScrimColor(getResources().getColor(R.color.Alpha_theme));
                     EventBus.getDefault().post(false);
                     mImmersionBar.barColor(R.color.Alpha_theme);
+                    binding.mobileToolbar.setNavigationIcon(R.mipmap.nav_back_w);
                     //展开状态
                 } else if (state == State.COLLAPSED) {
                     EventBus.getDefault().post(true);
@@ -107,6 +108,7 @@ public class PersonalActivity extends BaseBindActivity implements View.OnClickLi
 //                    ctl.setCollapsedTitleGravity(View.TEXT_ALIGNMENT_GRAVITY);
                     RxUserCommunity userCommunity = viewModel.userBean.get();
                     String viewName;
+                    binding.mobileToolbar.setNavigationIcon(R.mipmap.nav_back_g);
                     if (userCommunity != null) {
                         viewName = userCommunity.getAccount().getViewName();
                     } else {

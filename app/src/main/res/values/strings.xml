@@ -76,7 +76,7 @@
     <string name="refund_hint_time">成交时间：</string>
     <string name="refund_hint_total">共</string>
     <string name="refund_hint_prodictNumber">件商品</string>
-    <string name="refund_input_max_money_hint">最大可以输入金额：</string>
+    <string name="refund_input_max_money_hint">最大退款金额：</string>
 
     <!-- integral -->
     <string name="integral_completed">已完成</string>

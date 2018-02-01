@@ -52,7 +52,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="35px"
                     android:layout_marginRight="15px"
-                    android:src="@mipmap/nav_search_g" />
+                    android:src="@mipmap/nav_search_w" />
 
                 <TextView
                     style="@style/titleTextAlphaStyle"
@@ -69,6 +69,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:background="#ccc" />
     </RelativeLayout>

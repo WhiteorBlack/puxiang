@@ -24,6 +24,7 @@ import com.puxiang.mall.module.login.view.RegisterFragment;
 import com.puxiang.mall.module.main.view.MainActivity;
 import com.puxiang.mall.module.my.view.AddEditAddressActivity;
 import com.puxiang.mall.module.my.view.CollectionActivity;
+import com.puxiang.mall.module.my.view.CouponActivity;
 import com.puxiang.mall.module.my.view.PostAddress;
 import com.puxiang.mall.module.my.view.ShowHeadPicActivity;
 import com.puxiang.mall.module.pay.view.PayActivity;
@@ -36,6 +37,7 @@ import com.puxiang.mall.module.plate.view.PlatePostActivityNew;
 import com.puxiang.mall.module.post.view.CommentActivity;
 import com.puxiang.mall.module.post.view.PostDetailActivity;
 import com.puxiang.mall.module.refund.view.RefundActivity;
+import com.puxiang.mall.module.refund.view.ReturnAddressActivity;
 import com.puxiang.mall.module.scan.view.QRCodeActivity;
 import com.puxiang.mall.module.search.view.SearchActivity;
 import com.puxiang.mall.module.search.view.SearchBBsListActivity;
@@ -69,6 +71,7 @@ import com.puxiang.mall.model.data.RxAds;
 import com.puxiang.mall.model.data.RxPost;
 import com.puxiang.mall.model.data.RxPostInfo;
 import com.puxiang.mall.module.login.view.LoginFragment;
+import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -79,10 +82,6 @@ import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by ChenHengQuan on 2016/9/28.
- * Email nullpointerchan@163.com
- */
 public class ActivityUtil {
     private static String TAG = "NETWORK_Exception";
 
@@ -178,7 +177,12 @@ public class ActivityUtil {
                     ActivityUtil.startBestShopActivity(activity);
                     return;
                 }
-                WebUtil.jumpWebWithSearch(linkUrl, activity);
+                if (linkUrl.contains(URLs.HTML_SECKILL_PAGE_KEY)){
+                    //秒杀必须登录
+                    WebUtil.jumpMyWeb(linkUrl,activity);
+                    return;
+                }
+                WebUtil.jumpWeb(linkUrl, activity);
                 break;
             case ListType.LINK_POST:
                 String postId = bean.getContentId();
@@ -503,6 +507,10 @@ public class ActivityUtil {
     //
     public static void startSettingActivity(Activity activity, boolean isNewestVersion, String
             introduce, String versionName) {
+        if (!MyApplication.isLogin()) {
+            startLoginActivity(activity);
+            return;
+        }
         Intent intent = new Intent(activity, SettingActivity.class);
         intent.putExtra("isNewestVersion", isNewestVersion);
         intent.putExtra("introduce", introduce);
@@ -649,7 +657,11 @@ public class ActivityUtil {
             Intent intent = new Intent(activity, BuyGoodsList.class);
             activity.startActivity(intent);
         } else {
-            startSellerNotifyActivity(activity);
+            if (TextUtils.isEmpty(MyApplication.mCache.getAsString("dealer" + MyApplication.USER_ID))) {
+                startSellerNotifyActivity(activity);
+            } else {
+                startApplySellerActivity(activity);
+            }
         }
     }
 
@@ -718,6 +730,7 @@ public class ActivityUtil {
 
     /**
      * 开通经销商提示页面
+     *
      * @param activity
      */
     public static void startSellerNotifyActivity(Activity activity) {
@@ -727,11 +740,34 @@ public class ActivityUtil {
 
     /**
      * 申请开通经销商
+     *
      * @param activity
      */
     public static void startApplySellerActivity(Activity activity) {
         Intent intent = new Intent(activity, ApplyDealerActivity.class);
         activity.startActivity(intent);
     }
+
+    /**
+     * 我的优惠券
+     *
+     * @param activity
+     */
+    public static void startCouponActivity(Activity activity) {
+        Intent intent = new Intent(activity, CouponActivity.class);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 我的优惠券
+     *
+     * @param activity
+     */
+    public static void startRefundAddressActivity(Activity activity, String returnId) {
+        Intent intent = new Intent(activity, ReturnAddressActivity.class);
+        intent.putExtra("reId", returnId);
+        activity.startActivity(intent);
+    }
+
 
 }

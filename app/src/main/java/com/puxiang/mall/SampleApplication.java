@@ -3,30 +3,13 @@ package com.puxiang.mall;
 import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig;
-import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
-import com.orhanobut.logger.Logger;
-import com.puxiang.mall.model.data.RongMessage;
 import com.puxiang.mall.mvvm.base.ApplicationLike;
-import com.puxiang.mall.service.InitializeService;
-import com.tencent.tinker.loader.TinkerRuntimeException;
-import com.tencent.tinker.loader.app.TinkerApplication;
-import com.tencent.tinker.loader.shareutil.ShareConstants;
 
 import java.lang.reflect.Constructor;
-
-import io.rong.imkit.RongIM;
-import io.rong.imkit.utils.SystemUtils;
-import io.rong.imkit.widget.provider.RealTimeLocationMessageProvider;
-import io.rong.imlib.ipc.RongExceptionHandler;
 
 
 

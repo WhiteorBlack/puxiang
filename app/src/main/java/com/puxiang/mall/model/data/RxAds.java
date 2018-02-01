@@ -25,6 +25,15 @@ public class RxAds {
     public String contentType;
     public String contentId;
     public String keyword;
+    private int resId;
+
+    public int getResId() {
+        return resId;
+    }
+
+    public void setResId(int resId) {
+        this.resId = resId;
+    }
 
     private RxShuohuInfo shuohuInfo;
 

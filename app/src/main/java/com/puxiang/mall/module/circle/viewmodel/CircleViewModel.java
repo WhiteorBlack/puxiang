@@ -66,7 +66,7 @@ public class CircleViewModel extends BaseObservable implements ViewModel {
     public void getCache(CircleFragment fragment) {
         isFirst = fragment.getArguments().getBoolean("first", false);
         typeId = fragment.getArguments().getString("typeId", typeId);
-        getPostListCache();
+//        getPostListCache();
     }
 
 
@@ -105,9 +105,6 @@ public class CircleViewModel extends BaseObservable implements ViewModel {
                         @Override
                         public void onSuccess(RxList<RxPostInfo> bean) {
                             List<RxPostInfo> postInfoList = bean.getList();
-                            if (pageNo == 1) {
-                                MyApplication.mCache.put(CacheKey.HOME_POSTS + typeId, postInfoList);
-                            }
                             dealData(postInfoList);
                             adapter.setPagingData(postInfoList, pageNo);
                         }
@@ -127,9 +124,6 @@ public class CircleViewModel extends BaseObservable implements ViewModel {
                         @Override
                         public void onSuccess(RxList<RxPostInfo> bean) {
                             List<RxPostInfo> postInfoList = bean.getList();
-                            if (pageNo == 1) {
-                                MyApplication.mCache.put(CacheKey.HOME_POSTS + typeId, postInfoList);
-                            }
                             dealData(postInfoList);
                             adapter.setPagingData(postInfoList, pageNo);
                         }

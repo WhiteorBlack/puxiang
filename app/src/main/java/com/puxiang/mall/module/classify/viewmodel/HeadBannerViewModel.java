@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -21,6 +22,7 @@ import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.ActivityUtil;
+import com.puxiang.mall.utils.AppUtil;
 import com.puxiang.mall.widget.MyBanner;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -40,6 +42,7 @@ public class HeadBannerViewModel extends BaseObservable implements ViewModel, BG
     private BaseBindActivity bindActivity;
     private BaseBindFragment fragment;
     public List<RxAds> bannerList = new ArrayList<>();
+    private static String dataCode;
 
     public HeadBannerViewModel(BaseBindFragment fragment) {
         this.fragment = fragment;
@@ -48,7 +51,7 @@ public class HeadBannerViewModel extends BaseObservable implements ViewModel, BG
 
     public HeadBannerViewModel(BaseBindActivity activity) {
         this.bindActivity = activity;
-        this.activity=activity;
+        this.activity = activity;
     }
 
     @Override
@@ -58,19 +61,37 @@ public class HeadBannerViewModel extends BaseObservable implements ViewModel, BG
 
     @Override
     public void fillBannerItem(BGABanner banner, View itemView, Object model, int position) {
-        ((SimpleDraweeView) itemView).setImageURI(((RxAds) model).getPicUrl());
+        if (TextUtils.equals(dataCode, "classfy")) {
+            ((SimpleDraweeView) itemView).setImageURI(AppUtil.getResUri(((RxAds) model).getResId()));
+        } else {
+            ((SimpleDraweeView) itemView).setImageURI(((RxAds) model).getPicUrl());
+        }
     }
 
     @BindingAdapter("headBanner")
     public static void setBanner(MyBanner banner, List<RxAds> list) {
-        if (list == null || list.size() < 1) {
-            return;
+        List<String> tips = new ArrayList<>();
+        if (TextUtils.equals(dataCode, "classfy")) {
+            list.clear();
+            RxAds rxAds = new RxAds();
+            rxAds.setResId(R.mipmap.banner_classfy_one);
+            list.add(rxAds);
+
+            RxAds rxAds2 = new RxAds();
+            rxAds2.setResId(R.mipmap.banner_classfy_two);
+            list.add(rxAds2);
+        } else {
+            if (list == null || list.size() < 1) {
+                return;
+            }
+
+
+            for (RxAds ads : list) {
+                tips.add(ads.getText());
+            }
         }
 
-        List<String> tips = new ArrayList<>();
-        for (RxAds ads : list) {
-            tips.add(ads.getText());
-        }
+
         banner.setData(R.layout.viewpager_img, list, tips);
     }
 
@@ -78,9 +99,10 @@ public class HeadBannerViewModel extends BaseObservable implements ViewModel, BG
      * 获取轮播图数据
      */
     public void getBannerData(String channelCode) {
+        dataCode = channelCode;
         ApiWrapper.getInstance()
                 .getAds(channelCode)
-                .compose(fragment==null?bindActivity.bindUntilEvent(ActivityEvent.DESTROY):fragment.bindUntilEvent(FragmentEvent.DESTROY))
+                .compose(fragment == null ? bindActivity.bindUntilEvent(ActivityEvent.DESTROY) : fragment.bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new NetworkSubscriber<List<RxAds>>() {
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
@@ -89,7 +111,6 @@ public class HeadBannerViewModel extends BaseObservable implements ViewModel, BG
 
                     @Override
                     public void onSuccess(List<RxAds> bean) {
-                        MyApplication.mCache.put(channelCode, bean);
                         bannerList.clear();
                         bannerList.addAll(bean);
                         notifyPropertyChanged(BR.headBanner);

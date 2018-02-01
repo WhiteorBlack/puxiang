@@ -77,7 +77,7 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_emotion, container, false);
         initView();
         initDatas();
-        ImmersionBar.with(getActivity(),this).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
+        ImmersionBar.with(getActivity(), this).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
         return binding.getRoot();
     }
 
@@ -86,11 +86,6 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
         binding.setViewModel(viewModer);
         binding.emotionBar.setViewModel(viewModer);
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//    }
 
 
     /**
@@ -117,7 +112,6 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
                         .emotionBar.etEmotion)//判断绑定那种EditView
                 .bindToEmotionButton(binding.emotionBar.ivEmotionBtn)//绑定表情按钮
                 .build();
-//        GlobalOnItemClickManagerUtils.getInstance().attachToEditText(binding.emotionBar.etEmotion);
         postDetail = (PostDetailActivity) getActivity();
 
         binding.emotionBar.vZan.setOnClickListener(this);
@@ -231,13 +225,6 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
         fragments.add(f5);
         fragments.add(f6);
         fragments.add(f7);
-        /*Bundle b = null;
-        for (int i = 0; i < 7; i++) {
-            b = new Bundle();
-            b.putString("Interge", "Fragment-" + i);
-            Fragment1 fg = Fragment1.newInstance(Fragment1.class, b);
-            fragments.add(fg);
-        }*/
         NoHorizontalScrollerVPAdapter adapter = new NoHorizontalScrollerVPAdapter(getActivity()
                 .getSupportFragmentManager(), fragments);
         binding.vp.setAdapter(adapter);
@@ -285,7 +272,6 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
                     viewModer.comment(postDetail.getPostId(), context);
                     etEmotion.setText("");
                     isInterceptBackPress();
-                    //  postDetail.binding.rvPost.requestFocus();
                 }
                 break;
         }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentShoppingCartBinding;
 import com.puxiang.mall.fragment.BaseBindFragment;
@@ -33,6 +34,7 @@ public class ShoppCartFragment extends BaseBindFragment implements View.OnClickL
         adapter.openLoadAnimation();
         binding.rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.rv.setAdapter(adapter);
+        binding.rv.addOnItemTouchListener(viewModel.itemChildClickListener());
         binding.setViewModel(viewModel);
         binding.tvQx.setOnClickListener(this);
         binding.cbAll.setOnClickListener(this);
@@ -43,7 +45,12 @@ public class ShoppCartFragment extends BaseBindFragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.getData();
+        if (MyApplication.isLogin()) {
+            viewModel.getData();
+        } else {
+            adapter.setData(null);
+            viewModel.isNone.set(true);
+        }
     }
 
     @Override

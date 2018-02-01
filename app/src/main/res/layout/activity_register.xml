@@ -225,6 +225,50 @@
                 android:layout_below="@+id/et_password2"
                 android:layout_marginTop="30px"
                 android:background="#cecece" />
+
+            <ImageView
+                android:id="@+id/tv_invate"
+                style="@style/titleTextMarginStyle"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="50px"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v4"
+                android:layout_marginBottom="0px"
+                android:background="@mipmap/icon_invate_code" />
+
+            <EditText
+                android:id="@+id/et_invate"
+                style="@style/ETMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v4"
+                android:layout_toRightOf="@+id/tv_invate"
+                android:background="@null"
+                android:hint="您的邀请码"
+                android:text="@={viewModel.invateCode}"
+                android:textColorHint="@color/se" />
+
+
+            <ImageView
+                android:id="@+id/iv_invate_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v4"
+                android:layout_marginRight="20px"
+                android:layout_marginTop="50px"
+                android:layout_toLeftOf="@+id/chb_pass_two"
+                android:background="@mipmap/icon_cancel"
+                android:onClick="@{viewModel.onClick}"
+                android:visibility="@{StringUtil.isEmpty(viewModel.invateCode)?View.INVISIBLE:View.VISIBLE}" />
+
+            <View
+                android:id="@+id/v5"
+                style="@style/lineStyle"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/et_invate"
+                android:layout_marginTop="30px"
+                android:background="#cecece" />
         </RelativeLayout>
 
         <LinearLayout

@@ -21,6 +21,7 @@ import com.puxiang.mall.model.data.RxCityArea;
 import com.puxiang.mall.model.data.RxComment;
 import com.puxiang.mall.model.data.RxCommentInfo;
 import com.puxiang.mall.model.data.RxCommentReply;
+import com.puxiang.mall.model.data.RxDealer;
 import com.puxiang.mall.model.data.RxEsportList;
 import com.puxiang.mall.model.data.RxFans;
 import com.puxiang.mall.model.data.RxIntegral;
@@ -235,10 +236,10 @@ public class ApiWrapper extends RetrofitUtil {
     /**
      * 获取商家商品
      */
-    public Observable<RxList<RxProduct>> getShopGoods(String keyword,String shopId, String orderBy, String
+    public Observable<RxList<RxProduct>> getShopGoods(String keyword, String shopId, String orderBy, String
             order, int pageSize, int pageNo) {
         return getService()
-                .searchShopProduct(keyword,shopId, orderBy, order, pageSize, pageNo)
+                .searchShopProduct(keyword, shopId, orderBy, order, pageSize, pageNo)
                 .compose(this.applySchedulers());
     }
 
@@ -644,9 +645,9 @@ public class ApiWrapper extends RetrofitUtil {
      * @param macAddress 设备唯一Id
      */
     public Observable<String> register(String mobile, String code, String password, String
-            macAddress) {
+            macAddress,String invateCode) {
         return getService()
-                .register(mobile, code, password, macAddress)
+                .register(mobile, code, password, macAddress,invateCode)
                 .compose(this.applySchedulers());
     }
 
@@ -1404,4 +1405,25 @@ public class ApiWrapper extends RetrofitUtil {
                 .compose(this.applySchedulers());
     }
 
+    public Observable<RxDealer> getDealer() {
+        return getService().getDealer(MyApplication.USER_ID, MyApplication.TOKEN)
+                .compose(this.applySchedulers());
+    }
+
+    public Observable<RxDealer> becomeDealer(String dealerId, String name, String linkMan, String linkPhone,
+                                             String idcardFront, String idcardBack, String provinceCod,
+                                             String provinceName, String cityCode, String cityNam,
+                                             String countryCode, String countryName, String streetCode,
+                                             String streetName, String detailAddress) {
+
+        return getService().becomeDealer(MyApplication.USER_ID, dealerId, MyApplication.TOKEN,
+                name, linkMan, linkPhone, idcardFront, idcardBack, provinceCod, provinceName,
+                cityNam, cityCode, countryName, countryCode, streetName, streetCode, detailAddress)
+                .compose(this.applySchedulers());
+    }
+
+    public Observable<String> addLogistics(String refundApplicationId, String companyName, String expressCode, String freight, String deliverGoodsTime) {
+        return getService().addLogistics(MyApplication.USER_ID, MyApplication.TOKEN, refundApplicationId, companyName, expressCode, freight, deliverGoodsTime)
+                .compose(this.applySchedulers());
+    }
 }

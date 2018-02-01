@@ -36,7 +36,7 @@ public class ApplyDealerActivity extends BaseBindActivity implements EasyPermiss
         binding = DataBindingUtil.setContentView(this, R.layout.activity_apply_dealer);
         viewModel = new ApplyDealerViewModel(this);
         binding.setViewModel(viewModel);
-        mImmersionBar.keyboardEnable(false).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
+        mImmersionBar.keyboardEnable(false).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED).flymeOSStatusBarFontColor(R.color.text_black).statusBarDarkFont(true).init();
     }
 
     @Override
@@ -54,16 +54,17 @@ public class ApplyDealerActivity extends BaseBindActivity implements EasyPermiss
 
             @Override
             public void onPageSelected(int position) {
-                pos=position;
+                pos = position;
                 switch (position) {
+                    case 0:
+                        viewModel.setStepText("下一步");
+                        break;
                     case 1:
                         viewModel.setStepTwo(true);
                         binding.btnStep.setText("提交");
                         break;
                     case 2:
                         viewModel.setStepThree(true);
-                        binding.btnStep.setText("审核中");
-                        viewModel.setBtnStepEnable(false);
                         break;
 
                 }
@@ -90,21 +91,53 @@ public class ApplyDealerActivity extends BaseBindActivity implements EasyPermiss
         fragmentAdapter.notifyDataSetChanged();
     }
 
+    public void setCurrentItem(int pos) {
+        binding.viewpager.setCurrentItem(pos);
+    }
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                onBackPressed();
+                finish();
                 break;
             case R.id.btn_step:
-                pos++;
-                binding.viewpager.setCurrentItem(pos);
+                viewModel.onStepClick(pos);
+//                pos++;
+                break;
+            case R.id.btn_back:
+                if (pos == 2) {
+                    if (viewModel.status == 3) { //取消
+                        onBackPressed();
+                        return;
+                    }
+
+                    if (viewModel.status == 2) {
+                        //查看详情
+
+                        return;
+                    }
+                }
+                pos--;
+                pos = pos < 0 ? 0 : pos;
+                setCurrentItem(pos);
                 break;
         }
     }
 
     @Override
-    protected void viewModelDestroy() {
+    public void onBackPressed() {
+//        if (pos == 1) {
+//            binding.viewpager.setCurrentItem(0);
+//            return;
+//        } else {
+//            finish();
+//        }
+        super.onBackPressed();
+    }
 
+    @Override
+    protected void viewModelDestroy() {
+        viewModel.destroy();
     }
 
     @Override
@@ -115,11 +148,13 @@ public class ApplyDealerActivity extends BaseBindActivity implements EasyPermiss
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         EasyPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
+
     @Override
     public void onPermissionDenied(int requestCode, List<String> perms) {
         switch (requestCode) {

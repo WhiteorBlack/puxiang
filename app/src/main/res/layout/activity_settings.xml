@@ -5,6 +5,7 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="android.text.TextUtils"/>
 
         <variable
             name="viewModel"
@@ -52,8 +53,8 @@
                 <TextView
                     style="@style/titleTextStyle"
                     android:layout_width="0dp"
-                    android:layout_marginLeft="10px"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
                     android:layout_weight="1"
                     android:text="@{viewModel.userBean.viewName}" />
 
@@ -73,10 +74,10 @@
                 style="@style/titleMarginStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/titleTextStyle"
@@ -93,9 +94,9 @@
             <View
                 android:id="@+id/v1"
                 style="@style/lineStyle"
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="1px" />
+                android:layout_height="1px"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_service"
@@ -120,9 +121,9 @@
 
             <View
                 android:id="@+id/v4"
-                android:background="@color/bg_Gray_light"
                 android:layout_width="match_parent"
-                android:layout_height="10px" />
+                android:layout_height="10px"
+                android:background="@color/bg_Gray_light" />
 
             <LinearLayout
                 android:id="@+id/ll_about"
@@ -131,8 +132,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/titleTextStyle"
@@ -148,20 +149,20 @@
 
             <View
                 android:id="@+id/v5"
-                android:visibility="gone"
-                android:background="@color/bg_Gray_light"
                 android:layout_width="match_parent"
-                android:layout_height="10px" />
+                android:layout_height="10px"
+                android:background="@color/bg_Gray_light"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_settings_version"
                 style="@style/titleMarginStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_version_name"
@@ -197,6 +198,70 @@
                 style="@style/lineStyle"
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
+
+            <LinearLayout
+                android:id="@+id/ll_invate_code"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v2"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我的邀请码" />
+
+                <TextView
+                    android:id="@+id/tv_invate_code"
+                    style="@style/titleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.userBean.refCode}" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v6"
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:background="@color/bg_Gray_light" />
+
+            <LinearLayout
+                android:id="@+id/ll_invate_name"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v6"
+                android:visibility="@{TextUtils.isEmpty(viewModel.userBean.refUserPhone)?View.GONE:View.VISIBLE}"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我的邀请人" />
+
+                <TextView
+                    android:id="@+id/tv_invate_name"
+                    android:layout_width="wrap_content"
+                    style="@style/titleTextStyle"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.userBean.refUserPhone}" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v7"
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:visibility="@{TextUtils.isEmpty(viewModel.userBean.refUserPhone)?View.GONE:View.VISIBLE}"
+                android:background="@color/bg_Gray_light" />
 
             <LinearLayout
                 android:id="@+id/ll_settings_logout"

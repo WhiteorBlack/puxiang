@@ -1,7 +1,6 @@
 package com.puxiang.mall.module.bbs.viewmodel;
 
 import android.Manifest;
-import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.net.Uri;
@@ -24,7 +23,6 @@ import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.ActivityUtil;
-import com.puxiang.mall.utils.FileUtil;
 import com.puxiang.mall.utils.LoadingWindow;
 import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
@@ -34,7 +32,6 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +45,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
-import io.rong.imkit.plugin.image.PictureSelectorActivity;
 
 import static com.puxiang.mall.utils.StringUtil.getString;
 
@@ -151,8 +147,6 @@ public class PublishViewModel implements ViewModel {
                                         .addRequestCode(PermissionCode.RG_CAMERA_PERM)
                                         .permissions(Manifest.permission.CAMERA)
                                         .request();
-//                                 GalleryFinal.openCamera(REQUEST_CODE_CAMERA, GalleryFinal
-//                                 .getCoreConfig().getFunctionConfig());
                                 break;
                             default:
                                 break;

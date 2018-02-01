@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxCoupon" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:background="@mipmap/bg_coupon_blue"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="20px">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="优惠券"
+                android:textColor="#f99e16"
+                android:textSize="40px" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:text="内容"
+                android:textColor="#777777"
+                android:textSize="24px" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:text="有效期"
+                android:textColor="#777777"
+                android:textSize="22px" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.1">
+
+            <Button
+                android:id="@+id/btn_use"
+                android:layout_width="160px"
+                android:layout_height="56px"
+                android:textSize="30px"
+                android:layout_centerInParent="true"
+                android:background="@drawable/btn_use_conpon"
+                android:text="立即使用"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="22px"
+                android:text="活动券"
+                android:layout_marginTop="15px"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/btn_use"/>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

@@ -48,8 +48,6 @@ public class CirclePageViewModel extends BaseObservable implements ViewModel {
         this.fragment = fragment;
         this.adapter = adapter;
         getCache();
-        //  getChannels();
-        //   getSearchText();
         initData();
     }
 
@@ -73,9 +71,7 @@ public class CirclePageViewModel extends BaseObservable implements ViewModel {
      * 获取缓存数据
      */
     private void getCache() {
-        // getKeywordCache();
         getUserInfoCache();
-        //   getChannelsCache();
     }
 
 
@@ -95,47 +91,6 @@ public class CirclePageViewModel extends BaseObservable implements ViewModel {
         }
     }
 
-    /**
-     * 获取频道缓存。
-     */
-    private void getChannelsCache() {
-        List<RxChannel> rxChannels = MyApplication.mCache.getAsListBean(CacheKey.CHANNELS_HOME, RxChannel[].class);
-        adapter.setNewData(rxChannels);
-    }
-
-//    /**
-//     * 获取搜索栏关键字缓存
-//     */
-//    private void getKeywordCache() {
-//        MyApplication.mCache.getAsString(CacheKey.TEXT_SEARCH, s -> keyword.set(s));
-//    }
-//
-//    /**
-//     * 获取搜索栏内容
-//     */
-//    private void getSearchText() {
-//        ApiWrapper.getInstance()
-//                .getAds(URLs.TEXT_SEARCH)
-//                .compose(fragment.bindUntilEvent(FragmentEvent.DESTROY))
-//                .subscribe(new NetworkSubscriber<List<RxAds>>() {
-//                    @Override
-//                    public void onSuccess(final List<RxAds> bean) {
-//                        setSearchText(bean);
-//                    }
-//                });
-//    }
-//
-//    /**
-//     * 设置搜索栏关键字
-//     */
-//    private void setSearchText(List<RxAds> list) {
-//        if (list.size() > 0) {
-//            String searchText = list.get(0).getText();
-//            String text = searchText.trim();
-//            keyword.set(text);
-//            MyApplication.mCache.put(CacheKey.TEXT_SEARCH, text);
-//        }
-//    }
 
     /**
      * 获取频道
@@ -167,7 +122,6 @@ public class CirclePageViewModel extends BaseObservable implements ViewModel {
      * @param channels 频道数据源
      */
     private void setChannelsData(List<RxChannel> channels) {
-        //  MyApplication.mCache.put(CacheKey.CHANNELS_HOME, channels);
         adapter.setNewData(channels);
     }
 

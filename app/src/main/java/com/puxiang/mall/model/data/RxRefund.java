@@ -12,7 +12,7 @@ public class RxRefund {
      * mainPictureUrl : http://somicshop.oss-cn-shenzhen.aliyuncs.com/attached/images/201611/d6e49124dd014d06a9c21947af50f6ca45940.jpg?430x430
      * refundReasons : [{"refundReasonDes":"收到商品破损","refundReasonId":7},{"refundReasonDes":"商品错发/漏发","refundReasonId":8},{"refundReasonDes":"商品需要维护","refundReasonId":9},{"refundReasonDes":"发票问题","refundReasonId":10},{"refundReasonDes":"收到商品与描述不符","refundReasonId":11},{"refundReasonDes":"商品质量问题","refundReasonId":12},{"refundReasonDes":"未收到货","refundReasonId":13},{"refundReasonDes":"未按约定时间发货","refundReasonId":14},{"refundReasonDes":"退运费","refundReasonId":15}]
      * orderStatus : payed
-     * productName : G951 电竞游戏耳机 头戴式 电脑耳机 被动降噪 免驱动 振动耳麦
+     * productName :
      * orderId : 201612011735344333460
      * totalPrice : 0.01
      */

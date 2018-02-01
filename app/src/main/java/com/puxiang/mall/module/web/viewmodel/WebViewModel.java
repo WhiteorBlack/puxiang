@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
@@ -13,8 +14,6 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.base.ErrorShow;
 import com.puxiang.mall.config.Event;
@@ -30,7 +29,6 @@ import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
-import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.ActivityUtil;
 import com.puxiang.mall.utils.LoadingWindow;
 import com.puxiang.mall.utils.StringUtil;
@@ -42,22 +40,15 @@ import com.puxiang.mall.widget.dialog.MapDialog;
 import com.puxiang.mall.widget.dialog.OnDialogExecuteListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.Map;
-
 import io.reactivex.Observable;
 import io.rong.imkit.RongIM;
-
 import static com.puxiang.mall.utils.WebUtil.verifyUrlSuffixed;
 
 public class WebViewModel implements ViewModel {
@@ -69,6 +60,7 @@ public class WebViewModel implements ViewModel {
     public ObservableField<String> toolBarText = new ObservableField<>();
     public ObservableField<String> toolBarTitle = new ObservableField<>();
     public ObservableBoolean isError = new ObservableBoolean(false);
+    public ObservableInt webProgress = new ObservableInt(-1);
     public String url = "";
     private String TAG = "WebViewModel";
     private WebActivity activity;
@@ -86,7 +78,6 @@ public class WebViewModel implements ViewModel {
             @Override
             public void onPropertyChanged(android.databinding.Observable sender, int propertyId) {
                 boolean b = ((ObservableBoolean) sender).get();
-                Log.e(TAG, "onPropertyChanged: isError  " + b);
                 if (!b) {
                     activity.hidNoneView();
                 }
@@ -168,6 +159,7 @@ public class WebViewModel implements ViewModel {
 
     public WebViewClient getWebViewClient(ErrorShow errorShow) {
         return new WebViewClient() {
+
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
@@ -175,12 +167,11 @@ public class WebViewModel implements ViewModel {
                     isLoading = true;
                     // 设置是否阻塞图片加载
                     view.getSettings().setBlockNetworkImage(true);
-                    Log.e(TAG, "onPageStarted: " + url);
                     if (initOK) {
-                        loadingWindow.showWindow();
+//                        loadingWindow.showWindow();
                     } else {
                         initOK = true;
-                        loadingWindow.delayedShowWindow();
+//                        loadingWindow.delayedShowWindow();
                     }
                     isError.set(false);
                 }
@@ -193,10 +184,9 @@ public class WebViewModel implements ViewModel {
                 if (view.getSettings().getLoadsImagesAutomatically()) {
                     view.getSettings().setLoadsImagesAutomatically(true);
                 }
-                loadingWindow.hidWindow();
+//                loadingWindow.hidWindow();
                 // 设置是否阻塞图片加载
                 view.getSettings().setBlockNetworkImage(false);
-                Log.e(TAG, "onPageFinished: " + url);
                 WebViewModel.this.url = url;
 
                 if (url.contains(URLs.HTML_GHALL_DETAIL_KEY)) {
@@ -211,13 +201,12 @@ public class WebViewModel implements ViewModel {
                 } else {
                     toolBarTitle.set(view.getTitle());
                 }
-                if (url.contains(URLs.HTML_SHOP)) {
-                    showText("店铺详情");
-                }
                 if (url.contains(URLs.HTML_MY_GOOD_ADDRESS_KEY)) {
                     showText("新增");
                 } else if (url.contains(URLs.HTML_EXCHANGE_PAGE_KEY)) {
-                    showText("积分规则");
+                    isShowIcon.set(false);
+                    isShowText.set(false);
+//                    showText("积分规则");
                 } else if (url.contains(URLs.HTML_MY_GOOD_ADDRESS_MODIFY_KEY)) {
                     showText("删除");
                 } else if (StringUtil.isContains(url, URLs.HTML_GAMING_HALL_KEY, URLs.HTML_GHALL_INFO_KEY,
@@ -233,7 +222,6 @@ public class WebViewModel implements ViewModel {
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                Log.e(TAG, "onReceivedError: " + 1);
                 isError.set(true);
                 errorShow.showNoneView("当前网络不可用~", v -> loadUrl.notifyChange());
             }
@@ -241,14 +229,12 @@ public class WebViewModel implements ViewModel {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                Log.e(TAG, "onReceivedError: " + 2);
                 isError.set(true);
                 errorShow.showNoneView("当前网络不可用~", v -> loadUrl.notifyChange());
             }
 
             @Override //网页加载 禁止在浏览器打开在本应用打开
             public boolean shouldOverrideUrlLoading(WebView web, String url) {
-                Log.e(TAG, "shouldOverrideUrlLoading: " + url);
                 if (!url.contains("http://")) {
                     if (url.contains("tel:")) {
                         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
@@ -258,7 +244,6 @@ public class WebViewModel implements ViewModel {
                     return true;
                 }
                 url = WebUtil.verifyUrlSuffixed(url);
-                Log.e(TAG, "url: " + url);
                 if (url.contains(URLs.HTML_LOTTERY_NEW_KEY)) {
                     getShareInfo();
                 } else if (url.contains("shop_detail.html")) {
@@ -266,7 +251,6 @@ public class WebViewModel implements ViewModel {
                     try {
                         String shopId = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
                         ActivityUtil.startShopDetialActivity(activity, shopId);
-                        Logger.e("shopId--" + shopId);
                     } catch (Exception e) {
 
                     }
@@ -276,11 +260,7 @@ public class WebViewModel implements ViewModel {
                 } else if (url.contains(URLs.HTML_PAY_KEY)) {
                     String orderId = StringUtil.getUrlValue(url, "orderIds=");
                     ActivityUtil.startPayActivity(activity, orderId);
-//                    if (web.canGoBack()) {
-//                        web.goBack();
-//                    } else {
-//                        activity.onBackPressed();
-//                    }
+                    activity.finish();
                 } else if (url.contains(URLs.CREATE_TOPIC_KEY)) {
                     if (StringUtil.isEmpty(MyApplication.TOKEN)) {
                         ActivityUtil.startLoginActivity(activity);
@@ -292,7 +272,7 @@ public class WebViewModel implements ViewModel {
                         ActivityUtil.startPublishActivity(activity, plateId, detailId, plateName);
                     }
                 } else if (url.contains(URLs.HTML_REFUND_KEY)) {
-                    String orderDetailId = StringUtil.getUrlValue(url, "detailId=");
+                    String orderDetailId = StringUtil.getUrlValue(url, "orderDetailId=");
                     String productId = StringUtil.getUrlValue(url, "productId=");
                     String tabIndex = StringUtil.getUrlValue(url, "tabIndex=");
                     ActivityUtil.startRefundActivity(activity, orderDetailId, productId, tabIndex);
@@ -321,8 +301,9 @@ public class WebViewModel implements ViewModel {
                     } else {
                         ActivityUtil.startLoginActivity(activity);
                     }
-                } else if (url.contains(URLs.HTML_INTEGRAL_KEY)) {
-                    ActivityUtil.startIntegralActivity(activity);
+//                }
+//                else if (url.contains(URLs.HTML_INTEGRAL_KEY)) {
+//                    ActivityUtil.startIntegralActivity(activity);
                 } else if (url.contains(URLs.HTML_REGISTER_KEY)) {
                     ActivityUtil.startRegisterActivity(activity);
                 } else if (url.contains(URLs.HTML_HOT_PLATES_KEY)) {
@@ -349,6 +330,10 @@ public class WebViewModel implements ViewModel {
                     }
                 } else if (url.contains(URLs.HTML_SING_KEY)) {
                     checkCard();
+                } else if (url.contains(URLs.HTML_REFUND_ADDRESS)) {
+                    //跳转增加退货邮件信息
+                    String reId = StringUtil.getUrlValue(url, "reID=");
+                    ActivityUtil.startRefundAddressActivity(activity, reId);
                 } else {
                     loadUrl.set(url);
                 }
@@ -364,7 +349,6 @@ public class WebViewModel implements ViewModel {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Log.e(TAG, "URLDecoder: " + url);
         return url;
     }
 
@@ -377,7 +361,6 @@ public class WebViewModel implements ViewModel {
     }
 
     private void checkLocation() {
-        loadingWindow.showWindow();
         //获取地理位置信息
         Location location = LocationUtil.getLocation();
         double latitude;
@@ -391,13 +374,10 @@ public class WebViewModel implements ViewModel {
         }
         if (latitude == 0 && longitude == 0) {
             ToastUtil.toast("获取位置信息失败，添加的GPS权限后重试~");
-            loadingWindow.dismiss();
         } else {
             String gid = StringUtil.getUrlValue(loadUrl.get(), "gid=");
-            loadingWindow.showWindow();
             ApiWrapper.getInstance()
                     .checkUserInShop(gid, LocationUtil.LATITUDE, LocationUtil.LONGITUDE)
-                    .doOnTerminate(loadingWindow::dismiss)
                     .subscribe(new NetworkSubscriber<RxSing>() {
                         @Override
                         public void onSuccess(RxSing data) {
@@ -406,7 +386,7 @@ public class WebViewModel implements ViewModel {
                                         ActivityUtil.ActivityRequestCode.QR_SING, gid, LocationUtil.LATITUDE,
                                         LocationUtil.LONGITUDE);
                             } else {
-                                ToastUtil.toast("你当前所在的位置不在电竞馆范围内，请移步到硕美科电竞馆。");
+//                                ToastUtil.toast("你当前所在的位置不在电竞馆范围内，请移步到硕美科电竞馆。");
                             }
                         }
                     });
@@ -457,8 +437,7 @@ public class WebViewModel implements ViewModel {
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String shareUrl) {
-                        Log.e(TAG, "onSuccess: " + shareUrl);
-                        ShareInfo shareInfo = new ShareInfo(shareUrl, "我在《硕虎娱乐》发现了 ", "", rawUrl);
+                        ShareInfo shareInfo = new ShareInfo(shareUrl, "我在《蒲象商城》发现了 ", "", rawUrl);
                         share(shareInfo);
                     }
                 });
@@ -471,14 +450,12 @@ public class WebViewModel implements ViewModel {
      */
     private void shareLottery(String rawUrl) {
         // String rawUrl = s.replaceAll("_share", "");
-        Log.e(TAG, "shareLottery: " + rawUrl);
         ApiWrapper.getInstance().getShareUrl(rawUrl)
                 .doOnTerminate(loadingWindow::hidWindow)
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String shareUrl) {
-                        Log.e(TAG, "onSuccess: " + shareUrl);
                         ShareInfo shareInfo =
                                 new ShareInfo(shareUrl, "福利多多送，来转一转试试运气吧~", "", rawUrl);
                         share(shareInfo);
@@ -560,9 +537,9 @@ public class WebViewModel implements ViewModel {
                 .subscribe(new NetworkSubscriber<RxProduct>() {
                     @Override
                     public void onSuccess(RxProduct data) {
-                        String title = "蒲象商城";
+                        String title = data.getProductName();
                         String picture = data.getMainPictureUrl();
-                        share(new ShareInfo("", title, picture, url,"我在《蒲象商城》发现了 "+data.getIntroduce()));
+                        share(new ShareInfo("", title, picture, url, "我在《蒲象商城》发现了 " + data.getIntroduce()));
                     }
                 });
     }

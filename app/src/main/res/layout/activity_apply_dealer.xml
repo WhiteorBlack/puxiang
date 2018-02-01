@@ -30,9 +30,9 @@
             android:background="@color/bg_Gray_light"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.isInit?View.VISIBLE:View.INVISIBLE}"
             android:paddingBottom="30px"
-            android:paddingTop="30px">
+            android:paddingTop="30px"
+            android:visibility="@{viewModel.isInit?View.VISIBLE:View.INVISIBLE}">
 
             <LinearLayout
                 android:id="@+id/ll_step_one"
@@ -125,16 +125,36 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/btn_step"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="86px"
-            android:visibility="@{viewModel.isInit?View.VISIBLE:View.INVISIBLE}"
-            android:background="@drawable/btn_step"
-            android:enabled="@{viewModel.btnStepEnable}"
-            android:text="下一步"
-            android:onClick="onClick"
-            android:textColor="@color/white"
-            android:textSize="30px" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.isInit?View.VISIBLE:View.INVISIBLE}">
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="match_parent"
+                android:layout_height="86px"
+                android:layout_weight="1"
+                android:visibility="@{viewModel.btnBackVis?View.VISIBLE:View.GONE}"
+                android:background="@mipmap/bg_step_disenable"
+                android:enabled="@{viewModel.btnStepEnable}"
+                android:onClick="onClick"
+                android:text="@{viewModel.backText}"
+                android:textColor="@color/white"
+                android:textSize="30px" />
+
+            <Button
+                android:id="@+id/btn_step"
+                android:layout_width="match_parent"
+                android:layout_height="86px"
+                android:layout_weight="1"
+                android:background="@drawable/btn_step"
+                android:enabled="@{viewModel.btnStepEnable}"
+                android:onClick="onClick"
+                android:text="@{viewModel.stepText}"
+                android:textColor="@color/white"
+                android:textSize="30px" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

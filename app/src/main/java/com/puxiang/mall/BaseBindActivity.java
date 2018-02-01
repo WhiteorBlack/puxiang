@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
 import com.puxiang.mall.base.ErrorShow;
 import com.puxiang.mall.databinding.ToolbarLayoutBinding;
 import com.puxiang.mall.module.bbs.viewmodel.BbsRequest;
@@ -17,9 +16,8 @@ import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.ToastUtil;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
+import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
-
 import cn.bingoogolapple.bgabanner.BGABanner;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -200,12 +198,14 @@ public abstract class BaseBindActivity extends RxAppCompatActivity implements Bb
     protected void onPause() {
         super.onPause();
         onUserInvisible();
+        MobclickAgent.onPause(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         onUserVisible();
+        MobclickAgent.onResume(this);
     }
 
     /**

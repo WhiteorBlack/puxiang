@@ -101,6 +101,7 @@ public class ACache {
     }
 
     public static void saveInfo(RxMyUserInfo myUserInfo, String token) {
+        MyApplication.isLoginOB.set(true);
         MyApplication.mCache.put(CacheKey.USER_INFO, myUserInfo);
         WebUtil.removeCookie();
         String userId = myUserInfo.getUserId();
@@ -108,6 +109,7 @@ public class ACache {
         MyApplication.mCache.put(CacheKey.USER_ID, userId);
         MyApplication.mCache.put(CacheKey.TOKEN, token);
         MyApplication.mCache.put(CacheKey.INFO, info);
+        MyApplication.mCache.put(CacheKey.SHOP_ID,TextUtils.isEmpty(myUserInfo.getShop().getShopId())?"":myUserInfo.getShop().getShopId());
         if (myUserInfo.getRoles() != null && myUserInfo.getRoles().size() > 0) {
             for (int i = 0; i < myUserInfo.getRoles().size(); i++) {
                 RxRoles rxRoles = myUserInfo.getRoles().get(i);
@@ -123,13 +125,14 @@ public class ACache {
                 }
             }
         }
-        MyApplication.messageState.setIsSeller(isInRoles("seller", myUserInfo.getRoles()));
-        MyApplication.messageState.setIsDealer(isInRoles("dealer", myUserInfo.getRoles()));
-        MyApplication.messageState.setIsMember(isInRoles("member", myUserInfo.getRoles()));
+        MyApplication.SHOP_ID=myUserInfo.getShop().getShopId();
         MyApplication.USER_ID = userId;
         MyApplication.TOKEN = token;
         MyApplication.INFO = info;
-        IMRequest.IMConnect();  //暂时不集成 2017.09.01
+        MyApplication.messageState.setIsSeller(isInRoles("seller", myUserInfo.getRoles()));
+        MyApplication.messageState.setIsDealer(isInRoles("dealer", myUserInfo.getRoles()));
+        MyApplication.messageState.setIsMember(isInRoles("member", myUserInfo.getRoles()));
+        IMRequest.IMConnect();
         update(myUserInfo);
     }
 
@@ -355,6 +358,7 @@ public class ACache {
     }
 
     public void put(String key, Object o) {
+        remove(key);
         put(key, gson.toJson(o));
     }
 

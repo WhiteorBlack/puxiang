@@ -3,39 +3,22 @@ package com.puxiang.mall;
 import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.databinding.Bindable;
 import android.databinding.Observable;
 import android.databinding.ObservableBoolean;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.multidex.MultiDex;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig;
 import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
 import com.puxiang.mall.config.CacheKey;
-import com.puxiang.mall.config.Config;
 import com.puxiang.mall.module.my.model.ObMessageState;
 import com.puxiang.mall.mvvm.base.ApplicationLike;
-import com.puxiang.mall.network.ApiService;
-import com.puxiang.mall.network.NetworkSubscriber;
-import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.service.InitializeService;
 import com.puxiang.mall.utils.ACache;
 import com.puxiang.mall.utils.StringUtil;
-import com.orhanobut.logger.Logger;
-import com.squareup.leakcanary.LeakCanary;
-import com.tencent.bugly.Bugly;
-import com.tencent.tinker.loader.app.DefaultApplicationLike;
-import com.tencent.bugly.beta.Beta;
-import com.umeng.analytics.MobclickAgent;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 public class MyApplication extends ApplicationLike {
     private Application application;
@@ -50,11 +33,11 @@ public class MyApplication extends ApplicationLike {
     public static String TOKEN = "";
     public static String USER_ID = "";
     public static String RONG_TOKEN = "";
+    public static String SHOP_ID="";
     public static ACache mCache;
     private static Context context;
 
     public static String info = "";
-    public static int i = 1;
 
     private static final String XF_APPID = "58b69a7e";
     private static final String BUGLY_APPID = "7af15a29f3";
@@ -63,7 +46,6 @@ public class MyApplication extends ApplicationLike {
     public static boolean isHotFix = false;
 
     public static ObservableBoolean isLoginOB = new ObservableBoolean();
-
 
     public static ObMessageState messageState = new ObMessageState(); //暂时把框架拉起来，其他先不考虑
 
@@ -162,6 +144,7 @@ public class MyApplication extends ApplicationLike {
         } else {
             RONG_TOKEN = rongToken;
         }
+        SHOP_ID=mCache.getAsString(CacheKey.SHOP_ID);
         messageState.setIsDealer(mCache.getAsBoolean(CacheKey.ISDEALER));
         messageState.setIsMember(mCache.getAsBoolean(CacheKey.ISMEMBER));
         messageState.setIsSeller(mCache.getAsBoolean(CacheKey.ISSELLER));

@@ -49,7 +49,7 @@ public class ClassifyFragment extends BaseBindFragment implements View.OnClickLi
     @Override
     public void update() {
         super.update();
-        headViewModel.getBannerData(URLs.SHOP_LIST);
+        headViewModel.getBannerData("classfy");
     }
 
     /**

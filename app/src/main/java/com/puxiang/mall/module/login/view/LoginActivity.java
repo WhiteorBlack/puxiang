@@ -1,5 +1,6 @@
 package com.puxiang.mall.module.login.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.ActivityLoginNewBinding;
 import com.puxiang.mall.module.shop.adapter.SimpleFragmentAdapter;
 import com.puxiang.mall.utils.AutoUtils;
+import com.umeng.socialize.UMShareAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,13 @@ public class LoginActivity extends BaseBindActivity {
                 onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override

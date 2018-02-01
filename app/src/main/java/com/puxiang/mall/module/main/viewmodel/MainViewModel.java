@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -18,7 +17,7 @@ import com.puxiang.mall.config.updata.NotificationInstallCreator;
 import com.puxiang.mall.model.data.HttpResult;
 import com.puxiang.mall.model.data.RxAds;
 import com.puxiang.mall.model.data.RxMessageState;
-import com.puxiang.mall.module.bbs.viewmodel.BbsRequest;
+import com.puxiang.mall.model.data.RxMyUserInfo;
 import com.puxiang.mall.mvvm.base.ViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.URLs;
@@ -28,15 +27,11 @@ import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.permissions.EasyPermission;
 import com.puxiang.mall.utils.permissions.PermissionCode;
 import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-
 import org.lzh.framework.updatepluginlib.UpdateBuilder;
 import org.lzh.framework.updatepluginlib.model.Update;
 import org.lzh.framework.updatepluginlib.strategy.UpdateStrategy;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -149,6 +144,21 @@ public class MainViewModel extends BaseObservable implements ViewModel {
     }
 
     /**
+     * 请求网络，获取用户信息
+     */
+    public void getInfo() {
+        ApiWrapper.getInstance()
+                .getMyUserInfo()
+                .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribe(new NetworkSubscriber<RxMyUserInfo>() {
+                    @Override
+                    public void onSuccess(RxMyUserInfo bean) {
+                       MyApplication.mCache.saveInfo(bean,MyApplication.TOKEN);
+                    }
+                });
+    }
+
+    /**
      * 检测地址图片是否已缓存
      *
      * @param ads
@@ -180,8 +190,6 @@ public class MainViewModel extends BaseObservable implements ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
                     if (MyApplication.isInit) {
-                        Log.e(TAG, "versionCheck: ");
-
                         UpdateBuilder.create().strategy(new UpdateStrategy() {
                             @Override
                             public boolean isShowUpdateDialog(Update update) {

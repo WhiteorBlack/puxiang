@@ -23,13 +23,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/kong" />
+            android:background="@mipmap/shopping_empty" />
 
         <TextView
             style="@style/noneTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="35px"
+            android:visibility="gone"
             android:gravity="center"
             android:text="购物车空着哦~" />
 
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10px"
             android:gravity="center"
+            android:visibility="invisible"
             android:text="赶紧抢些东西慰劳自己吧~" />
 
         <TextView

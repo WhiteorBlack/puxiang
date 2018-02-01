@@ -99,17 +99,22 @@ public class MyViewModel extends BaseObservable implements ViewModel {
      */
     public List<RxMyItem> getBuyList() {
         List<RxMyItem> items = new ArrayList<>();
-        items.add(new RxMyItem("我要进货", R.mipmap.my_buy_man, 10));
+
         items.add(new RxMyItem("我的收藏", R.mipmap.my_coll, 0));
         items.add(new RxMyItem("收货地址", R.mipmap.my_map, 1));
-        items.add(new RxMyItem("我的社区", R.mipmap.my_circle, 2));
-        items.add(new RxMyItem("我的发帖", R.mipmap.my_post, 3));
+        items.add(new RxMyItem("优惠券", R.mipmap.my_coupon, 12));
+        if (!MyApplication.isLogin() || !MyApplication.messageState.getIsSeller()) {
+            items.add(new RxMyItem("我要开店", R.mipmap.my_new_shop, 9));
+        }
         items.add(new RxMyItem("评论我的", R.mipmap.my_comment, 4));
         items.add(new RxMyItem("赞我的", R.mipmap.my_zan, 5));
-        items.add(new RxMyItem("我的积分", R.mipmap.my_integra_gray, 6));
-        items.add(new RxMyItem("积分商城", R.mipmap.my_integra_shop_gray, 7));
-        items.add(new RxMyItem("任务中心", R.mipmap.my_mession_center_gray, 8));
-        items.add(new RxMyItem("我要开店", R.mipmap.my_new_shop, 9));
+//        items.add(new RxMyItem("我的积分", R.mipmap.my_integ, 6));
+        items.add(new RxMyItem("积分商城", R.mipmap.my_integra_shop, 7));
+        items.add(new RxMyItem("我的社区", R.mipmap.my_circle, 2));
+        items.add(new RxMyItem("我的发帖", R.mipmap.my_post, 3));
+//        items.add(new RxMyItem("任务中心", R.mipmap.my_mession_center_gray, 8));
+        items.add(new RxMyItem("我的消息", R.mipmap.my_message, 13));
+        items.add(new RxMyItem("设置", R.mipmap.my_setting, 14));
         return items;
     }
 
@@ -120,20 +125,33 @@ public class MyViewModel extends BaseObservable implements ViewModel {
      */
     public List<RxMyItem> getSaleList() {
         List<RxMyItem> items = new ArrayList<>();
-        items.add(new RxMyItem("进货订单", R.mipmap.my_buy_order, 2));
-        items.add(new RxMyItem("店铺管理", R.mipmap.my_man_shop, 3));
+        items.add(new RxMyItem("我的店铺", R.mipmap.my_new_shop, 0));
+        items.add(new RxMyItem("店铺管理", R.mipmap.my_man_shop, 1));
+        items.add(new RxMyItem("我的订单", R.mipmap.my_buy_order, 2));
         return items;
     }
 
     /**
-     * 初始化 系统中心模块数据
+     * 初始化 未成为经销商数据
      *
      * @return
      */
-    public List<RxMyItem> getSettingList() {
+    public List<RxMyItem> getNoDealer() {
         List<RxMyItem> items = new ArrayList<>();
-        items.add(new RxMyItem("我的消息", R.mipmap.my_message, 0));
-        items.add(new RxMyItem("设置", R.mipmap.my_setting, 1));
+        items.add(new RxMyItem("成为经销商", R.mipmap.my_dealer, 0));
+        items.add(new RxMyItem("我要进货", R.mipmap.my_buy_man_gray, 1));
+        return items;
+    }
+
+    /**
+     * 初始化 成为经销商数据
+     *
+     * @return
+     */
+    public List<RxMyItem> getDealer() {
+        List<RxMyItem> items = new ArrayList<>();
+        items.add(new RxMyItem("我要进货", R.mipmap.my_buy_man, 2));
+        items.add(new RxMyItem("我的订单", R.mipmap.my_buy_order, 3));
         return items;
     }
 
@@ -189,7 +207,7 @@ public class MyViewModel extends BaseObservable implements ViewModel {
                     public void onSuccess(List<RxAds> bean) {
                         String bgUrlStr = bean.get(0).getPicUrl();
                         if (!StringUtil.isEmpty(bgUrlStr)) {
-                            MyApplication.mCache.put(CacheKey.MY_BG_URL, bgUrlStr);
+//                            MyApplication.mCache.put(CacheKey.MY_BG_URL, bgUrlStr);
                             bgUrl.set(bgUrlStr);
                         }
                     }

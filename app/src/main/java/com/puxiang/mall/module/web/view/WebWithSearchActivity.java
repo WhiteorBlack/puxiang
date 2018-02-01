@@ -43,7 +43,7 @@ public class WebWithSearchActivity extends BaseBindActivity implements View.OnCl
     public void initView() {
         WebView webView = binding.web;
         viewModel = new WebWithSearchViewModel(this);
-        WebUtil.initWebViewSettings(webView, viewModel.getWebViewClient(this));
+        WebUtil.initWebViewSettings(webView, viewModel.getWebViewClient(this),viewModel);
         binding.setViewModel(viewModel);
     }
 

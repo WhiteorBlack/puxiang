@@ -136,11 +136,12 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                     public void onFail(RetrofitUtil.APIException e) {
                         super.onFail(e);
                         isInitData.set(false);
+                        loadingWindow.hidWindow();
+                        ToastUtil.toast("网络错误");
                     }
 
                     @Override
                     public void onSuccess(RxPostInfo postInfo) {
-                        Logger.e("successs");
                         isInitData.set(true);
                         isInit.set(true);
                         setPostDetailData(postInfo);
@@ -644,20 +645,28 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
         for (String s : split) {
 
             if (isPicUrl(s)) {
-                s=s.substring(s.indexOf("http"));
-                int i = 0;
-                if (s.contains("\"")) {
-                    i = s.indexOf("\"");
+                if (s.contains("src=\"data:image")) {
+                    String[] bases=s.split("src=\"");
+                    String baseString = bases[1];
+                    baseString = baseString.substring(0, baseString.indexOf("\""));
+                    stringList.add(baseString);
                 } else {
-                    i = s.indexOf(">") - 1;
+                    s = s.substring(s.indexOf("http"));
+                    int i = 0;
+                    if (s.contains("\"")) {
+                        i = s.indexOf("\"");
+                    } else {
+                        i = s.indexOf(">") - 1;
+                    }
+                    int j = s.indexOf(">");
+                    String imgUrl = s.substring(0, i);
+                    stringList.add(imgUrl);
+                    if (j < s.length()) {
+                        s.replaceAll("/>", "");
+                        stringList.add(s.substring(j + 1));
+                    }
                 }
-                int j = s.indexOf(">");
-                String imgUrl = s.substring(0, i);
-                stringList.add(imgUrl);
-                if (j < s.length()) {
-                    s.replaceAll("/>", "");
-                    stringList.add(s.substring(j + 1));
-                }
+
 
             } else {
                 stringList.add(s);
@@ -667,9 +676,12 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
     }
 
     private boolean isPicUrl(String url) {
-        if ((url.contains("http://") || url.contains("https://")) && (url.contains(".jpg") || url.contains(".jpeg")
-                || url.contains(".png") || url.contains(".bmp") || url.contains(".JPG") || url.contains(".JPEG")
-                || url.contains(".PNG") || url.contains(".BMP") || url.contains(".gif"))) {
+        if (url.contains("src=\"data:image") || ((url.contains("http://") || url.contains("https://")) &&
+                (url.contains(".jpg") || url.contains(".jpeg")
+                        || url.contains(".png") || url.contains(".bmp") || url.contains(".JPG") || url.contains(".JPEG")
+                        || url.contains(".PNG") || url.contains(".BMP") || url.contains(".gif") || url.contains("=jpg") || url.contains("=jpeg")
+                        || url.contains("=png") || url.contains("=bmp") || url.contains("=JPG") || url.contains("=JPEG")
+                        || url.contains("=PNG") || url.contains("=BMP") || url.contains("=gif")))) {
             return true;
         }
         return false;
