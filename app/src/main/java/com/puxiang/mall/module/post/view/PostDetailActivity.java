@@ -54,6 +54,7 @@ public class PostDetailActivity extends BaseBindActivity implements OnClickListe
 //        mImmersionBar.statusBarDarkFont(false).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
         initRv();
         initEmotionMainFragment();
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void initEmotionData() {

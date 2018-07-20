@@ -86,9 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="210px"
                 android:layout_toRightOf="@+id/sdv_item_pic"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView

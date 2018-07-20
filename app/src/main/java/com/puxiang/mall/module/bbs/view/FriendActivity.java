@@ -31,6 +31,8 @@ public class FriendActivity extends BaseBindActivity {
         initRecyclerView(binding.rv);
         initRefresh(binding.storeHousePtrFrame);
         binding.setViewModel(viewModel);
+        setBarHeight(binding.toolbar.ivBar);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void initRecyclerView(RecyclerView rv) {

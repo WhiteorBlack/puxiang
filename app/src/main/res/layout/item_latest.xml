@@ -28,7 +28,7 @@
                 android:layout_width="18px"
                 android:layout_height="27px"
                 android:background="@mipmap/icon_red_location"
-                android:visibility="@{item.isVisiable?View.VISIBLE:View.GONE}" />
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"

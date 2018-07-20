@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flyco.dialog.widget.NormalDialog;
@@ -15,6 +18,7 @@ import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.base.ErrorShow;
 import com.puxiang.mall.module.bbs.viewmodel.BbsRequest;
+import com.puxiang.mall.utils.AppUtil;
 import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.StringUtil;
 import com.puxiang.mall.utils.ToastUtil;
@@ -92,6 +96,15 @@ public abstract class BaseBindFragment extends RxFragment implements BbsRequest.
         }
     }
 
+    /**
+     * 设置状态栏高度
+     * @param imageView
+     */
+    public void setBarHeight(ImageView imageView) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+        params.height = AppUtil.getStatusBarHeight(this.getContext());
+        imageView.setLayoutParams(params);
+    }
 
     public ViewGroup getRootView() {
         return rootView;
@@ -180,28 +193,6 @@ public abstract class BaseBindFragment extends RxFragment implements BbsRequest.
         });
     }
 
-    /**
-     * 初始化刷新布局
-     *
-     * @param mPtrFrame 刷新布局
-     */
-    public void initRefresh(final PtrFrameLayout mPtrFrame,boolean stateBar) {
-        this.mPtrFrame = mPtrFrame;
-        RefreshHeader ptrUIHandler = new RefreshHeader(getContext(),stateBar);
-        mPtrFrame.addPtrUIHandler(ptrUIHandler);
-        mPtrFrame.setHeaderView(ptrUIHandler);
-        mPtrFrame.setPtrHandler(new PtrHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                refreshData();
-            }
-
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
-            }
-        });
-    }
 
     /**
      * 刷新逻辑块

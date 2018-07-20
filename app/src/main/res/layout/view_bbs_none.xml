@@ -19,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="亲，请登录后查看社区~"
             android:textColor="@color/none_text"
             android:textSize="25px" />
 

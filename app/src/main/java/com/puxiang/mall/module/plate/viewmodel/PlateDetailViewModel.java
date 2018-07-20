@@ -1,8 +1,11 @@
 package com.puxiang.mall.module.plate.viewmodel;
 
+import android.databinding.Bindable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -54,6 +57,7 @@ public class PlateDetailViewModel implements ViewModel {
     private ShareInfo shareInfo;
     private String shareTitle;
     private String shareImage;
+    private String shareDescibe;
     private ShareBottomDialog shareDialog;
     private String rawUrl;
 
@@ -150,12 +154,17 @@ public class PlateDetailViewModel implements ViewModel {
      * @param bean 圈子详情数据源
      */
     private void setPlateDetailData(RxPlate bean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            shareDescibe= Html.fromHtml(bean.getPlateIntroduce(),Html.FROM_HTML_MODE_COMPACT).toString();
+        }
+        shareDescibe=shareDescibe.replaceAll("\n","").replaceAll("\t","").replaceAll("\r","");
         shareTitle = bean.getPlateName();
         shareImage = bean.getPlatePic();
         plateBean.set(bean);
         isJoin.set(bean.getIsAttented());
         activity.setExplain();
     }
+
 
     /**
      * 获取分享的Url
@@ -183,14 +192,10 @@ public class PlateDetailViewModel implements ViewModel {
      * 分享
      */
     public void share() {
-        if (StringUtil.isEmpty(shareUrl)) {
-            getShareUrl();
-        } else {
-            if (shareInfo == null) {
-                shareInfo = new ShareInfo(shareUrl, "来聊聊吧" + shareTitle, shareImage, rawUrl);
-            }
-            setShareDialog(shareInfo);
+        if (shareInfo == null) {
+            shareInfo = new ShareInfo(shareUrl, "来聊聊" + shareTitle+"吧", shareImage, rawUrl,shareDescibe);
         }
+        setShareDialog(shareInfo);
     }
 
     /**

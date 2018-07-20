@@ -22,6 +22,7 @@ public class SexActivity extends BaseBindActivity {
     @Override
     public void initView() {
         initData();
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override
@@ -34,6 +35,7 @@ public class SexActivity extends BaseBindActivity {
         sex = getIntent().getIntExtra("info", 3);
         binding.toolbar.setTitle("个人信息");
         binding.toolbar.setBtnName("保存");
+
 
         switch (sex) {
             case 0:

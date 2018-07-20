@@ -3,7 +3,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.scan.viewmodel.QRCodeViewModel"/>
     </data>
 
     <RelativeLayout

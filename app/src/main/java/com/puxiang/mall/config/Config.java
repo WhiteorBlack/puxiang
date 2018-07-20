@@ -1,9 +1,7 @@
 package com.puxiang.mall.config;
 
-import android.content.Context;
-
-import com.puxiang.mall.MyApplication;
 import com.orhanobut.logger.LogLevel;
+import com.puxiang.mall.MyApplication;
 
 public class Config {
 
@@ -72,22 +70,22 @@ public class Config {
     /**
      * 环境配置
      */
-    private static final Environment ENVIRONMENT = Environment.DEVELOP;
+    private static final Environment ENVIRONMENT = Environment.ONLINE;
 
 
     static {
         switch (ENVIRONMENT) {
             case DEVELOP: //开发环境
-                SERVER_HOST = "http://api.hnslsm.cn/";
-                HTTP_BBS_ROOT_URL = "http://mbbs.hnslsm.cn/";
-                HTTP_MALL_ROOT_URL = "http://m.hnslsm.cn/";
+                SERVER_HOST = "http://192.168.1.158:8091/api/";
+                HTTP_BBS_ROOT_URL = "http://192.168.1.158:8091/api/";
+                HTTP_MALL_ROOT_URL = "http://test.m.puxiang.com:8092/";
                 LOG_LEVEL = LogLevel.FULL;
                 break;
             case ONLINE: //生产环境
             default:
-                SERVER_HOST = "http://172.16.88.158:8091/api/";
-                HTTP_BBS_ROOT_URL = "http://172.16.88.158:8092/bbs/";
-                HTTP_MALL_ROOT_URL = "http://172.16.88.158:8092/mall/";
+                SERVER_HOST = "http://api.hnslsm.cn/";
+                HTTP_BBS_ROOT_URL = "http://mbbs.hnslsm.cn/";
+                HTTP_MALL_ROOT_URL = "http://m.hnslsm.cn/";
                 LOG_LEVEL = LogLevel.NONE;
                 break;
         }

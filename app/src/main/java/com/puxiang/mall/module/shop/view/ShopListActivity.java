@@ -1,23 +1,11 @@
 package com.puxiang.mall.module.shop.view;
 
 import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.location.Criteria;
-import android.location.GpsStatus;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +13,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.utils.CoordinateConverter;
 import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
@@ -47,8 +32,6 @@ import com.puxiang.mall.utils.permissions.EasyPermission;
 import com.puxiang.mall.utils.permissions.PermissionCode;
 
 import java.util.List;
-
-import static com.puxiang.mall.utils.StringUtil.getString;
 
 /**
  * Created by zhaoyong bai on 2017/10/12.
@@ -86,7 +69,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         shopBinding.setViewModel(shopViewModel);
         shopBinding.setMsgModel(msgCountViewModel);
         shopBinding.ivRefresh.setOnClickListener(this);
-        locationClient=new LocationClient(getApplicationContext());
+        locationClient = new LocationClient(getApplicationContext());
         mImmersionBar.keyboardEnable(false).init();
         initClient();
     }
@@ -95,7 +78,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         LocationClientOption mOption = new LocationClientOption();
         mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         mOption.setCoorType("gcj02");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
-        mOption.setScanSpan(60*1000);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        mOption.setScanSpan(60 * 1000);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         mOption.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         mOption.setIsNeedLocationDescribe(false);//可选，设置是否需要地址描述
         mOption.setNeedDeviceDirect(false);//可选，设置是否需要设备方向结果
@@ -110,20 +93,17 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         locationClient.registerLocationListener(listener);
     }
 
-  private   BDLocationListener listener=new BDLocationListener() {
+    private BDLocationListener listener = new BDLocationListener() {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            Logger.e("location----"+ bdLocation.getLatitude()+" --- "+bdLocation.getLongitude()+"--"+bdLocation.getStreet());
+            Logger.e("location----" + bdLocation.getLatitude() + " --- " + bdLocation.getLongitude() + "--" + bdLocation.getStreet());
             if (bdLocation == null) {
-                shopViewModel.getShopList(1,"","","");
+                shopViewModel.getShopList(1, "", "", "");
             } else {
-//                shopViewModel.setCurrentCity(bdLocation.getCity());
-//                shopViewModel.setCurrentStreet(bdLocation.getAddress().address);
                 shopViewModel.getCurrentLocation(bdLocation.getLatitude(), bdLocation.getLongitude());
             }
         }
     };
-
 
 
     @Override
@@ -164,12 +144,13 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
         initBanner(shopBinding.banner);
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) shopBinding.banner.getLayoutParams();
-        params.height = (int) (MyApplication.widthPixels *0.347);
+        params.height = (int) (MyApplication.widthPixels * 0.347);
         shopBinding.banner.setLayoutParams(params);
         shopBinding.banner.setAdapter(shopHeadViewModel);
         shopHeadViewModel.getBannerData();
         msgCountViewModel.getMsgCountData();
         shopBinding.toolbar.tvSearch.setOnEditorActionListener(this);
+        setBarHeight(shopBinding.toolbar.ivBar);
     }
 
     /**
@@ -236,13 +217,12 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
                 locationClient.requestLocation();
                 break;
             case R.id.txt_search:
-                String keyword=shopBinding.toolbar.tvSearch.getText().toString();
-//                if (TextUtils.isEmpty(keyword)){
-//                    ToastUtil.toast("请输入要搜索的内容");
-//                    return;
-//                }
+                String keyword = shopBinding.toolbar.tvSearch.getText().toString();
                 closeInput();
                 shopViewModel.searchShop(keyword);
+                break;
+            case R.id.iv_back:
+                onBackPressed();
                 break;
         }
     }
@@ -250,11 +230,7 @@ public class ShopListActivity extends BaseBindActivity implements EasyPermission
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            String keyword=shopBinding.toolbar.tvSearch.getText().toString();
-//                if (TextUtils.isEmpty(keyword)){
-//                    ToastUtil.toast("请输入要搜索的内容");
-//                    return;
-//                }
+            String keyword = shopBinding.toolbar.tvSearch.getText().toString();
             closeInput();
             shopViewModel.searchShop(keyword);
         }

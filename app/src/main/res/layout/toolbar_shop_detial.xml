@@ -16,27 +16,31 @@
             type="com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/order_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarSizeHeight"
-        android:background="@color/mall_activity"
-        android:elevation="@dimen/elevation_height">
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40px"
+            android:layout_alignParentTop="true"
+            android:background="@mipmap/bg_statue_bar" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/iv_back"
-                style="@style/ToolbarBackBtnStyle"
+                style="@style/ToolbarBackBtnWhiteStyle"
                 android:layout_marginRight="5dp"
-                android:background="@color/mall_activity"
-                android:onClick="onClick"
-                android:src="@mipmap/nav_back_w" />
+                android:onClick="onClick" />
 
             <RelativeLayout
                 android:id="@+id/rl_search"
@@ -45,19 +49,9 @@
                 android:layout_gravity="center_vertical"
                 android:layout_toLeftOf="@+id/iv_search_btn"
                 android:layout_toRightOf="@+id/iv_back"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/bg_search_bar">
 
-                <LinearLayout
-                    android:id="@+id/ll_search_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/searchEditHeight"
-                    android:alpha="0.36"
-                    android:background="@drawable/bg_search_bar"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-
-                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/iv_search_icon"
@@ -65,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/nav_search_w" />
+                    android:src="@mipmap/search_a" />
 
                 <EditText
                     android:id="@+id/et"
@@ -77,29 +71,31 @@
                     android:layout_toRightOf="@+id/iv_search_icon"
                     android:background="@null"
                     android:hint="输入您喜欢的商品"
-                    android:singleLine="true"
                     android:imeOptions="actionSearch"
+                    android:singleLine="true"
                     android:text="@{viewModel.keyword}"
-                    android:textColor="#fff"
-                    android:textColorHint="@color/white"
-                    android:textSize="32px" />
+                    android:textColor="@color/text_black"
+                    android:textColorHint="@color/gray_text"
+                    android:textSize="28px" />
             </RelativeLayout>
+
             <TextView
+                android:id="@+id/txt_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_search"
-                android:text="搜索"
-                android:textSize="32px"
-                android:onClick="onClick"
-                android:textColor="@color/white"
                 android:layout_marginLeft="30px"
-                android:paddingRight="30px"/>
+                android:onClick="onClick"
+                android:paddingRight="30px"
+                android:text="搜索"
+                android:textColor="@color/text_black"
+                android:textSize="30px" />
+
             <FrameLayout
                 android:layout_width="55px"
                 android:layout_height="52px"
-                android:visibility="gone"
                 android:layout_marginLeft="30px"
-                android:layout_marginRight="30px">
+                android:layout_marginRight="30px"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_warn"
@@ -123,6 +119,5 @@
                     android:visibility="@{msgModel.msgCount>0?View.VISIBLE:View.INVISIBLE}" />
             </FrameLayout>
         </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

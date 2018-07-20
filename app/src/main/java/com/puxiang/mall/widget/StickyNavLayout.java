@@ -21,6 +21,7 @@ import com.puxiang.mall.utils.ScreenUtil;
 
 public class StickyNavLayout extends LinearLayout implements NestedScrollingParent {
     private static final String TAG = "StickyNavLayout";
+    private boolean isScrollable=true;
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
@@ -150,6 +151,14 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
         }
     }
 
+    public boolean isScrollable() {
+        return isScrollable;
+    }
+
+    public void setScrollable(boolean scrollable) {
+        isScrollable = scrollable;
+    }
+
     private View mTop;
     private View mNav;
     private View mViewPager;
@@ -230,6 +239,9 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
 
     @Override
     public void scrollTo(int x, int y) {
+        if (!isScrollable){
+            return;
+        }
         if (y < 0) {
             y = 0;
         }
@@ -243,6 +255,9 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
 
     @Override
     public void computeScroll() {
+        if (!isScrollable){
+            return;
+        }
         if (mScroller.computeScrollOffset()) {
             scrollTo(0, mScroller.getCurrY());
             invalidate();

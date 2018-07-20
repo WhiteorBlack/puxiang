@@ -8,7 +8,7 @@ import com.puxiang.mall.config.Config;
 public class URLs {
     public static final String RESPONSE_OK = "000";
     public static final int PAGE_SIZE = 10;
-
+    public static final String PHOTO_ROOT = "http://puxiang.oss-cn-qingdao.aliyuncs.com/";
     public static final String HTML_ORDER_DEALER_COMMIT = Config.HTTP_MALL_ROOT_URL + "order_dealer_commit.html";//确认订单
     public static final String HTML_STOCK_LIST = Config.HTTP_MALL_ROOT_URL + "stock_list.html"; //进货列表
     public static final String HTML_SHOP_LIST = Config.HTTP_MALL_ROOT_URL + "shop_list.html";  //商家列表
@@ -28,6 +28,10 @@ public class URLs {
     public static final String HTML_MY_GOODADDRESS_MODIFY = Config.HTTP_MALL_ROOT_URL + "goodAddressModify.html";
     public static final String HTML_MY_GOOD_ADDRESS_MODIFY_KEY = "goodAddressModify.html";
     public static final String HTML_REFUND_ADDRESS = Config.HTTP_MALL_ROOT_URL + "return_address.html"; //添加退货邮件信息
+    public static final String HTML_ADD_GOODS_ADDRESS = Config.HTTP_MALL_ROOT_URL + "addCommodity.html"; //店铺商品管理 新增商品
+    public static final String HTML_MODIFY_GOODS_ADDRESS = Config.HTTP_MALL_ROOT_URL + "amendCommodity.html"; //店铺商品管理 修改商品
+    public static final String HTML_MANAGER_SHOP = Config.HTTP_MALL_ROOT_URL + "shopManagement.html"; //店铺信息管理
+    public static final String HTML_SHOP_ORDER = Config.HTTP_MALL_ROOT_URL + "mySeller_order.html"; //店铺订单管理
 
     public static final String BATCH_COMMIT = Config.HTTP_MALL_ROOT_URL + "order_dealer_commit.html?from=app";
     public static final String HTML_USER_INFO = "myInfo.html";
@@ -42,6 +46,9 @@ public class URLs {
     public static final String HTML_REFUND_KEY = "return_refundRequest.html";
     public static final String HTML_USER_CENTER_KEY = "usercenter_page.html";
     public static final String HTML_ORDER_DETAIL = Config.HTTP_MALL_ROOT_URL + "order_detail.html?from=app&orderIds=";
+    public static final String HTML_MAN_DEALER_FEE = Config.HTTP_MALL_ROOT_URL + "carriageManagement.html?from=app&shopId=";
+    public static final String HTML_DEALER_ORDER = Config.HTTP_MALL_ROOT_URL + "dealerOrder.html?from=app&tabIndex=0";
+
     //发现
     public static final String HTML_DISCOVER = Config.HTTP_MALL_ROOT_URL + "/discover.html?from=app";
     //积分规则
@@ -57,7 +64,7 @@ public class URLs {
     public static final String HTML_LOTTERY_KEY = "Everyday_lottery.html";
     //任务中心KEY
     public static final String HTML_INTEGRAL_KEY = "mission_center.html";
-    public static final String HTML_INTEGRAL = Config.HTTP_MALL_ROOT_URL+"mission_center.html";
+    public static final String HTML_INTEGRAL = Config.HTTP_MALL_ROOT_URL + "mission_center.html";
     //注册用户协议
     public static final String AGREEMENT = Config.HTTP_BBS_ROOT_URL + "user_protocol.html?from=app";
 
@@ -73,6 +80,9 @@ public class URLs {
     public static final String HTML_GHALL_INFO = Config.HTTP_BBS_ROOT_URL + "Ghall_info.html?gid=%s";
     public static final String HTML_SING_KEY = "sign_empty_page";
     public static final String HTML_OPEN_BDMAP_KEY = "ToBDAppMap.html";
+
+    //商品详情KEY
+    public static final String HTML_ACTIVITY_KEY = "zuimeichuntian.html";
 
     //商品详情KEY
     public static final String HTML_GOODS_KEY = "goods_detail.html";

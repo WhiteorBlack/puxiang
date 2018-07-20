@@ -7,8 +7,7 @@
     <LinearLayout
         android:id="@+id/rc_status_bar"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:background="#ffdfdf"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="gone">
         <ImageView
@@ -16,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="27dp"
+            android:visibility="gone"
             android:layout_gravity="center_vertical"
             android:indeterminateDrawable="@drawable/rc_notification_network_available"/>
         <TextView
@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="25dp"
+            android:visibility="gone"
             android:layout_gravity="center_vertical"
             android:text="@string/rc_notice_network_unavailable"
             android:textColor="#776868"

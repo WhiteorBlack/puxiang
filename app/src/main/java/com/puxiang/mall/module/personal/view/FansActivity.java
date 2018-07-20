@@ -28,6 +28,7 @@ public class FansActivity extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle("粉丝");
         initRv(binding.rv);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

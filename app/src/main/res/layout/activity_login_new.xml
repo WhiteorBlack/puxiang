@@ -11,29 +11,39 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolBarSizeHeight"
-            android:background="@color/white">
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:id="@+id/iv_bar"
+                android:background="@mipmap/bg_statue_bar"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
-            <ImageButton
-                android:id="@+id/iv_back"
-                style="@style/ToolbarBackBtnStyle"
-                android:background="@color/white"
-                android:src="@mipmap/nav_back_g"
-                android:layout_gravity="bottom" />
+                <ImageButton
+                    android:id="@+id/iv_back"
+                    style="@style/ToolbarBackBtnStyle"
+                    android:layout_gravity="bottom"
+                    android:background="@color/white"
+                    android:src="@mipmap/nav_back_g" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tb_login"
-                android:layout_width="300px"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                app:tabIndicatorColor="@color/text_black"
-                app:tabMode="fixed"
-                app:tabTextAppearance="@style/LoginTabTextStyle"
-                app:tabSelectedTextColor="#494949"
-                app:tabTextColor="#7a7a7a" />
-        </FrameLayout>
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tb_login"
+                    android:layout_width="300px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    app:tabIndicatorColor="@color/text_black"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="#494949"
+                    app:tabTextAppearance="@style/LoginTabTextStyle"
+                    app:tabTextColor="#7a7a7a" />
+            </FrameLayout>
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"

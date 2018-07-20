@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2014 pengjianbo(pengjianbosoft@gmail.com), Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,26 +16,23 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="70dp"
-    android:layout_height="100dp"
-    >
+    android:layout_height="100dp">
 
     <cn.finalteam.galleryfinal.widget.GFImageView
         android:id="@+id/iv_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_gf_default_photo"
-        android:padding="4dp"
         android:layout_margin="4dp"
+        android:padding="4dp"
         android:scaleType="centerCrop"
-        />
+        android:src="@drawable/ic_gf_default_photo" />
 
     <ImageView
         android:id="@+id/iv_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete_photo"
         android:layout_alignParentRight="true"
         android:layout_marginTop="4dp"
-        />
+        android:src="@drawable/ic_delete_photo" />
 
 </RelativeLayout>

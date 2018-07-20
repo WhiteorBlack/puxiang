@@ -26,15 +26,15 @@ import java.util.TimerTask;
 
 public class AppUtil {
 
-    public static String getMsgCount(int msgCount){
-        return msgCount<100?msgCount+"":"99+";
+    public static String getMsgCount(int msgCount) {
+        return msgCount < 100 ? msgCount + "" : "99+";
     }
 
     public static Drawable getDrawable(int resId) {
         return resId == 0 ? null : ContextCompat.getDrawable(MyApplication.getContext(), resId);
     }
 
-    public static Drawable getDrawable(int resId,int defaultres) {
+    public static Drawable getDrawable(int resId, int defaultres) {
         return resId == 0 ? getDrawable(defaultres) : ContextCompat.getDrawable(MyApplication.getContext(), resId);
     }
 
@@ -42,7 +42,7 @@ public class AppUtil {
         return ContextCompat.getColor(MyApplication.getContext(), resId == 0 ? R.color.transparent : resId);
     }
 
-    public static int getColor(int resId,int defaultColor) {
+    public static int getColor(int resId, int defaultColor) {
         return ContextCompat.getColor(MyApplication.getContext(), resId == 0 ? defaultColor : resId);
     }
 
@@ -55,6 +55,10 @@ public class AppUtil {
                 getColor(defaultColorRes == 0 ? R.color.transparent : defaultColorRes) : Color.parseColor(colorString);
     }
 
+    public static int getResId(int resId) {
+        return MyApplication.getContext().getResources().getInteger(resId);
+    }
+
     public static float getDimension(int resId) {
         return MyApplication.getContext().getResources().getDimension(resId);
     }
@@ -62,7 +66,6 @@ public class AppUtil {
     public static float getDimensionPixelSize(int resId) {
         return MyApplication.getContext().getResources().getDimensionPixelSize(resId);
     }
-
 
 
     public static boolean isDebugMode() {
@@ -121,6 +124,7 @@ public class AppUtil {
     //弱引用的Handler,防止内存泄露
     public static class UnLeakHandler extends Handler {
         private final WeakReference<Context> context;
+
         public UnLeakHandler(Context context) {
             this.context = new WeakReference<>(context);
         }
@@ -132,7 +136,22 @@ public class AppUtil {
         return (int) (value * (int) newCount) / newCount;
     }
 
-    public static Uri getResUri(int resId){
+    public static Uri getResUri(int resId) {
         return Uri.parse("res://com.puxiang.mall/" + resId);
+    }
+
+    /**
+     * 获取状态栏高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

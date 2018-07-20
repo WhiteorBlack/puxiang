@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="point"
+            type="String" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolBarSizeHeight"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_bar"
+            android:layout_width="match_parent"
+            android:layout_height="30px"
+            android:background="@mipmap/bg_statue_bar" />
+
+        <ImageButton
+            android:id="@+id/iv_back"
+            style="@style/ToolbarBackBtnWhiteStyle"
+            android:layout_below="@+id/iv_bar" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TitleBarTextDealer"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/iv_bar"
+            android:layout_centerHorizontal="true"
+            android:text="@{title}" />
+
+        <TextView
+            android:id="@+id/tv_point"
+            style="@style/BbsTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="90px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15px"
+            android:layout_toRightOf="@+id/iv_back"
+            android:drawableLeft="@mipmap/icon_point_black"
+            android:drawablePadding="10px"
+            android:gravity="center"
+            android:maxEms="5"
+            android:onClick="onClick"
+            android:text="@{point}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line" />
+    </RelativeLayout>
+</layout>

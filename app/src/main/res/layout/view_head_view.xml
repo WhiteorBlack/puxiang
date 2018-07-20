@@ -31,9 +31,15 @@
                 android:id="@+id/banner"
                 style="@style/BannerDefaultStyle"
                 android:focusable="false"
-                app:banner_indicatorGravity="bottom|left"
+                app:banner_indicatorGravity="bottom|center_horizontal"
                 app:banner_transitionEffect="alpha"
                 bind:banner="@{viewModel.banner}" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@mipmap/bg_banner_bottom" />
 
         </FrameLayout>
 
@@ -48,7 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15px"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="@{TextUtils.isEmpty(viewModel.hotLineOne)?View.GONE:View.VISIBLE}">
 
             <ImageView
                 android:layout_width="80px"
@@ -147,17 +154,17 @@
             android:layout_width="match_parent"
             android:layout_height="10px"
             android:layout_marginTop="15px"
-            android:visibility="@{TextUtils.isEmpty(viewModel.onePic)?View.GONE:View.VISIBLE}"
-            android:background="@color/bg_Gray_light" />
+            android:background="@color/bg_Gray_light"
+            android:visibility="@{TextUtils.isEmpty(viewModel.onePic)?View.GONE:View.VISIBLE}" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:visibility="@{TextUtils.isEmpty(viewModel.onePic)?View.GONE:View.VISIBLE}"
             android:orientation="horizontal"
             android:paddingBottom="5px"
-            android:paddingTop="5px">
+            android:paddingTop="5px"
+            android:visibility="@{TextUtils.isEmpty(viewModel.onePic)?View.GONE:View.VISIBLE}">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -166,17 +173,11 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <FrameLayout
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="86px"
-                    android:background="@color/mall_activity">
+                    android:background="@mipmap/bg_mall_activity" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@mipmap/title_activity" />
-                </FrameLayout>
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sdv_activity"

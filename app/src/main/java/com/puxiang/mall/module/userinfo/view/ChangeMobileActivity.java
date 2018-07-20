@@ -25,6 +25,7 @@ public class ChangeMobileActivity extends BaseBindActivity {
     @Override
     public void initView() {
         binding.toolbar.setTitle("变更手机号");
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View v) {

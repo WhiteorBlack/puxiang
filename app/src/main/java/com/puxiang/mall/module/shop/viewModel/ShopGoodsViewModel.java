@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.puxiang.mall.config.Event;
 import com.puxiang.mall.model.data.RxList;
 import com.puxiang.mall.model.data.RxProduct;
 import com.puxiang.mall.module.search.OrderEvent;
@@ -38,10 +39,10 @@ public class ShopGoodsViewModel extends BaseObservable implements ViewModel {
     private String type;
     private String shopId;
     private String order = "desc";
-//    private final LoadingWindow loadingWindow;
+    //    private final LoadingWindow loadingWindow;
     private boolean isInitData = false;
-    private int pageNo = 1,pageSize=12;
-    private String keyword="";
+    private int pageNo = 1, pageSize = 12;
+    private String keyword = "";
 
 
     public ShopGoodsViewModel(ShopGoodsFragment fragment, SearchListAdapter adapter) {
@@ -68,7 +69,7 @@ public class ShopGoodsViewModel extends BaseObservable implements ViewModel {
      * @param pageNo 页码
      */
     public void update(final int pageNo) {
-        ApiWrapper.getInstance().getShopGoods(keyword,shopId, type, order,pageSize, pageNo)
+        ApiWrapper.getInstance().getShopGoods(keyword, shopId, type, order, pageSize, pageNo)
                 .doOnTerminate(() -> {
 
                     if (isInitData) return;
@@ -85,6 +86,9 @@ public class ShopGoodsViewModel extends BaseObservable implements ViewModel {
 
                     @Override
                     public void onSuccess(RxList<RxProduct> bean) {
+                        if (bean.getList() != null && bean.getList().size() > 2) {
+                            EventBus.getDefault().post(Event.ENABLE_SCROLL);
+                        }
                         adapter.setPagingData(bean.getList(), pageNo);
                     }
                 });

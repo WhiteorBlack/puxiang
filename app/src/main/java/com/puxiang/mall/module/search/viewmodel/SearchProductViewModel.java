@@ -102,7 +102,6 @@ public class SearchProductViewModel extends BaseObservable implements ViewModel 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String keyword) {
         pageNo = 1;
-
         this.keyword = keyword;
         update(pageNo);
     }
@@ -152,7 +151,8 @@ public class SearchProductViewModel extends BaseObservable implements ViewModel 
                 super.onItemChildClick(adapter, view, position);
                 switch (view.getId()) {
                     case R.id.tv_get_in:
-                        WebUtil.jumpShopWeb(activity, ((List<RxProduct>) adapter.getData()).get(position).getShopId());
+//                        WebUtil.jumpShopWeb(activity, ((List<RxProduct>) adapter.getData()).get(position).getShopId());
+                        ActivityUtil.startShopDetialActivity(activity, ((List<RxProduct>) adapter.getData()).get(position).getShopId());
                         break;
                 }
             }

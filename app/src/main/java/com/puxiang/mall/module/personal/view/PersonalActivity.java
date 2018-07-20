@@ -94,7 +94,6 @@ public class PersonalActivity extends BaseBindActivity implements View.OnClickLi
         abl.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                Log.d("STATE", state.name());
                 if (state == State.EXPANDED) {
                     ctl.setTitle("");
                     ctl.setContentScrimColor(getResources().getColor(R.color.Alpha_theme));

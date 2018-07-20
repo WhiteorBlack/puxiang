@@ -64,8 +64,8 @@ public class CirclePageFragment extends BaseBindFragment implements View.OnClick
                 isRed = isVisiable.get();
                 try {
                     if (isVisiable.get()) {
-
                         binding.toolbar.llTop.setBackgroundColor(getResources().getColor(R.color.sale_price));
+
                     } else {
                         binding.toolbar.llTop.setBackgroundColor(0);
                     }

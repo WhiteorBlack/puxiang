@@ -39,6 +39,7 @@ public class InfoActivity extends BaseBindActivity {
     public void initView() {
         mImmersionBar.statusBarDarkFont(false).init();
         binding.toolbar.setTitle("个人信息");
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {
@@ -70,6 +71,9 @@ public class InfoActivity extends BaseBindActivity {
                 break;
             case R.id.my_info_birthday:
                 viewModel.selectBirthday();
+                break;
+            case R.id.ll_info_email:
+                ActivityUtil.startEmailActivityForResult(this, userInfo.getEmail(), 0);
                 break;
         }
     }

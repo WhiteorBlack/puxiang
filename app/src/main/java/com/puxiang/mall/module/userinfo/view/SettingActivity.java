@@ -34,6 +34,7 @@ public class SettingActivity extends BaseBindActivity implements View.OnClickLis
         binding.toolbar.setBackSrc(R.mipmap.nav_back_g);
         binding.toolbar.setColor(R.color.white);
         binding.toolbar.setTextColor(R.color.bbsText);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {
@@ -58,6 +59,9 @@ public class SettingActivity extends BaseBindActivity implements View.OnClickLis
                 break;
             case R.id.ll_settings_logout:
                 viewModel.logOutDialog();
+                break;
+            case R.id.ll_service:
+
                 break;
         }
     }

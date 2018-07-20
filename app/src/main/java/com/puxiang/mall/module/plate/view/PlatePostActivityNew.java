@@ -19,7 +19,6 @@ import com.puxiang.mall.R;
 import com.puxiang.mall.config.Event;
 import com.puxiang.mall.databinding.ActivityPlateNewBinding;
 import com.puxiang.mall.model.data.RxPlate;
-import com.puxiang.mall.module.login.view.LoginFragment;
 import com.puxiang.mall.module.main.view.MainActivity;
 import com.puxiang.mall.module.plate.adapter.PlatePostAdapter;
 import com.puxiang.mall.module.plate.viewmodel.PlateDetailViewModel;
@@ -65,7 +64,7 @@ public class PlatePostActivityNew extends BaseBindActivity {
 
     public void setExplain() {
         binding.tvExplain.postDelayed(() -> {
-            if (binding.tvExplain.getLineCount() > 1) {
+            if (binding.tvExplain.getLineCount() > 2) {
                 binding.cbAllExplain.setVisibility(View.VISIBLE);
             }
         }, 500);
@@ -109,7 +108,6 @@ public class PlatePostActivityNew extends BaseBindActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                //    Log.e(TAG, "onScrolled: " + dy);
                 if (status == 1) {
                     if (dy > 0) {
                         if (isVisible) {

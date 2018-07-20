@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentRvPagerBinding;
 import com.puxiang.mall.fragment.BaseBindFragment;
@@ -39,7 +38,7 @@ public class SearchPlateFragment extends BaseBindFragment {
     private void initRecycle(RecyclerView rv) {
         rv.addOnItemTouchListener(viewModel.itemClickListener());
         adapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());
-        RecycleViewUtils.setEmptyView(adapter, rv, getActivity().getLayoutInflater(), "搜索不到该圈子~");
+        RecycleViewUtils.setEmptyView(adapter, rv, getActivity().getLayoutInflater(), "");
         adapter.setEnableLoadMore(true);
         adapter.setHasStableIds(true);
         adapter.setOnLoadMoreListener(() -> viewModel.loadMore(),rv);

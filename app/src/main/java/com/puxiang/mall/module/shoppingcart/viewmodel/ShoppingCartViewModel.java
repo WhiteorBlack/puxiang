@@ -264,7 +264,7 @@ public class ShoppingCartViewModel extends BaseObservable implements ViewModel, 
         String orderString = new Gson().toJson(orders);
         Logger.e(orderString);
         orderString = URLs.ORDER_COMMIT + "&products=" + orderString;
-        WebUtil.jumpWeb(orderString, activity.getContext());
+        WebUtil.jumpWeb(orderString, activity.getActivity());
     }
 
     /**
@@ -479,7 +479,7 @@ public class ShoppingCartViewModel extends BaseObservable implements ViewModel, 
     }
 
     private void onGoodsClickListener(String goodsId) {
-        WebUtil.jumpGoodsWeb(activity.getContext(), goodsId);
+        WebUtil.jumpGoodsWeb(activity.getActivity(), goodsId);
     }
 
     private void onAddClickListener(int pos) {

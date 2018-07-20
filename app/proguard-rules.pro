@@ -25,6 +25,7 @@
 -keep class org.apache.** { *;}
 -dontwarn com.facebook.**
 -keep class com.facebook.** { *;}
+-keepclassmembers class * extends android.webkit.WebChromeClient{ public void openFileChooser(...);}
 
 #解决内部类警告
 -keepattributes InnerClasses
@@ -233,6 +234,13 @@
 -dontwarn anet.**
 -dontwarn org.android.spdy.**
 -dontwarn org.android.agoo.**
+
+# 小米通道
+-keep class com.xiaomi.** {*;}
+-dontwarn com.xiaomi.**
+# 华为通道
+-keep class com.huawei.** {*;}
+-dontwarn com.huawei.**
 
 #umeng
  -dontshrink

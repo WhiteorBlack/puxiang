@@ -46,6 +46,7 @@ public class PublishActivity extends BaseBindActivity implements EasyPermission.
     private void initToolBar() {
         binding.toolbar.setTitle(getString(R.string.publish_title));
         binding.toolbar.setBtnName(getString(R.string.publish_toolbar_btn_name));
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     private void initRV() {

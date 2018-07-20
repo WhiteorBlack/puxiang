@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
@@ -74,7 +75,6 @@ public class TextViewForFullHtml extends android.support.v7.widget.AppCompatText
     @Override
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, type);
-
     }
 
 
@@ -85,6 +85,9 @@ public class TextViewForFullHtml extends android.support.v7.widget.AppCompatText
     private static final String REGEX_SPACE = "\\s*|\t|\r|\n";
 
     public void loadContent(String content) {
+        if (TextUtils.isEmpty(content)){
+            return;
+        }
         content = content.replace("<p", "<d");
         content = content.replace("</p>", "</d><br/>");
         //  content = ActionscriptTextUtils.parseFontHTML(content);

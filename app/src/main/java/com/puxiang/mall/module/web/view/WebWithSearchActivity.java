@@ -1,11 +1,24 @@
 package com.puxiang.mall.module.web.view;
 
+import android.annotation.TargetApi;
+import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -25,6 +38,8 @@ import com.puxiang.mall.utils.WebUtil;
 import com.umeng.socialize.UMShareAPI;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebWithSearchActivity extends BaseBindActivity implements View.OnClickListener {
 
@@ -45,6 +60,55 @@ public class WebWithSearchActivity extends BaseBindActivity implements View.OnCl
         viewModel = new WebWithSearchViewModel(this);
         WebUtil.initWebViewSettings(webView, viewModel.getWebViewClient(this),viewModel);
         binding.setViewModel(viewModel);
+        setBarHeight(binding.toolbar.ivBar);
+        setWebChrome(webView,viewModel);
+    }
+
+    private void setWebChrome(WebView webView, WebWithSearchViewModel viewModel) {
+        WebChromeClient chromeClient = new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress > 0 && newProgress < 100) {
+                    viewModel.webProgress.set(newProgress);
+                } else {
+                    viewModel.webProgress.set(-1);
+                }
+            }
+
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                return super.onConsoleMessage(consoleMessage);
+            }
+
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                mUploadCallbackAboveL = filePathCallback;
+                take();
+                return true;
+            }
+
+
+            //<3.0
+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+                mUploadMessage = uploadMsg;
+                take();
+            }
+
+            //>3.0+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
+                mUploadMessage = uploadMsg;
+                take();
+            }
+
+            //>4.1.1
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+                mUploadMessage = uploadMsg;
+                take();
+            }
+        };
+        webView.setWebChromeClient(chromeClient);
     }
 
     private boolean checkUrlValid() {
@@ -233,6 +297,11 @@ public class WebWithSearchActivity extends BaseBindActivity implements View.OnCl
         return false;
     }
 
+    private ValueCallback<Uri> mUploadMessage;// 表单的数据信息
+    private ValueCallback<Uri[]> mUploadCallbackAboveL;
+    private final static int FILECHOOSER_RESULTCODE = 1;// 表单的结果回调
+    private Uri imageUri;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -249,6 +318,86 @@ public class WebWithSearchActivity extends BaseBindActivity implements View.OnCl
         } else {
             UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         }
+
+        if (requestCode == FILECHOOSER_RESULTCODE) {
+            if (null == mUploadMessage && null == mUploadCallbackAboveL) return;
+            Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
+            if (mUploadCallbackAboveL != null) {
+                onActivityResultAboveL(requestCode, resultCode, data);
+            } else if (mUploadMessage != null) {
+                if (result == null) {
+                    mUploadMessage.onReceiveValue(imageUri);
+                    mUploadMessage = null;
+                } else {
+                    mUploadMessage.onReceiveValue(result);
+                    mUploadMessage = null;
+                }
+            }
+        }
     }
+
+    @SuppressWarnings("null")
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void onActivityResultAboveL(int requestCode, int resultCode, Intent data) {
+        if (requestCode != FILECHOOSER_RESULTCODE || mUploadCallbackAboveL == null) {
+            return;
+        }
+
+        Uri[] results = null;
+        if (resultCode == RESULT_OK) {
+            if (data == null) {
+                results = new Uri[]{imageUri};
+            } else {
+                String dataString = data.getDataString();
+                ClipData clipData = data.getClipData();
+                if (clipData != null) {
+                    results = new Uri[clipData.getItemCount()];
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        ClipData.Item item = clipData.getItemAt(i);
+                        results[i] = item.getUri();
+                    }
+                }
+                if (dataString != null)
+                    results = new Uri[]{Uri.parse(dataString)};
+            }
+        }
+        if (results != null) {
+            mUploadCallbackAboveL.onReceiveValue(results);
+            mUploadCallbackAboveL = null;
+        } else {
+            results = new Uri[]{imageUri};
+            mUploadCallbackAboveL.onReceiveValue(results);
+            mUploadCallbackAboveL = null;
+        }
+        return;
+    }
+
+    private void take() {
+        File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyApp");
+        if (!imageStorageDir.exists()) {
+            imageStorageDir.mkdirs();
+        }
+        File file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        imageUri = Uri.fromFile(file);
+        final List<Intent> cameraIntents = new ArrayList<Intent>();
+        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        final PackageManager packageManager = getPackageManager();
+        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam) {
+            final String packageName = res.activityInfo.packageName;
+            final Intent i = new Intent(captureIntent);
+            i.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            i.setPackage(packageName);
+            i.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            cameraIntents.add(i);
+        }
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        i.setType("image/*");
+        Intent chooserIntent = Intent.createChooser(i, "Image Chooser");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
+        startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
+    }
+
 
 }

@@ -57,13 +57,13 @@ public class SectionAdapterNew extends BaseSectionQuickAdapter<MallData, Section
             helper.setText(R.id.tv_desc, item.desc);
             switch (item.floower) {
                 case 1:
-                    helper.setBackgroundRes(R.id.iv_title, R.mipmap.new_goods);
-                    helper.setBackgroundRes(R.id.fl_title, R.mipmap.title_bg_green);
 
-                    break;
-                case 2:
                     helper.setBackgroundRes(R.id.iv_title, R.mipmap.hot_goods);
                     helper.setBackgroundRes(R.id.fl_title, R.mipmap.title_red_l);
+                    break;
+                case 2:
+                    helper.setBackgroundRes(R.id.iv_title, R.mipmap.new_goods);
+                    helper.setBackgroundRes(R.id.fl_title, R.mipmap.title_bg_green);
                     break;
                 case 3:
                     helper.setBackgroundRes(R.id.iv_title, R.mipmap.white_win);

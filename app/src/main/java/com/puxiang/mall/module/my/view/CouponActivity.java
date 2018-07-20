@@ -35,6 +35,7 @@ public class CouponActivity extends BaseBindActivity {
         binding.toolbar.setTitle("我的优惠券");
         setWhiteTitle(binding.toolbar);
         initRV(binding.rvCoupon);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     private void initRV(RecyclerView rvCoupon) {

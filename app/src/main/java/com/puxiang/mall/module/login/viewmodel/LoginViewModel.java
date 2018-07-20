@@ -7,6 +7,7 @@ import android.databinding.ObservableField;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+
 import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
@@ -37,11 +38,14 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -63,7 +67,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
 
     public LoginViewModel(BaseBindFragment fragment) {
         EventBus.getDefault().register(this);
-//        getCacheData();
         this.fragment = fragment;
         activity = (BaseBindActivity) fragment.getActivity();
         loadingWindow = new LoadingWindow(activity);
@@ -172,13 +175,13 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
     }
 
     /**
-     * 延时1.5秒，提升用户登录体验
+     * 延时0.5秒，提升用户登录体验
      *
      * @param accountStr  帐号
      * @param passwordStr 密码
      */
     private void startLogin(String accountStr, String passwordStr) {
-        Observable.timer(1500, TimeUnit.MILLISECONDS)
+        Observable.timer(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> loginRequest(accountStr, passwordStr));
     }
@@ -241,7 +244,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
      */
     private void connect(String token) {
 
-
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
             /**
@@ -267,6 +269,7 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+                Logger.e("rongClient---"+errorCode.getMessage());
             }
         });
     }
@@ -308,7 +311,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
         }
         if (mShareAPI.isInstall(activity, SHARE_MEDIA.QQ)) {
             loadingWindow.showWindow();
-//                    mShareAPI.doOauthVerify(this, SHARE_MEDIA.QQ, umAuthListener);
             mShareAPI.getPlatformInfo(activity, SHARE_MEDIA.QQ, umAuthListener);
         } else {
             ToastUtil.toast("请安装QQ客户端");
@@ -360,7 +362,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            Logger.i(data.toString());
             if (platform == SHARE_MEDIA.QQ) {
                 qqAuthLogin(data);
             } else if (platform == SHARE_MEDIA.SINA) {
@@ -371,7 +372,6 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
             loadingWindow.dismiss();
-            Logger.e(t.getMessage());
         }
 
         @Override
@@ -410,13 +410,11 @@ public class LoginViewModel extends BaseObservable implements ViewModel {
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        Logger.e(e.toString());
                     }
 
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
                         super.onFail(e);
-                        Logger.e(e.toString());
                     }
 
                     @Override

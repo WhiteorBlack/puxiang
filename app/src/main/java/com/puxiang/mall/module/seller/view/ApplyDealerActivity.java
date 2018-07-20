@@ -36,7 +36,7 @@ public class ApplyDealerActivity extends BaseBindActivity implements EasyPermiss
         binding = DataBindingUtil.setContentView(this, R.layout.activity_apply_dealer);
         viewModel = new ApplyDealerViewModel(this);
         binding.setViewModel(viewModel);
-        mImmersionBar.keyboardEnable(false).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED).flymeOSStatusBarFontColor(R.color.text_black).statusBarDarkFont(true).init();
+        mImmersionBar.keyboardEnable(false).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED).statusBarDarkFont(false).flymeOSStatusBarFontColor(R.color.white).init();
     }
 
     @Override
@@ -46,6 +46,7 @@ public class ApplyDealerActivity extends BaseBindActivity implements EasyPermiss
         fragmentAdapter = new SimpleFragmentAdapter(getSupportFragmentManager(), fragments);
         binding.viewpager.setAdapter(fragmentAdapter);
 //        binding.viewpager.setCanScroll(true);
+        setBarHeight(binding.toolbar.ivBar);
         binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

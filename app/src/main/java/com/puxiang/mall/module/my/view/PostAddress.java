@@ -34,6 +34,7 @@ public class PostAddress extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle("收货地址");
         initPostRv(binding.rvAddress);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

@@ -9,9 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.puxiang.mall.BaseBindActivity;
@@ -34,7 +36,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchListActivity extends BaseBindActivity implements View.OnClickListener {
+public class SearchListActivity extends BaseBindActivity implements View.OnClickListener, TextView.OnEditorActionListener {
     private List<Fragment> fragments = new ArrayList<>();
     private ActivitySearchListBinding binding;
     private String keyword;
@@ -42,10 +44,10 @@ public class SearchListActivity extends BaseBindActivity implements View.OnClick
     private SearchListViewModel viewModel;
 
     @Override
-    protected void initBind(){
+    protected void initBind() {
         Intent intent = getIntent();
         keyword = intent.getStringExtra("keyword");
-        catoryId=intent.getStringExtra("categoryId");
+        catoryId = intent.getStringExtra("categoryId");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_list);
         viewModel = new SearchListViewModel(keyword);
         binding.setViewModel(viewModel);
@@ -53,11 +55,14 @@ public class SearchListActivity extends BaseBindActivity implements View.OnClick
     }
 
     public void initView() {
-        setPageTag("keyword:" , keyword);
+        setPageTag("keyword:", keyword);
         binding.toolbarLayout.et.setText(keyword);
         binding.toolbarLayout.et.setCursorVisible(false);
         binding.toolbarLayout.et.setOnClickListener(v -> binding.toolbarLayout.et.setCursorVisible(true));
+        binding.toolbarLayout.et.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        binding.toolbarLayout.et.setOnEditorActionListener(this);
         initData();
+        setBarHeight(binding.toolbarLayout.ivBar);
     }
 
     private void initData() {
@@ -84,7 +89,7 @@ public class SearchListActivity extends BaseBindActivity implements View.OnClick
         Bundle bundle = new Bundle();
         bundle.putString("type", i + "");
         bundle.putString("keyword", keyword);
-        bundle.putString("categoryId",catoryId);
+        bundle.putString("categoryId", catoryId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -96,20 +101,32 @@ public class SearchListActivity extends BaseBindActivity implements View.OnClick
                 onBackPressed();
                 break;
             case R.id.iv_search_btn:
-                String keyword = MyTextUtils.getEditTextString(binding.toolbarLayout.et);
-                viewModel.keyword.set(keyword);
-                MobclickAgent.onEvent(this, "keyword--->" + keyword);
-                //请求SearchFragment刷新数据
-                EventBus.getDefault().post(keyword);
+                search();
                 break;
         }
     }
 
+    private void search() {
+        String keyword = MyTextUtils.getEditTextString(binding.toolbarLayout.et);
+        viewModel.keyword.set(keyword);
+        MobclickAgent.onEvent(this, "keyword--->" + keyword);
+        //请求SearchFragment刷新数据
+        EventBus.getDefault().post(keyword);
+    }
 
     @Override
     protected void viewModelDestroy() {
         if (binding.vp != null) binding.vp.removeAllViews();
         if (viewModel != null) viewModel.destroy();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId== EditorInfo.IME_ACTION_SEARCH){
+            search();
+            return true;
+        }
+        return false;
     }
 
     private class MyAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {

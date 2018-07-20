@@ -40,13 +40,11 @@ public class SearchListFragment extends BaseBindFragment {
 
     private void initRecycle(RecyclerView rv) {
         adapter.setHasStableIds(true);
-        RecycleViewUtils.setEmptyView(adapter, rv, inflater, "搜索不到该商品~");
+        RecycleViewUtils.setEmptyView(adapter, rv, inflater, "");
         //上拉刷新设置
         adapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());
         adapter.setEnableLoadMore(true);
-        adapter.setOnLoadMoreListener(() -> {
-            viewModel.loadMore();
-        },rv);
+        adapter.setOnLoadMoreListener(() -> viewModel.loadMore(),rv);
         rv.addOnItemTouchListener(viewModel.itemClickListener());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);

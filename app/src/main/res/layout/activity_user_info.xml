@@ -126,14 +126,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textSize="@dimen/myInfoTextSize"
-                    android:text="@{viewModel.userBean.nickname}" />
+                    android:text="@{viewModel.userBean.nickname}"
+                    android:textSize="@dimen/myInfoTextSize" />
 
                 <ImageView
                     android:id="@+id/iv_nick"
                     style="@style/nextImgStyle"
-                    android:src="@mipmap/my_open"
-                    />
+                    android:src="@mipmap/my_open" />
             </LinearLayout>
 
             <include layout="@layout/view_lien" />
@@ -163,6 +162,41 @@
                     android:layout_weight="2"
                     android:gravity="right"
                     android:text="@{viewModel.userBean.realName}"
+                    android:textSize="@dimen/myInfoTextSize" />
+
+                <ImageView
+                    style="@style/nextImgStyle"
+                    android:src="@mipmap/my_open" />
+            </LinearLayout>
+
+
+            <include layout="@layout/view_lien" />
+
+            <LinearLayout
+                android:id="@+id/ll_info_email"
+                style="@style/titleMarginStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="onClick"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    style="@style/titleTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="邮箱" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/myInfoTextAlphaStyle2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="right"
+                    android:text="@{viewModel.userBean.email}"
                     android:textSize="@dimen/myInfoTextSize" />
 
                 <ImageView
@@ -259,8 +293,8 @@
                     android:id="@+id/tv_birthday"
                     style="@style/myInfoTextAlphaStyle2"
                     android:layout_width="wrap_content"
-                    android:text="@{viewModel.userBean.birthday}"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.userBean.birthday}"
                     android:textSize="@dimen/myInfoTextSize" />
 
                 <ImageView

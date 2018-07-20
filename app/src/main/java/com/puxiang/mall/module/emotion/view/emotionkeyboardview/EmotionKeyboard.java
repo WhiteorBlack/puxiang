@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.orhanobut.logger.Logger;
 import com.puxiang.mall.module.emotion.utils.LogUtils;
 
 

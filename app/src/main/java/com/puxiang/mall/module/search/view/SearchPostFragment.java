@@ -37,7 +37,7 @@ public class SearchPostFragment extends BaseBindFragment {
     private void initRecycle(RecyclerView rv) {
         rv.addOnItemTouchListener(viewModel.itemClickListener());
         adapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());
-        RecycleViewUtils.setEmptyView(adapter, rv, getActivity().getLayoutInflater(), "搜索不到该帖子~");
+        RecycleViewUtils.setEmptyView(adapter, rv, getActivity().getLayoutInflater(), "");
         adapter.setEnableLoadMore(true);
         adapter.setHasStableIds(true);
         adapter.setOnLoadMoreListener(() -> viewModel.loadMore(),rv);

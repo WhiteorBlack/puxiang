@@ -2,12 +2,13 @@ package com.puxiang.mall.module.mall.viewmodel;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
 import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BR;
 import com.puxiang.mall.BaseBindActivity;
+import com.puxiang.mall.MyApplication;
+import com.puxiang.mall.config.Event;
 import com.puxiang.mall.fragment.BaseBindFragment;
 import com.puxiang.mall.model.data.RxUnreadMessage;
 import com.puxiang.mall.mvvm.base.ViewModel;
@@ -34,10 +35,12 @@ public class MsgCountViewModel extends BaseObservable implements ViewModel {
 
     public MsgCountViewModel(BaseBindActivity activity) {
         this.activity = activity;
+        EventBus.getDefault().register(this);
     }
 
     public MsgCountViewModel(BaseBindFragment fragment) {
         this.fragment = fragment;
+        EventBus.getDefault().register(this);
     }
 
     @Bindable
@@ -51,32 +54,48 @@ public class MsgCountViewModel extends BaseObservable implements ViewModel {
     }
 
     public void getMsgCountData() {
+        if (!MyApplication.isLogin()) {
+            return;
+        }
+        ApiWrapper.getInstance()
+                .getUnreadMessage()
+                .compose(activity == null ? fragment.bindUntilEvent(FragmentEvent.DESTROY) : activity.bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribe(new NetworkSubscriber<List<RxUnreadMessage>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Logger.e("getMsgCount");
+                    }
 
-//        ApiWrapper.getInstance()
-//                .getUnreadMessage()
-//                .compose(activity == null ? fragment.bindUntilEvent(FragmentEvent.DESTROY) : activity.bindUntilEvent(ActivityEvent.DESTROY))
-//                .subscribe(new NetworkSubscriber<List<RxUnreadMessage>>() {
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        super.onError(e);
-//                        Logger.e("getMsgCount");
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(List<RxUnreadMessage> data) {
-//                        if (data.size() > 0) {
-//                            int count = 0;
-//                            for (int i = 0; i < data.size(); i++) {
-//                                count += data.get(i).getUnreadCount();
-//                            }
-//                            msgCount.set(count);
-//                        }
-//                    }
-//                });
+                    @Override
+                    public void onSuccess(List<RxUnreadMessage> data) {
+                        if (data.size() > 0) {
+                            int count = 0;
+                            for (int i = 0; i < data.size(); i++) {
+                                count += data.get(i).getUnreadCount();
+                            }
+                            msgCount.set(count);
+                            notifyPropertyChanged(BR.msgCount);
+                        }
+                    }
+                });
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Integer event) {
+        switch (event) {
+            case Event.LOGIN_REFRESH:
+                getMsgCountData();
+                break;
+            case Event.LOGOUT:
+                msgCount.set(0);
+                notifyPropertyChanged(BR.msgCount);
+                break;
+        }
+    }
 
     @Override
     public void destroy() {
+        EventBus.getDefault().unregister(this);
     }
 }

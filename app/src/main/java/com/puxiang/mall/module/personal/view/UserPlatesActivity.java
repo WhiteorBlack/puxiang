@@ -29,6 +29,7 @@ public class UserPlatesActivity extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle("圈子");
         initRv(binding.rv);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

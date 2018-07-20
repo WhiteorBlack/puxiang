@@ -8,15 +8,34 @@ import android.content.res.Configuration;
  */
 
 public interface ApplicationLifeCycle {
+    /**
+     * Same as {@link Application#onCreate()}.
+     */
     void onCreate();
 
+    /**
+     * Same as {@link Application#onLowMemory()}.
+     */
     void onLowMemory();
 
-    void onTrimMemory(int var1);
+    /**
+     * Same as {@link Application#onTrimMemory(int level)}.
+     * @param level
+     */
+    void onTrimMemory(int level);
 
+    /**
+     * Same as {@link Application#onTerminate()}.
+     */
     void onTerminate();
 
-    void onConfigurationChanged(Configuration var1);
+    /**
+     * Same as {@link Application#onConfigurationChanged(Configuration newconfig)}.
+     */
+    void onConfigurationChanged(Configuration newConfig);
 
-    void onBaseContextAttached(Context var1);
+    /**
+     * Same as {@link Application#attachBaseContext(Context context)}.
+     */
+    void onBaseContextAttached(Context base);
 }

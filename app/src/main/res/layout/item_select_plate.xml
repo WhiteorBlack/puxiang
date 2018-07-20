@@ -38,9 +38,7 @@
             app:placeholderImage="@mipmap/ic_launcher"
             app:placeholderImageScaleType="fitXY"
             app:roundAsCircle="true"
-
             app:url="@{item.platePic}"
-
             />
 
         <TextView

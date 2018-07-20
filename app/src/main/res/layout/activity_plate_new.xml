@@ -24,8 +24,7 @@
         android:id="@+id/mPtrFrame"
         style="@style/style_ptr"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-     >
+        android:layout_height="match_parent">
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -129,7 +128,6 @@
                         </RelativeLayout>
 
                         <TextView
-                            android:id="@+id/tv_explain"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/view_bg"
@@ -139,18 +137,29 @@
                             android:padding="@dimen/sideMargin"
                             android:text="@{viewModel.plateBean.plateIntroduce}"
                             android:textColor="@color/title"
-                            android:textSize="24px" />
+                            android:textSize="24px"
+                            android:visibility="gone" />
+
+                        <com.puxiang.mall.utils.fullhtml.TextViewForFullHtml
+                            android:id="@+id/tv_explain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/view_bg"
+                            android:lineSpacingExtra="5px"
+                            android:maxLines="1"
+                            android:onClick="onClick"
+                            android:padding="@dimen/sideMargin"
+                            android:textColor="@color/title"
+                            android:textSize="24px"
+                            app:loadContent="@{viewModel.plateBean.plateIntroduce}" />
 
                         <CheckBox
                             android:id="@+id/cb_all_explain"
-                            android:layout_width="match_parent"
-                            android:layout_height="21px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:background="@color/view_bg"
-                            android:button="@null"
-                            android:drawableBottom="@drawable/select_hidden"
-                            android:elevation="@dimen/elevation_height"
-                            android:paddingBottom="5px"
+                            android:button="@drawable/select_hidden"
+                            android:gravity="center"
                             android:visibility="gone" />
 
                         <View
@@ -190,11 +199,11 @@
                 android:layout_gravity="center_horizontal|bottom"
                 android:onClick="onClick"
                 android:src="@mipmap/icon_post_bbs"
-                app:pressedTranslationZ="12dp"
-                app:rippleColor="#a6a6a6"
                 app:backgroundTint="#F1CF39"
                 app:elevation="6px"
-                app:fabSize="auto" />
+                app:fabSize="auto"
+                app:pressedTranslationZ="12dp"
+                app:rippleColor="#a6a6a6" />
         </android.support.design.widget.CoordinatorLayout>
     </in.srain.cube.views.ptr.PtrFrameLayout>
 </layout>

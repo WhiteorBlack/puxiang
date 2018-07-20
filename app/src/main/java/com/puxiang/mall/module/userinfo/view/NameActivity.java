@@ -24,6 +24,7 @@ public class NameActivity extends BaseBindActivity {
         binding.etInfo.setHint("请输入真实姓名");
         binding.toolbar.setTitle("个人信息");
         binding.toolbar.setBtnName("保存");
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.seller.viewmodel.DealerManagerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="经销商信息"
+                android:textColor="@color/text_black"
+                android:textSize="30px"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line1"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="代理商名称："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_agent"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line1"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_agent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="@={viewModel.rxDealer.name}"
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/et_agent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line2"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="联系人："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line2"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="@={viewModel.rxDealer.linkMan}"
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/et_name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line3"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="联系电话："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line3"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_phone"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:text="@={viewModel.rxDealer.linkPhone}"
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <View
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_phone"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line4"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="所在地区："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/et_phone"
+                android:layout_toEndOf="@+id/tv_phone"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:onClick="@{viewModel.onClick}"
+                android:paddingRight="10px"
+                android:text="@{viewModel.rxDealer.provinceName+` `+viewModel.rxDealer.cityName+` `+viewModel.rxDealer.countyName}"
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/line4"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="28px"
+                android:background="@mipmap/my_open" />
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_area"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:layout_below="@+id/line5"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="详细街道："
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/line5"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/tv_address"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:text="@={viewModel.rxDealer.detailAddress}"
+                android:textColor="#373f4a"
+                android:textSize="28px" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/tv_address"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="match_parent"
+                android:layout_height="86px"
+                android:layout_weight="1"
+                android:background="@mipmap/bg_step_disenable"
+                android:onClick="@{viewModel.onClick}"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="30px" />
+
+            <Button
+                android:id="@+id/btn_step"
+                android:layout_width="match_parent"
+                android:layout_height="86px"
+                android:layout_weight="1"
+                android:background="@drawable/btn_step"
+                android:onClick="@{viewModel.onClick}"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="30px" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

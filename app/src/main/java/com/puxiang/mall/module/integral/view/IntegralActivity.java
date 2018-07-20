@@ -34,6 +34,7 @@ public class IntegralActivity extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle("任务中心");
         initRV(binding.rv);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

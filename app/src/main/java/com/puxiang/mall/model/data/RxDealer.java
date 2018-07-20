@@ -5,6 +5,8 @@ package com.puxiang.mall.model.data;
  */
 
 public class RxDealer {
+    private String userId;
+    private String logo;
     private String name;
     private String linkMan;
     private String linkPhone;
@@ -30,6 +32,40 @@ public class RxDealer {
     private double lng;
     private double lat;
     private String idcardBack;
+    private boolean selected = false;
+    private String shopId;
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 
     public String getName() {
         return name;

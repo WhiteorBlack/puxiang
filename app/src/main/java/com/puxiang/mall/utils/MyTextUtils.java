@@ -15,6 +15,9 @@ import com.puxiang.mall.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MyTextUtils {
 
     public static int TYPE_IMAGE = 1000;
@@ -63,6 +66,8 @@ public class MyTextUtils {
     }
 
     public static String getPrice(TextView textView, double f) {
+        TextPaint paint = textView.getPaint();
+        paint.setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         String s = "￥" + String.format("%.2f", f);
         return s;
     }
@@ -182,6 +187,19 @@ public class MyTextUtils {
         List<PostContent> list = null;
 
         return list;
+    }
+
+    /**
+     * 判断邮箱是否合法
+     * @param email
+     * @return
+     */
+    public static boolean isEmail(String email){
+        if (null==email || "".equals(email)) return false;
+        //Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //简单匹配
+        Pattern p =  Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 
     class PostContent {

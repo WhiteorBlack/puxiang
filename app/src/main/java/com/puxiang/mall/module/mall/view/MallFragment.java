@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import com.gyf.barlibrary.ImmersionBar;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentMallBinding;
@@ -26,10 +28,14 @@ import com.puxiang.mall.module.mall.viewmodel.MallPicAdds;
 import com.puxiang.mall.module.mall.viewmodel.MallViewModel;
 import com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel;
 import com.puxiang.mall.utils.ActivityUtil;
+import com.puxiang.mall.utils.NetworkUtil;
+import com.puxiang.mall.utils.RecycleViewUtils;
 import com.puxiang.mall.utils.ScreenUtil;
+
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
+
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -79,7 +85,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
                 }
                 MyApplication.messageState.setMyMessage(0);
                 break;
-            case R.id.ll_search_bar:
+            case R.id.fl_search:
                 String searchText = binding.toolbarMall.tvSearch.getText().toString();
                 ActivityUtil.startSearchActivity(this.getActivity(), TextUtils.isEmpty(searchText) ? "" : searchText);
                 break;
@@ -117,6 +123,7 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mall, container, false);
         bottomLineBinding = DataBindingUtil.inflate(inflater, R.layout.view_bottom_line, container, false);
         adapter = new SectionAdapterNew(R.layout.item_mall_goods, R.layout.item_mall_title, null);
+
         viewModel = new MallViewModel(this, adapter);
         mallPicAdds = new MallPicAdds(this);
         msgCountViewModel = new MsgCountViewModel(this);
@@ -146,13 +153,20 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
         rvMall.setFocusableInTouchMode(false);
         rvMall.setFocusable(false);
         rvMall.setNestedScrollingEnabled(false);
-
+        if (!NetworkUtil.isNetworkAvailable(getContext())) {
+            RecycleViewUtils.setNetWorkOutView(adapter, rvMall, getLayoutInflater(), "");
+        }
         binding.nsvParent.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (oldScrollY > ScreenUtil.getWidthAndHeight().heightPixels) {
                 viewModel.setIsVisible(true);
 
             } else {
                 viewModel.setIsVisible(false);
+            }
+            if (oldScrollY > binding.layoutHead.banner.getHeight()) {
+                binding.toolbarMall.llParent.setBackgroundResource(R.mipmap.mall_bar_bg);
+            } else {
+                binding.toolbarMall.llParent.setBackgroundResource(0);
             }
         });
 
@@ -167,9 +181,9 @@ public class MallFragment extends BaseBindFragment implements View.OnClickListen
         binding.layoutHead.banner.setDelegate(headViewModel);
         binding.layoutHead.banner.setParentView(binding.ptrFrame);
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) binding.layoutHead.banner.getLayoutParams();
-        params.height = (int) (MyApplication.widthPixels * 0.347);
+        params.height = (int) (MyApplication.widthPixels * 0.54);
         binding.layoutHead.banner.setLayoutParams(params);
-        binding.toolbarMall.llSearchBar.setOnClickListener(this);
+        binding.toolbarMall.flSearch.setOnClickListener(this);
         binding.toolbarMall.ivScan.setOnClickListener(this);
         binding.toolbarMall.ivWarn.setOnClickListener(this);
         binding.layoutHead.setViewModel(headViewModel);

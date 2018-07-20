@@ -48,6 +48,7 @@
                 android:hint="请输入帐号"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
+                android:inputType="number"
                 android:text="@={viewModel.account}"
                 android:textColorHint="@color/se" />
 

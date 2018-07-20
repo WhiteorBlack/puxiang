@@ -14,10 +14,13 @@ import com.puxiang.mall.model.data.RxCatalog;
 import com.puxiang.mall.model.data.RxChannel;
 import com.puxiang.mall.model.data.RxCheck;
 import com.puxiang.mall.model.data.RxCityArea;
+import com.puxiang.mall.model.data.RxClassfy;
 import com.puxiang.mall.model.data.RxComment;
 import com.puxiang.mall.model.data.RxCommentInfo;
 import com.puxiang.mall.model.data.RxCommentReply;
 import com.puxiang.mall.model.data.RxDealer;
+import com.puxiang.mall.model.data.RxDealerCheck;
+import com.puxiang.mall.model.data.RxDealerList;
 import com.puxiang.mall.model.data.RxEsportList;
 import com.puxiang.mall.model.data.RxFans;
 import com.puxiang.mall.model.data.RxIntegral;
@@ -264,7 +267,8 @@ public interface ApiService {
                                                             @Query("orderBy") String orderBy,
                                                             @Query("order") String order,
                                                             @Query("pageSize") int pageSize,
-                                                            @Query("pageNo") int pageNo);
+                                                            @Query("pageNo") int pageNo,
+                                                            @Query("userId") String userid);
 
     //获取商家商品
     @GET("mall/search/searchProduct.do")
@@ -429,6 +433,13 @@ public interface ApiService {
     Observable<HttpResult<String>> modifyRealName(@Field("realName") String realName,
                                                   @Field("userId") String userId,
                                                   @Field("token") String token);
+
+    //修改邮箱地址
+    @FormUrlEncoded
+    @POST("mall/member/userInfo/modifyUserInfo.do")
+    Observable<HttpResult<String>> modifyEmail(@Field("email") String email,
+                                               @Field("userId") String userId,
+                                               @Field("token") String token);
 
     //修改昵称
     @FormUrlEncoded
@@ -923,6 +934,7 @@ public interface ApiService {
     Observable<HttpResult<RxDealer>> getDealer(@Field("userId") String userId,
                                                @Field("token") String token);
 
+    //申请成为经销商
     @FormUrlEncoded
     @POST("mall/dealer/becomeDealer.do")
     Observable<HttpResult<RxDealer>> becomeDealer(@Field("userId") String userId,
@@ -943,6 +955,45 @@ public interface ApiService {
                                                   @Field("streetCode") String streetCode,
                                                   @Field("detailAddress") String detailAddress);
 
+    @GET("mall/dealer/becomeDealer.do")
+    Observable<HttpResult<RxDealer>> becomeDealer(@Query("userId") String userId,
+                                                  @Query("token") String token,
+                                                  @Query("name") String name,
+                                                  @Query("linkMan") String linkMan,
+                                                  @Query("linkPhone") String linkPhone,
+                                                  @Query("idcardFront") String idcardFront,
+                                                  @Query("idcardBack") String idcardBack,
+                                                  @Query("provinceName") String provinceName,
+                                                  @Query("provinceCode") String provinceCode,
+                                                  @Query("cityName") String cityName,
+                                                  @Query("cityCode") String cityCode,
+                                                  @Query("countyName") String countyName,
+                                                  @Query("countyCode") String countyCode,
+                                                  @Query("streetName") String streetName,
+                                                  @Query("streetCode") String streetCode,
+                                                  @Query("detailAddress") String detailAddress);
+
+    //修改经销商信息
+    @FormUrlEncoded
+    @POST("mall/dealer/modifyDealer.do")
+    Observable<HttpResult<String>> modifyDealer(@Field("userId") String userId,
+                                                @Field("dealerId") String dealerId,
+                                                @Field("token") String token,
+                                                @Field("name") String name,
+                                                @Field("linkMan") String linkMan,
+                                                @Field("linkPhone") String linkPhone,
+                                                @Field("idcardFront") String idcardFront,
+                                                @Field("idcardBack") String idcardBack,
+                                                @Field("provinceName") String provinceName,
+                                                @Field("provinceCode") String provinceCode,
+                                                @Field("cityName") String cityName,
+                                                @Field("cityCode") String cityCode,
+                                                @Field("countyName") String countyName,
+                                                @Field("countyCode") String countyCode,
+                                                @Field("streetName") String streetName,
+                                                @Field("streetCode") String streetCode,
+                                                @Field("detailAddress") String detailAddress);
+
     @FormUrlEncoded
     @POST("mall/refund/refundApplication/addLogistics.do")
     Observable<HttpResult<String>> addLogistics(@Field("userId") String userId,
@@ -952,4 +1003,72 @@ public interface ApiService {
                                                 @Field("expressCode") String expressCode,
                                                 @Field("freight") String freight,
                                                 @Field("deliverGoodsTime") String deliverGoodsTime);
+
+    @POST("mall/category/getAll.do ")
+    Observable<HttpResult<List<RxClassfy>>> getClassfy();
+
+
+    //获取商家商品
+    @GET("mall/product/getShopProducts.do")
+    Observable<HttpResult<RxList<RxProduct>>> shopProduct(@Query("userId") String userId,
+                                                          @Query("token") String token,
+                                                          @Query("keyword") String keyword,
+                                                          @Query("shopId") String shopId,
+                                                          @Query("pageSize") int pageSize,
+                                                          @Query("pageNo") int pageNo);
+
+    //获取经销商
+    @GET("mall/dealer/getUserNotBind.do")
+    Observable<HttpResult<RxDealerList>> getDealerList(@Query("userId") String userId,
+                                                       @Query("token") String token,
+                                                       @Query("areaCode") String areaCode,
+                                                       @Query("areaName") String areaName,
+                                                       @Query("pageSize") int pageSize,
+                                                       @Query("pageNo") int pageNo);
+
+    //获取我的经销商
+    @GET("mall/dealer/user/getPassed.do")
+    Observable<HttpResult<List<RxDealerCheck>>> getDealerMine(@Query("userId") String userId,
+                                                              @Query("token") String token);
+
+    //获取经销商
+    @GET("mall/dealer/user/getNotPass.do")
+    Observable<HttpResult<List<RxDealerCheck>>> getDealerNotPass(@Query("userId") String userId,
+                                                                 @Query("token") String token);
+
+    //关联代理商
+    @GET("mall/dealer/user/apply.do")
+    Observable<HttpResult<String>> applyDealer(@Query("userId") String userId,
+                                               @Query("token") String token,
+                                               @Query("dealerIds") String dealerIds
+    );
+
+    //取关代理商
+    @GET("mall/dealer/user/cancel.do")
+    Observable<HttpResult<String>> cancelDealer(@Query("userId") String userId,
+                                                @Query("token") String token,
+                                                @Query("dealerIds") String dealerIds
+    );
+
+    //商品上架
+    @POST("mall/product/upshelf.do")
+    @FormUrlEncoded
+    Observable<HttpResult<String>> upShelf(@Field("userId") String userId,
+                                           @Field("token") String token,
+                                           @Field("productId") String productId);
+
+    //商品上架
+    @POST("mall/product/unshelf.do")
+    @FormUrlEncoded
+    Observable<HttpResult<String>> downShelf(@Field("userId") String userId,
+                                             @Field("token") String token,
+                                             @Field("productId") String productId);
+
+    //删除商品
+    @POST("mall/product/updateInvalid.do")
+    @FormUrlEncoded
+    Observable<HttpResult<String>> delProduct(@Field("userId") String userId,
+                                              @Field("token") String token,
+                                              @Field("productIds") String productIds);
+
 }

@@ -41,6 +41,7 @@ public class QRCodeActivity extends BaseBindActivity implements QRCodeView.Deleg
     public void initView() {
         binding.toolbar.setTitle("扫码");
         mQRCodeView.setDelegate(this);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     /**

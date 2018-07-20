@@ -25,6 +25,7 @@ public class VerifyPhoneActivity extends BaseBindActivity implements View.OnClic
     @Override
     public void initView() {
         binding.toolbar.setTitle("验证手机号码");
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

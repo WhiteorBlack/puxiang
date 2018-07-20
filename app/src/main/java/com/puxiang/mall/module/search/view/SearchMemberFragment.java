@@ -39,7 +39,7 @@ public class SearchMemberFragment extends BaseBindFragment {
     private void initRecycle(RecyclerView rv) {
         rv.addOnItemTouchListener(viewModel.itemClickListener());
         adapter.setLoadMoreView(RecycleViewUtils.getLoadMoreView());
-        RecycleViewUtils.setEmptyView(adapter, rv, getActivity().getLayoutInflater(), "搜索不到该用户~");
+        RecycleViewUtils.setEmptyView(adapter, rv, getActivity().getLayoutInflater(), "");
         adapter.setEnableLoadMore(true);
         adapter.setHasStableIds(true);
         adapter.setOnLoadMoreListener(() -> viewModel.loadMore(),rv);

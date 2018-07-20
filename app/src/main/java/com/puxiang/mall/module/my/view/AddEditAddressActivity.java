@@ -36,7 +36,7 @@ public class AddEditAddressActivity extends BaseBindActivity {
         } else {
             binding.toolbar.setTitle("编辑地址");
         }
-
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {

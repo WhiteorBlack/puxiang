@@ -121,8 +121,7 @@ public class EmotionCommentFragment extends BaseBindFragment implements View.OnC
     /**
      * 数据操作,这里是测试数据，请自行更换数据
      */
-    int[] imgRes = {R.mipmap.a00, R.mipmap.b00, R.mipmap.c00, R.mipmap.d00, R.mipmap.e00, R
-            .mipmap.f00, R.mipmap.g00};
+    int[] imgRes = {R.mipmap.a00, R.mipmap.b00, R.mipmap.c00, R.mipmap.d00, R.mipmap.f00, R.mipmap.g00};
 
     protected void initDatas() {
         replaceFragment();

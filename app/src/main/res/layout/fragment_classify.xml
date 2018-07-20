@@ -29,31 +29,42 @@
                 android:id="@+id/vtl"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:background="@color/main_bg"
+                android:layout_weight="1"
+                android:background="@color/white"
                 android:visibility="visible"
-                app:vindicator_color="@color/sale_price"
-                app:vindicator_gravity="left"
+                app:vindicator_color="#FF5400"
+                app:vindicator_gravity="right"
+                app:vtab_margin="20px"
                 app:vtab_mode="scrollable"
                 bind:catalogData="@{viewModel.catalogList}" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/bg_Gray" />
 
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/nsv_parent"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="7"
+                android:layout_weight="3"
                 android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
-                    <include
-                        android:id="@+id/layout_head"
-                        layout="@layout/view_head_banner"
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/sdv_classfy"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="200px"
+                        android:layout_margin="20px"
+                        android:onClick="@{viewModel.topClick}"
+                        app:placeholderImageScaleType="fitXY"
+                        app:roundedCornerRadius="15px"
+                        app:url="@{viewModel.topUrl}" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv"

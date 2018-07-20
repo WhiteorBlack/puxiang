@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F1F1F1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40px"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_all"
+                style="@style/selectNormalStyle"
+                android:layout_width="100px"
+                android:layout_height="60px"
+                android:layout_marginBottom="10px"
+                android:layout_marginLeft="10px"
+                android:layout_marginTop="10px"
+                android:background="@drawable/btn_all"
+                android:onClick="onClick"
+                android:text="全选"
+                android:textSize="22px" />
+
+            <Button
+                android:id="@+id/btn_center"
+                style="@style/selectNormalStyle"
+                android:layout_width="100px"
+                android:layout_height="60px"
+                android:layout_marginBottom="10px"
+                android:layout_marginTop="10px"
+                android:background="@color/white"
+                android:onClick="onClick"
+                android:text="取关"
+                android:textSize="22px" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="@style/selectNormalStyle"
+                android:layout_width="100px"
+                android:layout_height="60px"
+                android:layout_marginBottom="10px"
+                android:layout_marginRight="10px"
+                android:layout_marginTop="10px"
+                android:background="@drawable/btn_cancel"
+                android:onClick="onClick"
+                android:text="取消"
+                android:textSize="22px" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

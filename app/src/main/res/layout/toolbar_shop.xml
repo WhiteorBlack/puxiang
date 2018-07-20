@@ -24,32 +24,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/toolBarSizeHeight"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40px"
+            android:background="@mipmap/bg_statue_bar" />
 
         <LinearLayout
             android:id="@+id/ll_parent"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolBarSizeHeight"
-            android:background="@color/mall_activity"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:clickable="true"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="35px">
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/iv_back"
-                style="@style/ToolbarBackBtnStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/mall_activity"
-                android:onClick="@{viewModel.onClick}"
-                android:src="@mipmap/nav_back_w" />
+                style="@style/ToolbarBackBtnWhiteStyle" />
 
             <TextView
                 android:id="@+id/tv_location"
                 android:layout_width="120px"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/icon_white_location"
                 android:drawablePadding="8px"
                 android:ellipsize="end"
@@ -58,26 +58,16 @@
                 android:maxEms="3"
                 android:onClick="@{viewModel.onClick}"
                 android:text="@{viewModel.currentCity}"
-                android:textColor="@color/white"
-                android:textSize="32px" />
+                android:textColor="@color/text_black"
+                android:textSize="28px" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20px"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/bg_search_bar">
 
-                <LinearLayout
-                    android:id="@+id/ll_search_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/searchEditHeight"
-                    android:alpha="0.36"
-                    android:background="@drawable/bg_search_bar"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-
-                </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -85,7 +75,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20px"
                     android:alpha="1"
-                    android:background="@mipmap/nav_search_w" />
+                    android:background="@mipmap/search_a" />
 
                 <EditText
                     android:id="@+id/tv_search"
@@ -101,9 +91,9 @@
                     android:hint="请输入商户名、地点"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
-                    android:textColor="#fff"
-                    android:textColorHint="@color/white"
-                    android:textSize="30px" />
+                    android:textColor="@color/text_black"
+                    android:textColorHint="@color/gray_text"
+                    android:textSize="28px" />
             </FrameLayout>
 
             <TextView
@@ -113,8 +103,8 @@
                 android:layout_marginLeft="30px"
                 android:paddingRight="30px"
                 android:text="搜索"
-                android:textColor="@color/white"
-                android:textSize="32px" />
+                android:textColor="@color/text_black"
+                android:textSize="30px" />
 
             <FrameLayout
                 android:layout_width="55px"

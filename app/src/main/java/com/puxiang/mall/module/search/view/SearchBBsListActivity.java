@@ -55,6 +55,7 @@ public class SearchBBsListActivity extends BaseBindActivity implements View.OnCl
         setPageTag("keyword:", keyword);
         binding.toolbarLayout.et.setText(keyword);
         initData();
+        setBarHeight(binding.toolbarLayout.ivBar);
     }
 
     private void initData() {

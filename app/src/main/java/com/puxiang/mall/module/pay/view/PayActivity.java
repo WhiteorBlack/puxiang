@@ -25,6 +25,7 @@ public class PayActivity extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle("确认支付");
         setWhiteTitle(binding.toolbar);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

@@ -5,7 +5,10 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -84,6 +87,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
     private String shareUrl;
     private ShareInfo shareInfo;
     private String shareTitle;
+    private String shareDescibe;
     private String shareImage;
     private ShareBottomDialog shareDialog;
     private int pageNo = 0;
@@ -140,6 +144,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                         ToastUtil.toast("网络错误");
                     }
 
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onSuccess(RxPostInfo postInfo) {
                         isInitData.set(true);
@@ -169,6 +174,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
                 });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setPostDetailData(RxPostInfo bean) {
         initShareData(bean);
         setDetailData(bean);
@@ -202,14 +208,10 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
      * 分享
      */
     public void share() {
-        if (StringUtil.isEmpty(shareUrl)) {
-            getShareUrl();
-        } else {
-            if (shareInfo == null) {
-                shareInfo = new ShareInfo(shareUrl, shareTitle, shareImage, rawUrl);
-            }
-            setShareDialog(shareInfo);
+        if (shareInfo == null) {
+            shareInfo = new ShareInfo("", shareTitle, shareImage, rawUrl, shareDescibe);
         }
+        setShareDialog(shareInfo);
     }
 
     private void setShareDialog(ShareInfo shareInfo) {
@@ -228,6 +230,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
      *
      * @param bean 分享数据
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initShareData(RxPostInfo bean) {
         String picUrls = bean.getPost().getPicUrl();
         if (!StringUtil.isEmpty(picUrls)) {
@@ -235,6 +238,18 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
             shareImage = urls.length > 0 ? urls[0] : "";
         }
         shareTitle = bean.getPost().getTitle();
+        shareDescibe = Html.fromHtml(bean.getPost().getContent(), Html.FROM_HTML_MODE_COMPACT).toString();
+        shareDescibe = shareDescibe.replaceAll("\n", "").replaceAll("\\t", "").replaceAll("\\r", "");
+        if (shareDescibe.length()>50){
+            shareDescibe=shareDescibe.substring(0,50);
+        }
+        if (TextUtils.isEmpty(shareTitle)) {
+            if (shareDescibe.length() > 20) {
+                shareTitle = shareDescibe.substring(0, 10);
+            } else {
+                shareTitle = shareDescibe;
+            }
+        }
     }
 
     /**
@@ -646,7 +661,7 @@ public class PostDetailViewModel extends BaseObservable implements ViewModel {
 
             if (isPicUrl(s)) {
                 if (s.contains("src=\"data:image")) {
-                    String[] bases=s.split("src=\"");
+                    String[] bases = s.split("src=\"");
                     String baseString = bases[1];
                     baseString = baseString.substring(0, baseString.indexOf("\""));
                     stringList.add(baseString);

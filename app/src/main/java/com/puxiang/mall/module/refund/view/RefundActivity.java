@@ -37,7 +37,7 @@ public class RefundActivity extends BaseBindActivity implements EasyPermission.P
 
     @Override
     public void initView() {
-
+        setBarHeight(binding.toolbarLayout.ivBar);
         initRV(binding.rvRefund);
         setWhiteTitle(binding.toolbarLayout);
     }

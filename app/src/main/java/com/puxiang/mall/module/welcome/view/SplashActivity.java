@@ -1,34 +1,32 @@
 package com.puxiang.mall.module.welcome.view;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
-import android.net.Uri;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.gyf.barlibrary.ImmersionBar;
 import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
+import com.puxiang.mall.R;
 import com.puxiang.mall.config.CacheKey;
+import com.puxiang.mall.config.Config;
 import com.puxiang.mall.databinding.ActivitySplashBinding;
 import com.puxiang.mall.module.welcome.viewmodel.SplashViewModel;
 import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.retrofit.ApiWrapper;
 import com.puxiang.mall.utils.ActivityUtil;
+import com.puxiang.mall.utils.AppUtil;
 import com.puxiang.mall.utils.SharedPreferences;
 import com.puxiang.mall.utils.WebUtil;
-import com.puxiang.mall.R;
-import com.puxiang.mall.config.Config;
-import com.puxiang.mall.module.main.view.MainActivity;
-import com.gyf.barlibrary.ImmersionBar;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -103,7 +101,6 @@ public class SplashActivity extends AppCompatActivity {
              */
             @Override
             public void onSuccess(String userid) {
-                Logger.e("rong", "--onSuccess" + userid);
             }
 
             /**
@@ -112,7 +109,6 @@ public class SplashActivity extends AppCompatActivity {
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Logger.e("rong", "--onError" + errorCode);
             }
         });
     }
@@ -147,9 +143,25 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected final void onDestroy() {
         super.onDestroy();
+        releaseImageViewResouce(binding.imgSplash);
+        releaseImageViewResouce(binding.ivLogo);
 //        Fresco.getImagePipeline().evictFromMemoryCache(Uri.parse(viewModel.uriStr.get()));
     }
 
+    public void releaseImageViewResouce(ImageView imageView) {
+        if (imageView == null) return;
+        Drawable drawable = imageView.getDrawable();
+        if (drawable != null && drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
+
+
+        }
+        imageView = null;
+    }
 
     @Override
     protected final void onStart() {

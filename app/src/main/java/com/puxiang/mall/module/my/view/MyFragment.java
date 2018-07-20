@@ -25,6 +25,7 @@ import com.puxiang.mall.model.data.RxOrderState;
 import com.puxiang.mall.module.login.view.LoginActivity;
 import com.puxiang.mall.module.my.adapter.MyItemAdapter;
 import com.puxiang.mall.module.my.viewmodel.MyViewModel;
+import com.puxiang.mall.module.web.view.WebViewNew;
 import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.network.retrofit.Constant;
 import com.puxiang.mall.utils.ActivityUtil;
@@ -45,7 +46,7 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
 
     private MyViewModel viewModel;
     private FragmentMyBinding binding;
-    private MyItemAdapter orderAdapter, buyAdapter, saleAdapter, settingAdapter;
+    private MyItemAdapter orderAdapter, buyAdapter, saleAdapter, settingAdapter, sysAdapter;
 
     @Override
     public View initBinding(final LayoutInflater inflater, final ViewGroup container) {
@@ -53,7 +54,6 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         viewModel = new MyViewModel(this);
         binding.setViewModel(viewModel);
         binding.setMessageState(MyApplication.messageState);
-//        AutoUtils.auto(binding.getRoot());
         return binding.getRoot();
     }
 
@@ -63,22 +63,6 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
     private void initData() {
         if (MyApplication.isLogin()) {
             viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
-//            for (int j = 0; j < buyAdapter.getData().size(); j++) {
-//                if (MyApplication.messageState.getIsDealer() && buyAdapter.getData().get(j).getPos() == 11) {
-//                    buyAdapter.notifyItemRemoved(j);
-//                    break;
-//                }
-//                if (!MyApplication.messageState.getIsDealer() && buyAdapter.getData().get(j).getPos() == 10) {
-//                    buyAdapter.notifyItemRemoved(j);
-//                    break;
-//                }
-//            }
-//            for (int j = 0; j < buyAdapter.getData().size(); j++) {
-//                if (buyAdapter.getData().get(j).getPos() == 9) {
-//                    buyAdapter.notifyItemRemoved(j);
-//                    break;
-//                }
-//            }
         } else {
             viewModel.setIsSellerVis(true);
         }
@@ -98,6 +82,7 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         initBuyRecyclerView(binding.rvBuyer);
         initSaleRecyclerView(binding.rvSaler);
         initSettingRecyclerView(binding.rvSetting);
+        initSystemRv(binding.rvSystem);
         initData();
         binding.nsvParent.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY < binding.rlHead.getHeight() - binding.rlBar.getHeight()) {
@@ -121,7 +106,14 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                 }
                 if (i == BR.warnMessage) {
                     //我的消息
-                    settingAdapter.getData().get(0).setHasMsg(MyApplication.messageState.isWarnMessage());
+                    for (int j = 0; j < sysAdapter.getData().size(); j++) {
+                        if (sysAdapter.getData().get(j).getPos() == 0) {
+                            sysAdapter.getData().get(j).setHasMsg(MyApplication.messageState.isWarnMessage());
+                            sysAdapter.notifyItemChanged(j);
+                            break;
+                        }
+                    }
+
                 }
                 if (i == BR.isSeller) {
                     if (MyApplication.messageState.getIsSeller()) {
@@ -149,6 +141,51 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                         viewModel.setIsSellerVis(MyApplication.messageState.getIsSeller());
                     }
 
+                }
+            }
+        });
+    }
+
+    /**
+     * 系统中心
+     *
+     * @param rvSystem
+     */
+    private void initSystemRv(RecyclerView rvSystem) {
+        sysAdapter = new MyItemAdapter(R.layout.item_my_bottom, viewModel.getSystem());
+        rvSystem.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        rvSystem.setNestedScrollingEnabled(false);
+        rvSystem.setAdapter(sysAdapter);
+        sysAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (sysAdapter.getData().get(position).getPos()) {
+                    case 0:
+                        if (!MyApplication.isLogin()) {
+                            ActivityUtil.startLoginActivity(getActivity());
+                            return;
+                        }
+                        if (RongIM.getInstance() != null) {
+                            WeakReference<Context> wr = new WeakReference<>(
+                                    getContext());
+                            Map<String, Boolean> map = new HashMap<>();
+                            map.put(Conversation.ConversationType.PRIVATE.getName(), false);
+                            RongIM.getInstance().startConversationList(wr.get(), map);
+                        }
+                        MyApplication.messageState.setMyMessage(0);
+                        ((List<RxMyItem>) adapter.getData()).get(position).setHasMsg(false);
+                        sysAdapter.notifyItemChanged(position);
+                        break;
+                    case 1:
+                        ActivityUtil.startSettingActivity(getActivity(), MyApplication.messageState.isNewestVersion(),
+                                viewModel.introduce, viewModel.versionName);
+                        break;
+                    case 2:
+                        WebUtil.jumpWeb(URLs.HTML_MY_ABOUT, getActivity());
+                        break;
+                    case 3:
+                        WebUtil.jumpWeb(URLs.HTML_MY_SERVER, getActivity());
+                        break;
                 }
             }
         });
@@ -186,7 +223,11 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     ActivityUtil.startStockListActivity(getActivity());
                     break;
                 case 3://我的订单
-
+                    WebUtil.jumpMyWeb(URLs.HTML_DEALER_ORDER, getActivity());
+                    break;
+                case 4:
+                    //经销商信息管理
+                    ActivityUtil.startDealerManagerActivity(getActivity());
                     break;
             }
         });
@@ -203,6 +244,10 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvBuyer.setNestedScrollingEnabled(false);
         rvBuyer.setAdapter(saleAdapter);
         saleAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (!MyApplication.isLogin()) {
+                ActivityUtil.startLoginActivity(getActivity());
+                return;
+            }
             switch (viewModel.getSaleList().get(position).getPos()) {
                 case 0:
                     //我的店铺
@@ -210,11 +255,25 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     break;
                 case 1:
                     //店铺管理
-
+                    WebUtil.jumpMyAgentWeb(URLs.HTML_MANAGER_SHOP + "?shopId=" + MyApplication.SHOP_ID, getActivity());
                     break;
                 case 2:
                     //我的订单
-
+                    WebUtil.jumpMyWeb(URLs.HTML_SHOP_ORDER + "?tabIndex=0", getActivity());
+                    break;
+                case 3:
+                    //商品管理
+                    ActivityUtil.startGoodsManager(getActivity());
+                    break;
+                case 4:
+                    //运费管理
+                    WebUtil.jumpMyAgentWeb(URLs.HTML_MAN_DEALER_FEE + MyApplication.SHOP_ID, getActivity());
+                    break;
+                case 5:
+                    ActivityUtil.startDealerList(getActivity());
+                    break;
+                case 7:
+                    ActivityUtil.startDealerBuy(getActivity());
                     break;
             }
         });
@@ -255,19 +314,19 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     break;
                 case 3:
                     //我的发帖
-                    WebUtil.jumpMyWeb(URLs.HTML_MY_TALK, getContext());
+                    WebUtil.jumpMyWeb(URLs.HTML_MY_TALK, getActivity());
                     break;
                 case 4:
                     //评论我的
                     viewModel.setMessageReadTime(Constant.MESSAGE_CODE_COMMENT_ME);
                     MyApplication.messageState.setCommentMe(false);
-                    WebUtil.jumpMyWeb(URLs.HTML_MY_COMMENT, getContext());
+                    WebUtil.jumpMyWeb(URLs.HTML_MY_COMMENT, getActivity());
                     break;
                 case 5:
                     //赞我的
                     viewModel.setMessageReadTime(Constant.MESSAGE_CODE_LIKE_ME);
                     MyApplication.messageState.setLike(false);
-                    WebUtil.jumpMyWeb(URLs.HTML_MY_LAUD, getContext());
+                    WebUtil.jumpMyWeb(URLs.HTML_MY_LAUD, getActivity());
                     break;
                 case 6:
                     //我的积分
@@ -282,7 +341,7 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     break;
                 case 9:
                     //我要开店
-                    WebUtil.jumpMyWeb(URLs.HTML_NEW_SHOP, getActivity());
+                    WebUtil.jumpMyAgentWeb(URLs.HTML_NEW_SHOP, getActivity());
                     break;
                 case 10:
                     //我要进货
@@ -297,25 +356,32 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
 //                    ActivityUtil.startCouponActivity(getActivity());
                     WebUtil.jumpMyWeb(URLs.HTML_MY_COUPONS, getActivity());
                     break;
-                case 13:
-                    if (!MyApplication.isLogin()) {
-                        ActivityUtil.startLoginActivity(getActivity());
-                        return;
-                    }
-                    if (RongIM.getInstance() != null) {
-                        WeakReference<Context> wr = new WeakReference<>(
-                                getContext());
-                        Map<String, Boolean> map = new HashMap<>();
-                        map.put(Conversation.ConversationType.PRIVATE.getName(), false);
-                        RongIM.getInstance().startConversationList(wr.get(), map);
-                    }
-                    MyApplication.messageState.setMyMessage(0);
-                    ((List<RxMyItem>) adapter.getData()).get(position).setHasMsg(false);
-                    settingAdapter.notifyItemChanged(position);
+//                case 13:
+//                    if (!MyApplication.isLogin()) {
+//                        ActivityUtil.startLoginActivity(getActivity());
+//                        return;
+//                    }
+//                    if (RongIM.getInstance() != null) {
+//                        WeakReference<Context> wr = new WeakReference<>(
+//                                getContext());
+//                        Map<String, Boolean> map = new HashMap<>();
+//                        map.put(Conversation.ConversationType.PRIVATE.getName(), false);
+//                        RongIM.getInstance().startConversationList(wr.get(), map);
+//                    }
+//                    MyApplication.messageState.setMyMessage(0);
+//                    ((List<RxMyItem>) adapter.getData()).get(position).setHasMsg(false);
+//                    settingAdapter.notifyItemChanged(position);
+//                    break;
+//                case 14:
+//                    ActivityUtil.startSettingActivity(getActivity(), MyApplication.messageState.isNewestVersion(),
+//                            viewModel.introduce, viewModel.versionName);
+//                    break;
+
+                case 15:
+                    ActivityUtil.startDealerList(getActivity());
                     break;
-                case 14:
-                    ActivityUtil.startSettingActivity(getActivity(), MyApplication.messageState.isNewestVersion(),
-                            viewModel.introduce, viewModel.versionName);
+                case 16:
+                    ActivityUtil.startDealerBuy(getActivity());
                     break;
             }
         });
@@ -333,9 +399,9 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
         rvOrder.setAdapter(orderAdapter);
         orderAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (position < 4) {
-                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER) + "&tabIndex=" + (position + 1), getContext());
+                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER) + "&tabIndex=" + (position + 1), getActivity());
             } else {
-                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_RETURN_ORDER), getContext());
+                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_RETURN_ORDER), getActivity());
             }
         });
     }
@@ -395,7 +461,7 @@ public class MyFragment extends BaseBindFragment implements View.OnClickListener
                     startActivity(intent);
                     return;
                 }
-                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER), getContext());
+                WebUtil.jumpMyWeb(URLs.getHTMLuserInfo(MyApplication.USER_ID, URLs.HTML_MY_ORDER), getActivity());
                 break;
             case R.id.my_pic:
             case R.id.ll_user_info:

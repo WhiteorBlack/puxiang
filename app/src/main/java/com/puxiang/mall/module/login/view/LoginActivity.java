@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.R;
@@ -29,7 +30,7 @@ public class LoginActivity extends BaseBindActivity {
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_new);
         isLogin = getIntent().getBooleanExtra("isLogin", true);
-        mImmersionBar.keyboardEnable(false).init();
+        mImmersionBar.keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
     }
 
     @Override
@@ -41,6 +42,7 @@ public class LoginActivity extends BaseBindActivity {
         }else {
             binding.viewpager.setCurrentItem(1);
         }
+        setBarHeight(binding.ivBar);
 
     }
 

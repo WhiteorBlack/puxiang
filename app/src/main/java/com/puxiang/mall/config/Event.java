@@ -28,4 +28,6 @@ public interface Event {
     int LOGOUT = 2021;
     int SING_OK = 2022;
     int LOGIN_REFRESH=2023;
+    int DISABLE_SCROLL=2024;
+    int ENABLE_SCROLL=2025;
 }

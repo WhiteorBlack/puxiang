@@ -2,6 +2,9 @@ package com.puxiang.mall.module.userinfo.viewmodel;
 
 import android.databinding.ObservableField;
 
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.config.CacheKey;
@@ -94,10 +97,23 @@ public class SettingsViewModel implements ViewModel {
             RongIM.getInstance().logout();
         }
         EventBus.getDefault().post(Event.RELOAD);
+        EventBus.getDefault().post(Event.LOGOUT);
         MyApplication.isLoginOB.set(false);
         MyApplication.messageState.setIsSeller(false);
         MyApplication.messageState.setIsDealer(false);
         MyApplication.messageState.setIsMember(false);
+        MyApplication.messageState.clearMessage();
+        MyApplication.pushService.unbindAccount(new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Logger.e("unbind success");
+            }
+
+            @Override
+            public void onFailed(String s, String s1) {
+                Logger.e("unbind fail  "+ s +s1);
+            }
+        });
     }
 
     //接收关闭请求

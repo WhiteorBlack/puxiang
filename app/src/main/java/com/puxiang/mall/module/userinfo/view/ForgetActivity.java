@@ -24,6 +24,7 @@ public class ForgetActivity extends BaseBindActivity implements View.OnClickList
     @Override
     public void initView() {
         binding.toolbar.setTitle("忘记密码");
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {
@@ -50,7 +51,7 @@ public class ForgetActivity extends BaseBindActivity implements View.OnClickList
 
     @Override
     protected void viewModelDestroy() {
-        if (viewModel!=null){
+        if (viewModel != null) {
             viewModel.destroy();
         }
     }

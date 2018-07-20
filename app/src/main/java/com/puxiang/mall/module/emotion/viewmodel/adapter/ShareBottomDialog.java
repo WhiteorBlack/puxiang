@@ -57,7 +57,6 @@ public class ShareBottomDialog extends BottomBaseDialog<ShareBottomDialog> {
                     return;
                 }
 
-                Log.e("2222", "onResult: " + shareInfo.getRawUrl());
                 ApiWrapper.getInstance().shareOK(shareInfo.getRawUrl())
                         .subscribe(new NetworkSubscriber<String>() {
                             @Override
@@ -71,12 +70,10 @@ public class ShareBottomDialog extends BottomBaseDialog<ShareBottomDialog> {
 
             @Override
             public void onError(SHARE_MEDIA platform, Throwable t) {
-                Log.e("2222", "onError: " + t.toString());
             }
 
             @Override
             public void onCancel(SHARE_MEDIA platform) {
-                Log.e("2222", "onCancel: " + platform.toString());
             }
         };
     }

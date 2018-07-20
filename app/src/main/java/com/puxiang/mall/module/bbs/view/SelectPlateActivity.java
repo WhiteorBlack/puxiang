@@ -30,6 +30,7 @@ public class SelectPlateActivity extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle(getString(R.string.select_plate));
         initRecyclerView();
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

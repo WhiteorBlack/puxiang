@@ -5,122 +5,142 @@
     <data>
 
         <import type="com.puxiang.mall.R" />
-        <import type="android.view.View"/>
-        <import type="com.puxiang.mall.MyApplication"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.puxiang.mall.MyApplication" />
+
+        <import type="com.puxiang.mall.utils.AppUtil" />
 
         <variable
             name="viewModel"
             type="com.puxiang.mall.module.mall.viewmodel.MallViewModel" />
+
         <variable
             name="msgModel"
-            type="com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel"/>
+            type="com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel" />
+
         <variable
             name="messageState"
-            type="com.puxiang.mall.module.my.model.ObMessageState"/>
+            type="com.puxiang.mall.module.my.model.ObMessageState" />
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_parent"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarSizeHeight"
-        android:background="@color/mall_activity"
         android:clickable="true"
         android:gravity="center_horizontal|bottom"
         android:orientation="horizontal"
-        android:paddingBottom="15px">
+        android:paddingBottom="5px">
 
-        <ImageView
-            android:layout_width="147px"
-            android:layout_height="60px"
-            android:layout_marginLeft="40px"
-            android:background="@mipmap/sc_logo" />
-
-        <ImageView
-            android:id="@+id/iv_scan"
-            android:layout_width="@dimen/searchBarIconSize"
-            android:layout_height="@dimen/searchBarIconSize"
-            android:layout_marginBottom="1px"
-            android:layout_marginLeft="10px"
-            android:background="@mipmap/nav_scan_w" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/ll_scan"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:id="@+id/ll_search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/searchEditHeight"
-                android:alpha="0.36"
-                android:background="@drawable/bg_search_bar"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-            </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30px"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="50px"
-                android:layout_height="50px"
+                android:id="@+id/iv_scan"
+                android:layout_width="@dimen/searchBarIconSize"
+                android:layout_height="@dimen/searchBarIconSize"
+                android:src="@mipmap/nav_scan_w" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_scan"
+                android:text="扫一扫"
+                android:textColor="@color/white"
+                android:textSize="18px" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_warn"
+            android:layout_width="68px"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25px">
+
+
+            <ImageView
+                android:id="@+id/iv_warn"
+                android:layout_width="@dimen/searchBarIconSize"
+                android:layout_height="@dimen/searchBarIconSize"
+                android:scaleType="fitCenter"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/nav_warn_w" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_warn"
+                android:layout_centerHorizontal="true"
+                android:text="消 息"
+                android:textColor="@color/white"
+                android:textSize="18px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="top|right"
+                android:layout_marginRight="5px"
+                android:background="@drawable/mall_message_unread"
+                android:paddingBottom="2px"
+                android:paddingLeft="8px"
+                android:paddingRight="8px"
+                android:paddingTop="2px"
+                android:text="@{msgModel.msgCount+``}"
+                android:textColor="@color/white"
+                android:textSize="18px"
+                android:visibility="@{msgModel.msgCount>0?View.VISIBLE:View.GONE}" />
+        </RelativeLayout>
+
+
+        <FrameLayout
+            android:id="@+id/fl_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/searchEditHeight"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15px"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_toLeftOf="@+id/rl_warn"
+            android:layout_toRightOf="@+id/ll_scan"
+            android:layout_weight="1"
+            android:background="@drawable/bg_mall_search_bar">
+
+
+            <ImageView
+                android:layout_width="38px"
+                android:layout_height="42px"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20px"
                 android:alpha="1"
-                android:background="@mipmap/nav_search_w" />
+                android:background="@mipmap/search_a" />
 
             <TextView
                 android:id="@+id/tv_search"
                 style="@style/homeSearchTips"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="80px"
                 android:layout_marginRight="20px"
                 android:alpha="1"
+                android:gravity="center_vertical"
                 android:text="@{viewModel.searchText}"
-                android:textColor="#fff"
-                android:textSize="25px" />
+                android:textColor="#b5b5b4"
+                android:textSize="28px" />
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="55px"
-            android:layout_height="52px"
-            android:layout_marginBottom="1px"
-            android:layout_marginLeft="20px"
-            android:layout_marginRight="30px">
-
-            <ImageView
-                android:id="@+id/iv_warn"
-                android:layout_width="@dimen/searchBarIconSize"
-                android:layout_height="@dimen/searchBarIconSize"
-                android:layout_gravity="bottom|left"
-                android:background="@mipmap/nav_warn_w" />
-
-            <ImageView
-                android:layout_width="18px"
-                android:background="@drawable/red_msg_point"
-                android:layout_gravity="right|top"
-                android:visibility="@{messageState.isWarnMessage?View.VISIBLE:View.INVISIBLE}"
-                android:layout_marginRight="3px"
-                android:layout_height="18px" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|right"
-                android:background="@drawable/white_circle_bg"
-                android:paddingBottom="2px"
-                android:paddingLeft="8px"
-                android:paddingRight="8px"
-                android:paddingTop="2px"
-                android:visibility="gone"
-                android:text="@{msgModel.msgCount+``}"
-                android:textColor="@color/mall_activity"
-                android:textSize="18px" />
-        </FrameLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

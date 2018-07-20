@@ -40,6 +40,7 @@ public class ShowHeadPicActivity extends BaseBindActivity implements EasyPermiss
             return true;
         });
         mImmersionBar.statusBarDarkFont(false).init();
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {

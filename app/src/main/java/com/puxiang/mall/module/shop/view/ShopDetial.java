@@ -19,6 +19,7 @@ import com.orhanobut.logger.Logger;
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
+import com.puxiang.mall.config.Event;
 import com.puxiang.mall.databinding.ActivityShopDetialBinding;
 import com.puxiang.mall.module.classify.viewmodel.HeadBannerViewModel;
 import com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel;
@@ -31,6 +32,8 @@ import com.puxiang.mall.utils.ScreenUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +59,7 @@ public class ShopDetial extends BaseBindActivity implements TextView.OnEditorAct
         binding.headBanner.setAdapter(viewModel);
         shopId = getIntent().getStringExtra("shopId");
         mImmersionBar.statusBarDarkFont(false).keyboardEnable(false).init();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -63,10 +67,12 @@ public class ShopDetial extends BaseBindActivity implements TextView.OnEditorAct
         initIndicator(binding.bottomView);
         initBanner(binding.headBanner);
         viewModel.getShopDetialData();
-        FrameLayout.LayoutParams params= (FrameLayout.LayoutParams) binding.headBanner.getLayoutParams();
-        params.height=(int) (MyApplication.widthPixels * 0.347);
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) binding.headBanner.getLayoutParams();
+        params.height = (int) (MyApplication.widthPixels * 0.347);
         binding.headBanner.setLayoutParams(params);
+        binding.nslParent.setScrollable(false);
         binding.toolbarShopDetial.et.setOnEditorActionListener(this);
+        setBarHeight(binding.toolbarShopDetial.ivBar);
     }
 
 
@@ -111,9 +117,19 @@ public class ShopDetial extends BaseBindActivity implements TextView.OnEditorAct
         binding.bottomView.setCurrentItem(pos);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Integer i) {
+        if (i == Event.ENABLE_SCROLL) {
+            binding.nslParent.setScrollable(true);
+        }
+    }
+
     @Override
     protected void viewModelDestroy() {
-        if (viewModel != null) viewModel.destroy();
+        EventBus.getDefault().unregister(this);
+        if (viewModel != null) {
+            viewModel.destroy();
+        }
     }
 
     @Override

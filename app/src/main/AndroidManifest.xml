@@ -3,38 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.puxiang.mall">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
-    <!-- alipay -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
     <!-- 友盟统计 -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission
+        android:name="android.permission.SET_DEBUG_APP"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <!--阿里移动推送相关权限-->
     <!--Android 6.0版本可去除，用于选举信息（通道复用）的同步-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!--进行网络访问和网络状态监控相关的权限声明-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <!--允许对sd卡进行读写操作-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--网络库使用，当网络操作时需要确保事务完成不被杀掉-->
@@ -72,18 +63,10 @@
     <!--读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <!-- 银联 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.NFC" />
 
     <uses-feature android:name="android.hardware.nfc.hce" />
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD" />
 
@@ -237,6 +220,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+
         <activity
             android:name=".module.shop.view.ShopDetial"
             android:launchMode="singleTop"
@@ -296,6 +280,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".module.seller.view.DealerManager"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".module.login.view.BindingMobileActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -309,6 +297,40 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.refund.view.ReturnAddressActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.userinfo.view.EmailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.goods.view.GoodsInfoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.shop.view.GoodsManager"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.web.view.WebViewNew"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.dealer.view.DealerListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.dealer.view.DealerStatueActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.dealer.view.DealerBuyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
@@ -370,6 +392,7 @@
             android:name="com.puxiang.mall.module.pay.alipay.H5PayDemoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
         <!-- wechat callback-->
         <activity
             android:name="com.puxiang.mall.wxapi.WXEntryActivity"
@@ -452,6 +475,29 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="houtai" />
+
+        <!--阿里云推送-->
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="24794747" />
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="3583be9fa2e15a9f7e8e273522191a01" />
+
+        <receiver
+            android:name="com.puxiang.mall.receiver.alibaba.MyMessageReceiver"
+            android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
 
         <!--百度地图-->
         <meta-data

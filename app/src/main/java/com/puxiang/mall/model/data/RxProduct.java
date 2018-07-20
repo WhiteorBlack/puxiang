@@ -27,6 +27,7 @@ public class RxProduct extends BaseObservable {
     private String unit;
     private String title;
     private int stock;
+    private int type;
     private double price;
     private int hit;
     private String description;
@@ -39,14 +40,24 @@ public class RxProduct extends BaseObservable {
     private String mainPictureUrl;
     private double marketPrice;
     private String productName;
-    private ObservableBoolean isSelected=new ObservableBoolean(false);
-    private ObservableInt buyCount=new ObservableInt(1);
+    private ObservableBoolean isSelected = new ObservableBoolean(false);
+    public boolean manSelected = false;
+    private ObservableInt buyCount = new ObservableInt(1);
     private int batchStartQty;
-    private ObservableField<Double> batchTotalPrice=new ObservableField<>(0.0d);
+    private ObservableField<Double> batchTotalPrice = new ObservableField<>(0.0d);
     private String prices;
     private String shopId;
+    private int isMixBatch;
     private double initTotalPrice;
     private String shopName;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getShopName() {
         return shopName;

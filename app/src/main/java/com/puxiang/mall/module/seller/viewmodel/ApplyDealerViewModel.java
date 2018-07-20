@@ -83,7 +83,7 @@ public class ApplyDealerViewModel extends BaseObservable implements ViewModel, O
     private int num = 0;
     private ObservableField<RxDealer> rxDealer = new ObservableField<>(new RxDealer());
     private GalleryFinal.OnHanlderResultCallback resultCallback;
-    private LoadingWindow loadingWindow;
+//    private LoadingWindow loadingWindow;
 
     private Map<String, String> picMap = new HashMap<>();
     private boolean uploadOK = true;
@@ -93,7 +93,7 @@ public class ApplyDealerViewModel extends BaseObservable implements ViewModel, O
     public ApplyDealerViewModel(ApplyDealerActivity activity) {
         this.activity = activity;
         initCityData();
-        loadingWindow = new LoadingWindow(activity);
+//        loadingWindow = new LoadingWindow(activity);
         initFunctionConfig();
         getDealer();
     }
@@ -192,7 +192,7 @@ public class ApplyDealerViewModel extends BaseObservable implements ViewModel, O
      * 上传图片
      */
     public void uploadImage() {
-        loadingWindow.showWindow();
+//        loadingWindow.showWindow();
         upload(checkPhotoUrl());
     }
 
@@ -250,7 +250,7 @@ public class ApplyDealerViewModel extends BaseObservable implements ViewModel, O
                     public void onFail(RetrofitUtil.APIException e) {
                         super.onFail(e);
                         uploadOK = false;
-                        loadingWindow.hidWindow();
+//                        loadingWindow.hidWindow();
                     }
 
                     @Override
@@ -271,17 +271,17 @@ public class ApplyDealerViewModel extends BaseObservable implements ViewModel, O
             return;
         }
         RxDealer rxDealer = getRxDealer();
-        ApiWrapper.getInstance().becomeDealer(rxDealer.getDealerId(), rxDealer.getName(), rxDealer.getLinkMan(), rxDealer.getLinkPhone(), picMap.get(getFaceUri()), picMap.get(getBackUri()),
+        ApiWrapper.getInstance().becomeDealer(rxDealer.getDealerId(),rxDealer.getName(), rxDealer.getLinkMan(), rxDealer.getLinkPhone(), picMap.get(getFaceUri()), picMap.get(getBackUri()),
                 rxDealer.getProvinceCode(), rxDealer.getProvinceName(), rxDealer.getCityCode(), rxDealer.getCityName(), rxDealer.getCountyCode(), rxDealer.getCountyName(),
                 rxDealer.getStreetCode(), rxDealer.getStreetName(), rxDealer.getDetailAddress())
                 .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                .doOnTerminate(loadingWindow::hidWindow)
+//                .doOnTerminate(loadingWindow::hidWindow)
                 .subscribe(new NetworkSubscriber<RxDealer>() {
                     @Override
                     public void onFail(RetrofitUtil.APIException e) {
                         super.onFail(e);
                         ToastUtil.toast("网络错误请重试");
-                        loadingWindow.hidWindow();
+//                        loadingWindow.hidWindow();
                     }
 
                     @Override

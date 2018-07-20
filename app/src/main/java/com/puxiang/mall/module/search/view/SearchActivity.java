@@ -1,7 +1,9 @@
 package com.puxiang.mall.module.search.view;
 
 import android.databinding.DataBindingUtil;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.puxiang.mall.BaseBindActivity;
@@ -14,7 +16,7 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-public class SearchActivity extends BaseBindActivity implements TagFlowLayout.OnTagClickListener, View.OnClickListener {
+public class SearchActivity extends BaseBindActivity implements TagFlowLayout.OnTagClickListener, View.OnClickListener, TextView.OnEditorActionListener {
 
     private ActivitySearchBinding binding;
     private SearchViewModel viewModel;
@@ -29,6 +31,8 @@ public class SearchActivity extends BaseBindActivity implements TagFlowLayout.On
     public void initView() {
         binding.toolbarLayout.et.setCursorVisible(false);
         binding.toolbarLayout.et.setOnClickListener(v -> binding.toolbarLayout.et.setCursorVisible(true));
+        binding.toolbarLayout.et.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        binding.toolbarLayout.et.setOnEditorActionListener(this);
         TagAdapter<String> hisAdapter = new TagAdapter<String>(viewModel.hisList) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
@@ -52,6 +56,7 @@ public class SearchActivity extends BaseBindActivity implements TagFlowLayout.On
         binding.tflHot.setOnTagClickListener(this);
         binding.tflHot.setAdapter(hotAdapter);
         binding.setViewModel(viewModel);
+        setBarHeight(binding.toolbarLayout.ivBar);
     }
 
     @Override
@@ -67,7 +72,6 @@ public class SearchActivity extends BaseBindActivity implements TagFlowLayout.On
                 onBackPressed();
                 break;
             case R.id.iv_search_btn:
-              //  viewModel.keyword.set(MyTextUtils.getEditTextString(binding.toolbarLayout.et));
                 viewModel.startSearch(MyTextUtils.getEditTextString(binding.toolbarLayout.et));
                 break;
             case R.id.iv_del:
@@ -81,5 +85,14 @@ public class SearchActivity extends BaseBindActivity implements TagFlowLayout.On
         String keyword = ((TextView) view).getText().toString();
         viewModel.startSearch(keyword);
         return true;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId==EditorInfo.IME_ACTION_SEARCH){
+            viewModel.startSearch(MyTextUtils.getEditTextString(binding.toolbarLayout.et));
+            return true;
+        }
+        return false;
     }
 }

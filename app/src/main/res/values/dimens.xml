@@ -38,7 +38,7 @@
     <dimen name="px6">6px</dimen>
     <dimen name="searchBarHeight">88px</dimen>
     <dimen name="searchBarWide">640px</dimen>
-    <dimen name="searchBarIconSize">58px</dimen>
+    <dimen name="searchBarIconSize">48px</dimen>
     <dimen name="searchEditHeight">60px</dimen>
     <dimen name="myInfoTextSize">35px</dimen>
     <dimen name="progress_width">200dp</dimen>

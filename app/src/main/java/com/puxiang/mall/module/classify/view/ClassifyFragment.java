@@ -11,12 +11,9 @@ import android.widget.LinearLayout;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.FragmentClassifyBinding;
-import com.puxiang.mall.databinding.ViewHeadBannerBinding;
 import com.puxiang.mall.fragment.BaseBindFragment;
-import com.puxiang.mall.module.classify.adapter.ClassifyRightAdapter;
+import com.puxiang.mall.module.classify.adapter.ClassfyRightSectionAdapter;
 import com.puxiang.mall.module.classify.viewmodel.ClassifyViewModel;
-import com.puxiang.mall.module.classify.viewmodel.HeadBannerViewModel;
-import com.puxiang.mall.network.URLs;
 import com.puxiang.mall.utils.ActivityUtil;
 
 /**
@@ -24,11 +21,9 @@ import com.puxiang.mall.utils.ActivityUtil;
  */
 public class ClassifyFragment extends BaseBindFragment implements View.OnClickListener {
 
-    private ClassifyRightAdapter rightAdapter;
+    private ClassfyRightSectionAdapter rightAdapter;
     private FragmentClassifyBinding binding;
     private ClassifyViewModel viewModel;
-    private ViewHeadBannerBinding headViewBinding;
-    private HeadBannerViewModel headViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,18 +33,14 @@ public class ClassifyFragment extends BaseBindFragment implements View.OnClickLi
     @Override
     public View initBinding(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_classify, container, false);
-        rightAdapter = new ClassifyRightAdapter(R.layout.item_classify_right);
+        rightAdapter = new ClassfyRightSectionAdapter(R.layout.item_classify_right, R.layout.item_classfy_title, null);
         viewModel = new ClassifyViewModel(this, rightAdapter);
-
-        headViewModel = new HeadBannerViewModel(this);
-        binding.layoutHead.setViewModel(headViewModel);
         return binding.getRoot();
     }
 
     @Override
     public void update() {
         super.update();
-        headViewModel.getBannerData("classfy");
     }
 
     /**
@@ -58,31 +49,29 @@ public class ClassifyFragment extends BaseBindFragment implements View.OnClickLi
     @Override
     public void initView() {
         initRecycler();
-        initHeanView();
-        initBanner(binding.layoutHead.headBanner);
         binding.toolbar.llClassifyToolbar.setOnClickListener(this);
-        LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) binding.layoutHead.headBanner.getLayoutParams();
-        params.height=(int) (MyApplication.widthPixels * 0.347*0.7);
-        binding.layoutHead.headBanner.setLayoutParams(params);
+        initTopImage();
+        setBarHeight(binding.toolbar.ivBar);
     }
 
-    private void initHeanView() {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.layoutHead.headBanner.getLayoutParams();
-        params.height = MyApplication.widthPixels * 7 / 20;
-        binding.layoutHead.headBanner.setLayoutParams(params);
-        binding.layoutHead.headBanner.setAdapter(headViewModel);
-        binding.layoutHead.headBanner.setDelegate(headViewModel);
+    /**
+     * 初始化顶部图片尺寸
+     */
+    private void initTopImage() {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.sdvClassfy.getLayoutParams();
+        params.height = (int) ((MyApplication.widthPixels * 2 / 3 - 40) * 0.5);
+        binding.sdvClassfy.setLayoutParams(params);
     }
-
 
     /**
      * 初始化RV
      */
     private void initRecycler() {
-        binding.rv.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        binding.rv.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         binding.rv.addOnItemTouchListener(viewModel.clickListener());
         binding.rv.setAdapter(rightAdapter);
-        binding.vtl.setItemOnClickListener(position -> viewModel.getRightData(position));
+        binding.vtl.setTabMargin(120);
+        binding.vtl.setItemOnClickListener(position -> viewModel.setRightData(position));
         binding.setViewModel(viewModel);
         binding.rv.setNestedScrollingEnabled(false);
         binding.rv.setHasFixedSize(true);
@@ -92,6 +81,7 @@ public class ClassifyFragment extends BaseBindFragment implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_classify_toolbar:
+            case R.id.tv_search:
                 ActivityUtil.startSearchActivity(this.getActivity(), "");
                 break;
         }
@@ -102,6 +92,5 @@ public class ClassifyFragment extends BaseBindFragment implements View.OnClickLi
         if (viewModel != null) {
             viewModel.destroy();
         }
-        if (headViewModel!=null) headViewModel.destroy();
     }
 }

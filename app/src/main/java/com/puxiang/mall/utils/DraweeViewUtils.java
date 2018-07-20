@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -640,8 +641,11 @@ public class DraweeViewUtils {
         return null;
     }
 
-    public static Uri getUriPath(String path){
-        Uri uri=new Uri.Builder().scheme(UriUtil.LOCAL_FILE_SCHEME).path(path).build();
+    public static Uri getUriPath(String path) {
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
+        Uri uri = new Uri.Builder().scheme(UriUtil.LOCAL_FILE_SCHEME).path(path).build();
         return uri;
     }
 

@@ -42,6 +42,7 @@ public class PayResultActivity extends BaseBindActivity {
         EventBus.getDefault().post(Event.RELOAD_WEB);
         initRv(binding.rvCollect);
         collectionViewModel.getCollectProducts(4, 1);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     private void initRv(RecyclerView rvCollect) {

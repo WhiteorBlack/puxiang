@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="5px"
                         android:background="@color/mall_activity"
-                        android:visibility="@{viewModel.selectPos==0?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{viewModel.selectPos==0?View.VISIBLE:View.INVISIBLE}" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -125,7 +125,7 @@
                         android:layout_height="5px"
                         android:layout_alignParentBottom="true"
                         android:background="@color/mall_activity"
-                        android:visibility="@{viewModel.selectPos==1?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{viewModel.selectPos==1?View.VISIBLE:View.INVISIBLE}" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -150,7 +150,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="5px"
                         android:background="@color/mall_activity"
-                        android:visibility="@{viewModel.selectPos==2?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{viewModel.selectPos==2?View.VISIBLE:View.INVISIBLE}" />
                 </LinearLayout>
             </LinearLayout>
 

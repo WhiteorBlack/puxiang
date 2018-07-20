@@ -12,10 +12,14 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.puxiang.mall.model.data.RxClassfyRightItem;
 import com.puxiang.mall.module.bbs.view.FriendActivity;
 import com.puxiang.mall.module.bbs.view.PublishActivity;
 import com.puxiang.mall.module.bbs.view.SelectPlateActivity;
 import com.puxiang.mall.module.classify.view.ClassifyFragment;
+import com.puxiang.mall.module.dealer.view.DealerBuyActivity;
+import com.puxiang.mall.module.dealer.view.DealerListActivity;
+import com.puxiang.mall.module.dealer.view.DealerStatueActivity;
 import com.puxiang.mall.module.from.view.FromActivity;
 import com.puxiang.mall.module.integral.view.IntegralActivity;
 import com.puxiang.mall.module.login.view.BindingMobileActivity;
@@ -43,13 +47,16 @@ import com.puxiang.mall.module.search.view.SearchActivity;
 import com.puxiang.mall.module.search.view.SearchBBsListActivity;
 import com.puxiang.mall.module.search.view.SearchListActivity;
 import com.puxiang.mall.module.seller.view.ApplyDealerActivity;
+import com.puxiang.mall.module.seller.view.DealerManager;
 import com.puxiang.mall.module.seller.view.SellerNotifyActivity;
 import com.puxiang.mall.module.shop.view.BuyGoodsList;
+import com.puxiang.mall.module.shop.view.GoodsManager;
 import com.puxiang.mall.module.shop.view.SelectCityActivity;
 import com.puxiang.mall.module.shop.view.ShopDetial;
 import com.puxiang.mall.module.shop.view.ShopListActivity;
 import com.puxiang.mall.module.shoppingcart.view.ShoppCartActivity;
 import com.puxiang.mall.module.userinfo.view.ChangeMobileActivity;
+import com.puxiang.mall.module.userinfo.view.EmailActivity;
 import com.puxiang.mall.module.userinfo.view.ForgetActivity;
 import com.puxiang.mall.module.userinfo.view.InfoActivity;
 import com.puxiang.mall.module.userinfo.view.NameActivity;
@@ -144,7 +151,7 @@ public class ActivityUtil {
 
         switch (type) {
             case ListType.LINK_INTEGRAL_TASK:
-//                activity.startActivity(new Intent(activity, IntegralActivity.class));
+                activity.startActivity(new Intent(activity, IntegralActivity.class));
                 break;
 
             case ListType.LINK_ACTIVITY:
@@ -177,9 +184,9 @@ public class ActivityUtil {
                     ActivityUtil.startBestShopActivity(activity);
                     return;
                 }
-                if (linkUrl.contains(URLs.HTML_SECKILL_PAGE_KEY)){
+                if (linkUrl.contains(URLs.HTML_SECKILL_PAGE_KEY)) {
                     //秒杀必须登录
-                    WebUtil.jumpMyWeb(linkUrl,activity);
+                    WebUtil.jumpMyWeb(linkUrl, activity);
                     return;
                 }
                 WebUtil.jumpWeb(linkUrl, activity);
@@ -358,7 +365,12 @@ public class ActivityUtil {
         activity.startActivityForResult(intent, i);
     }
 
-    //
+    public static void startEmailActivityForResult(Activity activity, String info, int i) {
+        Intent intent = new Intent(activity, EmailActivity.class);
+        intent.putExtra("info", info);
+        activity.startActivityForResult(intent, i);
+    }
+
     public static void startSelectPlateActivityForResult(Activity activity, String plateId) {
         Intent intent = new Intent(activity, SelectPlateActivity.class);
         if (!StringUtil.isEmpty(plateId)) {
@@ -749,6 +761,16 @@ public class ActivityUtil {
     }
 
     /**
+     * 经销商信息管理
+     *
+     * @param activity
+     */
+    public static void startDealerManagerActivity(Activity activity) {
+        Intent intent = new Intent(activity, DealerManager.class);
+        activity.startActivity(intent);
+    }
+
+    /**
      * 我的优惠券
      *
      * @param activity
@@ -769,5 +791,129 @@ public class ActivityUtil {
         activity.startActivity(intent);
     }
 
+    /**
+     * 商品管理页面
+     *
+     * @param activity
+     */
+    public static void startGoodsManager(Activity activity) {
+        Intent intent = new Intent(activity, GoodsManager.class);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 商品管理页面
+     *
+     * @param activity
+     */
+    public static void startDealerList(Activity activity) {
+        Intent intent = new Intent(activity, DealerListActivity.class);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 采购页面
+     *
+     * @param activity
+     */
+    public static void startDealerBuy(Activity activity) {
+        Intent intent = new Intent(activity, DealerBuyActivity.class);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 经销商审核状态
+     *
+     * @param activity
+     */
+    public static void startDealerStatue(Activity activity,String data) {
+        Intent intent = new Intent(activity, DealerStatueActivity.class);
+        intent.putExtra("data",data);
+        activity.startActivity(intent);
+    }
+
+    public static void startClassfyLink(Activity activity, RxClassfyRightItem bean) {
+        String type = bean.getLinkType();
+        if (StringUtil.isEmpty(type)) {
+            type = ListType.LINK_HTML;
+        }
+
+        switch (type) {
+            case ListType.LINK_INTEGRAL_TASK:
+                activity.startActivity(new Intent(activity, IntegralActivity.class));
+                break;
+
+            case ListType.LINK_ACTIVITY:
+                openChrome(activity, bean.getLinkContent());
+                break;
+
+            case ListType.LINK_ESPORT:
+                EventBus.getDefault().post(Event.GO_PLATES);
+                startMainActivity(activity);
+                break;
+            case ListType.LINK_HTML:
+            case ListType.LINK_H5:
+            case ListType.LINK_PRODUCT:
+            case ListType.LINK_INTEGRAL_MALL:
+                String linkUrl = bean.getLinkContent();
+                if (linkUrl.contains("stock_list.htm")) {
+                    /**
+                     * 跳转到进货页面
+                     * 如果是普通用户则跳转到开通经销商页面
+                     */
+                    if (MyApplication.isLogin()) {
+                        startStockListActivity(activity);
+                    } else {
+                        startLoginActivity(activity);
+                    }
+                    return;
+                }
+                if (linkUrl.contains("shop_list.html")) {
+                    //跳转精选商家
+                    ActivityUtil.startBestShopActivity(activity);
+                    return;
+                }
+                if (linkUrl.contains(URLs.HTML_SECKILL_PAGE_KEY)) {
+                    //秒杀必须登录
+                    WebUtil.jumpMyWeb(linkUrl, activity);
+                    return;
+                }
+                WebUtil.jumpWeb(linkUrl, activity);
+                break;
+            case ListType.LINK_POST:
+                String postId = bean.getLinkContent();
+                startPostDetailActivity(activity, postId);
+                break;
+            case ListType.LINK_PLATE:
+                String plateId = bean.getLinkContent();
+                Logger.d("plateId", plateId);
+                if (!StringUtil.isEmpty(plateId)) {
+                    startPlatePostActivity(activity, plateId);
+                }
+                break;
+            case ListType.LINK_PLATE_TYPE:
+                ((MainActivity) activity).setCurrentItem(2);
+                break;
+            case ListType.LINK_CHANNEL:
+                String typeId = bean.getLinkContent();
+                String typeName = bean.getName();
+                startFromActivity(activity, typeId, typeName);
+                break;
+
+            case ListType.LINK_AI:
+                if (MyApplication.isLogin()) {
+//                    startAiActivity(activity, bean.getShuohuInfo());
+                } else {
+                    startLoginActivity(activity);
+                }
+                break;
+            case ListType.LINK_SEARCH:
+                String contentId = bean.getLinkContent();
+                if (!TextUtils.isEmpty(contentId)) {
+                    startSearchList(activity, contentId);
+                }
+                break;
+        }
+    }
 
 }

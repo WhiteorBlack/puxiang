@@ -1,19 +1,31 @@
 package com.puxiang.mall.module.web.viewmodel;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.webkit.ValueCallback;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.base.ErrorShow;
 import com.puxiang.mall.config.Event;
@@ -40,15 +52,27 @@ import com.puxiang.mall.widget.dialog.MapDialog;
 import com.puxiang.mall.widget.dialog.OnDialogExecuteListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import cn.finalteam.galleryfinal.utils.Utils;
 import io.reactivex.Observable;
 import io.rong.imkit.RongIM;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static android.app.Activity.RESULT_OK;
 import static com.puxiang.mall.utils.WebUtil.verifyUrlSuffixed;
 
 public class WebViewModel implements ViewModel {
@@ -177,6 +201,7 @@ public class WebViewModel implements ViewModel {
                 }
             }
 
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -211,6 +236,9 @@ public class WebViewModel implements ViewModel {
                     showText("删除");
                 } else if (StringUtil.isContains(url, URLs.HTML_GAMING_HALL_KEY, URLs.HTML_GHALL_INFO_KEY,
                         URLs.HTML_GHALL_DETAIL_KEY, URLs.HTML_GOODS_KEY, URLs.HTML_EXCHANGE_DETAIL_KEY)) {
+                    isShowIcon.set(true);
+                    isShowText.set(false);
+                } else if (StringUtil.isContains(url, URLs.HTML_ACTIVITY_KEY)) {
                     isShowIcon.set(true);
                     isShowText.set(false);
                 } else {
@@ -334,13 +362,50 @@ public class WebViewModel implements ViewModel {
                     //跳转增加退货邮件信息
                     String reId = StringUtil.getUrlValue(url, "reID=");
                     ActivityUtil.startRefundAddressActivity(activity, reId);
+                } else if (url.contains(URLs.HTML_DEALER_ORDER)) {
+                    WebUtil.jumpMyWeb(URLs.HTML_DEALER_ORDER,activity);
                 } else {
                     loadUrl.set(url);
                 }
                 return true;
             }
+
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+
+                // ------5.0以上手机执行------
+                Uri uri = request.getUrl();
+                String url = uri.toString();
+                return shouldInterceptRequest(view, url);
+            }
+
+
+//            @Override
+//            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+//                String newUrl = StringUtil.getNewUrl(url);
+//
+//                if (newUrl.equals(url)) {
+//                    return super.shouldInterceptRequest(view, url);
+//                }
+//
+//
+//                Request request1 = new Request.Builder()
+//                        .url(newUrl)
+//                        .build();
+//                Response response = null;
+//                try {
+//                    response = client.newCall(request1).execute();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                String type = Utils.getMimeType(newUrl);
+//                return new WebResourceResponse(type, response.header("content-encoding", "utf-8"), response.body().byteStream());
+//            }
+
         };
     }
+
 
     private String getDecoderUrl(String url) {
         try {
@@ -413,16 +478,21 @@ public class WebViewModel implements ViewModel {
      */
     public void getShareInfo() {
         String shareUrl = loadUrl.get().replaceAll("from=app", "from=html");
-        loadingWindow.showWindow();
-        if (shareUrl.contains(URLs.HTML_GOODS_KEY)) {
-            shareProduct(shareUrl);
-        } else if (shareUrl.contains(URLs.HTML_EXCHANGE_DETAIL_KEY)) {
-            shareIntegralProduct(shareUrl);
-        } else if (shareUrl.contains(URLs.HTML_LOTTERY_KEY)) {
-            shareLottery(shareUrl);
-        } else if (StringUtil.isContains(shareUrl, URLs.HTML_GAMING_HALL_KEY, URLs.HTML_GHALL_INFO_KEY, URLs
-                .HTML_GHALL_DETAIL_KEY)) {
-            shareLink(shareUrl);
+        if (shareUrl.contains(URLs.HTML_ACTIVITY_KEY)) {
+            shareActivity(shareUrl);
+        } else {
+
+            loadingWindow.showWindow();
+            if (shareUrl.contains(URLs.HTML_GOODS_KEY)) {
+                shareProduct(shareUrl);
+            } else if (shareUrl.contains(URLs.HTML_EXCHANGE_DETAIL_KEY)) {
+                shareIntegralProduct(shareUrl);
+            } else if (shareUrl.contains(URLs.HTML_LOTTERY_KEY)) {
+                shareLottery(shareUrl);
+            } else if (StringUtil.isContains(shareUrl, URLs.HTML_GAMING_HALL_KEY, URLs.HTML_GHALL_INFO_KEY, URLs
+                    .HTML_GHALL_DETAIL_KEY)) {
+                shareLink(shareUrl);
+            }
         }
     }
 
@@ -437,10 +507,15 @@ public class WebViewModel implements ViewModel {
                 .subscribe(new NetworkSubscriber<String>() {
                     @Override
                     public void onSuccess(String shareUrl) {
-                        ShareInfo shareInfo = new ShareInfo(shareUrl, "我在《蒲象商城》发现了 ", "", rawUrl);
+                        ShareInfo shareInfo = new ShareInfo(shareUrl, "我在《蒲象商城》发现了 ", "", rawUrl, toolBarTitle.get());
                         share(shareInfo);
                     }
                 });
+    }
+
+    private void shareActivity(String rawUrl) {
+        ShareInfo shareInfo = new ShareInfo("", "我在《蒲象商城》发现了 ", "", rawUrl, toolBarTitle.get());
+        share(shareInfo);
     }
 
     /**

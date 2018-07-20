@@ -61,7 +61,7 @@ public class ShopGoodsFragment extends BaseBindFragment {
         adapter.setOnLoadMoreListener(() -> viewModel.loadMore(), rv);
         rv.setHasFixedSize(true);
         rv.addOnItemTouchListener(viewModel.itemClickListener());
-        rv.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false));
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(adapter);
         rv.setOnTouchListener((view, motionEvent) -> {
             int[] point = new int[2];

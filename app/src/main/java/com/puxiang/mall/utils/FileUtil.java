@@ -1,11 +1,14 @@
 package com.puxiang.mall.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 
@@ -290,4 +293,39 @@ public class FileUtil {
         String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
         return path;
     }
+
+    public static Uri getMediaUriFromPath(Context context, String path) {
+        Uri uri = null;
+        if (path != null) {
+            path = Uri.decode(path);
+            Log.d("", "path2 is " + path);
+            ContentResolver cr = context.getContentResolver();
+            StringBuffer buff = new StringBuffer();
+            buff.append("(")
+                    .append(MediaStore.Images.ImageColumns.DATA)
+                    .append("=")
+                    .append("'" + path + "'")
+                    .append(")");
+            Cursor cur = cr.query(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    new String[]{MediaStore.Images.ImageColumns._ID},
+                    buff.toString(), null, null);
+            int index = 0;
+            for (cur.moveToFirst(); !cur.isAfterLast(); cur
+                    .moveToNext()) {
+                index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
+                index = cur.getInt(index);
+            }
+            if (index == 0) {
+            } else {
+                Uri uri_temp = Uri.parse("content://media/external/images/media/" + index);
+                Log.d("", "uri_temp is " + uri_temp);
+                if (uri_temp != null) {
+                    uri = uri_temp;
+                }
+            }
+        }
+        return uri;
+    }
+
 }

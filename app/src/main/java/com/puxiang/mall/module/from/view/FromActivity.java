@@ -31,6 +31,8 @@ public class FromActivity extends BaseBindActivity {
         binding.toolbar.setTitle(typeName);
         initRecyclerView(binding.rv);
         initRefresh(binding.storeHousePtrFrame);
+        setBarHeight(binding.toolbar.ivBar);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

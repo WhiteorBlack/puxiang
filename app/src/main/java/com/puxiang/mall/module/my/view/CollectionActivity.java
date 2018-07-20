@@ -44,6 +44,7 @@ public class CollectionActivity extends BaseBindActivity {
         binding.toolbar.setColor(R.color.white);
         binding.toolbar.setTextColor(R.color.text_black);
         viewModel.getCollectProducts(10,1);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

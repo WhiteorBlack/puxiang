@@ -46,6 +46,7 @@ public class ConversationActivity extends BaseBindActivity {
     public void initView() {
         AutoUtils.setSize(this, true, 720, 1154);
         AutoUtils.auto(binding.toolbar.getRoot());
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {

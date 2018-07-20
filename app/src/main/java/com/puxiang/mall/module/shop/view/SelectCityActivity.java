@@ -87,7 +87,7 @@ public class SelectCityActivity extends BaseBindActivity implements TextView.OnE
 
     @Override
     public void initView() {
-
+        setBarHeight(binding.toolbar.ivBar);
         binding.rv.setLayoutManager(mManager = new LinearLayoutManager(this));
         binding.rv.setAdapter(adapter);
         binding.rv.addItemDecoration(mDecoration = new SuspensionDecoration(this, cityList).setLeftPadding(80));

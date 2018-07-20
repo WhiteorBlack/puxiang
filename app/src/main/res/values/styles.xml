@@ -93,7 +93,7 @@
         <!-- 指示点容器左右内间距 -->
         <item name="banner_pointContainerLeftRightPadding">@dimen/sideMargin</item>
         <!-- 指示点上下外间距 -->
-        <item name="banner_pointTopBottomMargin">10px</item>
+        <item name="banner_pointTopBottomMargin">5px</item>
         <!-- 指示点左右外间距 -->
         <item name="banner_pointLeftRightMargin">-5px</item>
         <!-- 指示器的位置 -->
@@ -110,26 +110,36 @@
     <!-- Toolbar返回键 -->
     <style name="ToolbarBackBtnStyle">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">centerInside</item>
         <item name="android:paddingRight">@dimen/sideMargin</item>
         <item name="android:paddingLeft">20px</item>
-        <item name="android:paddingTop">26px</item>
         <item name="android:background">@color/mall_activity</item>
-        <item name="android:paddingBottom">26px</item>
         <item name="android:src">@mipmap/nav_back_w</item>
+        <item name="android:gravity">center</item>
+        <item name="android:onClick">onClick</item>
+    </style>
+
+    <!-- Toolbar返回键 -->
+    <style name="ToolbarBackBtnWhiteStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:paddingRight">@dimen/sideMargin</item>
+        <item name="android:paddingLeft">20px</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:src">@mipmap/nav_back_g</item>
         <item name="android:onClick">onClick</item>
     </style>
 
     <!-- Toolbar右侧功能键 -->
     <style name="ToolbarRightBtnStyle">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">centerInside</item>
         <item name="android:paddingRight">@dimen/sideMargin</item>
         <item name="android:paddingLeft">20px</item>
         <item name="android:paddingTop">26px</item>
-        <item name="android:paddingBottom">26px</item>
         <item name="android:onClick">onClick</item>
     </style>
 
@@ -440,6 +450,7 @@
         <item name="DialogTitleText">Loading…</item>
         <item name="DialogSpotCount">6</item>
     </style>
+
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/mall_activity</item>
         <item name="tabIndicatorHeight">2dp</item>
@@ -448,7 +459,25 @@
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
+
     <style name="LoginTabTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="TitleBarText">
+        <item name="android:textSize">34px</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">90px</item>
+    </style>
+
+    <style name="TitleBarTextDealer">
+        <item name="android:textSize">34px</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
 </resources>

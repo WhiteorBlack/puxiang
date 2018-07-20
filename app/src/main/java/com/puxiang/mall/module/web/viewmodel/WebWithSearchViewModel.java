@@ -68,7 +68,7 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
     public ObservableField<String> toolBarTitle = new ObservableField<>();
     public ObservableBoolean isShowSearch = new ObservableBoolean(true);
     public ObservableBoolean isError = new ObservableBoolean(false);
-    public ObservableInt webProgress=new ObservableInt(-1);
+    public ObservableInt webProgress = new ObservableInt(-1);
     public String url = "";
     private String TAG = "WebWithSearchViewModel";
     private WebWithSearchActivity activity;
@@ -359,6 +359,15 @@ public class WebWithSearchViewModel extends BaseObservable implements ViewModel 
                     }
                 } else if (url.contains(URLs.HTML_SING_KEY)) {
                     checkCard();
+                } else if (url.contains("shop_detail.html")) {
+                    //跳转到商家详情
+                    try {
+                        String shopId = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
+                        ActivityUtil.startShopDetialActivity(activity, shopId);
+                    } catch (Exception e) {
+
+                    }
+
                 } else {
                     loadUrl.set(url);
                 }

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.view.View;
-
 import com.puxiang.mall.BaseBindActivity;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.ActivityConversationListBinding;
@@ -40,6 +39,7 @@ public class ImListActivity extends BaseBindActivity implements EasyPermission.P
                 .rationale(getString(R.string.rationale_audio))
                 .permissions(Manifest.permission.RECORD_AUDIO)
                 .request();
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

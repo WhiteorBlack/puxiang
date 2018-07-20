@@ -5,7 +5,8 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="android.text.TextUtils"/>
+
+        <import type="android.text.TextUtils" />
 
         <variable
             name="viewModel"
@@ -112,7 +113,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="客户服务和意见反馈" />
+                    android:text="意见反馈" />
 
                 <ImageView
                     style="@style/nextImgStyle"
@@ -236,10 +237,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/v6"
-                android:visibility="@{TextUtils.isEmpty(viewModel.userBean.refUserPhone)?View.GONE:View.VISIBLE}"
                 android:gravity="center_vertical"
                 android:onClick="onClick"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="@{TextUtils.isEmpty(viewModel.userBean.refUserPhone)?View.GONE:View.VISIBLE}">
 
                 <TextView
                     style="@style/titleTextStyle"
@@ -250,8 +251,8 @@
 
                 <TextView
                     android:id="@+id/tv_invate_name"
-                    android:layout_width="wrap_content"
                     style="@style/titleTextStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.userBean.refUserPhone}" />
             </LinearLayout>
@@ -260,8 +261,8 @@
                 android:id="@+id/v7"
                 android:layout_width="match_parent"
                 android:layout_height="10px"
-                android:visibility="@{TextUtils.isEmpty(viewModel.userBean.refUserPhone)?View.GONE:View.VISIBLE}"
-                android:background="@color/bg_Gray_light" />
+                android:background="@color/bg_Gray_light"
+                android:visibility="@{TextUtils.isEmpty(viewModel.userBean.refUserPhone)?View.GONE:View.VISIBLE}" />
 
             <LinearLayout
                 android:id="@+id/ll_settings_logout"

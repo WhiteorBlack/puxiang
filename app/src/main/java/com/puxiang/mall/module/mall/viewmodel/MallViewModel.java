@@ -41,6 +41,7 @@ public class MallViewModel extends BaseObservable implements ViewModel {
     public ObservableField<String> total = new ObservableField<>("0");
     public ObservableBoolean isInitData = new ObservableBoolean(false);
     public ObservableBoolean isVisible = new ObservableBoolean(false);
+    public ObservableBoolean isBarVis = new ObservableBoolean(true);
     public boolean isTop = false;
     public ObservableField<String> searchText = new ObservableField<>("");
     private int floowerCount = 0;
@@ -100,11 +101,11 @@ public class MallViewModel extends BaseObservable implements ViewModel {
                         fragment.refreshFail();
                     }
 
+
                     @Override
                     public void onSuccess(RxMallInfo bean) {
                         if (TextUtils.equals(recommendType, "recommendFloor1")) {
                             floowerCount = 0;
-//                            isInitData.set(false);
                             getRecommendProducts("recommendFloor2");
 
                         }
@@ -150,7 +151,7 @@ public class MallViewModel extends BaseObservable implements ViewModel {
         }
 
         if (floowerCount == 4) {
-            floowerCount=0;
+            floowerCount = 0;
             adapter.setNewData(mallList);
         }
 //        if (floowerCount == 1) {

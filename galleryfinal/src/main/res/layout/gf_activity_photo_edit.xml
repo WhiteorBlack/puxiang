@@ -27,6 +27,7 @@
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/gf_title_bar_height"
+        android:background="@drawable/mall_bar_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         >

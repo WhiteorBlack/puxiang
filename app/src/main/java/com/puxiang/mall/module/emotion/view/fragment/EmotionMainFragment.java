@@ -150,7 +150,7 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
     /**
      * 数据操作,这里是测试数据，请自行更换数据
      */
-    int[] imgRes = {R.mipmap.a00, R.mipmap.b00, R.mipmap.c00, R.mipmap.d00, R.mipmap.e00, R.mipmap.f00, R.mipmap.g00};
+    int[] imgRes = {R.mipmap.a00, R.mipmap.b00, R.mipmap.c00, R.mipmap.d00, R.mipmap.f00, R.mipmap.g00};
 
     protected void initDatas() {
         replaceFragment();
@@ -197,6 +197,7 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
                 //通知更新，这里我们选择性更新就行了
                 horizontalRecyclerviewAdapter.notifyItemChanged(oldPosition);
                 horizontalRecyclerviewAdapter.notifyItemChanged(CurrentPosition);
+
                 //viewpager界面切换
                 binding.vp.setCurrentItem(position, false);
             }
@@ -215,14 +216,12 @@ public class EmotionMainFragment extends BaseBindFragment implements View.OnClic
         BEmotiomFragment f2 = (BEmotiomFragment) factory.getFragment(EmotionUtils.EMOTION_B_TYPE);
         BEmotiomFragment f3 = (BEmotiomFragment) factory.getFragment(EmotionUtils.EMOTION_C_TYPE);
         BEmotiomFragment f4 = (BEmotiomFragment) factory.getFragment(EmotionUtils.EMOTION_D_TYPE);
-        BEmotiomFragment f5 = (BEmotiomFragment) factory.getFragment(EmotionUtils.EMOTION_E_TYPE);
         BEmotiomFragment f6 = (BEmotiomFragment) factory.getFragment(EmotionUtils.EMOTION_F_TYPE);
         BEmotiomFragment f7 = (BEmotiomFragment) factory.getFragment(EmotionUtils.EMOTION_G_TYPE);
         fragments.add(f1);
         fragments.add(f2);
         fragments.add(f3);
         fragments.add(f4);
-        fragments.add(f5);
         fragments.add(f6);
         fragments.add(f7);
         NoHorizontalScrollerVPAdapter adapter = new NoHorizontalScrollerVPAdapter(getActivity()

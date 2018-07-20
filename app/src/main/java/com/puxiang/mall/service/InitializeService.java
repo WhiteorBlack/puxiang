@@ -21,7 +21,10 @@ import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.config.Config;
 import com.puxiang.mall.model.data.AppVersionJSON;
 import com.puxiang.mall.network.FrescoImageLoader;
+import com.puxiang.mall.network.NetworkSubscriber;
 import com.puxiang.mall.network.URLs;
+import com.puxiang.mall.network.retrofit.ApiWrapper;
+import com.puxiang.mall.network.retrofit.RetrofitUtil;
 import com.puxiang.mall.utils.AppUtil;
 import com.puxiang.mall.utils.DateUtils;
 import com.puxiang.mall.utils.NetworkUtil;
@@ -44,6 +47,7 @@ import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.ThemeConfig;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class InitializeService extends IntentService {
     private boolean isConfirm;
@@ -88,21 +92,10 @@ public class InitializeService extends IntentService {
         MyApplication.isInit = true;
         UMShareAPI.get(this);
         Bugly.init(this.getApplicationContext(), BUGLY_APPID, false);
-        //  QbSdk.initX5Environment(this, null);
         initLogger();
-//        initCloudChannel();
         initPlatformConfig();
         initGalleryFinal();
         initUpdateConfig();
-//        RongIM.init(this);
-//        initSpeech();
-//        initHotFix();
-//        BlockCanary.install(this, new AppBlockCanaryContext()).start();
-//        Stetho.initialize(
-//                Stetho.newInitializerBuilder(this)
-//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-//                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-//                        .build());
         initUMeng();
         initRongIM();
     }
@@ -138,56 +131,74 @@ public class InitializeService extends IntentService {
 //            e.printStackTrace();
 //        }
 
+        if (MyApplication.isLogin()){
+            connect(MyApplication.RONG_TOKEN);
+        }
+
     }
 
+    private void getRongToken(String userId, String token) {
+        ApiWrapper.getInstance()
+                .getRongToken(userId, token)
+                .subscribe(new NetworkSubscriber<String>() {
+                    @Override
+                    public void onFail(RetrofitUtil.APIException e) {
+                        super.onFail(e);
+                    }
 
-    private void initHotFix() {
-        Beta.betaPatchListener = new BetaPatchListener() {
-            @Override
-            public void onPatchReceived(String patchFile) {
-                Log.e(TAG, "onPatchReceived: " + patchFile);
-            }
-
-            @Override
-            public void onDownloadReceived(long savedLength, long totalLength) {
-                Log.e(TAG, "onDownloadReceived: " + totalLength);
-            }
-
-            @Override
-            public void onDownloadSuccess(String msg) {
-                Log.e(TAG, "onDownloadSuccess: " + msg);
-            }
-
-            @Override
-            public void onDownloadFailure(String msg) {
-                Log.e(TAG, "onDownloadFailure: " + msg);
-            }
-
-            @Override
-            public void onApplySuccess(String msg) {
-                Log.e(TAG, "onApplySuccess: " + msg);
-                MyApplication.isHotFix = true;
-            }
-
-            @Override
-            public void onApplyFailure(String msg) {
-                Log.e(TAG, "onApplyFailure: " + msg);
-            }
-
-            @Override
-            public void onPatchRollback() {
-
-            }
-        };
+                    @Override
+                    public void onSuccess(String data) {
+                        MyApplication.mCache.put(CacheKey.RONG_TOKEN, data);
+                        connect(data);
+                    }
+                });
     }
+
+    /**
+     * <p>连接服务器，在整个应用程序全局，只需要调用一次，需在  init 之后调用。</p>
+     * <p>如果调用此接口遇到连接失败，SDK 会自动启动重连机制进行最多10次重连，分别是1, 2, 4, 8, 16, 32, 64, 128, 256, 512秒后。
+     * 在这之后如果仍没有连接成功，还会在当检测到设备网络状态变化时再次进行重连。</p>
+     *
+     * @param token 从服务端获取的用户身份令牌（Token）。
+     * @return RongIM  客户端核心类的实例。
+     */
+    private void connect(String token) {
+
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
+            /**
+             * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+             *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+             */
+            @Override
+            public void onTokenIncorrect() {
+                getRongToken(MyApplication.USER_ID,MyApplication.TOKEN);
+            }
+
+            /**
+             * 连接融云成功
+             * @param userid 当前 token 对应的用户 id
+             */
+            @Override
+            public void onSuccess(String userid) {
+            }
+
+            /**
+             * 连接融云失败
+             * @param errorCode 错误码，可到官网 查看错误码对应的注释
+             */
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Logger.e("rongClient---"+errorCode.getMessage());
+            }
+        });
+    }
+
 
     private void initLogger() {
         Logger.init(Config.LOG_TAG).setLogLevel(Config.LOG_LEVEL);
     }
 
-    /**
-     * 暂时不集成，后续再加  2017.09.01
-     */
     private void initPlatformConfig() {
         //微信 appid appsecret
         PlatformConfig.setWeixin(Config.WX_APP_ID, Config.WX_APP_SECRET);
@@ -329,33 +340,6 @@ public class InitializeService extends IntentService {
         GalleryFinal.init(coreConfig);
     }
 
-    /**
-     * 暂时不集成，后续再加  2017.09.01
-     */
-//    private void initSpeech() {
-//        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=58b69a7e");
-//    }
-
-    /**
-     * 初始化云推送通道
-     * 暂时不集成，后续再加  2017.09.01
-     */
-//    private void initCloudChannel() {
-//        PushServiceFactory.init(MyApplication.getContext());
-//        CloudPushService pushService = PushServiceFactory.getCloudPushService();
-//        pushService.register(MyApplication.getContext(), new CommonCallback() {
-//            @Override
-//            public void onSuccess(String response) {
-//                Log.d(TAG, "init cloudchannel success");
-//            }
-//
-//            @Override
-//            public void onFailed(String errorCode, String errorMessage) {
-//                Log.d(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- " +
-//                        "errorMessage:" + errorMessage);
-//            }
-//        });
-//    }
     @Override
     public void onDestroy() {
         super.onDestroy();

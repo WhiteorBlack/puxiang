@@ -26,6 +26,7 @@ public class NickActivity extends BaseBindActivity {
         binding.toolbar.setBackSrc(R.mipmap.nav_back_g);
         binding.toolbar.setColor(R.color.white);
         binding.toolbar.setTextColor(R.color.text_black);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {

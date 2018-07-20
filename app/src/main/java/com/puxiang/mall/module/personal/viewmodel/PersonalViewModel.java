@@ -55,7 +55,6 @@ public class PersonalViewModel extends BaseObservable implements ViewModel {
         if (userId.equals(MyApplication.USER_ID)) {
             String userImage = userInfo.getUserImage();
             userBean.get().getAccount().setUserImage(userImage);
-
         }
     }
 

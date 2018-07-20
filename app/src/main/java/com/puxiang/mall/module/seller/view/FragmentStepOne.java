@@ -28,7 +28,7 @@ public class FragmentStepOne extends BaseBindFragment implements View.OnClickLis
     public View initBinding(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_step_one, container, false);
         binding.setViewModel(viewModel);
-        ImmersionBar.with(this).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).flymeOSStatusBarFontColor(R.color.text_black).statusBarDarkFont(true).keyboardEnable(false).init();
+        ImmersionBar.with(this).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).keyboardEnable(false).init();
         return binding.getRoot();
     }
 

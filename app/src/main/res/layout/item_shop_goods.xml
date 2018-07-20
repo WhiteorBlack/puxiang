@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,26 +16,21 @@
         <import type="android.view.View" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_goods"
-        android:orientation="vertical">
+        android:paddingBottom="@dimen/sideMargin">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/bg_Gray_light" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_item_pic"
-            android:layout_width="@dimen/homeItemPicSize"
-            android:layout_height="@dimen/homeItemPicSize"
+            android:layout_width="200px"
+            android:layout_height="200px"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginLeft="40px"
             android:layout_marginRight="@dimen/sideMargin"
-            android:layout_marginTop="40px"
+            android:layout_marginTop="@dimen/sideMargin"
             app:fadeDuration="300"
             app:placeholderImage="@mipmap/ic_launcher"
             app:placeholderImageScaleType="centerCrop"
@@ -42,28 +39,81 @@
         <TextView
             android:id="@+id/tv_goods_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20px"
             android:layout_marginRight="20px"
-            android:layout_marginTop="10px"
+            android:layout_marginTop="30px"
+            android:layout_toRightOf="@+id/sdv_item_pic"
             android:layout_weight="1"
-            android:lines="2"
             android:ellipsize="end"
+            android:lines="2"
             android:text="@{item.productName}"
             android:textColor="@color/text_black"
-            android:textSize="22px" />
+            android:textSize="28px" />
 
-        <TextView
-            android:id="@+id/tv_goods_price"
+        <LinearLayout
+            android:id="@+id/ll_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_goods_name"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="25px"
+            android:layout_toRightOf="@+id/sdv_item_pic"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20px"
+                android:text="@{MyTextUtils.getSalePrice(item.salePrice)}"
+                android:textColor="@color/sale_price"
+                android:textSize="32px" />
+
+            <TextView
+                android:id="@+id/tv_item_price"
+                style="@style/PriceStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_item_salePrice"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/tv_item_salePrice"
+                android:text="@{MyTextUtils.getPrice(item.marketPrice)}"
+                android:visibility="@{item.marketPrice==0?View.INVISIBLE:View.VISIBLE}" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_sale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20px"
-            android:layout_marginLeft="25px"
-            android:layout_marginRight="20px"
-            android:layout_marginTop="20px"
-            android:text="@{MyTextUtils.getSalePrice(item.salePrice)}"
-            android:textColor="@color/sale_price"
-            android:textSize="32px" />
-    </LinearLayout>
+            android:layout_alignBottom="@+id/sdv_item_pic"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:visibility="@{item.type==1?View.VISIBLE:View.GONE}"
+            android:layout_toRightOf="@id/sdv_item_pic"
+            android:background="@mipmap/icon_sale" />
+
+        <ImageView
+            android:id="@+id/iv_bulk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_item_pic"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:visibility="@{item.type==2?View.VISIBLE:View.GONE}"
+            android:layout_toRightOf="@id/sdv_item_pic"
+            android:background="@mipmap/icon_bulk" />
+
+        <TextView
+            android:id="@+id/tv_sale_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_item_pic"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:text="@{`已售 `+item.sellCount}"
+            android:textColor="#7d7d7d"
+            android:textSize="24px" />
+    </RelativeLayout>
 
 </layout>

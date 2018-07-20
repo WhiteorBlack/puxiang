@@ -29,6 +29,8 @@ public class AttentionUsersActivity extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle("关注的人");
         initRv(binding.rv);
+        setBarHeight(binding.toolbar.ivBar);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

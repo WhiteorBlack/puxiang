@@ -26,6 +26,7 @@ public class SellerNotifyActivity extends BaseBindActivity {
         binding.toolbar.setTextColor(R.color.text_black);
         binding.toolbar.setColor(R.color.white);
         binding.toolbar.setBackSrc(R.mipmap.nav_back_g);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {

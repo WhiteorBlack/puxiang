@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="isCollected"
+            type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolBarSizeHeight"
+            android:background="@color/white"
+            android:gravity="bottom">
+
+            <ImageButton
+                android:id="@+id/iv_back"
+                style="@style/ToolbarBackBtnWhiteStyle"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:onClick="onClick" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tb_goods"
+                android:layout_width="400px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal|bottom"
+                app:tabIndicatorColor="#ff0a00"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="#282830"
+                app:tabTextAppearance="@style/LoginTabTextStyle"
+                app:tabTextColor="#282830" />
+
+
+            <ImageButton
+                android:id="@+id/btn_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="28px"
+                android:layout_marginRight="10dp"
+                android:background="@mipmap/icon_bar_menu" />
+
+            <CheckBox
+                android:id="@+id/cb_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="28px"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@id/btn_menu"
+                android:button="@drawable/select_collect"
+                android:checked="@{isCollected}"
+                android:onClick="onClick"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/bg_Gray_light" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:layout_gravity="bottom"
+                android:background="@color/bg_Gray"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_msg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="49px"
+                        android:layout_height="41px"
+                        android:background="@mipmap/icon_service_msg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5px"
+                        android:text="客服"
+                        android:textColor="@color/white"
+                        android:textSize="22px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_shop"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="49px"
+                        android:layout_height="41px"
+                        android:background="@mipmap/icon_shop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5px"
+                        android:text="进店"
+                        android:textColor="@color/white"
+                        android:textSize="22px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_shop_cart"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="49px"
+                        android:layout_height="41px"
+                        android:background="@mipmap/icon_shop_cart" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5px"
+                        android:text="购物车"
+                        android:textColor="@color/white"
+                        android:textSize="22px" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_put_cart"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.8"
+                    android:background="@color/apply_step_color"
+                    android:gravity="center"
+                    android:text="加入购物车"
+                    android:textColor="@color/white"
+                    android:textSize="32px" />
+
+                <TextView
+                    android:id="@+id/tv_buy"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.8"
+                    android:background="@color/mall_activity"
+                    android:gravity="center"
+                    android:text="立即购买"
+                    android:textColor="@color/white"
+                    android:textSize="32px" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</layout>

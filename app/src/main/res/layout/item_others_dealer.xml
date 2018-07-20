@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.puxiang.mall.model.data.RxDealerCheck" />
+
+        <import type="com.puxiang.mall.utils.MyTextUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{item.auditStatus==3?View.VISIBLE:View.GONE}"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@mipmap/dealer_fail" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_item_pic"
+            android:layout_width="190px"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25px"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="20px"
+            android:layout_marginTop="30px"
+            android:layout_toRightOf="@+id/iv_item_box"
+            app:placeholderImage="@mipmap/ic_launcher"
+            app:placeholderImageScaleType="fitXY"
+            app:viewAspectRatio="1"
+            bind:url="@{item.dealerLogo}" />
+
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            style="@style/titleTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="85px"
+            android:layout_marginTop="25px"
+            android:layout_toRightOf="@+id/sdv_item_pic"
+            android:ellipsize="end"
+            android:lines="2"
+            android:paddingRight="15px"
+            android:text="@{item.dealerName}"
+            android:textSize="28px" />
+
+
+        <ImageView
+            android:id="@+id/iv_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_item_name"
+            android:layout_marginRight="25px"
+            android:layout_marginTop="15px"
+            android:background="@mipmap/icon_dealer_checking"
+            android:visibility="@{item.auditStatus==1?View.VISIBLE:View.GONE}" />
+
+        <ImageView
+            android:id="@+id/iv_goods_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_item_name"
+            android:layout_marginRight="25px"
+            android:layout_marginTop="15px"
+            android:background="@mipmap/icon_dealer_retry"
+            android:visibility="@{item.auditStatus==3?View.VISIBLE:View.GONE}" />
+
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sdv_item_pic"
+            android:layout_marginTop="15px"
+            android:layout_toRightOf="@+id/sdv_item_pic"
+            android:drawableLeft="@mipmap/icon_point_purple"
+            android:gravity="center_vertical"
+            android:text="@{item.dealerAddress}"
+            android:textColor="@color/goods_man_gray"
+            android:textSize="26px" />
+
+        <TextView
+            android:id="@+id/tv_sell_count"
+            android:layout_width="wrap_content"
+            android:layout_height="40px"
+            android:layout_alignBaseline="@+id/tv_shop_name"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_item_salePrice"
+            android:layout_marginRight="25px"
+            android:layout_marginTop="15px"
+            android:gravity="center"
+            android:textColor="@color/goods_man_gray"
+            android:textSize="26px" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/sdv_item_pic"
+            android:background="@color/line" />
+    </RelativeLayout>
+</layout>

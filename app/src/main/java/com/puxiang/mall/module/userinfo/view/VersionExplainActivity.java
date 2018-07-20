@@ -26,6 +26,8 @@ public class VersionExplainActivity extends BaseBindActivity {
         } else {
             binding.setExplain(introduce);
         }
+
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View view) {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_classfy"
+            android:layout_width="match_parent"
+            android:layout_height="200px"
+            app:placeholderImageScaleType="fitXY"
+            fresco:placeholderImage="@mipmap/ic_launcher"
+            fresco:roundedCornerRadius="15px" />
+    </LinearLayout>
+</layout>

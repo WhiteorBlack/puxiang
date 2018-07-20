@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
+import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.R;
 import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.Rotatable;
@@ -86,6 +88,7 @@ public class RefreshHeader extends FrameLayout implements PtrUIHandler {
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ll.getLayoutParams();
         lp.setMargins(position, 0, 0, 0);
         ll.requestLayout();
+
     }
 
     public void onUIReset(PtrFrameLayout frame) {
@@ -119,7 +122,7 @@ public class RefreshHeader extends FrameLayout implements PtrUIHandler {
     public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
         final int offsetToRefresh = frame.getOffsetToRefresh();
         final int currentPos = ptrIndicator.getCurrentPosY();
-
+        MyApplication.isRefreshing.set(currentPos > 100);
         if (currentPos <= offsetToRefresh) {
             if (status == PtrFrameLayout.PTR_STATUS_PREPARE) {
                 int carPosition = currentPos * (screenWidth + llWidth) / 2 / offsetToRefresh - llWidth;

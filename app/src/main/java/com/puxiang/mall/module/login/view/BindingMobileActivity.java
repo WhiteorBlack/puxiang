@@ -23,6 +23,7 @@ public class BindingMobileActivity extends BaseBindActivity {
     public void initView() {
         binding.toolbar.setTitle("绑定手机号");
         setWhiteTitle(binding.toolbar);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     public void onClick(View v) {

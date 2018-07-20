@@ -55,23 +55,18 @@
                         app:banner_transitionEffect="alpha"
                         bind:headBanner="@{viewModel.bannerList}" />
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:alpha="0.6"
-                        android:background="@color/text_black">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="44px"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="@{viewModel.shopDetial.shopName}"
-                            android:textColor="@color/white"
-                            android:textSize="25px" />
-                    </FrameLayout>
                 </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/sideMargin"
+                    android:layout_marginRight="@dimen/sideMargin"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.shopDetial.shopName}"
+                    android:textColor="@color/black"
+                    android:textSize="30px" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,7 +82,7 @@
                         android:textColor="#4c4948"
                         android:textSize="28px" />
 
-                    <LinearLayout
+                    <com.puxiang.mall.widget.AutoLinearLayout
                         android:id="@+id/wll_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -129,20 +124,34 @@
                         android:textColor="#7d7d7d"
                         android:textSize="25px" />
 
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="80px"
+                        android:background="@color/line" />
+
                     <ImageView
                         android:id="@+id/iv_call"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/sideMargin"
                         android:background="@mipmap/icon_call_phone"
                         android:onClick="@{viewModel.detialClick}" />
+
+                    <TextView
+                        android:id="@+id/tv_link_man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10px"
+                        android:onClick="@{viewModel.detialClick}"
+                        android:text="店主"
+                        android:textColor="#7d7d7d"
+                        android:textSize="26px" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="20px"
-                    android:layout_marginRight="20px"
-                    android:background="@color/line" />
+                    android:layout_height="20px"
+                    android:background="@color/bg_Gray_light" />
             </LinearLayout>
 
             <LinearLayout

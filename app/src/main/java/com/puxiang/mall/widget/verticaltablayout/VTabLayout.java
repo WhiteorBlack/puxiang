@@ -39,7 +39,7 @@ public class VTabLayout extends ScrollView {
     private TabIndicator mIndicator;
     private int mTabMode;
     private int mTabHeight;
-
+    private int mIndicatorHeight;
     public static int TAB_MODE_FIXED = 10;
     public static int TAB_MODE_SCROLLABLE = 11;
 
@@ -69,6 +69,7 @@ public class VTabLayout extends ScrollView {
         mColorIndicator = typedArray.getColor(R.styleable.VTabLayout_vindicator_color,
                 context.getResources().getColor(R.color.colorAccent));
         mIndicatorWidth = (int) typedArray.getDimension(R.styleable.VTabLayout_vindicator_width, dp2px(3));
+//        mIndicatorHeight = (int) typedArray.getDimension(R.styleable.VTabLayout_vindicator_height, 100);
         mIndicatorCorners = typedArray.getDimension(R.styleable.VTabLayout_vindicator_corners, 0);
         mIndicatorGravity = typedArray.getInteger(R.styleable.VTabLayout_vindicator_gravity, Gravity.LEFT);
         mTabMargin = (int) typedArray.getDimension(R.styleable.VTabLayout_vtab_margin, 0);
@@ -105,7 +106,7 @@ public class VTabLayout extends ScrollView {
         if (mTabStrip.indexOfChild(tabView) == 0) {
             tabView.setChecked(true);
             params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
+            params.setMargins(0, mTabMargin, 0, 0);
             tabView.setLayoutParams(params);
             mSelectedTab = tabView;
         }
@@ -220,9 +221,9 @@ public class VTabLayout extends ScrollView {
             View view = mTabStrip.getChildAt(i);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
             initTabWithMode(params);
-            if (i == 0) {
-                params.setMargins(0, 0, 0, 0);
-            }
+//            if (i == 0) {
+//                params.setMargins(0, 0, 0, 0);
+//            }
             view.setLayoutParams(params);
         }
         mTabStrip.invalidate();
@@ -430,7 +431,8 @@ public class VTabLayout extends ScrollView {
         private float mIndicatorX;
         private float mIndicatorBottomY;
         private int mLastWidth;
-        private int mIndicatorHeight;
+        private int childViewHeight;
+
         private Paint mIndicatorPaint;
         //record invalidate count,used to initialize on mIndicatorBottomY
         private long mInvalidateCount;
@@ -447,7 +449,9 @@ public class VTabLayout extends ScrollView {
         @Override
         protected void onFinishInflate() {
             super.onFinishInflate();
-            mIndicatorBottomY = mIndicatorHeight;
+            mIndicatorBottomY = mIndicatorHeight-mTabMargin;
+//            mIndicatorY = mTabMargin;
+//            mIndicatorY = (mIndicatorHeight - childViewHeight) / 2;
         }
 
         @Override
@@ -457,7 +461,8 @@ public class VTabLayout extends ScrollView {
                 View childView = getChildAt(0);
                 mIndicatorHeight = childView.getMeasuredHeight();
                 if (mInvalidateCount == 0) {
-                    mIndicatorBottomY = mIndicatorHeight;
+                    mIndicatorBottomY = mIndicatorHeight+mTabMargin;
+//                    mIndicatorY=mTabMargin;
                 }
                 mInvalidateCount++;
             }
@@ -466,7 +471,7 @@ public class VTabLayout extends ScrollView {
         protected void updataIndicatorMargin() {
             int index = getSelectedTabPosition();
             mIndicatorY = calcIndicatorY(index);
-            mIndicatorBottomY = mIndicatorY + mIndicatorHeight;
+            mIndicatorBottomY = mIndicatorY + mIndicatorHeight+mTabMargin;
             invalidate();
         }
 
@@ -518,7 +523,7 @@ public class VTabLayout extends ScrollView {
         protected void moveIndicator(final int index) {
             final int direction = index - getSelectedTabPosition();
             final float target = calcIndicatorY(index);
-            final float targetBottom = target + mIndicatorHeight;
+            final float targetBottom = target + mIndicatorHeight+mTabMargin;
             if (mIndicatorY == target) return;
             post(new Runnable() {
                 @Override
@@ -590,7 +595,7 @@ public class VTabLayout extends ScrollView {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             mIndicatorPaint.setColor(mColorIndicator);
-            RectF r = new RectF(mIndicatorX, mIndicatorY,
+            RectF r = new RectF(mIndicatorX, mIndicatorY+mTabMargin,
                     mIndicatorX + mIndicatorWidth, mIndicatorBottomY);
             if (mIndicatorCorners != 0) {
                 canvas.drawRoundRect(r, mIndicatorCorners, mIndicatorCorners, mIndicatorPaint);

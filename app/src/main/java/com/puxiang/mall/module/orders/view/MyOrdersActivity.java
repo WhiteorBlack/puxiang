@@ -20,7 +20,7 @@ public class MyOrdersActivity extends BaseBindActivity {
 
     @Override
     public void initView() {
-
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

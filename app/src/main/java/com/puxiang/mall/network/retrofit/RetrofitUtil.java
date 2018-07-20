@@ -2,12 +2,16 @@ package com.puxiang.mall.network.retrofit;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-
-
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.orhanobut.logger.Logger;
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.config.CacheKey;
 import com.puxiang.mall.config.Config;
@@ -15,14 +19,6 @@ import com.puxiang.mall.model.data.HttpResult;
 import com.puxiang.mall.network.ApiService;
 import com.puxiang.mall.utils.NetworkUtil;
 import com.puxiang.mall.utils.StringUtil;
-import com.puxiang.mall.utils.ToastUtil;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.orhanobut.logger.Logger;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,7 +27,6 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

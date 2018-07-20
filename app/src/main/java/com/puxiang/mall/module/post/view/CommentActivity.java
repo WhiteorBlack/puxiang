@@ -41,6 +41,7 @@ public class CommentActivity extends BaseBindActivity implements View.OnClickLis
         binding.toolbar.setTitle("更多评论");
         initRv(binding.rvComment);
         initEmotionMainFragment(binding.rvComment);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

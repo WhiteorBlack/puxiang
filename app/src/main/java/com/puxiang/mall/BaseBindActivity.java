@@ -9,15 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
 import com.puxiang.mall.base.ErrorShow;
 import com.puxiang.mall.databinding.ToolbarLayoutBinding;
 import com.puxiang.mall.module.bbs.viewmodel.BbsRequest;
+import com.puxiang.mall.utils.AppUtil;
 import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.ToastUtil;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.umeng.analytics.MobclickAgent;
+
 import java.util.HashMap;
+
 import cn.bingoogolapple.bgabanner.BGABanner;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -42,7 +49,7 @@ public abstract class BaseBindActivity extends RxAppCompatActivity implements Bb
         super.onCreate(savedInstanceState);
         TAG = this.getClass().getSimpleName();
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.statusBarDarkFont(true).flymeOSStatusBarFontColor(R.color.text_black).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
+        mImmersionBar.statusBarDarkFont(false).flymeOSStatusBarFontColor(R.color.white).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).init();
         initBind();
         rootView = (ViewGroup) getWindow().getDecorView();
         //是否自动适配
@@ -121,9 +128,10 @@ public abstract class BaseBindActivity extends RxAppCompatActivity implements Bb
 
     /**
      * 设置红色title
+     *
      * @param toolbar
      */
-    public void setRedTitle(ToolbarLayoutBinding toolbar){
+    public void setRedTitle(ToolbarLayoutBinding toolbar) {
         toolbar.setBackSrc(R.mipmap.nav_back_w);
         toolbar.setColor(R.color.mall_activity);
         toolbar.setTextColor(R.color.white);
@@ -131,13 +139,38 @@ public abstract class BaseBindActivity extends RxAppCompatActivity implements Bb
 
     /**
      * 设置白色title
+     *
      * @param toolbar
      */
-    public void setWhiteTitle(ToolbarLayoutBinding toolbar){
+    public void setWhiteTitle(ToolbarLayoutBinding toolbar) {
         toolbar.setBackSrc(R.mipmap.nav_back_g);
         toolbar.setColor(R.color.white);
         toolbar.setTextColor(R.color.text_black);
+
     }
+
+    /**
+     * 设置状态栏高度
+     *
+     * @param imageView
+     */
+    public void setBarHeight(ImageView imageView) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+        params.height = AppUtil.getStatusBarHeight(this);
+        imageView.setLayoutParams(params);
+    }
+
+    /**
+     * 设置状态栏高度
+     *
+     * @param imageView
+     */
+    public void setBarHeightRel(ImageView imageView) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+        params.height = AppUtil.getStatusBarHeight(this);
+        imageView.setLayoutParams(params);
+    }
+
     /**
      * 初始化 banner
      *

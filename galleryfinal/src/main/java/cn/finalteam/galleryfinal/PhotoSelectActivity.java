@@ -193,7 +193,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         }
         mFabOk.setIcon(GalleryFinal.getGalleryTheme().getIconFab());
 
-        mTitlebar.setBackgroundColor(GalleryFinal.getGalleryTheme().getTitleBarBgColor());
+//        mTitlebar.setBackgroundColor(GalleryFinal.getGalleryTheme().getTitleBarBgColor());
         mTvSubTitle.setTextColor(GalleryFinal.getGalleryTheme().getTitleBarTextColor());
         mTvTitle.setTextColor(GalleryFinal.getGalleryTheme().getTitleBarTextColor());
         mTvChooseCount.setTextColor(GalleryFinal.getGalleryTheme().getTitleBarTextColor());

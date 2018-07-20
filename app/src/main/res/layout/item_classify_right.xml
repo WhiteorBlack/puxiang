@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.puxiang.mall.model.data.RxProduct" />
+            type="com.puxiang.mall.model.data.RxClassfyRightItem" />
     </data>
 
     <LinearLayout
@@ -21,17 +21,16 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sdv_pic"
-            android:layout_width="150px"
+            android:layout_width="120px"
             android:layout_height="wrap_content"
             android:layout_marginTop="21px"
             app:placeholderImage="@mipmap/ic_launcher"
             app:placeholderImageScaleType="fitXY"
             app:viewAspectRatio="1"
-            bind:url="@{item.mainPictureUrl}" />
+            bind:url="@{item.iconUrl}" />
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/homeItemTitleStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12px"
@@ -40,8 +39,9 @@
             android:paddingRight="15px"
             android:paddingTop="15px"
             android:singleLine="true"
-            android:text="@{item.productName}"
-            android:textSize="25px" />
+            android:text="@{item.name}"
+            android:textColor="#686868"
+            android:textSize="26px" />
 
     </LinearLayout>
 </layout>

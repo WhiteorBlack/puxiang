@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.puxiang.mall.module.dealer.viewmodel.StatueViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_layout" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="35px"
+            android:text="审核结果"
+            android:textStyle="bold"
+            android:textColor="@color/text_black"
+            android:textSize="28px" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/tv_title"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="@dimen/sideMargin"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/tv_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="35px"
+            android:text="申请时间"
+            android:textColor="@color/text_black"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_time_title"
+            android:layout_below="@+id/line"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="35px"
+            android:layout_toRightOf="@+id/tv_time_title"
+            android:text="@{viewModel.rxDealer.createTime}"
+            android:textColor="@color/gray_text"
+            android:textSize="28px" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/tv_time_title"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="@dimen/sideMargin"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/tv_statue_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line1"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="35px"
+            android:text="状态"
+            android:textColor="@color/text_black"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/tv_statue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_statue_title"
+            android:layout_below="@+id/line"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="35px"
+            android:layout_toRightOf="@+id/tv_statue_title"
+            android:text="未通过"
+            android:textColor="@color/sale_price"
+            android:textSize="28px" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/tv_statue_title"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="@dimen/sideMargin"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/tv_info_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line2"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="35px"
+            android:text="审核信息"
+            android:textColor="@color/text_black"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_info_title"
+            android:layout_below="@+id/line"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="35px"
+            android:layout_toRightOf="@+id/tv_info_title"
+            android:text="@{viewModel.rxDealer.auditStatusDesc}"
+            android:textColor="@color/sale_price"
+            android:textSize="28px" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/tv_info_title"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="@dimen/sideMargin"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/tv_check_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line3"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginTop="35px"
+            android:text="审核时间"
+            android:textColor="@color/text_black"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/tv_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_check_title"
+            android:layout_below="@+id/line"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="35px"
+            android:layout_toRightOf="@+id/tv_check_title"
+            android:text="@{viewModel.rxDealer.auditTime}"
+            android:textColor="@color/gray_text"
+            android:textSize="28px" />
+
+        <View
+            android:id="@+id/line4"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/tv_check_title"
+            android:layout_marginLeft="@dimen/sideMargin"
+            android:layout_marginRight="@dimen/sideMargin"
+            android:layout_marginTop="@dimen/sideMargin"
+            android:background="@color/line" />
+
+    </RelativeLayout>
+</layout>

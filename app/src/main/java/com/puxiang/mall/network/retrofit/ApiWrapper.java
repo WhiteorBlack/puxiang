@@ -1,9 +1,6 @@
 package com.puxiang.mall.network.retrofit;
 
-
-import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-
 
 import com.puxiang.mall.MyApplication;
 import com.puxiang.mall.model.data.HttpResult;
@@ -18,10 +15,13 @@ import com.puxiang.mall.model.data.RxCatalog;
 import com.puxiang.mall.model.data.RxChannel;
 import com.puxiang.mall.model.data.RxCheck;
 import com.puxiang.mall.model.data.RxCityArea;
+import com.puxiang.mall.model.data.RxClassfy;
 import com.puxiang.mall.model.data.RxComment;
 import com.puxiang.mall.model.data.RxCommentInfo;
 import com.puxiang.mall.model.data.RxCommentReply;
 import com.puxiang.mall.model.data.RxDealer;
+import com.puxiang.mall.model.data.RxDealerCheck;
+import com.puxiang.mall.model.data.RxDealerList;
 import com.puxiang.mall.model.data.RxEsportList;
 import com.puxiang.mall.model.data.RxFans;
 import com.puxiang.mall.model.data.RxIntegral;
@@ -209,7 +209,7 @@ public class ApiWrapper extends RetrofitUtil {
      */
     public Observable<RxList<RxProduct>> searchProduct(String catalogId) {
         return getService()
-                .searchProduct("", catalogId, "", "", 100, 1)
+                .searchProduct("", catalogId, "", "", 100, 1,MyApplication.USER_ID)
                 .compose(this.applySchedulers());
     }
 
@@ -219,7 +219,7 @@ public class ApiWrapper extends RetrofitUtil {
     public Observable<RxList<RxProduct>> searchProduct(String keyword, String orderBy, String
             order, int pageNo) {
         return getService()
-                .searchProduct(keyword, "", orderBy, order, pageSize, pageNo)
+                .searchProduct(keyword, "", orderBy, order, pageSize, pageNo,MyApplication.USER_ID)
                 .compose(this.applySchedulers());
     }
 
@@ -229,7 +229,7 @@ public class ApiWrapper extends RetrofitUtil {
     public Observable<RxList<RxProduct>> searchProduct(String keyword, String orderBy, String
             order, String catagroyId, int pageNo) {
         return getService()
-                .searchProduct(keyword, catagroyId, orderBy, order, pageSize, pageNo)
+                .searchProduct(keyword, catagroyId, orderBy, order, pageSize, pageNo,MyApplication.USER_ID)
                 .compose(this.applySchedulers());
     }
 
@@ -353,6 +353,15 @@ public class ApiWrapper extends RetrofitUtil {
         return getService().modifyRealName(realName, MyApplication.USER_ID, MyApplication.TOKEN)
                 .compose(this.applySchedulers());
     }
+
+    /**
+     * 修改邮箱地址
+     */
+    public Observable<String> modifyEmail(String email) {
+        return getService().modifyEmail(email, MyApplication.USER_ID, MyApplication.TOKEN)
+                .compose(this.applySchedulers());
+    }
+
 
     /**
      * 修改昵称
@@ -645,9 +654,9 @@ public class ApiWrapper extends RetrofitUtil {
      * @param macAddress 设备唯一Id
      */
     public Observable<String> register(String mobile, String code, String password, String
-            macAddress,String invateCode) {
+            macAddress, String invateCode) {
         return getService()
-                .register(mobile, code, password, macAddress,invateCode)
+                .register(mobile, code, password, macAddress, invateCode)
                 .compose(this.applySchedulers());
     }
 
@@ -1410,20 +1419,183 @@ public class ApiWrapper extends RetrofitUtil {
                 .compose(this.applySchedulers());
     }
 
+    /**
+     * 申请成为经销商
+     *
+     * @param dealerId
+     * @param name
+     * @param linkMan
+     * @param linkPhone
+     * @param idcardFront
+     * @param idcardBack
+     * @param provinceCode
+     * @param provinceName
+     * @param cityCode
+     * @param cityName
+     * @param countryCode
+     * @param countryName
+     * @param streetCode
+     * @param streetName
+     * @param detailAddress
+     * @return
+     */
     public Observable<RxDealer> becomeDealer(String dealerId, String name, String linkMan, String linkPhone,
+                                             String idcardFront, String idcardBack, String provinceCode,
+                                             String provinceName, String cityCode, String cityName,
+                                             String countryCode, String countryName, String streetCode,
+                                             String streetName, String detailAddress) {
+
+        return getService().becomeDealer(MyApplication.USER_ID, dealerId, MyApplication.TOKEN,
+                name, linkMan, linkPhone, idcardFront, idcardBack, provinceName, provinceCode,
+                cityName, cityCode, countryName, countryCode, streetName, streetCode, detailAddress)
+                .compose(this.applySchedulers());
+    }
+
+    public Observable<RxDealer> becomeDealer(String name, String linkMan, String linkPhone,
                                              String idcardFront, String idcardBack, String provinceCod,
                                              String provinceName, String cityCode, String cityNam,
                                              String countryCode, String countryName, String streetCode,
                                              String streetName, String detailAddress) {
 
-        return getService().becomeDealer(MyApplication.USER_ID, dealerId, MyApplication.TOKEN,
-                name, linkMan, linkPhone, idcardFront, idcardBack, provinceCod, provinceName,
+        return getService().becomeDealer(MyApplication.USER_ID, MyApplication.TOKEN,
+                name, linkMan, linkPhone, idcardFront, idcardBack, provinceName, provinceCod,
                 cityNam, cityCode, countryName, countryCode, streetName, streetCode, detailAddress)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 修改经销商
+     *
+     * @param dealerId
+     * @param name
+     * @param linkMan
+     * @param linkPhone
+     * @param idcardFront
+     * @param idcardBack
+     * @param provinceCode
+     * @param provinceName
+     * @param cityCode
+     * @param cityName
+     * @param countryCode
+     * @param countryName
+     * @param streetCode
+     * @param streetName
+     * @param detailAddress
+     * @return
+     */
+    public Observable<String> modifyDealer(String dealerId, String name, String linkMan, String linkPhone,
+                                           String idcardFront, String idcardBack, String provinceCode,
+                                           String provinceName, String cityCode, String cityName,
+                                           String countryCode, String countryName, String streetCode,
+                                           String streetName, String detailAddress) {
+
+        return getService().modifyDealer(MyApplication.USER_ID, dealerId, MyApplication.TOKEN,
+                name, linkMan, linkPhone, idcardFront, idcardBack, provinceName, provinceCode,
+                cityName, cityCode, countryName, countryCode, streetName, streetCode, detailAddress)
                 .compose(this.applySchedulers());
     }
 
     public Observable<String> addLogistics(String refundApplicationId, String companyName, String expressCode, String freight, String deliverGoodsTime) {
         return getService().addLogistics(MyApplication.USER_ID, MyApplication.TOKEN, refundApplicationId, companyName, expressCode, freight, deliverGoodsTime)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 获取全部分类信息
+     *
+     * @return
+     */
+    public Observable<List<RxClassfy>> getClassfy() {
+        return getService().getClassfy()
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 获取商家商品
+     */
+    public Observable<RxList<RxProduct>> searchProduct(String keyword, String shopId, int pageNo) {
+        return getService()
+                .shopProduct(MyApplication.USER_ID, MyApplication.TOKEN, keyword, shopId, pageSize, pageNo)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 上架商品
+     *
+     * @param productId
+     * @return
+     */
+    public Observable<String> upShelf(String productId) {
+        return getService().upShelf(MyApplication.USER_ID, MyApplication.TOKEN, productId)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 上架商品
+     *
+     * @param productId
+     * @return
+     */
+    public Observable<String> downShelf(String productId) {
+        return getService().downShelf(MyApplication.USER_ID, MyApplication.TOKEN, productId)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 删除商品
+     *
+     * @param productIds 商品Id合集用逗号分割开来
+     * @return
+     */
+    public Observable<String> delProduct(String productIds) {
+        return getService().downShelf(MyApplication.USER_ID, MyApplication.TOKEN, productIds)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 获取代理商
+     */
+    public Observable<RxDealerList> getDealerList(String areaName, String areaCode, int pageNo) {
+        return getService()
+                .getDealerList(MyApplication.USER_ID, MyApplication.TOKEN, areaCode, areaName, pageSize, pageNo)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 获取我的代理商
+     */
+    public Observable<List<RxDealerCheck>> getDealerMine(int pageNo) {
+        return getService()
+                .getDealerMine(MyApplication.USER_ID, MyApplication.TOKEN)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 获取我的代理商 未通过
+     */
+    public Observable<List<RxDealerCheck>> getDealerNot(int pageNo) {
+        return getService()
+                .getDealerNotPass(MyApplication.USER_ID, MyApplication.TOKEN)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 关联代理商
+     * @param ids
+     * @return
+     */
+    public Observable<String> applyDealer(String ids) {
+        return getService().applyDealer(MyApplication.USER_ID, MyApplication.TOKEN, ids)
+                .compose(this.applySchedulers());
+    }
+
+    /**
+     * 取关代理商
+     * @param ids
+     * @return
+     */
+    public Observable<String> cancelDealer(String ids) {
+        return getService().cancelDealer(MyApplication.USER_ID, MyApplication.TOKEN, ids)
                 .compose(this.applySchedulers());
     }
 }

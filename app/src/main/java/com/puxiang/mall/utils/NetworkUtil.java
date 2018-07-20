@@ -3,7 +3,6 @@ package com.puxiang.mall.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 public class NetworkUtil {
     /* 代码IP */
@@ -22,36 +21,13 @@ public class NetworkUtil {
         boolean network = isWifi(context);
         boolean mobilework = isMobile(context);
         if (!network && !mobilework) { // 无网络连接
-            Log.i(TAG, "无网路链接！");
             return false;
         } else if (network == true && mobilework == false) { // wifi连接
-            Log.i(TAG, "wifi连接！");
         } else { // 网络连接
-            Log.i(TAG, "手机网路连接，读取代理信息！");
-           // readProxy(context); // 读取代理信息
             return true;
         }
         return true;
     }
-
-
-
-
-//    /**
-//     * 读取网络代理
-//     *
-//     * @param context
-//     */
-//    private static void readProxy(Context context) {
-//        Uri uri = Uri.parse("content://telephony/carriers/preferapn");
-//        ContentResolver resolver = context.getContentResolver();
-//        Cursor cursor = resolver.query(uri, null, null, null, null);
-//        if (cursor != null && cursor.moveToFirst()) {
-//            PROXY_IP = cursor.getString(cursor.getColumnIndex(proxy));
-//            PROXY_PORT = cursor.getInt(cursor.getColumnIndex(port));
-//        }
-//        cursor.close();
-//    }
 
     /**
      * 判断当前网络是否是wifi局域网

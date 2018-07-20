@@ -92,4 +92,6 @@
     <color name="searchBarTextColor">#FF514F4F</color>
     <color name="address_default">#FFFDA002</color>
     <color name="apply_step_color">#FFFD5A01</color>
+    <color name="goods_info_gray">#a1a1a1</color>
+    <color name="goods_man_gray">#8c8c8c</color>
 </resources>

@@ -450,8 +450,6 @@ public class PublishViewModel implements ViewModel {
                         String photoPath = ((PhotoInfo) baseQuickAdapter.getData().get(i)).getPhotoPath();
                         if (TextUtils.isEmpty(photoPath)) {
                             getPic();
-//                            Intent intent = new Intent(activity, PictureSelectorActivity.class);
-//                            activity.startActivityForResult(intent, Config.PIC_REQUEST);
                         }
                         break;
                 }

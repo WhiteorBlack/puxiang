@@ -312,7 +312,7 @@ public class PhotoEditActivity extends CropImageActivity implements AdapterView.
         }
 
         mFabCrop.setIcon(GalleryFinal.getGalleryTheme().getIconFab());
-        mTitlebar.setBackgroundColor(GalleryFinal.getGalleryTheme().getTitleBarBgColor());
+//        mTitlebar.setBackgroundColor(GalleryFinal.getGalleryTheme().getTitleBarBgColor());
         mTvTitle.setTextColor(GalleryFinal.getGalleryTheme().getTitleBarTextColor());
         mFabCrop.setColorPressed(GalleryFinal.getGalleryTheme().getFabPressedColor());
         mFabCrop.setColorNormal(GalleryFinal.getGalleryTheme().getFabNornalColor());

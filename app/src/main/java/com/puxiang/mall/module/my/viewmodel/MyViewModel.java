@@ -106,20 +106,23 @@ public class MyViewModel extends BaseObservable implements ViewModel {
         if (!MyApplication.isLogin() || !MyApplication.messageState.getIsSeller()) {
             items.add(new RxMyItem("我要开店", R.mipmap.my_new_shop, 9));
         }
+//        items.add(new RxMyItem("我要开店", R.mipmap.my_new_shop, 9));
         items.add(new RxMyItem("评论我的", R.mipmap.my_comment, 4));
         items.add(new RxMyItem("赞我的", R.mipmap.my_zan, 5));
 //        items.add(new RxMyItem("我的积分", R.mipmap.my_integ, 6));
         items.add(new RxMyItem("积分商城", R.mipmap.my_integra_shop, 7));
         items.add(new RxMyItem("我的社区", R.mipmap.my_circle, 2));
         items.add(new RxMyItem("我的发帖", R.mipmap.my_post, 3));
+        items.add(new RxMyItem("绑定经销商", R.mipmap.my_bind_dealer, 15));
+        items.add(new RxMyItem("采购", R.mipmap.my_saler_buy, 16));
 //        items.add(new RxMyItem("任务中心", R.mipmap.my_mession_center_gray, 8));
-        items.add(new RxMyItem("我的消息", R.mipmap.my_message, 13));
-        items.add(new RxMyItem("设置", R.mipmap.my_setting, 14));
+//        items.add(new RxMyItem("我的消息", R.mipmap.my_message, 13));
+//        items.add(new RxMyItem("设置", R.mipmap.my_setting, 14));
         return items;
     }
 
     /**
-     * 初始化 你想要的模块数据
+     * 初始化 我是卖家的模块数据
      *
      * @return
      */
@@ -128,6 +131,10 @@ public class MyViewModel extends BaseObservable implements ViewModel {
         items.add(new RxMyItem("我的店铺", R.mipmap.my_new_shop, 0));
         items.add(new RxMyItem("店铺管理", R.mipmap.my_man_shop, 1));
         items.add(new RxMyItem("我的订单", R.mipmap.my_buy_order, 2));
+        items.add(new RxMyItem("商品管理", R.mipmap.my_goods_man, 3));
+        items.add(new RxMyItem("运费管理", R.mipmap.my_dealer_fee, 4));
+//        items.add(new RxMyItem("绑定经销商", R.mipmap.my_bind_dealer, 5));
+//        items.add(new RxMyItem("采购", R.mipmap.my_saler_buy, 7));
         return items;
     }
 
@@ -139,7 +146,7 @@ public class MyViewModel extends BaseObservable implements ViewModel {
     public List<RxMyItem> getNoDealer() {
         List<RxMyItem> items = new ArrayList<>();
         items.add(new RxMyItem("成为经销商", R.mipmap.my_dealer, 0));
-        items.add(new RxMyItem("我要进货", R.mipmap.my_buy_man_gray, 1));
+//        items.add(new RxMyItem("我要进货", R.mipmap.my_buy_man_gray, 1));
         return items;
     }
 
@@ -150,8 +157,23 @@ public class MyViewModel extends BaseObservable implements ViewModel {
      */
     public List<RxMyItem> getDealer() {
         List<RxMyItem> items = new ArrayList<>();
+        items.add(new RxMyItem("信息管理", R.mipmap.my_dealer_manager, 4));
         items.add(new RxMyItem("我要进货", R.mipmap.my_buy_man, 2));
         items.add(new RxMyItem("我的订单", R.mipmap.my_buy_order, 3));
+        return items;
+    }
+
+    /**
+     * 初始化 系统中心
+     *
+     * @return
+     */
+    public List<RxMyItem> getSystem() {
+        List<RxMyItem> items = new ArrayList<>();
+        items.add(new RxMyItem("我的消息", R.mipmap.my_message, 0));
+        items.add(new RxMyItem("设置", R.mipmap.my_setting, 1));
+        items.add(new RxMyItem("客服中心", R.mipmap.icon_my_service, 3));
+//        items.add(new RxMyItem("关于我们", R.mipmap.icon_my_about_us, 2));
         return items;
     }
 
@@ -161,7 +183,7 @@ public class MyViewModel extends BaseObservable implements ViewModel {
     private void getCacheData() {
         //TODO: 获取用户信息
         MyApplication.mCache.getAsJSONBean(CacheKey.USER_INFO, RxMyUserInfo.class
-                , myUserInfo -> userBean.set(myUserInfo));
+                , userBean::set);
         //TODO: 获取App版本信息
         MyApplication.mCache.getAsJSONBean(CacheKey.VERSION, AppVersionJSON.class, appVersionJSON -> {
             AppVersionJSON.ReturnObjectBean bean = appVersionJSON.getReturnObject();

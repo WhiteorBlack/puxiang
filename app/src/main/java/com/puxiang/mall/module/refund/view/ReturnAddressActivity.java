@@ -25,7 +25,8 @@ public class ReturnAddressActivity extends BaseBindActivity {
     @Override
     public void initView() {
         setWhiteTitle(binding.toolbar);
-        binding.toolbar.setTitle("填写发货信息");
+        setBarHeight(binding.toolbar.ivBar);
+        binding.toolbar.setTitle("填写发货信息");setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

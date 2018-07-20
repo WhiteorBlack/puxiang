@@ -22,6 +22,7 @@ public class VersionActivity extends BaseBindActivity {
     @Override
     public void initView() {
         binding.toolbar.setTitle("版本");
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.puxiang.mall.utils.AutoUtils;
 import com.puxiang.mall.utils.MapUtils;
 import com.puxiang.mall.utils.permissions.EasyPermission;
 import com.puxiang.mall.utils.permissions.PermissionCode;
+import com.puxiang.mall.widget.AutoLinearLayout;
 import com.puxiang.mall.widget.MyBanner;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
@@ -161,7 +162,7 @@ public class ShopDetialViewModel extends BaseObservable implements ViewModel, BG
     }
 
     @BindingAdapter("descList")
-    public static void setDesc(LinearLayout layout, List<String> list) {
+    public static void setDesc(AutoLinearLayout layout, List<String> list) {
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 View view = LayoutInflater.from(activity).inflate(R.layout.item_textview, layout, false);
@@ -209,6 +210,7 @@ public class ShopDetialViewModel extends BaseObservable implements ViewModel, BG
 
     public void detialClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_link_man:
             case R.id.iv_call:
                 String phoneNum = shopDetial.get().getLinkPhone();
                 if (TextUtils.isEmpty(phoneNum)) {

@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.puxiang.mall.MyApplication" />
+
         <variable
             name="viewModel"
             type="com.puxiang.mall.module.mall.viewmodel.MallViewModel" />
@@ -14,6 +16,10 @@
         <variable
             name="msgModel"
             type="com.puxiang.mall.module.mall.viewmodel.MsgCountViewModel" />
+
+        <variable
+            name="height"
+            type="int" />
 
     </data>
 
@@ -27,12 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <include
-                android:id="@+id/toolbar_mall"
-                layout="@layout/toolbar_mall"
-                bind:msgModel="@{msgModel}"
-                bind:viewModel="@{viewModel}" />
 
             <com.puxiang.mall.widget.CusPtrFrameLayout
                 android:id="@+id/ptr_frame"
@@ -54,22 +54,31 @@
                             android:id="@+id/layout_head"
                             layout="@layout/view_head_view" />
 
-                       <!-- <include
-                            android:id="@+id/layout_pic_adds"
-                            layout="@layout/view_mall_pic_adds" />-->
+                        <!-- <include
+                             android:id="@+id/layout_pic_adds"
+                             layout="@layout/view_mall_pic_adds" />-->
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rv_mall"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"
-                            />
+                            android:nestedScrollingEnabled="false" />
 
                     </LinearLayout>
 
                 </com.puxiang.mall.widget.MyNestScrollView>
             </com.puxiang.mall.widget.CusPtrFrameLayout>
         </LinearLayout>
+
+        <include
+            android:id="@+id/toolbar_mall"
+            layout="@layout/toolbar_mall"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolBarSizeHeight"
+            android:layout_gravity="top"
+            android:visibility="@{MyApplication.isRefreshing?View.GONE:View.VISIBLE}"
+            bind:msgModel="@{msgModel}"
+            bind:viewModel="@{viewModel}" />
 
         <ImageView
             android:id="@+id/iv_to_top"

@@ -40,6 +40,7 @@ public class ShoppCartFragment extends BaseBindFragment implements View.OnClickL
         binding.cbAll.setOnClickListener(this);
         binding.btnBuy.setOnClickListener(this);
         binding.llNone.ivStartBuy.setOnClickListener(this);
+        setBarHeight(binding.toolbar.ivBar);
     }
 
     @Override

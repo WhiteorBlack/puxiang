@@ -6,9 +6,10 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.puxiang.mall.R;
 import com.puxiang.mall.databinding.ActivityRegisterBinding;
 import com.puxiang.mall.fragment.BaseBindFragment;
@@ -25,6 +26,7 @@ public class RegisterFragment extends BaseBindFragment implements CompoundButton
         binding = DataBindingUtil.inflate(inflater, R.layout.activity_register, container, false);
         viewModel = new RegisterViewModel(this);
         binding.setViewModel(viewModel);
+        ImmersionBar.with(this).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE).keyboardEnable(true).init();
         return binding.getRoot();
     }
 
@@ -33,6 +35,7 @@ public class RegisterFragment extends BaseBindFragment implements CompoundButton
         MyTextUtils.setUnderline(binding.tvAgreement);
         binding.chbPass.setOnCheckedChangeListener(this);
         binding.chbPassTwo.setOnCheckedChangeListener(this);
+
     }
 
     public void setCodeError(String error) {
